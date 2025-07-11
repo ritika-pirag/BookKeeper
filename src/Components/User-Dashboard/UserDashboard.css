@@ -1,0 +1,24 @@
+.userdash-main { min-height: 100vh; }
+.userdash-header-card { border: 1px solid #f2f4f7; }
+.userdash-card { box-shadow: 0 2px 12px 0 rgba(16,24,40,0.04); }
+.userdash-welcome { font-size: 1.4rem; }
+.userdash-date-picker input { min-width: 160px; }
+.userdash-bestseller-row:last-child { border-bottom: none !important; }
+.userdash-badge { font-size: 0.95rem; border-radius: 8px; }
+.userdash-th { font-weight: 600; color: #344054; background: #F9FAFB; }
+.userdash-table th, .userdash-table td { vertical-align: middle; }
+.userdash-viewall-btn { font-size: 0.95rem; }
+.bg-orange { background: #FFA646 !important; }
+.bg-darkblue { background: #0B2447 !important; }
+@media (max-width: 991.98px) {
+  .userdash-header-card, .userdash-card { border-radius: 12px !important; }
+}
+@media (max-width: 767.98px) {
+  .userdash-header-card, .userdash-card { border-radius: 8px !important; }
+  .userdash-welcome { font-size: 1.1rem; }
+  .userdash-date-picker input { min-width: 120px; font-size: 0.95rem; }
+}
+@media (max-width: 575.98px) {
+  .userdash-header-card, .userdash-card { padding: 1rem !important; }
+  .userdash-welcome { font-size: 1rem; }
+}

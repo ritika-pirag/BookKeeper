@@ -1,0 +1,71 @@
+
+
+/* Yellow color for switches */
+.custom-switch:checked {
+    background-color: #ffc107 !important;
+    border-color: #ffc107 !important;
+}
+
+/* Yellow color for radio buttons */
+.custom-radio:checked {
+    background-color: #ffc107 !important;
+    border-color: #ffc107 !important;
+}
+
+/* Yellow color for checkboxes */
+.custom-check:checked {
+    background-color: #ffc107 !important;
+    border-color: #ffc107 !important;
+}
+/* Optional smooth hover effect */
+.cloud-card:hover {
+    background-color: #f5faff;
+    transition: background 0.3s ease;
+  }
+  
+  /* Optional stronger border on selection */
+  .border-primary {
+    border-width: 2px !important;
+  }
+  .form-label {
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .card-body h5 {
+    color: #2b2f38;
+    font-weight: 600;
+  }
+  
+  .form-check-label {
+    color: #444;
+    font-weight: 500;
+  }
+  
+  input::placeholder,
+  select,
+  small {
+    color: #888 !important;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  select,
+  input[type="file"] {
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+  }
+  
+  button {
+    font-weight: 500;
+  }
+  
+  .card {
+    background-color: #fff;
+  }
+  
+  .cloud-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+  }
+  

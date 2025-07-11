@@ -1,0 +1,18 @@
+.invoice-details {
+    font-size: 0.9rem;
+  }
+  
+  .invoice-details table {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .invoice-details table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+  }
+  
+  .invoice-details hr {
+    margin: 1.5rem 0;
+    border-top: 1px solid #dee2e6;
+  }

@@ -1,0 +1,117 @@
+.payments-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 12px;
+  }
+  
+  .payments-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+  }
+  
+  .payments-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  
+  .payments-dashboard .payments-card {
+    border-radius: 12px;
+  }
+  
+  .payments-dashboard .payments-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  /* Optional: Custom Background Colors */
+  .bg-orange {
+    background-color: #FFA64D;
+  }
+  
+  .bg-purple {
+    background-color: #7B61FF;
+  }
+  
+  .custom-pagination-orange .page-link {
+    color: #ff7a00; /* Orange text */
+    border-color: #ff7a00;
+  }
+  
+  .custom-pagination-orange .page-item.active .page-link {
+    background-color: #ff7a00;
+    border-color: #ff7a00;
+    color: #fff;
+  }
+  
+  .custom-pagination-orange .page-link:hover {
+    background-color: #ff9540;
+    border-color: #ff9540;
+    color: #fff;
+  }
+  
+  @media (max-width: 576px) {
+    .table-responsive table {
+      min-width: 600px;
+    }
+  
+    .custom-pagination-orange {
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+  
+    .input-group {
+      flex-direction: column;
+    }
+  
+    .input-group .form-control {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  
+    .input-group .btn {
+      width: 100%;
+    }
+  }
+  
+    @media (max-width: 576px) {
+      .payments-dashboard {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .bg-white.rounded.shadow-sm {
+        padding: 1rem !important;
+      }
+      .custom-pagination-orange .pagination {
+        flex-wrap: wrap;
+      }
+      .custom-pagination-orange .page-link {
+        min-width: 38px;
+        font-size: 0.95rem;
+        padding: 0.25rem 0.5rem;
+      }
+      .form-label {
+        font-size: 0.97rem;
+      }
+      .form-control {
+        font-size: 0.97rem;
+      }
+      .input-group .form-control {
+        font-size: 0.97rem;
+      }
+      .btn {
+        font-size: 0.97rem;
+        padding: 0.35rem 0.7rem;
+      }
+    }
+  
+  
