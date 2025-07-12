@@ -27,7 +27,7 @@ const BatchExpiry = () => {
     {
       batchNo: "BTCH001",
       productName: "Paracetamol 500mg",
-      godown: "Main Warehouse",
+      Warehouse: "Main Warehouse",
       stockQty: 500,
       manufactureDate: "2024-12-01",
       expiryDate: "2026-11-30",
@@ -36,7 +36,7 @@ const BatchExpiry = () => {
     {
       batchNo: "BTCH002",
       productName: "Vitamin C Tablets",
-      godown: "Godown A",
+      Warehouse: "Warehouse A",
       stockQty: 300,
       manufactureDate: "2023-05-15",
       expiryDate: "2025-05-15",
@@ -45,7 +45,7 @@ const BatchExpiry = () => {
     {
       batchNo: "BTCH003",
       productName: "Amoxicillin 250mg",
-      godown: "Cold Storage",
+      Warehouse: "Cold Storage",
       stockQty: 1200,
       manufactureDate: "2022-01-20",
       expiryDate: "2024-07-01",
@@ -54,7 +54,7 @@ const BatchExpiry = () => {
     {
       batchNo: "BTCH009",
       productName: "Vitamin C Chewable",
-      godown: "Dry Storage",
+      Warehouse: "Dry Storage",
       stockQty: 100,
       manufactureDate: "2021-11-10",
       expiryDate: "2023-11-10",
@@ -63,7 +63,7 @@ const BatchExpiry = () => {
     {
       batchNo: "BTCH017",
       productName: "Azithromycin 500mg",
-      godown: "Cold Storage",
+      Warehouse: "Cold Storage",
       stockQty: 300,
       manufactureDate: "2023-01-01",
       expiryDate: "2025-01-01",
@@ -72,7 +72,7 @@ const BatchExpiry = () => {
     {
       batchNo: "BTCH021",
       productName: "Ibuprofen 200mg",
-      godown: "Main Warehouse",
+      Warehouse: "Main Warehouse",
       stockQty: 500,
       manufactureDate: "2023-08-01",
       expiryDate: "2026-08-01",
@@ -81,7 +81,7 @@ const BatchExpiry = () => {
     {
       batchNo: "BTCH025",
       productName: "Paracetamol 500mg",
-      godown: "Main Storage",
+      Warehouse: "Main Storage",
       stockQty: 850,
       manufactureDate: "2023-06-15",
       expiryDate: "2025-06-30",
@@ -149,7 +149,7 @@ const BatchExpiry = () => {
           <button className="btn btn-light border text-success product-btn-icon">
             <FaFileExcel />
           </button>
-          <button
+          {/* <button
             className="btn text-white d-flex align-items-center gap-2"
             style={{ backgroundColor: "#FFA646" }}
             data-bs-toggle="modal"
@@ -157,7 +157,7 @@ const BatchExpiry = () => {
           >
             <FaPlusCircle />
             Add Batch
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -182,7 +182,7 @@ const BatchExpiry = () => {
             <tr>
               <th className="py-3">Batch No.</th>
               <th className="py-3">Product Name</th>
-              <th className="py-3">Godown</th>
+              <th className="py-3">Warehouse</th>
               <th className="py-3">Stock Qty</th>
               <th className="py-3">Manufacture Date</th>
               <th className="py-3">Expiry Date</th>
@@ -195,7 +195,7 @@ const BatchExpiry = () => {
               <tr key={idx}>
                 <td>{batch.batchNo}</td>
                 <td>{batch.productName}</td>
-                <td>{batch.godown}</td>
+                <td>{batch.Warehouse}</td>
                 <td>{batch.stockQty}</td>
                 <td>{batch.manufactureDate}</td>
                 <td>{batch.expiryDate}</td>
@@ -322,15 +322,15 @@ const BatchExpiry = () => {
                         <option>Ibuprofen 200mg</option>
                       </select>
                     </div>
-                    {/* Godown */}
+                    {/* Warehouse */}
                     <div className="col-md-6">
                       <label className="form-label">
-                        Godown <span className="text-danger">*</span>
+                        Warehouse <span className="text-danger">*</span>
                       </label>
                       <select className="form-select">
-                        <option>Select Godown</option>
+                        <option>Select Warehouse</option>
                         <option>Main Warehouse</option>
-                        <option>Godown A</option>
+                        <option>Warehouse A</option>
                         <option>Cold Storage</option>
                         <option>Dry Storage</option>
                         <option>Main Storage</option>
@@ -367,9 +367,9 @@ const BatchExpiry = () => {
                   >
                     Cancel
                   </button>
-                  <button type="submit" className="btn btn-warning text-white">
+                  {/* <button type="submit" className="btn btn-warning text-white">
                     Add Batch
-                  </button>
+                  </button> */}
                 </div>
               </form>
             </div>
@@ -413,8 +413,8 @@ const BatchExpiry = () => {
                         <td>{selectedBatch.productName}</td>
                       </tr>
                       <tr>
-                        <td className="fw-semibold">Godown</td>
-                        <td>{selectedBatch.godown}</td>
+                        <td className="fw-semibold">Warehouse</td>
+                        <td>{selectedBatch.Warehouse}</td>
                       </tr>
                       <tr>
                         <td className="fw-semibold">Stock Quantity</td>
@@ -476,10 +476,10 @@ const BatchExpiry = () => {
                       <input type="text" className="form-control" defaultValue={editBatch.productName} />
                     </div>
                     <div className="col-md-6">
-                      <label className="form-label">Godown</label>
-                      <select className="form-select" defaultValue={editBatch.godown}>
+                      <label className="form-label">Warehouse</label>
+                      <select className="form-select" defaultValue={editBatch.Warehouse}>
                         <option>Main Warehouse</option>
-                        <option>Godown A</option>
+                        <option>Warehouse A</option>
                         <option>Cold Storage</option>
                         <option>Dry Storage</option>
                         <option>Main Storage</option>

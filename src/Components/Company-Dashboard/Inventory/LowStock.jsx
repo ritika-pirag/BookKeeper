@@ -59,7 +59,7 @@ const LowStock = () => {
     <th className="py-3">Category</th>
     <th className="py-3">Unit</th>
     <th className="py-3">Quantity</th>
-    <th className="py-3">Min Qty</th>
+    {/* <th className="py-3">Min Qty</th> */}
     <th className="py-3">Price</th>
     <th className="py-3">Tax</th>
     <th className="py-3">Status</th>
@@ -75,7 +75,7 @@ const LowStock = () => {
                                 <td>{item.category}</td>
                                 <td>{item.unit}</td>
                                 <td>{item.quantity}</td>
-                                <td>{item.minQty}</td>
+                                {/* <td>{item.minQty}</td> */}
                                 <td>${item.price.toFixed(2)}</td>
                                 <td>{item.tax}</td>
                                 <td>{getStatusBadge(item.status)}</td>
@@ -118,7 +118,7 @@ const LowStock = () => {
                                                 <tr><td><strong>Brand</strong></td><td>None</td></tr>
                                                 <tr><td><strong>Unit</strong></td><td>{selectedProduct.unit}</td></tr>
                                                 <tr><td><strong>SKU</strong></td><td>{selectedProduct.sku}</td></tr>
-                                                <tr><td><strong>Minimum Qty</strong></td><td>{selectedProduct.minQty}</td></tr>
+                                                {/* <tr><td><strong>Minimum Qty</strong></td><td>{selectedProduct.minQty}</td></tr> */}
                                                 <tr><td><strong>Quantity</strong></td><td>{selectedProduct.quantity}</td></tr>
                                                 <tr><td><strong>Tax</strong></td><td>{selectedProduct.tax}</td></tr>
                                                 <tr><td><strong>Discount Type</strong></td><td>Percentage</td></tr>
@@ -222,7 +222,7 @@ const LowStock = () => {
                   />
                 </div>
 
-                <div className="col-md-6">
+                {/* <div className="col-md-6">
                   <label className="form-label">Min Qty</label>
                   <input
                     type="number"
@@ -235,7 +235,7 @@ const LowStock = () => {
                       })
                     }
                   />
-                </div>
+                </div> */}
 
                 <div className="col-md-6">
                   <label className="form-label">Price</label>
@@ -268,19 +268,24 @@ const LowStock = () => {
                 </div>
 
                 <div className="col-md-12">
-                  <label className="form-label">Status</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={selectedEditProduct.status}
-                    onChange={(e) =>
-                      setSelectedEditProduct({
-                        ...selectedEditProduct,
-                        status: e.target.value,
-                      })
-                    }
-                  />
-                </div>
+  <label className="form-label">Status</label>
+  <select
+    className="form-select"
+    value={selectedEditProduct.status}
+    onChange={(e) =>
+      setSelectedEditProduct({
+        ...selectedEditProduct,
+        status: e.target.value,
+      })
+    }
+  >
+    <option value="">Select Status</option>
+    <option value="In Stock">In Stock</option>
+    <option value="Low Stock">Low Stock</option>
+    <option value="Out Of Stock">Out Of Stock</option>
+  </select>
+</div>
+
               </div>
             </form>
           </div>

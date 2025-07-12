@@ -73,6 +73,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             <h6 className="text-white small fw-bold text-start">Inventory</h6>
 
             <ul className="list-unstyled">
+       
               {navItem("/company/productdetails", "fas fa-box-open", "Products Details")}
               {navItem("/company/batchandexpriry", "fas fa-cubes", "Batch&Expiry")}
               {navItem("/company/managestock", "fas fa-warehouse", "Manage Stock")}
@@ -83,8 +84,19 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             {/* Sales Section */}
             <h6 className="text-white small fw-bold text-start">Sales</h6>
             <ul className="list-unstyled">
+              {navItem("/company/pos", "fas fa-file-invoice", "Pos")}
               {navItem("/company/invoice", "fas fa-file-invoice", "Invoices")}
               {navItem("/company/salesreturn", "fas fa-undo", "Sales Return")}
+            </ul>
+
+
+
+                      {/* Purchases */}
+                      <h6 className="text-white small fw-bold text-start">Purchases</h6>
+            <ul className="list-unstyled">
+              {navItem("/company/vendors", "fas fa-file-alt", "Vendors")}
+              {navItem("/company/purchaseinvoice", "fas fa-file-alt", "Purchase Invoice")}
+              {navItem("/company/purchasereturn", "fas fa-file-alt", "Purchase Return")}
             </ul>
 
             {/* Payments Section */}
@@ -109,6 +121,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             {/* Purchases */}
             <h6 className="text-white small fw-bold text-start">Purchases</h6>
             <ul className="list-unstyled">
+              {navItem("/company/vendors", "fas fa-file-alt", "Vendors")}
               {navItem("/company/purchaseinvoice", "fas fa-file-alt", "Purchase Invoice")}
               {navItem("/company/purchasereturn", "fas fa-file-alt", "Purchase Return")}
             </ul>
@@ -150,16 +163,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         );
 
 
-      case "Salesperson":
-        return (
-          <>
-            {navItem("/salesperson/salespersondashboard", "fas fa-tachometer-alt", "Dashboard")}
-            {navItem("/salesperson/salespersonorder", "fas fa-shopping-cart", "Order Management")}
-            {navItem("/inventorymanagement", "fas fa-boxes", "logistics")}
-            {navItem("/salesperson/salespersoncustomerinfo", "fas fa-user-friends", "Customer Information")}
-
-          </>
-        );
+ 
 
 
 

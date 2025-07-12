@@ -33,6 +33,7 @@ import TdsTcs from './Components/Company-Dashboard/GST/TdsTcs';
 import ITCReport from './Components/Company-Dashboard/GST/ITCReport';
 import EWayBill from './Components/Company-Dashboard/GST/EWayBill';
 import PurchaseInvoice from './Components/Company-Dashboard/Purchases/PurchaseInvoice';
+import Vendors  from './Components/Company-Dashboard/Purchases/Vendors';
 import PurchaseReturn from './Components/Company-Dashboard/Purchases/PurchaseReturn';
 import DayBook from './Components/Company-Dashboard/Finance&Accounts/DayBook';
 import JournalEntries from './Components/Company-Dashboard/Finance&Accounts/JournalEntries';
@@ -124,8 +125,8 @@ function App() {
 
           {/* Purchases */}
           <Route path="/company/purchaseinvoice" element={<PurchaseInvoice/>} />
+          <Route path="/company/vendors" element={<Vendors/>} />
           <Route path="/company/purchasereturn" element={<PurchaseReturn/>} />
-
           {/* Finance & Accounts */}
           <Route path="/company/daybook" element={<DayBook/>} />
           <Route path="/company/journalentries" element={<JournalEntries/>} />

@@ -28,7 +28,7 @@ const  Productdetails = () => {
       brand: "None",
       unit: "Piece",
       quantity: 50,
-      minQty: 5,
+    
       price: "1500.00",
       tax: "0.00 %",
       discountType: "Percentage",
@@ -43,7 +43,7 @@ const  Productdetails = () => {
       category: "Computers",
       unit: "Piece",
       quantity: 3,
-      minQty: 10,
+    
       price: "$1200.00",
       tax: "5%",
       status: "Low Stock",
@@ -54,7 +54,7 @@ const  Productdetails = () => {
       category: "Computers",
       unit: "Piece",
       quantity: 0,
-      minQty: 5,
+  
       price: "$1000.00",
       tax: "10%",
       status: "Out Of Stock",
@@ -65,7 +65,7 @@ const  Productdetails = () => {
       category: "Computers",
       unit: "Piece",
       quantity: 2,
-      minQty: 6,
+      
       price: "$950.00",
       tax: "8%",
       status: "Low Stock",
@@ -76,7 +76,7 @@ const  Productdetails = () => {
       category: "Electronics",
       unit: "Piece",
       quantity: 20,
-      minQty: 5,
+   
       price: "$1099.00",
       tax: "12%",
       status: "In Stock",
@@ -87,7 +87,6 @@ const  Productdetails = () => {
       category: "Electronics",
       unit: "Piece",
       quantity: 8,
-      minQty: 10,
       price: "$999.00",
       tax: "10%",
       status: "Low Stock",
@@ -98,7 +97,7 @@ const  Productdetails = () => {
       category: "Electronics",
       unit: "Piece",
       quantity: 15,
-      minQty: 5,
+    
       price: "$399.00",
       tax: "5%",
       status: "In Stock",
@@ -109,7 +108,7 @@ const  Productdetails = () => {
       category: "Shoes",
       unit: "Pair",
       quantity: 0,
-      minQty: 7,
+      
       price: "$150.00",
       tax: "6%",
       status: "Out Of Stock",
@@ -120,7 +119,7 @@ const  Productdetails = () => {
       category: "Shoes",
       unit: "Pair",
       quantity: 10,
-      minQty: 3,
+    
       price: "$180.00",
       tax: "4%",
       status: "In Stock",
@@ -131,7 +130,7 @@ const  Productdetails = () => {
       category: "Electronics",
       unit: "Piece",
       quantity: 4,
-      minQty: 5,
+      
       price: "$499.00",
       tax: "7%",
       status: "Low Stock",
@@ -142,7 +141,7 @@ const  Productdetails = () => {
       category: "Accessories",
       unit: "Piece",
       quantity: 18,
-      minQty: 10,
+    
       price: "$99.99",
       tax: "5%",
       status: "In Stock",
@@ -153,7 +152,7 @@ const  Productdetails = () => {
       category: "Electronics",
       unit: "Piece",
       quantity: 6,
-      minQty: 2,
+      
       price: "$980.00",
       tax: "12%",
       status: "In Stock",
@@ -164,7 +163,7 @@ const  Productdetails = () => {
       category: "Electronics",
       unit: "Piece",
       quantity: 3,
-      minQty: 5,
+      
       price: "$149.00",
       tax: "6%",
       status: "Low Stock",
@@ -175,7 +174,7 @@ const  Productdetails = () => {
       category: "Accessories",
       unit: "Piece",
       quantity: 0,
-      minQty: 5,
+    
       price: "$129.00",
       tax: "5%",
       status: "Out Of Stock",
@@ -277,17 +276,7 @@ const  Productdetails = () => {
           </div>
 
           {/* Brand Dropdown */}
-          <div className="dropdown">
-            <button className="btn border dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Brand
-            </button>
-            <ul className="dropdown-menu custom-dropdown">
-              <li><a className="dropdown-item" href="#">Apple</a></li>
-              <li><a className="dropdown-item" href="#">HP</a></li>
-              <li><a className="dropdown-item" href="#">Lenovo</a></li>
-              <li><a className="dropdown-item" href="#">Dell</a></li>
-            </ul>
-          </div>
+      
 
           {/* Sort By Dropdown */}
           <div className="dropdown">
@@ -315,7 +304,7 @@ const  Productdetails = () => {
     <th class="py-3">Category</th>
     <th class="py-3">Unit</th>
     <th class="py-3">Quantity</th>
-    <th class="py-3">Min Qty</th>
+ 
     <th class="py-3">Price</th>
     <th class="py-3">Tax</th>
     <th class="py-3">Status</th>
@@ -331,7 +320,7 @@ const  Productdetails = () => {
                 <td>{prod.category}</td>
                 <td>{prod.unit}</td>
                 <td>{prod.quantity}</td>
-                <td>{prod.minQty}</td>
+            
                 <td>{prod.price}</td>
                 <td>{prod.tax}</td>
                 <td>
@@ -401,16 +390,7 @@ const  Productdetails = () => {
                 <div className="container-fluid">
                   <div className="row g-3">
                     {/* Store */}
-                    <div className="col-md-6">
-                      <label className="form-label">
-                        Store <span className="text-danger">*</span>
-                      </label>
-                      <select className="form-select">
-                        <option>Select</option>
-                        <option>Store 1</option>
-                        <option>Store 2</option>
-                      </select>
-                    </div>
+                
                     {/* Warehouse */}
                     <div className="col-md-6">
                       <label className="form-label">
@@ -430,12 +410,7 @@ const  Productdetails = () => {
                       <input type="text" className="form-control" />
                     </div>
                     {/* Slug */}
-                    <div className="col-md-6">
-                      <label className="form-label">
-                        Slug <span className="text-danger">*</span>
-                      </label>
-                      <input type="text" className="form-control" />
-                    </div>
+               
                     {/* SKU */}
                     <div className="col-md-6 d-flex align-items-end">
                       <div className="w-100">
@@ -477,30 +452,9 @@ const  Productdetails = () => {
                       </button>
                     </div>
                     {/* Sub Category */}
-                    <div className="col-md-6">
-                      <label className="form-label">
-                        Sub Category <span className="text-danger">*</span>
-                      </label>
-                      <select className="form-select">
-                        <option>Select</option>
-                        <option>Laptops</option>
-                        <option>Mobiles</option>
-                        <option>Headphones</option>
-                      </select>
-                    </div>
-                    {/* Brand */}
-                    <div className="col-md-6">
-                      <label className="form-label">
-                        Brand <span className="text-danger">*</span>
-                      </label>
-                      <select className="form-select">
-                        <option>Select</option>
-                        <option>Apple</option>
-                        <option>HP</option>
-                        <option>Lenovo</option>
-                        <option>Dell</option>
-                      </select>
-                    </div>
+              
+              
+
                     {/* Unit */}
                     <div className="col-md-6">
                       <label className="form-label">
@@ -513,17 +467,7 @@ const  Productdetails = () => {
                       </select>
                     </div>
                     {/* Barcode Symbology */}
-                    <div className="col-md-6">
-                      <label className="form-label">
-                        Barcode Symbology <span className="text-danger">*</span>
-                      </label>
-                      <select className="form-select">
-                        <option>Select</option>
-                        <option>Code128</option>
-                        <option>EAN13</option>
-                        <option>UPC</option>
-                      </select>
-                    </div>
+             
                     {/* Item Barcode */}
                     <div className="col-md-6 d-flex align-items-end">
                       <div className="w-100">
@@ -538,14 +482,37 @@ const  Productdetails = () => {
                     </div>
                     {/* Barcode Symbology (right) */}
                     <div className="col-md-6">
-                      <label className="form-label">Barcode Symbology</label>
+                      <label className="form-label">Status</label>
                       <select className="form-select">
                         <option>Choose</option>
-                        <option>Code128</option>
-                        <option>EAN13</option>
-                        <option>UPC</option>
+                        <option>Low stock </option>
+                        <option>Out of stock</option>
+                        <option>In Stock</option>
                       </select>
                     </div>
+                    <div className="row g-3">
+  <div className="col-md-6">
+    <label className="form-label">Tax</label>
+    <input type="text" className="form-control" placeholder="Enter Tax %" />
+  </div>
+  <div className="col-md-6">
+    <label className="form-label">Quantity</label>
+    <input type="number" className="form-control" placeholder="Enter Quantity" />
+  </div>
+</div>
+
+
+                          {/* Brand */}
+                          <div className="d-flex align-items-center gap-1">
+  <label className="mb-0 fw-semibold" htmlFor="priceFilter">Price:</label>
+  <input
+    type="number"
+    id="priceFilter"
+    className="form-control"
+    placeholder="Enter price"
+    style={{ width: "150px" }}
+  />
+</div>
                   </div>
                 </div>
                 <div className="mt-4 d-flex justify-content-end gap-2">
@@ -619,14 +586,14 @@ const  Productdetails = () => {
                           <td className="fw-semibold">Category</td>
                           <td>{selectedProduct.category}</td>
                         </tr>
-                        <tr>
+                        {/* <tr>
                           <td className="fw-semibold">Sub Category</td>
                           <td>{selectedProduct.subCategory || "None"}</td>
-                        </tr>
-                        <tr>
+                        </tr> */}
+                        {/* <tr>
                           <td className="fw-semibold">Brand</td>
                           <td>{selectedProduct.brand || "None"}</td>
-                        </tr>
+                        </tr> */}
                         <tr>
                           <td className="fw-semibold">Unit</td>
                           <td>{selectedProduct.unit}</td>
@@ -635,10 +602,7 @@ const  Productdetails = () => {
                           <td className="fw-semibold">SKU</td>
                           <td>{selectedProduct.sku}</td>
                         </tr>
-                        <tr>
-                          <td className="fw-semibold">Minimum Qty</td>
-                          <td>{selectedProduct.minQty}</td>
-                        </tr>
+                      
                         <tr>
                           <td className="fw-semibold">Quantity</td>
                           <td>{selectedProduct.quantity}</td>
@@ -647,10 +611,10 @@ const  Productdetails = () => {
                           <td className="fw-semibold">Tax</td>
                           <td>{selectedProduct.tax}</td>
                         </tr>
-                        <tr>
+                        {/* <tr>
                           <td className="fw-semibold">Discount Type</td>
                           <td>{selectedProduct.discountType || "Percentage"}</td>
-                        </tr>
+                        </tr> */}
                         <tr>
                           <td className="fw-semibold">Price</td>
                           <td>{selectedProduct.price}</td>
@@ -659,10 +623,10 @@ const  Productdetails = () => {
                           <td className="fw-semibold">Status</td>
                           <td>{selectedProduct.status || "Active"}</td>
                         </tr>
-                        <tr>
+                        {/* <tr>
                           <td className="fw-semibold">Description</td>
                           <td>{selectedProduct.description}</td>
-                        </tr>
+                        </tr> */}
                       </tbody>
                     </table>
                   </div>
@@ -715,10 +679,10 @@ const  Productdetails = () => {
                       <label className="form-label">Quantity</label>
                       <input type="number" className="form-control" defaultValue={editProduct.quantity} />
                     </div>
-                    <div className="col-md-6">
+                    {/* <div className="col-md-6">
                       <label className="form-label">Min Qty</label>
                       <input type="number" className="form-control" defaultValue={editProduct.minQty} />
-                    </div>
+                    </div> */}
                     <div className="col-md-6">
                       <label className="form-label">Price</label>
                       <input type="text" className="form-control" defaultValue={editProduct.price} />
@@ -728,9 +692,14 @@ const  Productdetails = () => {
                       <input type="text" className="form-control" defaultValue={editProduct.tax} />
                     </div>
                     <div className="col-md-6">
-                      <label className="form-label">Status</label>
-                      <input type="text" className="form-control" defaultValue={editProduct.status} />
-                    </div>
+  <label className="form-label">Status</label>
+  <select className="form-select" defaultValue={editProduct.status}>
+    <option value="In Stock">In Stock</option>
+    <option value="Low Stock">Low Stock</option>
+    <option value="Out Of Stock">Out Of Stock</option>
+  </select>
+</div>
+
                   </div>
                   <div className="mt-4 d-flex justify-content-end gap-2">
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
