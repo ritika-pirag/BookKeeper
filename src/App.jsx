@@ -11,7 +11,7 @@ import SalespersonOrder from './Components/Salesperson-Dashboard/SalespersonOrde
 import SalespersonCustomerInfo from './Components/Salesperson-Dashboard/SalespersonCustomerInfo';
 import Dashboardd from './Components/Dashboard/Dashboardd';
 import Company from './Components/Dashboard/Company';
-import CompanyDetails from './Components/Dashboard/CompanyDetails';
+// import CompanyDetails from './Components/Dashboard/CompanyDetails';
 import PlansPricing from './Components/Dashboard/PlansPricing';
 import RequestPlan from './Components/Dashboard/RequestPlan';
 import Payments from './Components/Dashboard/Payments';
@@ -85,7 +85,7 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<Dashboardd />} />
           <Route path="/superadmin/company" element={<Company />} />
-          <Route path="/superadmin/companydetails" element={<CompanyDetails />} />
+          {/* <Route path="/superadmin/companydetails" element={<CompanyDetails />} /> */}
           <Route path="/superadmin/planpricing" element={<PlansPricing />} />
           <Route path="/superadmin/requestplan" element={<RequestPlan />} />
           <Route path="/superadmin/payments" element={<Payments />} />

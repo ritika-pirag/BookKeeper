@@ -71,7 +71,7 @@ const initialCompanies = [
     {
         name: "Kylie Lawson",
         email: "kylie@lawsoncorp.com",
-        plan: "Platinum",
+        plan: "Basic",
         avatar: "https://i.ibb.co/9kcymv4q/image6.jpg",
         date: "2025-07-02",
         time: "08:20:10",
@@ -115,6 +115,18 @@ const Company = () => {
     const [deleteIndex, setDeleteIndex] = useState(null);
     const [resetIndex, setResetIndex] = useState(null);
     const [newPassword, setNewPassword] = useState("");
+
+
+    const [newCompany, setNewCompany] = useState({
+        name: "",
+        email: "",
+        date: "",
+        expired: "",
+        plan: ""
+      });
+      
+
+    
     const navigate = useNavigate();
 
     const toggleMenu = (index) => {
@@ -151,9 +163,11 @@ const Company = () => {
         setEditIndex(null);
     };
     const badgeStyles = {
-        Platinum: { backgroundColor: "#e5e4e2", color: "#000" },  // light gray platinum
-        Gold: { backgroundColor: "#ffd700", color: "#000" },      // bright gold
-        Silver: { backgroundColor: "#c0c0c0", color: "#000" },     // classic silver
+        Basic: { backgroundColor: "#b2dfdb", color: "#000" },  // Very light teal
+
+        Silver: { backgroundColor: "#c0c0c0", color: "#000" },     // Silver
+        Gold: { backgroundColor: "#ffd700", color: "#000" },       // Gold
+        Platinum: { backgroundColor: "#e5e4e2", color: "#000" },   // Platinum
       };
       
     return (
@@ -166,9 +180,15 @@ const Company = () => {
   Manage Companies
 </h4>
 
-                <button className="btn btn-success" onClick={() => setShowModal(true)}>
-                    <BsPlusCircle className="me-1" /> Add Company
-                </button>
+<button
+  className="btn btn-success d-flex align-items-center gap-2"
+  onClick={() => setShowModal(true)}
+  style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}
+>
+  <BsPlusCircle className="fs-5" />
+  <span className="fw-semibold">Add Company</span>
+</button>
+
             </div>
 
             <div className="row g-4">
@@ -197,12 +217,17 @@ const Company = () => {
                  <div className="dropdown-item text-warning fw-semibold" onClick={() => handleEdit(index)}>
                    <BsPencilSquare className="me-2" /> Edit
                  </div>
-                 <div className="dropdown-item">
-                   <BsShieldLock className="me-2" /> Login As Company
-                 </div>
-                 <div className="dropdown-item" onClick={() => setResetIndex(index)}>
+                 <div
+  className="dropdown-item"
+  onClick={() => navigate("/company/dashboard")}
+  style={{ cursor: "pointer" }}
+>
+  <BsShieldLock className="me-2" /> Login As Company
+</div>
+
+                 {/* <div className="dropdown-item" onClick={() => setResetIndex(index)}>
                    <BsGear className="me-2" /> Reset Password
-                 </div>
+                 </div> */}
                  <hr className="my-1" />
                  <div className="dropdown-item text-danger">
                    <BsSlashCircle className="me-2" /> Login Disable
@@ -258,63 +283,123 @@ const Company = () => {
                 ))}
             </div>
 
-            {/* Modal (same as before) */}
             {
-                showModal && (
-                    <div className="modal d-flex align-items-center justify-content-center" style={{
-                        backgroundColor: "rgba(0,0,0,0.5)",
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100vw",
-                        height: "100vh",
-                        zIndex: 1050
-                    }}>
-                        <div className="modal-dialog modal-lg modal-dialog-centered">
-                            <div className="modal-content rounded-4 p-3 position-relative">
-                                <button type="button" className="btn btn-sm btn-danger rounded-circle position-absolute"
-                                    style={{
-                                        width: "35px", height: "35px", top: "10px", right: "10px", zIndex: 10
-                                    }}
-                                    onClick={() => setShowModal(false)}
-                                >✕</button>
+  showModal && (
+    <div className="modal d-flex align-items-center justify-content-center" style={{
+      backgroundColor: "rgba(0,0,0,0.5)",
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      zIndex: 1050
+    }}>
+      <div className="modal-dialog modal-lg modal-dialog-centered">
+        <div className="modal-content rounded-4 p-3 position-relative">
 
-                                <div className="modal-header border-0 pt-3 pb-1">
-                                    <h5 className="modal-title fw-bold">Create Company</h5>
-                                </div>
+          {/* Close Button */}
+          <button
+            type="button"
+            className="btn btn-sm btn-danger rounded-circle position-absolute"
+            style={{
+              width: "35px", height: "35px", top: "10px", right: "10px", zIndex: 10
+            }}
+            onClick={() => setShowModal(false)}
+          >✕</button>
 
-                                <div className="modal-body pt-1">
-                                    <div className="row g-3">
-                                        <div className="col-md-6">
-                                            <label className="form-label fw-semibold">
-                                                Name <span className="text-danger">*</span>
-                                            </label>
-                                            <input type="text" className="form-control" placeholder="Enter Company Name" />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label className="form-label fw-semibold">
-                                                Email <span className="text-danger">*</span>
-                                            </label>
-                                            <input type="email" className="form-control" value="superadmin@example.com" readOnly />
-                                        </div>
-                                        <div className="col-12 mt-2">
-                                            <label className="form-check-label me-2 fw-semibold">Login is enable</label>
-                                            <div className="form-check form-switch d-inline-block">
-                                                <input className="form-check-input" type="checkbox" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+          {/* Modal Header */}
+          <div className="modal-header border-0 pt-3 pb-1">
+            <h5 className="modal-title fw-bold">Create Company</h5>
+          </div>
 
-                                <div className="modal-footer border-top-0 pt-3">
-                                    <button className="btn btn-dark px-4" onClick={() => setShowModal(false)}>Cancel</button>
-                                    <button className="btn btn-success px-4">Create</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
+          {/* Modal Body */}
+          <div className="modal-body pt-1">
+            <div className="row g-3">
+
+              <div className="col-md-6">
+                <label className="form-label fw-semibold">
+                  Name <span className="text-danger">*</span>
+                </label>
+                <input
+  type="text"
+  className="form-control"
+  placeholder="Enter Company Name"
+  value={newCompany.name}
+  onChange={(e) => setNewCompany({ ...newCompany, name: e.target.value })}
+/>
+              </div>
+
+              <div className="col-md-6">
+                <label className="form-label fw-semibold">
+                  Email <span className="text-danger">*</span>
+                </label>
+                <input
+  type="email"
+  className="form-control"
+  value={newCompany.email}
+  onChange={(e) => setNewCompany({ ...newCompany, email: e.target.value })}
+/>
+              </div>
+
+              {/* Start Date */}
+              <div className="col-md-6">
+                <label className="form-label fw-semibold">
+                  Start Date <span className="text-danger">*</span>
+                </label>
+                <input
+  type="date"
+  className="form-control"
+  value={newCompany.date}
+  onChange={(e) => setNewCompany({ ...newCompany, date: e.target.value })}
+/>
+              </div>
+
+              {/* Expire Date */}
+              <div className="col-md-6">
+                <label className="form-label fw-semibold">
+                  Expire Date <span className="text-danger">*</span>
+                </label>
+                <input
+  type="date"
+  className="form-control"
+  value={newCompany.expired}
+  onChange={(e) => setNewCompany({ ...newCompany, expired: e.target.value })}
+/>
+              </div>
+
+              {/* Plan Dropdown */}
+              <div className="col-md-6">
+                <label className="form-label fw-semibold">
+                  Plan <span className="text-danger">*</span>
+                </label>
+                <select
+  className="form-select"
+  value={newCompany.plan}
+  onChange={(e) => setNewCompany({ ...newCompany, plan: e.target.value })}
+>
+  <option value="">Select Plan</option>
+  <option value="basic">Basic</option>
+  <option value="silver">Silver</option>
+  <option value="gold">Gold</option>
+  <option value="platinum">Platinum</option>
+</select>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Modal Footer */}
+          <div className="modal-footer border-top-0 pt-3">
+            <button className="btn btn-dark px-4" onClick={() => setShowModal(false)}>Cancel</button>
+            <button className="btn btn-success px-4">Create</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  )
+}
+
 
             {editIndex !== null && (
                 <div
