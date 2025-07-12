@@ -96,12 +96,17 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
 ], "fas fa-tachometer-alt")}
 
 {renderCollapsibleSection("Inventory", "inventory", [
+
+  { to: "/company/warehouse", icon: "fas fa-industry", label: "Warehouse" },
+  { to: "/company/categories", icon: "fas fa-tags", label: "Categories" },
+  { to: "/company/brands", icon: "fas fa-trademark", label: "Brands" },
   { to: "/company/productdetails", icon: "fas fa-box-open", label: "Products Details" },
   { to: "/company/batchandexpriry", icon: "fas fa-cubes", label: "Batch&Expiry" },
   { to: "/company/managestock", icon: "fas fa-warehouse", label: "Manage Stock" },
   { to: "/company/lowstock", icon: "fas fa-exclamation-triangle", label: "Low Stock" },
   { to: "/company/printbarcode", icon: "fas fa-barcode", label: "Print Barcode" },
 ], "fas fa-box")}
+
 
 {renderCollapsibleSection("Sales", "sales", [
   { to: "/company/invoice", icon: "fas fa-file-invoice", label: "Invoices" },

@@ -73,6 +73,9 @@ import PaymentMode from './Components/User-Dashboard/Purchases/PaymentMode';
 import Invoicee from './Components/User-Dashboard/Purchases/Invoicee';
 import Expenses from './Components/User-Dashboard/Purchases/Expenses';
 import Purchasereport  from  "./Components/User-Dashboard/Reports/Purchasereport";
+import WareHouse from './Components/Company-Dashboard/Inventory/WareHouse';
+import Categories from './Components/Company-Dashboard/Inventory/Categories';
+import Brands from './Components/Company-Dashboard/Inventory/Brands';
 function App() {
   return (
     <Router>
@@ -105,6 +108,9 @@ function App() {
           <Route path="/company/managestock" element={<ManageStock/>} />
           <Route path="/company/lowstock" element={<LowStock/>} />
           <Route path="/company/printbarcode" element={<PrintBarcode/>} />
+          <Route path="/company/warehouse" element={<WareHouse/>} />
+<Route path="/company/categories" element={<Categories/>} />
+<Route path="/company/brands" element={<Brands/>} />
 
           {/* Sales */}
           <Route path="/company/invoice" element={<Invoice/>} />
