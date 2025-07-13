@@ -1,81 +1,88 @@
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import MainLayout from './Layout/MainLayout';
-import Login from './Components/Auth/Login';
-import Signup from './Components/Auth/Signup';
+import MainLayout from "./Layout/MainLayout";
+import Login from "./Components/Auth/Login";
+import Signup from "./Components/Auth/Signup";
 
-import SalespersonDashboard from './Components/Salesperson-Dashboard/SalespersonDashboard';
-import SalespersonInventory from './Components/Salesperson-Dashboard/SalespersonInventory';
-import SalespersonOrder from './Components/Salesperson-Dashboard/SalespersonOrder';
-import SalespersonCustomerInfo from './Components/Salesperson-Dashboard/SalespersonCustomerInfo';
-import Dashboardd from './Components/Dashboard/Dashboardd';
-import Company from './Components/Dashboard/Company';
+import SalespersonDashboard from "./Components/Salesperson-Dashboard/SalespersonDashboard";
+import SalespersonInventory from "./Components/Salesperson-Dashboard/SalespersonInventory";
+import SalespersonOrder from "./Components/Salesperson-Dashboard/SalespersonOrder";
+import SalespersonCustomerInfo from "./Components/Salesperson-Dashboard/SalespersonCustomerInfo";
+import Dashboardd from "./Components/Dashboard/Dashboardd";
+import Company from "./Components/Dashboard/Company";
 // import CompanyDetails from './Components/Dashboard/CompanyDetails';
-import PlansPricing from './Components/Dashboard/PlansPricing';
-import RequestPlan from './Components/Dashboard/RequestPlan';
-import Payments from './Components/Dashboard/Payments';
-import SystemSettings from './Components/Dashboard/SystemSettings';
-import CompanyDashbaord from './Components/Company-Dashboard/CompanyDashbaord';
-import ProductDetails from './Components/Company-Dashboard/Inventory/ProductDetails';
-import BatchExpiry from './Components/Company-Dashboard/Inventory/BatchExpiry';
-import ManageStock from './Components/Company-Dashboard/Inventory/ManageStock';
-import LowStock from './Components/Company-Dashboard/Inventory/LowStock';
-import PrintBarcode from './Components/Company-Dashboard/Inventory/printBarcode';
-import Invoice from './Components/Company-Dashboard/Sales/Invoice';
-import SalesReturn from './Components/Company-Dashboard/Sales/SalesReturn';
-import AccountStatement from './Components/Company-Dashboard/Payments/AccountStatement';
-import Coupons from './Components/Company-Dashboard/Payments/Coupons';
-import TaxReport from './Components/Company-Dashboard/GST/TaxReport ';
-import QRInvoice from './Components/Company-Dashboard/GST/QRInvoice';
-import GSTReturns from './Components/Company-Dashboard/GST/GSTReturns';
-import TdsTcs from './Components/Company-Dashboard/GST/TdsTcs';
-import ITCReport from './Components/Company-Dashboard/GST/ITCReport';
-import EWayBill from './Components/Company-Dashboard/GST/EWayBill';
-import PurchaseInvoice from './Components/Company-Dashboard/Purchases/PurchaseInvoice';
-import PurchaseReturn from './Components/Company-Dashboard/Purchases/PurchaseReturn';
-import DayBook from './Components/Company-Dashboard/Finance&Accounts/DayBook';
-import JournalEntries from './Components/Company-Dashboard/Finance&Accounts/JournalEntries';
-import Ledger from './Components/Company-Dashboard/Finance&Accounts/Ledger';
-import TrialBalance from './Components/Company-Dashboard/Finance&Accounts/TrialBalance';
-import CustomerList from './Components/Company-Dashboard/ClientsVendors/CustomerList';
-import BalanceSheet from './Components/Company-Dashboard/Reports/BalanceSheet';
-import CashFlow from './Components/Company-Dashboard/Reports/CashFlow';
-import ProfitLoss from './Components/Company-Dashboard/Reports/ProfitLoss';
-import Users from './Components/Company-Dashboard/UserManagement/Users';
-import RolesPermissions from './Components/Company-Dashboard/UserManagement/RolesPermissions';
-import DeleteAccountRequest from './Components/Company-Dashboard/UserManagement/DeleteAccountRequest';
-import CompanyInfo from './Components/Company-Dashboard/Settings/CompanyInfo';
-import LanguageSetting from './Components/Company-Dashboard/Settings/LanguageSetting';
-import UserDashboard from './Components/User-Dashboard/UserDashboard';
-import Product from './Components/User-Dashboard/Inventory/Product';
-import ManageProduct from './Components/User-Dashboard/Inventory/MangeProduct';
+import PlansPricing from "./Components/Dashboard/PlansPricing";
+import RequestPlan from "./Components/Dashboard/RequestPlan";
+import Payments from "./Components/Dashboard/Payments";
+import SystemSettings from "./Components/Dashboard/SystemSettings";
+import CompanyDashbaord from "./Components/Company-Dashboard/CompanyDashbaord";
+import ProductDetails from "./Components/Company-Dashboard/Inventory/ProductDetails";
+import BatchExpiry from "./Components/Company-Dashboard/Inventory/BatchExpiry";
+import ManageStock from "./Components/Company-Dashboard/Inventory/ManageStock";
+import LowStock from "./Components/Company-Dashboard/Inventory/LowStock";
+import PrintBarcode from "./Components/Company-Dashboard/Inventory/printBarcode";
+import Invoice from "./Components/Company-Dashboard/Sales/Invoice";
+import SalesReturn from "./Components/Company-Dashboard/Sales/SalesReturn";
+import AccountStatement from "./Components/Company-Dashboard/Payments/AccountStatement";
+import Coupons from "./Components/Company-Dashboard/Payments/Coupons";
+import TaxReport from "./Components/Company-Dashboard/GST/TaxReport ";
+import QRInvoice from "./Components/Company-Dashboard/GST/QRInvoice";
+import GSTReturns from "./Components/Company-Dashboard/GST/GSTReturns";
+import TdsTcs from "./Components/Company-Dashboard/GST/TdsTcs";
+import ITCReport from "./Components/Company-Dashboard/GST/ITCReport";
+import EWayBill from "./Components/Company-Dashboard/GST/EWayBill";
+import PurchaseInvoice from "./Components/Company-Dashboard/Purchases/PurchaseInvoice";
+import PurchaseReturn from "./Components/Company-Dashboard/Purchases/PurchaseReturn";
+import DayBook from "./Components/Company-Dashboard/Finance&Accounts/DayBook";
+import JournalEntries from "./Components/Company-Dashboard/Finance&Accounts/JournalEntries";
+import Ledger from "./Components/Company-Dashboard/Finance&Accounts/Ledger";
+import TrialBalance from "./Components/Company-Dashboard/Finance&Accounts/TrialBalance";
+import CustomerList from "./Components/Company-Dashboard/ClientsVendors/CustomerList";
+import BalanceSheet from "./Components/Company-Dashboard/Reports/BalanceSheet";
+import CashFlow from "./Components/Company-Dashboard/Reports/CashFlow";
+import ProfitLoss from "./Components/Company-Dashboard/Reports/ProfitLoss";
+import Users from "./Components/Company-Dashboard/UserManagement/Users";
+import RolesPermissions from "./Components/Company-Dashboard/UserManagement/RolesPermissions";
+import DeleteAccountRequest from "./Components/Company-Dashboard/UserManagement/DeleteAccountRequest";
+import CompanyInfo from "./Components/Company-Dashboard/Settings/CompanyInfo";
+import LanguageSetting from "./Components/Company-Dashboard/Settings/LanguageSetting";
+import UserDashboard from "./Components/User-Dashboard/UserDashboard";
+import Product from "./Components/User-Dashboard/Inventory/Product";
+import ManageProduct from "./Components/User-Dashboard/Inventory/MangeProduct";
 
-import Invoices from './Components/User-Dashboard/Sales/Invoices';
-import Pos from './Components/User-Dashboard/Sales/Pos';
+import Invoices from "./Components/User-Dashboard/Sales/Invoices";
+import Pos from "./Components/User-Dashboard/Sales/Pos";
 
-import PurchaseOrder from './Components/User-Dashboard/Purchases/PurchaseOrder';
+import PurchaseOrder from "./Components/User-Dashboard/Purchases/PurchaseOrder";
 
-import Cashflow from './Components/User-Dashboard/Account&Finance/Cashflow';
-import Accountstatement from './Components/User-Dashboard/Account&Finance/Accountstatement';
-import Salesreport from './Components/User-Dashboard/Reports/Salesreport';
+import Cashflow from "./Components/User-Dashboard/Account&Finance/Cashflow";
+import Accountstatement from "./Components/User-Dashboard/Account&Finance/Accountstatement";
+import Salesreport from "./Components/User-Dashboard/Reports/Salesreport";
 // import Purchasereport from './Components/User-Dashboard/Reports/Purchasereport';
-import Inventory from './Components/User-Dashboard/Reports/Inventory';
-import Invoicereport from './Components/User-Dashboard/Reports/Invoicereport';
-import Taxreports from './Components/User-Dashboard/Reports/Taxreports';
-import Balancesheet from './Components/User-Dashboard/Account&Finance/BalanceSheet';
+import Inventory from "./Components/User-Dashboard/Reports/Inventory";
+import Invoicereport from "./Components/User-Dashboard/Reports/Invoicereport";
+import Taxreports from "./Components/User-Dashboard/Reports/Taxreports";
+import Balancesheet from "./Components/User-Dashboard/Account&Finance/BalanceSheet";
 
-import DeliveryChallans from './Components/User-Dashboard/Sales/DeliveryChallans';
-import Estimates from './Components/User-Dashboard/Sales/Estimates';
-import OnlineOrder from './Components/User-Dashboard/Sales/OnlineOrder';
-import PosOrder from './Components/User-Dashboard/Sales/PosOrder';
-import PaymentMode from './Components/User-Dashboard/Purchases/PaymentMode';
-import Invoicee from './Components/User-Dashboard/Purchases/Invoicee';
-import Expenses from './Components/User-Dashboard/Purchases/Expenses';
-import Purchasereport  from  "./Components/User-Dashboard/Reports/Purchasereport";
-import WareHouse from './Components/Company-Dashboard/Inventory/WareHouse';
-import Categories from './Components/Company-Dashboard/Inventory/Categories';
-import Brands from './Components/Company-Dashboard/Inventory/Brands';
+import DeliveryChallans from "./Components/User-Dashboard/Sales/DeliveryChallans";
+import Estimates from "./Components/User-Dashboard/Sales/Estimates";
+import OnlineOrder from "./Components/User-Dashboard/Sales/OnlineOrder";
+import PosOrder from "./Components/User-Dashboard/Sales/PosOrder";
+import PaymentMode from "./Components/User-Dashboard/Purchases/PaymentMode";
+import Invoicee from "./Components/User-Dashboard/Purchases/Invoicee";
+import Expenses from "./Components/User-Dashboard/Purchases/Expenses";
+import Purchasereport from "./Components/User-Dashboard/Reports/Purchasereport";
+import WareHouse from "./Components/Company-Dashboard/Inventory/SiteData/WareHouse";
+import Categories from "./Components/Company-Dashboard/Inventory/SiteData/Categories";
+
+import BrandPage from "./Components/Company-Dashboard/Inventory/SiteData/BrandPage";
+
+import Productt from "./Components/Company-Dashboard/Inventory/Productt";
+import AddProduct from "./Components/Company-Dashboard/Inventory/Product/AddProduct";
+import DevicePage from "./Components/Company-Dashboard/Inventory/SiteData/DevicePage";
+import TaxPage from "./Components/Company-Dashboard/Inventory/TaxPage";
+
 function App() {
   return (
     <Router>
@@ -93,126 +100,126 @@ function App() {
           <Route path="/superadmin/requestplan" element={<RequestPlan />} />
           <Route path="/superadmin/payments" element={<Payments />} />
           <Route path="/superadmin/setting" element={<SystemSettings />} />
-
-
         </Route>
 
         {/* Company Dashboard routes with MainLayout */}
         <Route element={<MainLayout />}>
           {/* Admin Dashboard */}
-          <Route path="/company/dashboard" element={<CompanyDashbaord/>} />
+          <Route path="/company/dashboard" element={<CompanyDashbaord />} />
 
           {/* Inventory */}
-          <Route path="/company/productdetails" element={<ProductDetails/>} />
-          <Route path="/company/batchandexpriry" element={<BatchExpiry/>} />
-          <Route path="/company/managestock" element={<ManageStock/>} />
-          <Route path="/company/lowstock" element={<LowStock/>} />
-          <Route path="/company/printbarcode" element={<PrintBarcode/>} />
-          <Route path="/company/warehouse" element={<WareHouse/>} />
-<Route path="/company/categories" element={<Categories/>} />
-<Route path="/company/brands" element={<Brands/>} />
+          <Route path="/company/productdetails" element={<ProductDetails />} />
+          <Route path="/company/batchandexpriry" element={<BatchExpiry />} />
+          <Route path="/company/managestock" element={<ManageStock />} />
+          <Route path="/company/lowstock" element={<LowStock />} />
+          <Route path="/company/printbarcode" element={<PrintBarcode />} />
+          <Route path="/company/warehouse" element={<WareHouse />} />
+          <Route path="/company/categories" element={<Categories />} />
+          <Route path="/company/brands" element={<BrandPage />} />
+          <Route path="/company/product" element={<Productt />} />
+          <Route path="/company/createproduct" element={<AddProduct />} />
+          <Route path="/company/device" element={<DevicePage />} />
+          <Route path="/company/taxpage" element={<TaxPage />} />
 
           {/* Sales */}
-          <Route path="/company/invoice" element={<Invoice/>} />
-          <Route path="/company/salesreturn" element={<SalesReturn/>} />
+          <Route path="/company/invoice" element={<Invoice />} />
+
+          {/* Sales */}
+          <Route path="/company/invoice" element={<Invoice />} />
+          <Route path="/company/salesreturn" element={<SalesReturn />} />
 
           {/* Payments */}
-          <Route path="/company/coupons" element={<Coupons/>} />
-          <Route path="/company/accountstatement" element={<AccountStatement/>} />
+          <Route path="/company/coupons" element={<Coupons />} />
+          <Route
+            path="/company/accountstatement"
+            element={<AccountStatement />}
+          />
 
           {/* GST Filing */}
-          <Route path="/company/taxreport" element={<TaxReport/>} />
-          <Route path="/company/qrinvoice" element={<QRInvoice/>} />
-          <Route path="/company/gstreturns" element={<GSTReturns/>} />
-          <Route path="/company/tdstcs" element={<TdsTcs/>} />
-          <Route path="/company/itcreport" element={<ITCReport/>} />
-          <Route path="/company/ewaybill" element={<EWayBill/>} />
+          <Route path="/company/taxreport" element={<TaxReport />} />
+          <Route path="/company/qrinvoice" element={<QRInvoice />} />
+          <Route path="/company/gstreturns" element={<GSTReturns />} />
+          <Route path="/company/tdstcs" element={<TdsTcs />} />
+          <Route path="/company/itcreport" element={<ITCReport />} />
+          <Route path="/company/ewaybill" element={<EWayBill />} />
 
           {/* Purchases */}
-          <Route path="/company/purchaseinvoice" element={<PurchaseInvoice/>} />
-          <Route path="/company/purchasereturn" element={<PurchaseReturn/>} />
+          <Route
+            path="/company/purchaseinvoice"
+            element={<PurchaseInvoice />}
+          />
+          <Route path="/company/purchasereturn" element={<PurchaseReturn />} />
 
           {/* Finance & Accounts */}
-          <Route path="/company/daybook" element={<DayBook/>} />
-          <Route path="/company/journalentries" element={<JournalEntries/>} />
-          <Route path="/company/ledger" element={<Ledger/>} />
-          <Route path="/company/trialbalance" element={<TrialBalance/>} />
+          <Route path="/company/daybook" element={<DayBook />} />
+          <Route path="/company/journalentries" element={<JournalEntries />} />
+          <Route path="/company/ledger" element={<Ledger />} />
+          <Route path="/company/trialbalance" element={<TrialBalance />} />
 
           {/* Clients / Vendors */}
-          <Route path="/company/customers" element={<CustomerList/>} />
+          <Route path="/company/customers" element={<CustomerList />} />
 
           {/* Reports */}
-          <Route path="/company/balancesheet" element={<BalanceSheet/>} />
-          <Route path="/company/cashflow" element={<CashFlow/>} />
-          <Route path="/company/profitloss" element={<ProfitLoss/>} />
+          <Route path="/company/balancesheet" element={<BalanceSheet />} />
+          <Route path="/company/cashflow" element={<CashFlow />} />
+          <Route path="/company/profitloss" element={<ProfitLoss />} />
 
           {/* User Management */}
-          <Route path="/company/users" element={<Users/>} />
-          <Route path="/company/rolespermissions" element={<RolesPermissions/>} />
-          <Route path="/company/deleteaccountrequests" element={<DeleteAccountRequest/>} />
+          <Route path="/company/users" element={<Users />} />
+          <Route
+            path="/company/rolespermissions"
+            element={<RolesPermissions />}
+          />
+          <Route
+            path="/company/deleteaccountrequests"
+            element={<DeleteAccountRequest />}
+          />
 
           {/* Settings */}
-          <Route path="/company/companyinfo" element={<CompanyInfo/>} />
-          <Route path="/company/languages" element={<LanguageSetting/>} />
+          <Route path="/company/companyinfo" element={<CompanyInfo />} />
+          <Route path="/company/languages" element={<LanguageSetting />} />
         </Route>
-
-
-        {/* Salesperson Dashboard routes with MainLayout */}
-        <Route element={<MainLayout />}>
-          <Route path="/salesperson/salespersondashboard" element={<SalespersonDashboard />} />
-          <Route path="/salesperson/salespersoninventory" element={<SalespersonInventory />} />
-          <Route path="/salesperson/salespersonorder" element={<SalespersonOrder />} />
-          <Route path="/salesperson/salespersoncustomerinfo" element={<SalespersonCustomerInfo />} />
-
-        </Route>
-
-
 
         {/* User Dashboard routes with MainLayout */}
-<Route element={<MainLayout />}>
-  {/* Dashboard */}
-  <Route path="/user/dashboard" element={<UserDashboard/>} />
+        <Route element={<MainLayout />}>
+          {/* Dashboard */}
+          <Route path="/user/dashboard" element={<UserDashboard />} />
 
-  {/* Inventory */}
-  <Route path="/user/products" element={<Product/>} />
-  <Route path="/user/manageproduct" element={<ManageProduct/>} />
+          {/* Inventory */}
+          <Route path="/user/products" element={<Product />} />
+          <Route path="/user/manageproduct" element={<ManageProduct />} />
 
-  {/* Sales */}
+          {/* Sales */}
 
-  <Route path="/user/invoices" element={<Invoices/>} />
-  <Route path="/user/pos" element={<Pos/>} />
-  <Route path="/user/onlineorders" element={<OnlineOrder/>} />
-{/* <Route path="/user/posorders" element={<PosOrder/>} /> */}
-<Route path="/user/estimates" element={<Estimates/>} />
-<Route path="/user/deliverychallans" element={<DeliveryChallans/>} />
+          <Route path="/user/invoices" element={<Invoices />} />
+          <Route path="/user/pos" element={<Pos />} />
+          <Route path="/user/onlineorders" element={<OnlineOrder />} />
+          {/* <Route path="/user/posorders" element={<PosOrder/>} /> */}
+          <Route path="/user/estimates" element={<Estimates />} />
+          <Route path="/user/deliverychallans" element={<DeliveryChallans />} />
 
-  {/* Purchases */}
+          {/* Purchases */}
 
-  <Route path="/user/purchaseorder" element={<PurchaseOrder/>} />
-  <Route path="/user/expense" element={<Expenses/>} />
+          <Route path="/user/purchaseorder" element={<PurchaseOrder />} />
+          <Route path="/user/expense" element={<Expenses />} />
 
+          <Route path="/user/paymentmode" element={<PaymentMode />} />
 
-  <Route path="/user/paymentmode" element={<PaymentMode/>} />
+          <Route path="/user/invoice" element={<Invoicee />} />
 
+          {/* Finance & Accounts */}
+          <Route path="/user/daybook" element={<DayBook />} />
+          <Route path="/user/balancesheet" element={<Balancesheet />} />
+          <Route path="/user/cashflow" element={<Cashflow />} />
+          <Route path="/user/accountstatement" element={<Accountstatement />} />
 
-  <Route path="/user/invoice" element={<Invoicee/>} />
-
-  {/* Finance & Accounts */}
-  <Route path="/user/daybook" element={<DayBook/>} />
-  <Route path="/user/balancesheet" element={<Balancesheet/>} />
-  <Route path="/user/cashflow" element={<Cashflow/>} />
-  <Route path="/user/accountstatement" element={<Accountstatement/>} />
-
-  {/* Reports */}
-  <Route path="/user/salesreport" element={<Salesreport/>} />
-  <Route path="/user/purchasereport" element={<Purchasereport/>} />
-  <Route path="/user/inventoryreport" element={<Inventory/>} />
-  <Route path="/user/invoicereport" element={<Invoicereport/>} />
-  <Route path="/user/taxreport" element={<Taxreports/>} />
-</Route>
-
-
-
+          {/* Reports */}
+          <Route path="/user/salesreport" element={<Salesreport />} />
+          <Route path="/user/purchasereport" element={<Purchasereport />} />
+          <Route path="/user/inventoryreport" element={<Inventory />} />
+          <Route path="/user/invoicereport" element={<Invoicereport />} />
+          <Route path="/user/taxreport" element={<Taxreports />} />
+        </Route>
       </Routes>
     </Router>
   );
