@@ -39,7 +39,9 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
   };
 
   const navItem = (to, icon, label) => (
-    <li className="nav-item ps-2" key={to}> {/* Added 'ps-2' for extra left spacing */}
+    <li className="nav-item ps-2" key={to}>
+      {" "}
+      {/* Added 'ps-2' for extra left spacing */}
       <Link
         to={to}
         onClick={() => handleMenuClick(to)}
@@ -67,7 +69,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
       </Link>
     </li>
   );
-  
+
   const renderCollapsibleSection = (title, key, items, icon) => (
     <div className="mb-2">
       <div
@@ -94,13 +96,13 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           ></i>
           {title}
         </span>
-  
+
         <FaAngleDown
           className={openMenu === key ? "rotate-180" : ""}
           style={{ transition: "0.3s", color: "#ffffff" }}
         />
       </div>
-  
+
       {openMenu === key && (
         <ul className="list-unstyled ps-3 pt-1">
           {items.map((item) => navItem(item.to, item.icon, item.label))}
@@ -108,8 +110,6 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
       )}
     </div>
   );
-  
-  
 
   const getMenuItems = () => {
     switch (role) {
@@ -139,9 +139,11 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
       case "Company":
         return (
           <>
-{navItem("/company/dashboard", "fas fa-tachometer-alt", "Dashboard")}
-
-
+            {navItem(
+              "/company/dashboard",
+              "fas fa-tachometer-alt",
+              "Dashboard"
+            )}
 
             {renderCollapsibleSection(
               "POS",
@@ -153,15 +155,11 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
                   label: "Warehouse",
                 },
 
-
                 {
                   to: "/company/stocktranfer",
                   icon: "fas fa-industry",
                   label: "StockTransfer",
                 },
-
-
-
 
                 {
                   to: "/company/categories",
@@ -185,6 +183,12 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
                   icon: "fas fa-box-open",
                   label: "Product",
                 },
+                {
+                  to: "/company/ponitofsale",
+                  icon: "fas fa-file-invoice", // Font Awesome icon for invoice
+                  label: "Invoice",
+                },
+
                 // {
                 //   to: "/company/productdetails",
                 //   icon: "fas fa-box-open",
@@ -289,8 +293,6 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
               "Purchases",
               "purchases",
               [
-
-
                 {
                   to: "/company/vendors",
                   icon: "fas fa-file-alt",
@@ -340,7 +342,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             )}
 
             {renderCollapsibleSection(
-              "Reports", 
+              "Reports",
               "reports",
               [
                 // {

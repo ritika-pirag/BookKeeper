@@ -33,7 +33,7 @@ import TdsTcs from "./Components/Company-Dashboard/GST/TdsTcs";
 import ITCReport from "./Components/Company-Dashboard/GST/ITCReport";
 import EWayBill from "./Components/Company-Dashboard/GST/EWayBill";
 import Purchaseorders from "./Components/Company-Dashboard/Purchases/Purchaseorders";
-import Vendors  from "./Components/Company-Dashboard/Purchases/Vendors";
+import Vendors from "./Components/Company-Dashboard/Purchases/Vendors";
 import PurchaseReturn from "./Components/Company-Dashboard/Purchases/PurchaseReturn";
 import DayBook from "./Components/Company-Dashboard/Finance&Accounts/DayBook";
 import Expense from "./Components/Company-Dashboard/Finance&Accounts/Expense";
@@ -64,7 +64,7 @@ import PurchaseOrder from "./Components/User-Dashboard/Purchases/PurchaseOrder";
 import Cashflow from "./Components/User-Dashboard/Account&Finance/Cashflow";
 import Accountstatement from "./Components/User-Dashboard/Account&Finance/Accountstatement";
 import Salesreport from "./Components/User-Dashboard/Reports/Salesreport";
-import Purchasereport from './Components/User-Dashboard/Reports/Purchasereport';
+import Purchasereport from "./Components/User-Dashboard/Reports/Purchasereport";
 import Inventory from "./Components/User-Dashboard/Reports/Inventory";
 import Invoicereport from "./Components/User-Dashboard/Reports/Invoicereport";
 import Taxreports from "./Components/User-Dashboard/Reports/Taxreports";
@@ -88,6 +88,7 @@ import AddProduct from "./Components/Company-Dashboard/Inventory/Product/AddProd
 import DevicePage from "./Components/Company-Dashboard/Inventory/SiteData/DevicePage";
 import TaxPage from "./Components/Company-Dashboard/Inventory/TaxPage";
 import StockTransfer from "./Components/Company-Dashboard/Inventory/SiteData/StockTransfer";
+import PointOfSale from "./Components/Company-Dashboard/Inventory/Pos/PointOfSale";
 
 function App() {
   return (
@@ -120,14 +121,14 @@ function App() {
           {/* <Route path="/company/lowstock" element={<LowStock />} /> */}
           {/* <Route path="/company/printbarcode" element={<PrintBarcode />} /> */}
           <Route path="/company/warehouse" element={<WareHouse />} />
-          <Route path="/company/stocktranfer" element={<StockTransfer/>} />
+          <Route path="/company/stocktranfer" element={<StockTransfer />} />
           <Route path="/company/categories" element={<Categories />} />
           <Route path="/company/brands" element={<BrandPage />} />
           <Route path="/company/product" element={<Productt />} />
           <Route path="/company/createproduct" element={<AddProduct />} />
           <Route path="/company/device" element={<DevicePage />} />
           <Route path="/company/taxpage" element={<TaxPage />} />
-
+          <Route path="/company/ponitofsale" element={<PointOfSale />} />
           {/* Sales */}
           <Route path="/company/invoice" element={<Invoice />} />
 
@@ -152,10 +153,7 @@ function App() {
 
           {/* Purchases */}
           <Route path="/company/vendors" element={<Vendors />} />
-          <Route
-            path="/company/purchaseorders"
-            element={<Purchaseorders />}
-          />
+          <Route path="/company/purchaseorders" element={<Purchaseorders />} />
           <Route path="/company/purchasereturn" element={<PurchaseReturn />} />
 
           {/* Finance & Accounts */}
