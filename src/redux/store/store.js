@@ -10,7 +10,7 @@ import brandReducer from "../slices/createBrand";
 import deviceReducer from "../slices/deviceSlice";
 // import taxReducer from "../slices/taxSlice";
 // import problemReducer from '../slices/problemSlice';
-// import shopReducer from '../slices/shopSlice';
+import shopReducer from '../slices/shopSlice';
 // import userReducer from '../slices/userSlice';
 
 const store = configureStore({
@@ -25,7 +25,7 @@ const store = configureStore({
     // tax: taxReducer,
     devices: deviceReducer,
     // problems:problemReducer,
-    // shop: shopReducer
+    shop: shopReducer
   },
 });
 

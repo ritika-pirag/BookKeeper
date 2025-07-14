@@ -152,14 +152,14 @@ const CashFlow = () => {
 
   return (
     <div style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
-      <Container fluid className="py-4">
+      <Container fluid className="py-2">
         <div style={{ fontWeight: 700, fontSize: 28, marginBottom: 0 }}>
           Cash Flow
         </div>
         <div style={{ color: "#888", fontSize: 17, marginBottom: 24 }}>
           View Your Cashflows
         </div>
-        <Card className="shadow-sm mb-4">
+        <Card className=" mb-3">
           <Card.Body style={{ padding: 0 }}>
             <Row className="g-2 align-items-center p-3 pb-0">
               <Col xs={12} md={6} className="mb-2 mb-md-0">
@@ -208,20 +208,20 @@ const CashFlow = () => {
                   background: "#fff",
                 }}
               >
-                <thead>
+                <thead className="table-light ">
                   <tr>
-                    <th>Date</th>
+                    <th className="px-3 py-3">Date</th>
                     <th>Bank & Account Number</th>
                     <th>Description</th>
                     <th>Credit</th>
                     <th>Debit</th>
                     <th>
                       Account balance{" "}
-                      <span title="Account balance">ℹ️</span>
+              
                     </th>
                     <th>
                       Total Balance{" "}
-                      <span title="Total Balance">ℹ️</span>
+         
                     </th>
                     <th>Payment Method</th>
                   </tr>
@@ -229,7 +229,7 @@ const CashFlow = () => {
                 <tbody>
                   {filtered.map((row, idx) => (
                     <tr key={idx}>
-                      <td>{row.date}</td>
+                      <td className="px-3 py-3">{row.date}</td>
                       <td>{row.bank}</td>
                       <td>{row.desc}</td>
                       <td>{formatUSD(row.credit)}</td>

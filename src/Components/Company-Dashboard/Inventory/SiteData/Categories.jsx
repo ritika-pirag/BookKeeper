@@ -121,7 +121,7 @@ const Categories = () => {
             <div className="col-md-3 text-md-end">
               <button
                 type="button"
-                className="btn set_btn text-white rounded px-4 py-2 fw-semibold mt-4"
+                className="btn set_btn text-black rounded px-4 py-2 fw-semibold mt-4"
                 onClick={() => handleModalShow()}
               >
                 <i className="fa-solid fa-plus" /> Create Category

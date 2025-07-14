@@ -149,7 +149,7 @@ const DevicePage = () => {
 
             <div className="col-md-2 col-12 mt-3 mt-md-0 text-md-end">
               <button
-                className="btn set_btn text-white rounded px-4 py-2 fw-semibold w-100"
+                className="btn set_btn text-black rounded px-4 py-2 fw-semibold w-100"
                 onClick={handleModalShow}
               >
                 <i className="fa-solid fa-plus me-2" />

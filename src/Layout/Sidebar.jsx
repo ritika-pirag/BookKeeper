@@ -46,35 +46,59 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         className={`nav-link d-flex align-items-center sidebar-link px-3 py-2 ${
           activePath === to ? "active-link" : ""
         }`}
+        style={{ fontWeight: 500, fontSize: "15px", color: "#fff" }}
       >
-        <i className={`me-2 ${icon}`}></i> {label}
+        <i
+          className={`me-3 ${icon}`}
+          style={{
+            width: "20px",
+            minWidth: "20px",
+            textAlign: "center",
+            fontSize: "16px",
+          }}
+        ></i>
+        <span>{label}</span>
       </Link>
     </li>
   );
+  
+  
   const renderCollapsibleSection = (title, key, items, icon) => (
     <div className="mb-2">
       <div
         onClick={() => toggleMenu(key)}
-        className="d-flex justify-content-between align-items-center fw-semibold py-2 px-2 rounded pointer"
+        className="d-flex justify-content-between align-items-center fw-semibold py-2 px-3 rounded pointer"
         style={{
           cursor: "pointer",
-          color: "#fff", // black text
-          fontSize: "16px", // 👈 adjusted font size
-          fontWeight: "200", // 👈 bolder
+          color: "#fff",
+          fontSize: "15px",
         }}
       >
+        {/* Title + Icon alignment */}
         <span className="d-flex align-items-center">
-          <i className={`${icon} me-2`}></i> {title}
+          <i
+            className={`${icon} me-3`}
+            style={{
+              width: "20px",
+              minWidth: "20px",
+              textAlign: "center",
+              fontSize: "16px",
+            }}
+          ></i>
+          {title}
         </span>
+  
         <FaAngleDown className={openMenu === key ? "rotate-180" : ""} />
       </div>
+  
       {openMenu === key && (
-        <ul className="list-unstyled ps-3 pt-2">
+        <ul className="list-unstyled ps-3 pt-1">
           {items.map((item) => navItem(item.to, item.icon, item.label))}
         </ul>
       )}
     </div>
   );
+  
 
   const getMenuItems = () => {
     switch (role) {
@@ -104,21 +128,12 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
       case "Company":
         return (
           <>
-            {renderCollapsibleSection(
-              "Admin Dashboard",
-              "admin",
-              [
-                {
-                  to: "/company/dashboard",
-                  icon: "fas fa-tachometer-alt",
-                  label: "Dashboard",
-                },
-              ],
-              "fas fa-tachometer-alt"
-            )}
+{navItem("/company/dashboard", "fas fa-tachometer-alt", "Dashboard")}
+
+
 
             {renderCollapsibleSection(
-              "Inventory",
+              "POS",
               "inventory",
               [
                 {
@@ -145,39 +160,39 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
 
                 {
                   to: "/company/product",
-                  icon: "fas fa-trademark",
+                  icon: "fas fa-box-open",
                   label: "Product",
                 },
-                {
-                  to: "/company/productdetails",
-                  icon: "fas fa-box-open",
-                  label: "Products Details",
-                },
-                {
-                  to: "/company/batchandexpriry",
-                  icon: "fas fa-cubes",
-                  label: "Batch&Expiry",
-                },
-                {
-                  to: "/company/managestock",
-                  icon: "fas fa-warehouse",
-                  label: "Manage Stock",
-                },
-                {
-                  to: "/company/lowstock",
-                  icon: "fas fa-exclamation-triangle",
-                  label: "Low Stock",
-                },
-                {
-                  to: "/company/printbarcode",
-                  icon: "fas fa-barcode",
-                  label: "Print Barcode",
-                },
+                // {
+                //   to: "/company/productdetails",
+                //   icon: "fas fa-box-open",
+                //   label: "Products Details",
+                // },
+                // {
+                //   to: "/company/batchandexpriry",
+                //   icon: "fas fa-cubes",
+                //   label: "Batch&Expiry",
+                // },
+                // {
+                //   to: "/company/managestock",
+                //   icon: "fas fa-warehouse",
+                //   label: "Manage Stock",
+                // },
+                // {
+                //   to: "/company/lowstock",
+                //   icon: "fas fa-exclamation-triangle",
+                //   label: "Low Stock",
+                // },
+                // {
+                //   to: "/company/printbarcode",
+                //   icon: "fas fa-barcode",
+                //   label: "Print Barcode",
+                // },
               ],
               "fas fa-box"
             )}
 
-            {renderCollapsibleSection(
+            {/* {renderCollapsibleSection(
               "Sales",
               "sales",
               [
@@ -193,9 +208,9 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
                 },
               ],
               "fas fa-shopping-cart"
-            )}
+            )} */}
 
-            {renderCollapsibleSection(
+            {/* {renderCollapsibleSection(
               "Payments",
               "payments",
               [
@@ -211,7 +226,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
                 },
               ],
               "fas fa-credit-card"
-            )}
+            )} */}
 
             {renderCollapsibleSection(
               "GST Filing",

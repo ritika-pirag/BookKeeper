@@ -109,11 +109,11 @@ function App() {
           <Route path="/company/dashboard" element={<CompanyDashbaord />} />
 
           {/* Inventory */}
-          <Route path="/company/productdetails" element={<ProductDetails />} />
-          <Route path="/company/batchandexpriry" element={<BatchExpiry />} />
-          <Route path="/company/managestock" element={<ManageStock />} />
-          <Route path="/company/lowstock" element={<LowStock />} />
-          <Route path="/company/printbarcode" element={<PrintBarcode />} />
+          {/* <Route path="/company/productdetails" element={<ProductDetails />} /> */}
+          {/* <Route path="/company/batchandexpriry" element={<BatchExpiry />} /> */}
+          {/* <Route path="/company/managestock" element={<ManageStock />} /> */}
+          {/* <Route path="/company/lowstock" element={<LowStock />} /> */}
+          {/* <Route path="/company/printbarcode" element={<PrintBarcode />} /> */}
           <Route path="/company/warehouse" element={<WareHouse />} />
           <Route path="/company/categories" element={<Categories />} />
           <Route path="/company/brands" element={<BrandPage />} />
