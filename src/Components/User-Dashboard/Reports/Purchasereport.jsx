@@ -14,7 +14,7 @@ import { FaFilePdf, FaFileExcel, FaPrint } from "react-icons/fa";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-const purchaseData = [
+const PurchaseDataa = [
   {
     ref: "PO2025",
     sku: "PT001",
@@ -94,7 +94,7 @@ const products = [
   "Sanford Chair Sofa",
 ];
 
-const Purchasereport = () => {
+const PurchaseData= () => {
   const [startDate, setStartDate] = useState(new Date("2025-07-03"));
   const [endDate, setEndDate] = useState(new Date("2025-07-09"));
   const [store, setStore] = useState("All");
@@ -350,4 +350,4 @@ const Purchasereport = () => {
   );
 };
 
-export default Purchasereport;
+export default PurchaseDataa;

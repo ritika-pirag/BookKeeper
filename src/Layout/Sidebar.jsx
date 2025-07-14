@@ -329,11 +329,11 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             )}
 
             {renderCollapsibleSection(
-              "Reports",
+              "Reports", 
               "reports",
               [
                 // {
-                //   to: "/company/purcahsereport",
+                //   to: "/company/PurchaseDataa",
                 //   icon: "fas fa-search",
                 //   label: "Purchase Report",
                 // },

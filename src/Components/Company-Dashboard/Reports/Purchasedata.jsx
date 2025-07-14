@@ -14,7 +14,7 @@ import { FaFilePdf, FaFileExcel, FaPrint } from "react-icons/fa";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-const purchaseData = [
+const purchasereport = [
   {
     ref: "PO2025",
     sku: "PT001",

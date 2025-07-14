@@ -41,7 +41,7 @@ import JournalEntries from "./Components/Company-Dashboard/Finance&Accounts/Jour
 import Ledger from "./Components/Company-Dashboard/Finance&Accounts/Ledger";
 import TrialBalance from "./Components/Company-Dashboard/Finance&Accounts/TrialBalance";
 import CustomerList from "./Components/Company-Dashboard/ClientsVendors/CustomerList";
-// import Purchasereport from "./Components/Company-Dashboard/Reports/Purchasereport";
+// import Purchasedataa from "./Components/Company-Dashboard/Reports/Purchasedata";
 import salesreport from "./Components/Company-Dashboard/Reports/Salesreport";
 import Taxreport from "./Components/Company-Dashboard/Reports/Taxreports";
 import BalanceSheet from "./Components/Company-Dashboard/Reports/BalanceSheet";
@@ -64,7 +64,7 @@ import PurchaseOrder from "./Components/User-Dashboard/Purchases/PurchaseOrder";
 import Cashflow from "./Components/User-Dashboard/Account&Finance/Cashflow";
 import Accountstatement from "./Components/User-Dashboard/Account&Finance/Accountstatement";
 import Salesreport from "./Components/User-Dashboard/Reports/Salesreport";
-// import Purchasereport from './Components/User-Dashboard/Reports/Purchasereport';
+import Purchasereport from './Components/User-Dashboard/Reports/Purchasereport';
 import Inventory from "./Components/User-Dashboard/Reports/Inventory";
 import Invoicereport from "./Components/User-Dashboard/Reports/Invoicereport";
 import Taxreports from "./Components/User-Dashboard/Reports/Taxreports";
@@ -77,7 +77,7 @@ import PosOrder from "./Components/User-Dashboard/Sales/PosOrder";
 import PaymentMode from "./Components/User-Dashboard/Purchases/PaymentMode";
 import Invoicee from "./Components/User-Dashboard/Purchases/Invoicee";
 import Expenses from "./Components/User-Dashboard/Purchases/Expenses";
-import Purchasereport from "./Components/User-Dashboard/Reports/Purchasereport";
+import PurchaseData from "./Components/User-Dashboard/Reports/Purchasereport";
 import WareHouse from "./Components/Company-Dashboard/Inventory/SiteData/WareHouse";
 import Categories from "./Components/Company-Dashboard/Inventory/SiteData/Categories";
 
@@ -170,7 +170,7 @@ function App() {
           <Route path="/company/customers" element={<CustomerList />} />
 
           {/* Reports */}
-          <Route path="/company/purchasereport" element={<purchaseData/>} />
+          {/* <Route path="/company/Purchasedataa" element={<Purchasedata/>} /> */}
           <Route path="/company/salesreport" element={<Salesreport />} />
           <Route path="/company/taxreport" element={<Taxreport />} />
           <Route path="/company/balancesheet" element={<BalanceSheet />} />
