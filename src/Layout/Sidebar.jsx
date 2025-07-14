@@ -39,29 +39,34 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
   };
 
   const navItem = (to, icon, label) => (
-    <li className="nav-item" key={to}>
+    <li className="nav-item ps-2" key={to}> {/* Added 'ps-2' for extra left spacing */}
       <Link
         to={to}
         onClick={() => handleMenuClick(to)}
         className={`nav-link d-flex align-items-center sidebar-link px-3 py-2 ${
           activePath === to ? "active-link" : ""
         }`}
-        style={{ fontWeight: 500, fontSize: "15px", color: "#fff" }}
+        style={{
+          fontWeight: 500,
+          fontSize: "15px",
+          color: "#fff",
+          paddingLeft: "2.5rem", // further indent inside Link
+        }}
       >
         <i
           className={`me-3 ${icon}`}
           style={{
-            width: "20px",
-            minWidth: "20px",
+            width: "16px",
+            minWidth: "16px",
             textAlign: "center",
-            fontSize: "16px",
+            fontSize: "18px",
+            color: "#ccc",
           }}
         ></i>
         <span>{label}</span>
       </Link>
     </li>
   );
-  
   
   const renderCollapsibleSection = (title, key, items, icon) => (
     <div className="mb-2">
@@ -79,25 +84,31 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           <i
             className={`${icon} me-3`}
             style={{
-              width: "20px",
-              minWidth: "20px",
+              width: "22px",
+              minWidth: "22px",
               textAlign: "center",
-              fontSize: "16px",
+              fontSize: "18px",
+              fontWeight: "bold",
+              color: "#ffffff",
             }}
           ></i>
           {title}
         </span>
   
-        <FaAngleDown className={openMenu === key ? "rotate-180" : ""} />
+        <FaAngleDown
+          className={openMenu === key ? "rotate-180" : ""}
+          style={{ transition: "0.3s", color: "#ffffff" }}
+        />
       </div>
   
       {openMenu === key && (
-        <ul className="list-unstyled ps-3 pt-1 ">
+        <ul className="list-unstyled ps-3 pt-1">
           {items.map((item) => navItem(item.to, item.icon, item.label))}
         </ul>
       )}
     </div>
   );
+  
   
 
   const getMenuItems = () => {
