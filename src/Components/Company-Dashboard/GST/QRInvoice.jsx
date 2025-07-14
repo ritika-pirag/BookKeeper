@@ -40,7 +40,7 @@ const QRInvoice = () => {
               <option>Overflow Warehouse</option>
             </select>
           </div>
-          <div className="col-md-6">
+          {/* <div className="col-md-6">
             <label className="form-label fw-semibold">
               Store <span className="text-danger">*</span>
             </label>
@@ -52,7 +52,7 @@ const QRInvoice = () => {
               <option>Gadget World</option>
               <option>Volt Vault</option>
             </select>
-          </div>
+          </div> */}
         </div>
 
         {/* Product Search */}

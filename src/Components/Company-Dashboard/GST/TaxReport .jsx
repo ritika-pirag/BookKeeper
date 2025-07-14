@@ -16,27 +16,27 @@ const TaxReport = () => {
   const [dateRange, setDateRange] = useState([new Date(), new Date()]);
   const [startDate, endDate] = dateRange;
 
-  const stores = ["All", "Volt Vault", "Electro Mart", "Urban Mart", "Quantum Gadgets", "Prime Mart", "Elite Retail"];
+  // const stores = ["All", "Volt Vault", "Electro Mart", "Urban Mart", "Quantum Gadgets", "Prime Mart", "Elite Retail"];
   const suppliers = ["All", "A-Z Store", "Apex Computers", "Sigma Chairs", "Beats Headphones", "Aesthetic Bags", "Hatimi Hardwares"];
   const customers = ["All", "Mark Joslyn", "Carl Evans", "Richard Fralick", "Minerva Rameriz", "Daniel Jude", "Marsha Betts"];
   const payments = ["All", "Cash", "Stripe", "Paypal"];
 
   const purchaseData = [
-    ["#4237022", "A-Z Store", "06 Nov 2024", "Volt Vault", "$700", "Cash", "$700", "$700"],
-    ["#4237300", "Apex Computers", "24 Dec 2024", "Electro Mart", "$200", "Stripe", "$200", "$200"],
-    ["#7590321", "Sigma Chairs", "20 Sep 2024", "Urban Mart", "$450", "Stripe", "$450", "$450"],
-    ["#7590325", "Beats Headphones", "10 Dec 2024", "Quantum Gadgets", "$50", "Paypal", "$50", "$50"],
-    ["#7590365", "Aesthetic Bags", "14 Oct 2024", "Prime Mart", "$1200", "Paypal", "$1200", "$1200"],
-    ["#8744439", "Hatimi Hardwares", "25 Oct 2024", "Elite Retail", "$1000", "Cash", "$1000", "$1000"],
+    ["#4237022", "A-Z Store", "06 Nov 2024",  "$700", "Cash", "$700", "$700"],
+    ["#4237300", "Apex Computers", "24 Dec 2024", "$200", "Stripe", "$200", "$200"],
+    ["#7590321", "Sigma Chairs", "20 Sep 2024",  "$450", "Stripe", "$450", "$450"],
+    ["#7590325", "Beats Headphones", "10 Dec 2024",  "$50", "Paypal", "$50", "$50"],
+    ["#7590365", "Aesthetic Bags", "14 Oct 2024",  "$1200", "Paypal", "$1200", "$1200"],
+    ["#8744439", "Hatimi Hardwares", "25 Oct 2024",  "$1000", "Cash", "$1000", "$1000"],
   ];
 
   const salesData = [
-    ["#4237022", "Mark Joslyn", "06 Nov 2024", "Volt Vault", "$700", "Cash", "$700", "$700"],
-    ["#4237300", "Carl Evans", "24 Dec 2024", "Electro Mart", "$200", "Stripe", "$200", "$200"],
-    ["#7590321", "Richard Fralick", "20 Sep 2024", "Urban Mart", "$450", "Stripe", "$450", "$450"],
-    ["#7590325", "Minerva Rameriz", "10 Dec 2024", "Quantum Gadgets", "$50", "Paypal", "$50", "$50"],
-    ["#7590365", "Daniel Jude", "14 Oct 2024", "Prime Mart", "$1200", "Paypal", "$1200", "$1200"],
-    ["#8744439", "Marsha Betts", "25 Oct 2024", "Elite Retail", "$1000", "Cash", "$1000", "$1000"],
+    ["#4237022", "Mark Joslyn", "06 Nov 2024",  "$700", "Cash", "$700", "$700"],
+    ["#4237300", "Carl Evans", "24 Dec 2024",  "$200", "Stripe", "$200", "$200"],
+    ["#7590321", "Richard Fralick", "20 Sep 2024",  "$450", "Stripe", "$450", "$450"],
+    ["#7590325", "Minerva Rameriz", "10 Dec 2024",  "$50", "Paypal", "$50", "$50"],
+    ["#7590365", "Daniel Jude", "14 Oct 2024", "$1200", "Paypal", "$1200", "$1200"],
+    ["#8744439", "Marsha Betts", "25 Oct 2024",  "$1000", "Cash", "$1000", "$1000"],
   ];
 
   const renderFilterSection = (type) => (
@@ -54,14 +54,14 @@ const TaxReport = () => {
             dateFormat="dd/MM/yyyy"
           />
         </Col>
-        <Col md={3}>
+        {/* <Col md={3}>
           <Form.Label className="fw-semibold">Store</Form.Label>
           <Form.Select>
             {stores.map((store, i) => (
               <option key={i}>{store}</option>
             ))}
           </Form.Select>
-        </Col>
+        </Col> */}
         <Col md={3}>
           <Form.Label className="fw-semibold">{type === "purchase" ? "Supplier" : "Customer"}</Form.Label>
           <Form.Select>
@@ -78,8 +78,8 @@ const TaxReport = () => {
             ))}
           </Form.Select>
         </Col>
-    <Col md={1} className="d-flex align-items-start">
-          <Button variant="warning" className="w-100">
+    <Col md={1} className="d-flex align-items-start m-5">
+          <Button variant="warning" className="w-250">
             Generate Report
           </Button>
         </Col>
@@ -108,7 +108,7 @@ const TaxReport = () => {
             <th>Reference</th>
             <th>{type === "purchase" ? "Supplier" : "Customer"}</th>
             <th>Date</th>
-            <th>Store</th>
+            {/* <th>Store</th> */}
             <th>Amount</th>
             <th>Payment Method</th>
             <th>Discount</th>

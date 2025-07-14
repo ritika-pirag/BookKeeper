@@ -198,16 +198,7 @@ const ManageStock = () => {
                         </div>
 
                         {/* Store Filter */}
-                        <div className="filter-dropdown">
-
-                            <select className="form-select form-select-sm bg-light border-0 rounded-2 px-3 py-2">
-                                <option>Stores</option>
-                                <option>Electro Mart</option>
-                                <option>Quantum Gadgets</option>
-                                <option>Prime Bazaar</option>
-                            </select>
-                        </div>
-
+                 
                         {/* Product Filter */}
                         <div className="filter-dropdown">
 
@@ -277,10 +268,10 @@ const ManageStock = () => {
                                     />
                                 </th>
                                 <th>Warehouse</th>
-                                <th>Store</th>
+                                {/* <th>Store</th> */}
                                 <th>Product</th>
                                 <th>Date</th>
-                                <th style={{ minWidth: '150px' }}>Person</th>
+                                {/* <th style={{ minWidth: '150px' }}>Person</th> */}
                                 <th>Qty</th>
                                 <th style={{ minWidth: '120px' }}>Action</th>
                             </tr>
@@ -297,7 +288,7 @@ const ManageStock = () => {
                                         />
                                     </td>
                                     <td>{item.warehouse}</td>
-                                    <td>{item.store}</td>
+                                    {/* <td>{item.store}</td> */}
                                     <td>
                                         <div className="d-flex align-items-center justify-content-start ps-3">
                                             <img
@@ -314,14 +305,14 @@ const ManageStock = () => {
                                         </div>
                                     </td>
                                     <td>{item.date}</td>
-                                    <td>
+                                    {/* <td>
                                         <div className="d-flex align-items-center justify-content-center mx-auto" style={{ width: 'fit-content' }}>
 
                                             <span className="text-truncate">
                                                 {item.person}
                                             </span>
                                         </div>
-                                    </td>
+                                    </td> */}
                                     <td>{item.qty}</td>
                                 <td>
                                                                    <div className="d-flex gap-2 justify-content-center">
@@ -425,7 +416,7 @@ const ManageStock = () => {
                                     </Form.Select>
                                 </Form.Group>
                             </div>
-                            <div className="col-md-6">
+                            {/* <div className="col-md-6">
                                 <Form.Group>
                                     <Form.Label>Store</Form.Label>
                                     <Form.Select>
@@ -433,7 +424,7 @@ const ManageStock = () => {
                                         <option>Urban Mart</option>
                                     </Form.Select>
                                 </Form.Group>
-                            </div>
+                            </div> */}
                             <div className="col-md-6">
                                 <Form.Group>
                                     <Form.Label>Product</Form.Label>
@@ -455,12 +446,12 @@ const ManageStock = () => {
                                     <Form.Control type="number" placeholder="Enter quantity" />
                                 </Form.Group>
                             </div>
-                            <div className="col-md-6">
+                            {/* <div className="col-md-6">
                                 <Form.Group>
                                     <Form.Label>Person</Form.Label>
                                     <Form.Control type="text" placeholder="Enter person name" />
                                 </Form.Group>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="form-check mt-4 d-flex align-items-center">
@@ -548,20 +539,36 @@ const ManageStock = () => {
                         </Form.Group>
 
                         {/* Store */}
-                        <Form.Group className="mb-3">
-                            <Form.Label>
-                                Store <span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Select
-                                defaultValue={selectedStock?.store || ""}
-                                className="custom-input"
-                            >
-                                <option>{selectedStock?.store || "Select Store"}</option>
-                            </Form.Select>
-                        </Form.Group>
+                        <div className="d-flex gap-3 flex-wrap">
+  {/* Date Picker */}
+  <Form.Group className="mb-3" style={{ flex: 1, minWidth: "220px" }}>
+    <Form.Label>
+      Date <span className="text-danger">*</span>
+    </Form.Label>
+    <Form.Control
+      type="date"
+      className="custom-input"
+      defaultValue={selectedStock?.date || ""}
+    />
+  </Form.Group>
+
+  {/* Quantity Input */}
+  <Form.Group className="mb-3" style={{ flex: 1, minWidth: "220px" }}>
+    <Form.Label>
+      Quantity <span className="text-danger">*</span>
+    </Form.Label>
+    <Form.Control
+      type="number"
+      placeholder="Enter Qty"
+      className="custom-input"
+      defaultValue={selectedStock?.quantity || ""}
+    />
+  </Form.Group>
+</div>
+
 
                         {/* Responsible Person */}
-                        <Form.Group className="mb-3">
+                        {/* <Form.Group className="mb-3">
                             <Form.Label>
                                 Responsible Person <span className="text-danger">*</span>
                             </Form.Label>
@@ -573,7 +580,7 @@ const ManageStock = () => {
                                     {selectedStock?.responsible || "Select Person"}
                                 </option>
                             </Form.Select>
-                        </Form.Group>
+                        </Form.Group> */}
 
                         {/* Product Search */}
                         <Form.Group className="mb-3">

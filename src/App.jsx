@@ -27,7 +27,7 @@ import SalesReturn from "./Components/Company-Dashboard/Sales/SalesReturn";
 import AccountStatement from "./Components/Company-Dashboard/Payments/AccountStatement";
 import Coupons from "./Components/Company-Dashboard/Payments/Coupons";
 import TaxReport from "./Components/Company-Dashboard/GST/TaxReport ";
-import QRInvoice from "./Components/Company-Dashboard/GST/QRInvoice";
+// import QRInvoice from "./Components/Company-Dashboard/GST/QRInvoice";
 import GSTReturns from "./Components/Company-Dashboard/GST/GSTReturns";
 import TdsTcs from "./Components/Company-Dashboard/GST/TdsTcs";
 import ITCReport from "./Components/Company-Dashboard/GST/ITCReport";
@@ -35,6 +35,7 @@ import EWayBill from "./Components/Company-Dashboard/GST/EWayBill";
 import PurchaseInvoice from "./Components/Company-Dashboard/Purchases/PurchaseInvoice";
 import PurchaseReturn from "./Components/Company-Dashboard/Purchases/PurchaseReturn";
 import DayBook from "./Components/Company-Dashboard/Finance&Accounts/DayBook";
+import Expense from "./Components/Company-Dashboard/Finance&Accounts/Expense";
 import JournalEntries from "./Components/Company-Dashboard/Finance&Accounts/JournalEntries";
 import Ledger from "./Components/Company-Dashboard/Finance&Accounts/Ledger";
 import TrialBalance from "./Components/Company-Dashboard/Finance&Accounts/TrialBalance";
@@ -82,6 +83,7 @@ import Productt from "./Components/Company-Dashboard/Inventory/Productt";
 import AddProduct from "./Components/Company-Dashboard/Inventory/Product/AddProduct";
 import DevicePage from "./Components/Company-Dashboard/Inventory/SiteData/DevicePage";
 import TaxPage from "./Components/Company-Dashboard/Inventory/TaxPage";
+import StockTransfer from "./Components/Company-Dashboard/Inventory/SiteData/StockTransfer";
 
 function App() {
   return (
@@ -114,6 +116,7 @@ function App() {
           {/* <Route path="/company/lowstock" element={<LowStock />} /> */}
           {/* <Route path="/company/printbarcode" element={<PrintBarcode />} /> */}
           <Route path="/company/warehouse" element={<WareHouse />} />
+          <Route path="/company/stocktranfer" element={<StockTransfer/>} />
           <Route path="/company/categories" element={<Categories />} />
           <Route path="/company/brands" element={<BrandPage />} />
           <Route path="/company/product" element={<Productt />} />
@@ -137,7 +140,7 @@ function App() {
 
           {/* GST Filing */}
           <Route path="/company/taxreport" element={<TaxReport />} />
-          <Route path="/company/qrinvoice" element={<QRInvoice />} />
+          {/* <Route path="/company/qrinvoice" element={<QRInvoice />} /> */}
           <Route path="/company/gstreturns" element={<GSTReturns />} />
           <Route path="/company/tdstcs" element={<TdsTcs />} />
           <Route path="/company/itcreport" element={<ITCReport />} />
@@ -152,6 +155,8 @@ function App() {
 
           {/* Finance & Accounts */}
           <Route path="/company/daybook" element={<DayBook />} />
+
+          <Route path="/company/expense" element={<Expense />} />
           <Route path="/company/journalentries" element={<JournalEntries />} />
           <Route path="/company/ledger" element={<Ledger />} />
           <Route path="/company/trialbalance" element={<TrialBalance />} />

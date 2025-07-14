@@ -169,14 +169,14 @@ const SalesReturn = () => {
                     <button className="btn btn-light border text-success">
                         <FaFileExcel />
                     </button>
-                    <button
+                    {/* <button
                         className="btn text-white d-flex align-items-center gap-2"
                         style={{ backgroundColor: "#FFA646" }}
                         onClick={handleShow}
                     >
                         <FaPlusCircle />
                         Add Sales Return
-                    </button>
+                    </button> */}
                 </div>
             </div>
 
