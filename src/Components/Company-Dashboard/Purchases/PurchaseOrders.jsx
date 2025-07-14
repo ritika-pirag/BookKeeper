@@ -23,6 +23,7 @@ const initialData = [
     amount: "$1000",
     qty: 40,
     payment: "Online",
+    date: "2025-07-10",
   },
   {
     id: "P1002",
@@ -32,10 +33,11 @@ const initialData = [
     amount: "$1500",
     qty: 25,
     payment: "Cash",
+    date: "2025-07-12",
   },
 ];
 
-const OnlineOrders = () => {
+const PurchaseOrders = () => {
   const [data, setData] = useState(initialData);
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState(sortOptions[0]);
@@ -53,6 +55,7 @@ const OnlineOrders = () => {
     amount: "",
     qty: "",
     payment: "",
+    date: "",
   });
 
   const filtered = data.filter((row) =>
@@ -66,7 +69,7 @@ const OnlineOrders = () => {
 
   const handleAdd = () => {
     setData([...data, form]);
-    setForm({ id: "", name: "", warehouse: "", vendors: "", amount: "", qty: "", payment: "" });
+    setForm({ id: "", name: "", warehouse: "", vendors: "", amount: "", qty: "", payment: "", date: "" });
     setShowAdd(false);
   };
 
@@ -125,6 +128,7 @@ const OnlineOrders = () => {
                     <th>Vendors</th>
                     <th>Amount</th>
                     <th>Payment Type</th>
+                    <th>Date</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -138,6 +142,7 @@ const OnlineOrders = () => {
                       <td>{row.vendors}</td>
                       <td>{row.amount}</td>
                       <td>{row.payment}</td>
+                      <td>{row.date}</td>
                       <td>
                         <div className="d-flex gap-2">
                           <Button size="sm" variant="outline-primary" onClick={() => { setSelected(row); setShowView(true); }}>
@@ -194,6 +199,10 @@ const OnlineOrders = () => {
                 <Form.Label>Payment Type</Form.Label>
                 <Form.Control name="payment" value={form.payment} onChange={handleChange} />
               </Form.Group>
+              <Form.Group className="mb-2">
+                <Form.Label>Date</Form.Label>
+                <Form.Control name="date" value={form.date} onChange={handleChange} type="date" />
+              </Form.Group>
             </Form>
           </Modal.Body>
           <Modal.Footer>
@@ -221,6 +230,7 @@ const OnlineOrders = () => {
                 <p><b>Vendors:</b> {selected.vendors}</p>
                 <p><b>Amount:</b> {selected.amount}</p>
                 <p><b>Payment Type:</b> {selected.payment}</p>
+                <p><b>Date:</b> {selected.date}</p>
               </div>
             )}
           </Modal.Body>
@@ -261,6 +271,10 @@ const OnlineOrders = () => {
                 <Form.Label>Payment Type</Form.Label>
                 <Form.Control name="payment" value={form.payment} onChange={handleChange} />
               </Form.Group>
+              <Form.Group className="mb-2">
+                <Form.Label>Date</Form.Label>
+                <Form.Control name="date" value={form.date} onChange={handleChange} type="date" />
+              </Form.Group>
             </Form>
           </Modal.Body>
           <Modal.Footer>
@@ -295,4 +309,4 @@ const OnlineOrders = () => {
   );
 };
 
-export default OnlineOrders;
+export default PurchaseOrders;

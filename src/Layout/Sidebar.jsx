@@ -266,10 +266,17 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
               "Purchases",
               "purchases",
               [
+
+
                 {
-                  to: "/company/purchaseinvoice",
+                  to: "/company/vendors",
                   icon: "fas fa-file-alt",
-                  label: "Purchase Invoice",
+                  label: "Vendors",
+                },
+                {
+                  to: "/company/purchaseorders",
+                  icon: "fas fa-file-alt",
+                  label: "Purchase orders",
                 },
                 {
                   to: "/company/purchasereturn",
@@ -313,6 +320,23 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
               "Reports",
               "reports",
               [
+                // {
+                //   to: "/company/purcahsereport",
+                //   icon: "fas fa-search",
+                //   label: "Purchase Report",
+                // },
+
+                {
+                  to: "/company/salesreport",
+                  icon: "fas fa-search",
+                  label: "Sales Report",
+                },
+                {
+                  to: "/company/taxreport",
+                  icon: "fas fa-search",
+                  label: "Tax Report",
+                },
+
                 {
                   to: "/company/balancesheet",
                   icon: "fas fa-search",

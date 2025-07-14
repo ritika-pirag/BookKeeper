@@ -32,7 +32,8 @@ import GSTReturns from "./Components/Company-Dashboard/GST/GSTReturns";
 import TdsTcs from "./Components/Company-Dashboard/GST/TdsTcs";
 import ITCReport from "./Components/Company-Dashboard/GST/ITCReport";
 import EWayBill from "./Components/Company-Dashboard/GST/EWayBill";
-import PurchaseInvoice from "./Components/Company-Dashboard/Purchases/PurchaseInvoice";
+import Purchaseorders from "./Components/Company-Dashboard/Purchases/Purchaseorders";
+import Vendors  from "./Components/Company-Dashboard/Purchases/Vendors";
 import PurchaseReturn from "./Components/Company-Dashboard/Purchases/PurchaseReturn";
 import DayBook from "./Components/Company-Dashboard/Finance&Accounts/DayBook";
 import Expense from "./Components/Company-Dashboard/Finance&Accounts/Expense";
@@ -40,6 +41,9 @@ import JournalEntries from "./Components/Company-Dashboard/Finance&Accounts/Jour
 import Ledger from "./Components/Company-Dashboard/Finance&Accounts/Ledger";
 import TrialBalance from "./Components/Company-Dashboard/Finance&Accounts/TrialBalance";
 import CustomerList from "./Components/Company-Dashboard/ClientsVendors/CustomerList";
+// import Purchasereport from "./Components/Company-Dashboard/Reports/Purchasereport";
+import salesreport from "./Components/Company-Dashboard/Reports/Salesreport";
+import Taxreport from "./Components/Company-Dashboard/Reports/Taxreports";
 import BalanceSheet from "./Components/Company-Dashboard/Reports/BalanceSheet";
 import CashFlow from "./Components/Company-Dashboard/Reports/CashFlow";
 import ProfitLoss from "./Components/Company-Dashboard/Reports/ProfitLoss";
@@ -145,9 +149,10 @@ function App() {
           <Route path="/company/ewaybill" element={<EWayBill />} />
 
           {/* Purchases */}
+          <Route path="/company/vendors" element={<Vendors />} />
           <Route
-            path="/company/purchaseinvoice"
-            element={<PurchaseInvoice />}
+            path="/company/purchaseorders"
+            element={<Purchaseorders />}
           />
           <Route path="/company/purchasereturn" element={<PurchaseReturn />} />
 
@@ -163,6 +168,9 @@ function App() {
           <Route path="/company/customers" element={<CustomerList />} />
 
           {/* Reports */}
+          <Route path="/company/purchasereport" element={<purchaseData/>} />
+          <Route path="/company/salesreport" element={<Salesreport />} />
+          <Route path="/company/taxreport" element={<Taxreport />} />
           <Route path="/company/balancesheet" element={<BalanceSheet />} />
           <Route path="/company/cashflow" element={<CashFlow />} />
           <Route path="/company/profitloss" element={<ProfitLoss />} />
