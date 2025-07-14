@@ -314,112 +314,105 @@ const Expense = () => {
               ></button>
             </div>
             <div className="modal-body">
-              <form>
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    Date <span className="text-danger">*</span>
-                  </label>
-                  <input 
-                    type="date" 
-                    className="form-control" 
-                  />
-                </div>
+            <form>
+  <div className="mb-3">
+    <label className="form-label fw-semibold">
+      Date <span className="text-danger">*</span>
+    </label>
+    <input 
+      type="date" 
+      className="form-control" 
+    />
+  </div>
 
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    Expense Account <span className="text-danger">*</span>
-                  </label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="Enter expense account" 
-                  />
-                </div>
+  <div className="mb-3">
+    <label className="form-label fw-semibold">
+      Expense Account <span className="text-danger">*</span>
+    </label>
+    <input 
+      type="text" 
+      className="form-control" 
+      placeholder="Enter expense account" 
+    />
+  </div>
 
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    Reference Number <span className="text-danger">*</span>
-                  </label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="Enter reference number" 
-                  />
-                </div>
+  {/* 🔴 Reference Number field removed */}
 
-                <div className="row mb-3">
-                  <div className="col-md-6">
-                    <label className="form-label fw-semibold">
-                      Vendor Name <span className="text-danger">*</span>
-                    </label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      placeholder="Enter vendor name" 
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label fw-semibold">
-                      Paid Through <span className="text-danger">*</span>
-                    </label>
-                    <select className="form-select">
-                      <option>Select payment method</option>
-                      <option>Bank Transfer</option>
-                      <option>Credit Card</option>
-                      <option>PayPal</option>
-                      <option>Cash</option>
-                    </select>
-                  </div>
-                </div>
+  <div className="row mb-3">
+    <div className="col-md-6">
+      <label className="form-label fw-semibold">
+        Vendor Name <span className="text-danger">*</span>
+      </label>
+      <input 
+        type="text" 
+        className="form-control" 
+        placeholder="Enter vendor name" 
+      />
+    </div>
+    <div className="col-md-6">
+      <label className="form-label fw-semibold">
+        Paid Through <span className="text-danger">*</span>
+      </label>
+      <select className="form-select">
+        <option>Select payment method</option>
+        <option>Bank Transfer</option>
+        <option>Credit Card</option>
+        <option>PayPal</option>
+        <option>Cash</option>
+      </select>
+    </div>
+  </div>
 
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    Customer Name
-                  </label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="Enter customer name" 
-                  />
-                </div>
+  <div className="mb-3">
+    <label className="form-label fw-semibold">
+      Customer Name
+    </label>
+    <input 
+      type="text" 
+      className="form-control" 
+      placeholder="Enter customer name" 
+    />
+  </div>
 
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    Amount <span className="text-danger">*</span>
-                  </label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="Enter amount" 
-                  />
-                </div>
+  <div className="mb-3">
+    <label className="form-label fw-semibold">
+      Amount <span className="text-danger">*</span>
+    </label>
+    <input 
+      type="text" 
+      className="form-control" 
+      placeholder="Enter amount" 
+    />
+  </div>
 
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">Status</label>
-                  <select className="form-select">
-                    <option>Paid</option>
-                    <option>Pending</option>
-                    <option>Rejected</option>
-                  </select>
-                </div>
+  {/* ✅ Status field converted to input */}
+  <div className="mb-3">
+    <label className="form-label fw-semibold">Status</label>
+    <input 
+      type="text" 
+      className="form-control" 
+      placeholder="Enter status (e.g. Paid, Pending)" 
+    />
+  </div>
 
-                <div className="d-flex justify-content-end gap-3 mt-4">
-                  <button
-                    type="button"
-                    className="btn btn-outline-secondary px-4"
-                    data-bs-dismiss="modal"
-                  >
-                    Cancel
-                  </button>
-                  <button 
-                    type="submit" 
-                    className="btn btn-warning text-white px-4"
-                    style={{ backgroundColor: "#FFA646" }}
-                  >
-                    Add Expense
-                  </button>
-                </div>
-              </form>
+  <div className="d-flex justify-content-end gap-3 mt-4">
+    <button
+      type="button"
+      className="btn btn-outline-secondary px-4"
+      data-bs-dismiss="modal"
+    >
+      Cancel
+    </button>
+    <button 
+      type="submit" 
+      className="btn btn-warning text-white px-4"
+      style={{ backgroundColor: "#FFA646" }}
+    >
+      Add Expense
+    </button>
+  </div>
+</form>
+
             </div>
           </div>
         </div>
@@ -460,10 +453,7 @@ const Expense = () => {
                         <td className="fw-semibold">Expense Account</td>
                         <td>{selectedExpense.expenseAccount}</td>
                       </tr>
-                      <tr>
-                        <td className="fw-semibold">Reference Number</td>
-                        <td>{selectedExpense.reference}</td>
-                      </tr>
+              
                       <tr>
                         <td className="fw-semibold">Vendor Name</td>
                         <td>{selectedExpense.vendorName}</td>

@@ -92,7 +92,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
       </div>
   
       {openMenu === key && (
-        <ul className="list-unstyled ps-3 pt-1">
+        <ul className="list-unstyled ps-3 pt-1 ">
           {items.map((item) => navItem(item.to, item.icon, item.label))}
         </ul>
       )}
@@ -141,6 +141,17 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
                   icon: "fas fa-industry",
                   label: "Warehouse",
                 },
+
+
+                {
+                  to: "/company/stocktranfer",
+                  icon: "fas fa-industry",
+                  label: "StockTransfer",
+                },
+
+
+
+
                 {
                   to: "/company/categories",
                   icon: "fas fa-tags",
@@ -234,14 +245,15 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
               [
                 {
                   to: "/company/taxreport",
-                  icon: "fas fa-file-alt",
+                  icon: "fas fa-circle",
+
                   label: "Tax Report",
                 },
-                {
-                  to: "/company/qrinvoice",
-                  icon: "fas fa-th",
-                  label: "QR Invoice",
-                },
+                // {
+                //   to: "/company/qrinvoice",
+                //   icon: "fas fa-th",
+                //   label: "QR Invoice",
+                // },
                 {
                   to: "/company/gstreturns",
                   icon: "fas fa-th",

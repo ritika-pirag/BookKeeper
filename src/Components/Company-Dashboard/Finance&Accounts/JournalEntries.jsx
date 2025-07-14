@@ -167,34 +167,14 @@ const JournalEntries = () => {
         </div>
 
         <div className="d-flex flex-column flex-sm-row gap-2 flex-grow-1 flex-md-grow-0 w-100 w-md-auto">
-          <div className="col-md-6">
-            <input 
-              type="date" 
-              className="form-control" 
-              placeholder="dd/mm/yyyy" 
-            />
-          </div>
+      
+      
 
-          <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
+          <div className="dropdown flex-grow-2">
             <button 
-              className="btn btn-orange dropdown-toggle w-100" 
+              className="btn  w-100" 
               type="button" 
-              id="statusDropdown"
-              data-bs-toggle="dropdown" 
-              aria-expanded="false"
-            >
-              Status
-            </button>
-            <ul className="dropdown-menu w-100" aria-labelledby="statusDropdown">
-              <li><a className="dropdown-item" href="#">Posted</a></li>
-              <li><a className="dropdown-item" href="#">Draft</a></li>
-            </ul>
-          </div>
-
-          <div className="dropdown flex-grow-1">
-            <button 
-              className="btn btn-orange w-100" 
-              type="button" 
+              style={{ backgroundColor: "#53b2a5 " }}
             >
               Export
             </button>
@@ -205,9 +185,9 @@ const JournalEntries = () => {
       {/* Table */}
       <div className="table-responsive">
         <table className="table table-bordered align-middle mb-0">
-          <thead className="table-grey text-white">
+          <thead className="table-light text-white">
             <tr>
-              <th>Date</th>
+              <th className="px-3 py-3">Date</th>
               <th>Reference</th>
               <th>Description</th>
               <th>Debit Account</th>
@@ -220,7 +200,7 @@ const JournalEntries = () => {
           <tbody>
             {entries.map((entry) => (
               <tr key={entry.id}>
-                <td>{formatDate(entry.date)}</td>
+                <td className="px-3 py-3">{formatDate(entry.date)}</td>
                 <td>{entry.reference}</td>
                 <td>{entry.description}</td>
                 <td>{entry.debitAccount}</td>

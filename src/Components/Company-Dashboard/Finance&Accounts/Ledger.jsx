@@ -119,7 +119,7 @@ const Ledger = () => {
   };
 
   return (
-    <div className="container-fluid bg-light ">
+    <div className="mt-3 ">
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-4 mb-4">
         <div>
@@ -205,19 +205,18 @@ const Ledger = () => {
       >
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title fw-bold" id="transactionDetailModalLabel">
-                Transaction Details
-              </h5>
-              <button 
-                  className="btn outline-primary  btn-sm text-warning py-1 px-1"
-                type="button"
-               
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                onClick={() => setSelectedTransaction(null)}
-              ></button>
-            </div>
+          <div className="modal-header">
+  <h5 className="modal-title fw-bold" id="transactionDetailModalLabel">
+    Transaction Details
+  </h5>
+  <button 
+    type="button"
+    className="btn-close"
+    data-bs-dismiss="modal"
+    aria-label="Close"
+    onClick={() => setSelectedTransaction(null)}
+  ></button>
+</div>
             <div className="modal-body">
               {selectedTransaction && (
                 <div className="table-responsive">

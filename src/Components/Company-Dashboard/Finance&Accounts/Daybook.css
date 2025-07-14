@@ -11,7 +11,7 @@
   
   /* Orange button */
   .btn-orange {
-    background-color: #FFA646;
+    background-color:#53b2a5 ;
     color: white;
     border: none;
     border-radius: 8px;
@@ -20,7 +20,7 @@
   
   .btn-orange:hover,
   .btn-orange:focus {
-    background-color: #ff9442;
+    background-color: #53b2a5 ;
     color: white;
   }
   
@@ -42,12 +42,12 @@
   
   .custom-dropdown .dropdown-item:hover {
     background-color: #fff2e5;
-    color: #FFA646;
+    color: #53b2a5 ;
   }
   
   .custom-dropdown .active-orange {
     background-color: #fff7f0;
-    color: #FFA646;
+    color: #53b2a5 ;
     font-weight: 600;
   }
   
