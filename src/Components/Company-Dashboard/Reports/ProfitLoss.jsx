@@ -18,98 +18,21 @@ const months = [
   "Jun 2025",
 ];
 
-const defaultData = [
-  {
-    income: {
-      sales: 50000,
-      service: 30000,
-      purchaseReturn: 7000,
-      grossProfit: 8000,
-    },
-    daybook: {
-      sales: 50000,
-      purchase: 30000,
-      salesReturn: 7000,
-      totalDaybook: 8000,
-      netProfit: 8000,
-    },
+const defaultData = Array(6).fill({
+  income: {
+    sales: 50000,
+    service: 30000,
+    purchaseReturn: 7000,
+    grossProfit: 8000,
   },
-  {
-    income: {
-      sales: 50000,
-      service: 30000,
-      purchaseReturn: 7000,
-      grossProfit: 8000,
-    },
-    daybook: {
-      sales: 50000,
-      purchase: 30000,
-      salesReturn: 7000,
-      totalDaybook: 8000,
-      netProfit: 8000,
-    },
+  daybook: {
+    sales: 50000,
+    purchase: 30000,
+    salesReturn: 7000,
+    totalDaybook: 8000,
+    netProfit: 8000,
   },
-  {
-    income: {
-      sales: 50000,
-      service: 30000,
-      purchaseReturn: 7000,
-      grossProfit: 8000,
-    },
-    daybook: {
-      sales: 50000,
-      purchase: 30000,
-      salesReturn: 7000,
-      totalDaybook: 8000,
-      netProfit: 8000,
-    },
-  },
-  {
-    income: {
-      sales: 50000,
-      service: 30000,
-      purchaseReturn: 7000,
-      grossProfit: 8000,
-    },
-    daybook: {
-      sales: 50000,
-      purchase: 30000,
-      salesReturn: 7000,
-      totalDaybook: 8000,
-      netProfit: 8000,
-    },
-  },
-  {
-    income: {
-      sales: 50000,
-      service: 30000,
-      purchaseReturn: 7000,
-      grossProfit: 8000,
-    },
-    daybook: {
-      sales: 50000,
-      purchase: 30000,
-      salesReturn: 7000,
-      totalDaybook: 8000,
-      netProfit: 8000,
-    },
-  },
-  {
-    income: {
-      sales: 50000,
-      service: 30000,
-      purchaseReturn: 7000,
-      grossProfit: 8000,
-    },
-    daybook: {
-      sales: 50000,
-      purchase: 30000,
-      salesReturn: 7000,
-      totalDaybook: 8000,
-      netProfit: 8000,
-    },
-  },
-];
+});
 
 const formatUSD = (num) =>
   "$" +
@@ -118,48 +41,19 @@ const formatUSD = (num) =>
   });
 
 function toCSV(data) {
-  // Prepare CSV rows
   const rows = [];
   rows.push(["", ...months]);
   rows.push(["Income", ...Array(months.length).fill("")]);
-  rows.push([
-    "Sales",
-    ...data.map((d) => formatUSD(d.income.sales)),
-  ]);
-  rows.push([
-    "Service",
-    ...data.map((d) => formatUSD(d.income.service)),
-  ]);
-  rows.push([
-    "Purchase Return",
-    ...data.map((d) => formatUSD(d.income.purchaseReturn)),
-  ]);
-  rows.push([
-    "Gross Profit",
-    ...data.map((d) => formatUSD(d.income.grossProfit)),
-  ]);
-  rows.push(["DayBooknses", ...Array(months.length).fill("")]);
-  rows.push([
-    "Sales",
-    ...data.map((d) => formatUSD(d.daybook.sales)),
-  ]);
-  rows.push([
-    "Purrchase",
-    ...data.map((d) => formatUSD(d.daybook.purchase)),
-  ]);
-  rows.push([
-    "Sales Return",
-    ...data.map((d) => formatUSD(d.daybook.salesReturn)),
-  ]);
-  rows.push([
-    "Total DayBooknse",
-    ...data.map((d) => formatUSD(d.daybook.totalDaybook)),
-  ]);
-  rows.push([
-    "Net Profit",
-    ...data.map((d) => formatUSD(d.daybook.netProfit)),
-  ]);
-  // Convert to CSV string
+  rows.push(["Sales", ...data.map((d) => formatUSD(d.income.sales))]);
+  rows.push(["Service", ...data.map((d) => formatUSD(d.income.service))]);
+  rows.push(["Purchase Return", ...data.map((d) => formatUSD(d.income.purchaseReturn))]);
+  rows.push(["Gross Profit", ...data.map((d) => formatUSD(d.income.grossProfit))]);
+  rows.push(["Daybook", ...Array(months.length).fill("")]);
+  rows.push(["Sales", ...data.map((d) => formatUSD(d.daybook.sales))]);
+  rows.push(["Purchase", ...data.map((d) => formatUSD(d.daybook.purchase))]);
+  rows.push(["Sales Return", ...data.map((d) => formatUSD(d.daybook.salesReturn))]);
+  rows.push(["Total Daybook", ...data.map((d) => formatUSD(d.daybook.totalDaybook))]);
+  rows.push(["Net Profit", ...data.map((d) => formatUSD(d.daybook.netProfit))]);
   return rows.map((r) => r.join(",")).join("\r\n");
 }
 
@@ -182,12 +76,11 @@ const ProfitLoss = () => {
   return (
     <div style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
       <Container fluid className="py-4">
-        <div style={{ fontWeight: 700, fontSize: 28, marginBottom: 0 }}>
-          Profit / Loss Report
-        </div>
+        <div style={{ fontWeight: 700, fontSize: 28 }}>Profit / Loss Report</div>
         <div style={{ color: "#888", fontSize: 17, marginBottom: 24 }}>
           View Reports of Profit / Loss Report
         </div>
+
         <Row className="mb-3 justify-content-end">
           <Col xs="auto" className="mb-2 mb-md-0">
             <div className="d-flex align-items-center gap-2">
@@ -228,7 +121,8 @@ const ProfitLoss = () => {
             </Button>
           </Col>
         </Row>
-        <Card className="shadow-sm">
+
+        <Card className="">
           <Card.Body style={{ padding: 0 }}>
             <div style={{ overflowX: "auto" }}>
               <Table
@@ -240,17 +134,17 @@ const ProfitLoss = () => {
                   background: "#fff",
                 }}
               >
-                <thead>
+                <thead className="table-light">
                   <tr>
-                    <th style={{ background: "#f5f6fa", minWidth: 180 }}></th>
-                    {months.map((m, idx) => (
+                    <th style={{ background: "#f5f6fa", minWidth: 180 }} className="px-4 py-4"></th>
+                    {months.map((m) => (
                       <th
                         key={m}
                         style={{
                           background: "#f5f6fa",
                           textAlign: "center",
                           fontWeight: 600,
-                          fontSize: 20,
+                          fontSize: 18,
                         }}
                       >
                         {m}
@@ -259,92 +153,65 @@ const ProfitLoss = () => {
                   </tr>
                 </thead>
                 <tbody>
+                  {/* Income Section */}
                   <tr>
-                    <td style={{ fontWeight: 700 }}>Income</td>
-                    {tableData.map((d, idx) => (
-                      <td key={idx}></td>
-                    ))}
-                  </tr>
-                  <tr>
-                    <td>Sales</td>
-                    {tableData.map((d, idx) => (
-                      <td key={idx} style={{ color: "#444" }}>
-                        {formatUSD(d.income.sales)}
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    <td>Service</td>
-                    {tableData.map((d, idx) => (
-                      <td key={idx} style={{ color: "#444" }}>
-                        {formatUSD(d.income.service)}
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    <td>Purchase Return</td>
-                    {tableData.map((d, idx) => (
-                      <td key={idx} style={{ color: "#444" }}>
-                        {formatUSD(d.income.purchaseReturn)}
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>
-                      <b>Gross Profit</b>
+                    <td colSpan={months.length + 1} style={{ fontWeight: 700, background: "#f9f9f9" }} className="px-3 py-3">
+                      Income
                     </td>
-                    {tableData.map((d, idx) => (
-                      <td key={idx} style={{ fontWeight: 700 }}>
-                        <b>{formatUSD(d.income.grossProfit)}</b>
+                  </tr>
+                  {["sales", "service", "purchaseReturn", "grossProfit"].map((field) => (
+                    <tr key={field}>
+                      <td style={{ fontWeight: field === "grossProfit" ? 700 : 400 }}  className="px-3 py-3">
+                        {field === "purchaseReturn"
+                          ? "Purchase Return"
+                          : field === "grossProfit"
+                          ? "Gross Profit"
+                          : field.charAt(0).toUpperCase() + field.slice(1)}
                       </td>
-                    ))}
-                  </tr>
+                      {tableData.map((d, idx) => (
+                        <td
+                          key={idx}
+                          style={{
+                            color: "#444",
+                            fontWeight: field === "grossProfit" ? 700 : 400,
+                          }}
+                        >
+                          {formatUSD(d.income[field])}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+
+                  {/* Daybook Section */}
                   <tr>
-                    <td style={{ fontWeight: 700 }}>DayBooknses</td>
-                    {tableData.map((d, idx) => (
-                      <td key={idx}></td>
-                    ))}
+                    <td colSpan={months.length + 1} style={{ fontWeight: 700, background: "#f9f9f9" }} className="px-3 py-3">
+                      Daybook
+                    </td>
                   </tr>
-                  <tr>
-                    <td>Sales</td>
-                    {tableData.map((d, idx) => (
-                      <td key={idx} style={{ color: "#444" }}>
-                        {formatUSD(d.daybook.sales)}
+                  {["sales", "purchase", "salesReturn", "totalDaybook", "netProfit"].map((field) => (
+                    <tr key={field}>
+                      <td style={{ fontWeight: 700 }} className="px-3 py-3">
+                        {field === "salesReturn"
+                          ? "Sales Return"
+                          : field === "totalDaybook"
+                          ? "Total Daybook"
+                          : field === "netProfit"
+                          ? "Net Profit"
+                          : field.charAt(0).toUpperCase() + field.slice(1)}
                       </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    <td>Purrchase</td>
-                    {tableData.map((d, idx) => (
-                      <td key={idx} style={{ color: "#444" }}>
-                        {formatUSD(d.daybook.purchase)}
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Sales Return</td>
-                    {tableData.map((d, idx) => (
-                      <td key={idx} style={{ color: "#444" }}>
-                        {formatUSD(d.daybook.salesReturn)}
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Total DayBooknse</td>
-                    {tableData.map((d, idx) => (
-                      <td key={idx} style={{ color: "#444" }}>
-                        {formatUSD(d.daybook.totalDaybook)}
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Net Profit</td>
-                    {tableData.map((d, idx) => (
-                      <td key={idx} style={{ fontWeight: 700 }}>
-                        {formatUSD(d.daybook.netProfit)}
-                      </td>
-                    ))}
-                  </tr>
+                      {tableData.map((d, idx) => (
+                        <td
+                          key={idx}
+                          style={{
+                            color: "#444",
+                            fontWeight: 700,
+                          }}
+                        >
+                          {formatUSD(d.daybook[field])}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </div>
