@@ -92,7 +92,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
       </div>
   
       {openMenu === key && (
-        <ul className="list-unstyled ps-3 pt-1">
+        <ul className="list-unstyled ps-3 pt-1 ">
           {items.map((item) => navItem(item.to, item.icon, item.label))}
         </ul>
       )}
@@ -234,7 +234,8 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
               [
                 {
                   to: "/company/taxreport",
-                  icon: "fas fa-file-alt",
+                  icon: "fas fa-circle",
+
                   label: "Tax Report",
                 },
                 {
