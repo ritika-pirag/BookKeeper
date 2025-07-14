@@ -124,7 +124,7 @@ const Productt = () => {
           </div>
           <div className="col-md-3 mb-2 text-md-end">
             <Link to="/company/createproduct" title="Add New Product">
-              <button className="set_btn text-white rounded px-4 py-2 fw-semibold w-100">
+              <button className="set_btn text-black rounded px-4 py-2 fw-semibold w-100">
                 + Create New Product
               </button>
             </Link>

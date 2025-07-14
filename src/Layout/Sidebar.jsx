@@ -118,7 +118,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             )}
 
             {renderCollapsibleSection(
-              "Inventory",
+              "POS",
               "inventory",
               [
                 {
@@ -148,31 +148,31 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
                   icon: "fas fa-trademark",
                   label: "Product",
                 },
-                {
-                  to: "/company/productdetails",
-                  icon: "fas fa-box-open",
-                  label: "Products Details",
-                },
-                {
-                  to: "/company/batchandexpriry",
-                  icon: "fas fa-cubes",
-                  label: "Batch&Expiry",
-                },
-                {
-                  to: "/company/managestock",
-                  icon: "fas fa-warehouse",
-                  label: "Manage Stock",
-                },
-                {
-                  to: "/company/lowstock",
-                  icon: "fas fa-exclamation-triangle",
-                  label: "Low Stock",
-                },
-                {
-                  to: "/company/printbarcode",
-                  icon: "fas fa-barcode",
-                  label: "Print Barcode",
-                },
+                // {
+                //   to: "/company/productdetails",
+                //   icon: "fas fa-box-open",
+                //   label: "Products Details",
+                // },
+                // {
+                //   to: "/company/batchandexpriry",
+                //   icon: "fas fa-cubes",
+                //   label: "Batch&Expiry",
+                // },
+                // {
+                //   to: "/company/managestock",
+                //   icon: "fas fa-warehouse",
+                //   label: "Manage Stock",
+                // },
+                // {
+                //   to: "/company/lowstock",
+                //   icon: "fas fa-exclamation-triangle",
+                //   label: "Low Stock",
+                // },
+                // {
+                //   to: "/company/printbarcode",
+                //   icon: "fas fa-barcode",
+                //   label: "Print Barcode",
+                // },
               ],
               "fas fa-box"
             )}
