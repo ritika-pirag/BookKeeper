@@ -13,6 +13,8 @@ import {
   FaFilePdf,       // ✅ Added
   FaTrash ,    // ✅ Added
 } from "react-icons/fa";
+import {  BsEye } from "react-icons/bs";
+
 
 import { SiPaypal } from "react-icons/si";
 import { BsCreditCard2FrontFill, BsBank2,  } from "react-icons/bs";
@@ -288,12 +290,14 @@ const Payments = () => {
                         )}
                       </td>
                     <td>
-  <button 
-    className="btn btn-link text-warning p-0 me-2" 
-    onClick={() => handleViewDetails(txn)}
-  >
-    <FaEye />
-  </button>
+                      <div className="d-flex gap-2">
+<button 
+  className="btn btn-sm text-info p-0"
+  // style={{ color: '#02bfe7' }}   // Sky blue color
+  onClick={() => handleViewDetails(txn)}
+>
+  <BsEye size={18} />
+</button>
   {/* <button className="btn btn-link text-success p-0"><FaRedo /></button> */}
           <button 
           className="btn btn-link text-danger p-0" 
@@ -301,6 +305,7 @@ const Payments = () => {
         >
           <FaTrash />
         </button>
+        </div>
 </td>
                     </tr>
                   ))}
@@ -370,12 +375,12 @@ const Payments = () => {
                       <td>
                         {txn.status === "Refund Requested" ? (
                           <>
-                            <button className="btn btn-link text-warning p-0 me-2"><FaEye /></button>
+                            <button className="btn btn-link text-warning p-0 me-2"><FaEye/></button>
                             <button className="btn btn-link text-success p-0 me-2"><FaCheck /></button>
                             <button className="btn btn-link text-danger p-0"><FaTimes /></button>
                           </>
                         ) : (
-                          <button className="btn btn-link text-warning p-0 me-2"><FaEye /></button>
+                          <button className="btn btn-link text-warning p-0 me-2"><BsEye/></button>
                         )}
                       </td>
                     </tr>

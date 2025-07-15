@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
 import newlogo from "../assets/newlogozirakbookk.png";
-import zirakk from  "../assets/ZirakTechh.png";
-import  "./header.css";
+import "./header.css";
 import ProfileModal from './ProfileModal'; // Correct path lagayein
 const Header = ({ onToggleSidebar }) => {
   const [selectedLang, setSelectedLang] = useState("English");
@@ -32,14 +31,14 @@ const Header = ({ onToggleSidebar }) => {
           {/* Logo */}
           <div className="d-none d-md-block">
             <img
-              src={zirakk}
+              src={newlogo}
               alt="Logo"
               className="img-fluid sidebar-logo"
               style={{ maxHeight: "40px" }}
             />
           </div>
-{/* Search Input - Visible only on desktop */}
-{/* <input
+          {/* Search Input - Visible only on desktop */}
+          {/* <input
   type="text"
   className="form-control d-none d-md-block"
   placeholder="Search..."
@@ -73,19 +72,19 @@ const Header = ({ onToggleSidebar }) => {
                   className={`lang-item ${selectedLang === "English" ? "active-lang" : ""}`}
                   onClick={() => handleLanguageSelect("English")}
                 >
-                   English
+                  English
                 </li>
                 <li
                   className={`lang-item ${selectedLang === "Hindi" ? "active-lang" : ""}`}
                   onClick={() => handleLanguageSelect("Hindi")}
                 >
-                    Arabic
+                  Arabic
                 </li>
                 <li
                   className={`lang-item ${selectedLang === "Punjabi" ? "active-lang" : ""}`}
                   onClick={() => handleLanguageSelect("Punjabi")}
                 >
-               Pashto
+                  Pashto
                 </li>
               </ul>
             )}
@@ -97,36 +96,26 @@ const Header = ({ onToggleSidebar }) => {
             <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle"></span>
           </button>
 
-        {/* 👤 Profile Icon */}
-      <div
-        className="d-flex align-items-center me-3 ms-2"
-        onClick={() => setShowProfileModal(true)}
-        style={{ cursor: 'pointer' }}
-      >
-        <div
-          className="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
-          style={{ width: "35px", height: "35px" }}
-        >
-          P
-        </div>
-      </div>
+          {/* 👤 Profile Icon */}
+          <div
+            className="d-flex align-items-center me-3 ms-2"
+            onClick={() => setShowProfileModal(true)}
+            style={{ cursor: 'pointer' }}
+          >
+            <div
+              className="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
+              style={{ width: "35px", height: "35px" }}
+            >
+              P
+            </div>
+          </div>
 
-      {/* Modal */}
-      <ProfileModal
-        show={showProfileModal}
-        handleClose={() => setShowProfileModal(false)}
-      />
+          {/* Modal */}
+          <ProfileModal
+            show={showProfileModal}
+            handleClose={() => setShowProfileModal(false)}
+          />
 
-          {/* 🔓 Logout */}
-          <Link to="/">
-          <button
-  className="btn btn-outline"
-  style={{ borderColor: "#53b2a5", color: "#53b2a5" }}
->
-  <i className="fas fa-sign-out-alt me-1"></i> Logout
-</button>
-
-          </Link>
         </div>
       </div>
     </header>

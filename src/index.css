@@ -3,15 +3,9 @@ body,
   padding: 0 !important;
   margin: 0 !important;
 }
-
-
-
   .offcanvas-backdrop.show {
     opacity: 0 !important; /* no dark overlay */
   }
-
-
-
 
 .custom-toggle-switch {
   position: relative;
@@ -56,6 +50,3 @@ body,
 .custom-toggle-checkbox:checked + .custom-toggle-label::before {
   transform: translateX(24px);
 }
-
-
-

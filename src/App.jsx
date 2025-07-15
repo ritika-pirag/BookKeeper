@@ -5,10 +5,7 @@ import MainLayout from "./Layout/MainLayout";
 import Login from "./Components/Auth/Login";
 import Signup from "./Components/Auth/Signup";
 
-import SalespersonDashboard from "./Components/Salesperson-Dashboard/SalespersonDashboard";
-import SalespersonInventory from "./Components/Salesperson-Dashboard/SalespersonInventory";
-import SalespersonOrder from "./Components/Salesperson-Dashboard/SalespersonOrder";
-import SalespersonCustomerInfo from "./Components/Salesperson-Dashboard/SalespersonCustomerInfo";
+
 import Dashboardd from "./Components/Dashboard/Dashboardd";
 import Company from "./Components/Dashboard/Company";
 // import CompanyDetails from './Components/Dashboard/CompanyDetails';
