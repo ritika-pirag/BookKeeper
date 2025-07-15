@@ -2,17 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../Layout/Header";
 import Sidebar from "../Layout/Sidebar";
-import { Button } from "react-bootstrap";
-// import { FaCog } from "react-icons/fa"; 
-
 import './Sidebar.css';
-// import SettingModal from "../Components/SettingModal";
 
 const MainLayout = () => {
   const [screenSize, setScreenSize] = useState(getScreenCategory());
   const [sidebarVisible, setSidebarVisible] = useState(screenSize === 'desktop');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [showSettings, setShowSettings] = useState(false); // ✅ Settings modal state
 
   function getScreenCategory() {
     const width = window.innerWidth;
@@ -63,36 +58,35 @@ const MainLayout = () => {
   }, []);
 
   return (
-    <div className="container-fluid">
+    <div className="main-layout d-flex flex-column min-vh-100">
       {/* Header */}
-      <div className="row fixed-top bg-white shadow-sm">
-        <div className="col-12">
-          <Header onToggleSidebar={handleToggleSidebar} />
-        </div>
-      </div>
+      <header className="fixed-top w-100 z-3">
+        <Header onToggleSidebar={handleToggleSidebar} />
+      </header>
 
-      {/* Content Row */}
-      <div className="row" style={{ paddingTop: "65px" }}>
-        {/* Sidebar for Desktop */}
+      {/* Main Body */}
+      <div className="d-flex" style={{ paddingTop: "65px", flexGrow: 1 }}>
+        {/* Sidebar - visible on desktop */}
         {screenSize === 'desktop' && sidebarVisible && (
-          <div className="col-lg-2 p-0 d-none d-lg-block">
+          <div className="d-none d-lg-block bg-white border-end" style={{ width: '240px', minHeight: '100vh' }}>
             <Sidebar isMobile={false} onClose={handleCloseSidebar} />
           </div>
         )}
 
         {/* Main Content */}
-        <div
-          className={`${
-            screenSize === 'desktop' && sidebarVisible ? "col-md-9 col-lg-10" : "col-12"
-          } bg-light`}
+        <main
+          className="flex-grow-1 bg-light"
+          style={{
+            minHeight: "calc(100vh - 65px)",
+            overflowX: "hidden",
+            padding: "1rem"
+          }}
         >
-          <div className="p-4">
-            <Outlet />
-          </div>
-        </div>
+          <Outlet />
+        </main>
       </div>
 
-      {/* Offcanvas Sidebar for Mobile/Tablet */}
+      {/* Offcanvas Sidebar - for mobile and tablet */}
       {(screenSize === 'mobile' || screenSize === 'tablet') && (
         <div
           className="offcanvas offcanvas-start"
@@ -101,45 +95,13 @@ const MainLayout = () => {
           aria-labelledby="mobileSidebarLabel"
           data-bs-scroll="true"
           data-bs-backdrop="false"
-          style={{ width: '80px' }}
+          style={{ width: '240px' }}
         >
           <div className="offcanvas-body p-0">
             <Sidebar isMobile={true} onLinkClick={handleCloseSidebar} />
           </div>
         </div>
       )}
-
-      {/* ✅ Floating Settings Button */}
-      {/* <div
-        style={{
-          position: "fixed",
-          top: "35%",
-          right: 16,
-          zIndex: 9999,
-        }}
-      >
-        <Button
-          variant="warning"
-          style={{
-            borderRadius: "50%",
-            width: 48,
-            height: 48,
-            boxShadow: "0 2px 8px #0002",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 22,
-            padding: 0,
-          }}
-          onClick={() => setShowSettings(true)}
-        >
-          <FaCog />
-        </Button>
-      </div> */}
-
-      {/* ✅ Settings Modal */}
-   
-            {/* <SettingModal show={showSettings} handleClose={() => setShowSettings(false)} /> */}
     </div>
   );
 };
