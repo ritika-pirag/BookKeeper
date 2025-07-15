@@ -22,7 +22,6 @@ import {
 } from "react-icons/bs";
 import "./Dashboardd.css";
 
-// Sample data for all charts
 const monthlyData = [
   { name: "Jan", Growth: 1200, users: 6500, revenue: 250000 },
   { name: "Feb", Growth: 1500, users: 7200, revenue: 320000 },
@@ -40,9 +39,9 @@ const monthlyData = [
 
 const Dashboardd = () => {
   return (
-    <div className="dashboard container-fluid py-4 mt-4 mt-md-0">
+    <div className="dashboard container-fluid py-4">
       {/* Cards Section */}
-      <div className="row g-4 dashboard-cards mb-4">
+      <div className="row g-4 mb-4">
         {[
           {
             icon: <BsBuilding />,
@@ -73,15 +72,19 @@ const Dashboardd = () => {
             bg: "primary text-white",
           },
         ].map((card, index) => (
-          <div className="col-12 col-sm-6 col-md-3" key={index}>
-            <div className="card shadow-sm stat-card h-100">
+          <div className="col-12 col-sm-6 col-lg-3" key={index}>
+            <div className="card h-100 shadow-sm stat-card">
               <div className="card-body d-flex justify-content-between align-items-start">
-                <div className="icon-box">{card.icon}</div>
-                <div className={`growth-box bg-${card.bg}`}>{card.growth}</div>
+                <div className="icon-box fs-4 text-dark">{card.icon}</div>
+                <div
+                  className={`badge bg-${card.bg} rounded-pill px-3 py-1 fw-semibold`}
+                >
+                  {card.growth}
+                </div>
               </div>
               <div className="card-body pt-0">
-                <h4 className="stat-value">{card.value}</h4>
-                <p className="stat-label">{card.label}</p>
+                <h4 className="fw-bold mb-1">{card.value}</h4>
+                <p className="text-muted mb-0">{card.label}</p>
               </div>
             </div>
           </div>
@@ -90,14 +93,11 @@ const Dashboardd = () => {
 
       {/* Charts Section */}
       <div className="row g-4">
-
-
-        
-        {/* Line Chart (Companies Growth) */}
+        {/* Line Chart */}
         <div className="col-12 col-md-6">
-          <div className="card shadow-sm">
+          <div className="card shadow-sm h-100">
             <div className="card-header">
-              <h6 className="m-0 fw-bold">Total  Growth</h6>
+              <h6 className="m-0 fw-bold">Total Growth</h6>
             </div>
             <div className="card-body">
               <ResponsiveContainer width="100%" height={250}>
@@ -120,34 +120,33 @@ const Dashboardd = () => {
           </div>
         </div>
 
-   {/* Bar Chart (New Signup Users) */}
-<div className="col-12 col-md-6">
-  <div className="card shadow-sm">
-    <div className="card-header">
-      <h6 className="m-0 fw-bold">Signup Company</h6>
-    </div>
-    <div className="card-body">
-      <ResponsiveContainer width="100%" height={250}>
-        <BarChart data={monthlyData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="users" fill="#53b2a5" name="Sigup Company" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  </div>
-</div>
+        {/* Bar Chart */}
+        <div className="col-12 col-md-6">
+          <div className="card shadow-sm h-100">
+            <div className="card-header">
+              <h6 className="m-0 fw-bold">Signup Company</h6>
+            </div>
+            <div className="card-body">
+              <ResponsiveContainer width="100%" height={250}>
+                <BarChart data={monthlyData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="users" fill="#53b2a5" name="Signup Company" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
 
-
-        {/* Area Chart (Revenue) */}
+        {/* Area Chart */}
         <div className="col-12">
           <div className="card shadow-sm">
             <div className="card-header d-flex justify-content-between align-items-center">
               <h6 className="m-0 fw-bold">Revenue Trends</h6>
-              <button className="btn btn-light btn-sm d-flex align-items-center gap-2">
+              <button className="btn btn-outline-secondary btn-sm d-flex align-items-center gap-2">
                 <BsCalendar2 /> 2025
               </button>
             </div>

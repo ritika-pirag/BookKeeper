@@ -1,106 +1,66 @@
+/* Sidebar Container */
 .sidebar {
-  background-color: #032d45; /* Dark navy background */
-  color: hsl(0, 0%, 100%);
+  background-color: #032d45;
+  color: #ffffff;
   width: 240px;
-  border-right: none;
-  z-index: 1000 !important;
   overflow-y: auto;
   max-height: calc(100vh - 60px);
+  z-index: 1000 !important;
 }
 
 .sidebar-header {
   background-color: #032d45;
 }
 
-.sidebar-logo {
-  /* max-height: 60px; */
-  /* width: 200px;
-  margin-top: 15px; */
-}
-
-.sidebar-link {
-  color: #ffffff !important;
-  border-radius: 0;
-  transition: background-color 0.2s;
-  transform: translateX(4px);
-}
-
-.sidebar-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  transform: translateX(3px);
-}
-
-.active-link {
-  background-color: #53b2a5 !important; /* Yellow highlight */
-  color: #000000 !important;
-  font-weight: 600;
-  transform: translateX(8px);
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    display: none !important;
-    width: 296px;
-  }
-
-  .content {
-    margin-left: 0 !important;
-  }
-}
-/* Add this in your global CSS */
-.sidebar-container {
-  width: 100%;
-}
-
-.header {
-  background-color: #032d45; /* Dark navy background */
-  color: #ffffff;
-}
-
-.synced-btn {
-  background-color: #f8f9fa;
-  border: none;
-  border-radius: 20px;
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-  font-weight: 500;
-}
-.synced-icon {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 2px solid #28a745;
-  display: inline-block;
-  margin-right: 6px;
-  position: relative;
-}
-.synced-icon::after {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 3px;
+/* Scrollbar Styling - Webkit */
+.sidebar::-webkit-scrollbar,
+.sidebar-nav::-webkit-scrollbar {
   width: 6px;
-  height: 6px;
-  background-color: #28a745;
-  border-radius: 50%;
+}
+.sidebar::-webkit-scrollbar-track,
+.sidebar-nav::-webkit-scrollbar-track {
+  background: #032d45;
+}
+.sidebar::-webkit-scrollbar-thumb,
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 4px;
 }
 
-/* Sidebar.css */
+/* Scrollbar Styling - Firefox */
+.sidebar,
+.sidebar-nav {
+  scrollbar-width: thin;
+  scrollbar-color: #444 #032d45;
+}
 
-/* Navigation Items Container */
+/* Header Area */
+.header {
+  background-color: #032d45;
+  color: #ffffff;
+}
+
+/* Sidebar Nav Area */
 .sidebar-nav {
   padding: 20px 15px;
-  flex-grow: 1;
   overflow-y: auto;
+  flex-grow: 1;
 }
 
-/* Menu Sections */
+.sidebar-nav ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.sidebar-nav li {
+  list-style: none;
+}
+
+/* Section Titles */
 .menu-section {
   margin-bottom: 25px;
 }
-
 .section-title {
   color: #89b6d6;
   font-size: 0.75rem;
@@ -111,41 +71,58 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Navigation Links */
-.nav-item {
-  margin-bottom: 8px;
-}
-
+/* Sidebar Links */
 .sidebar-link {
   color: #ffffff !important;
+  background: transparent;
   border-radius: 6px !important;
-  transition: all 0.25s ease;
   padding: 12px 15px !important;
   display: flex;
   align-items: center;
   margin: 5px 0;
+  transition: all 0.25s ease;
+  font-size: 15px;
 }
 
 .sidebar-link i {
   width: 24px;
-  text-align: center;
   margin-right: 12px;
   font-size: 16px;
+  text-align: center;
 }
 
+/* Hover & Active Link */
 .sidebar-link:hover {
   background-color: #53b2a5 !important;
+  color: #ffffff;
   transform: translateX(3px);
 }
 
 .active-link {
-  background-color: #53b2a5 !important; /* Yellow highlight */
+  background-color: #53b2a5 !important;
   color: #ffffff !important;
   font-weight: 600;
-  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+  /* box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3); */
+  /* Removed transform to avoid shifting */
 }
 
-/* Close Button */
+
+/* Dropdown Menu (Subitems) */
+.sidebar-dropdown {
+  padding-left: 32px;
+}
+
+.sidebar-dropdown .sidebar-link {
+  padding: 10px 15px !important;
+  font-size: 14px;
+  margin: 2px 0;
+}
+
+.sidebar-dropdown .sidebar-link:hover {
+  background-color: #3e9e95 !important;
+}
+
+/* Close Button (Mobile) */
 .sidebar-close {
   position: absolute;
   top: 15px;
@@ -157,7 +134,7 @@
   padding: 5px !important;
 }
 
-/* Mobile Responsiveness */
+/* Responsive Styles */
 @media (max-width: 768px) {
   .sidebar {
     width: 260px;
@@ -171,35 +148,4 @@
   .sidebar-link {
     padding: 10px 12px !important;
   }
-}
-/* Scrollbar Styling for WebKit Browsers (Chrome, Safari, Edge) */
-.sidebar::-webkit-scrollbar,
-.sidebar-nav::-webkit-scrollbar {
-  width: 6px;
-}
-
-.sidebar::-webkit-scrollbar-track,
-.sidebar-nav::-webkit-scrollbar-track {
-  background: #032d45; /* Dark background */
-}
-
-.sidebar::-webkit-scrollbar-thumb,
-.sidebar-nav::-webkit-scrollbar-thumb {
-  background-color: #032d45; /* Yellow thumb */
-  border-radius: 4px;
-}
-
-/* Firefox Scrollbar Styling */
-.sidebar,
-.sidebar-nav {
-  scrollbar-width: thin;
-  scrollbar-color: #032d45 #032d45; /* thumb | track */
-}
-.sidebar-nav ul {
-  list-style: none !important;
-  padding-left: 0 !important;
-  margin-bottom: 0;
-}
-.sidebar-nav li {
-  list-style: none !important;
 }
