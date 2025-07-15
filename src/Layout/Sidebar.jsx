@@ -145,6 +145,68 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
               "Dashboard"
             )}
 
+
+
+
+
+{renderCollapsibleSection(
+  "Sales",
+  "sales",
+  [
+    {
+      to: "/company/InvoiceForm",
+      icon: "fas fa-cash-register",
+      label: "New Invoice",
+    },
+    {
+      to: "/company/Invoice",
+      icon: "fas fa-file-invoice",
+      label: "Manage Invoice",
+    },
+   
+  ],
+  "fas fa-chart-line" // Main Sales icon
+)}
+
+
+
+
+
+{renderCollapsibleSection(
+              "Purchases",
+              "purchases",
+              
+              [
+                {
+                  to: "/company/vendors",
+                  icon: "fas fa-file-alt",
+                  label: "Vendors",
+                },
+
+                {
+                  to: "/company/NewOrders",
+                  icon: "fas fa-cash-register",
+                  label: "New orders",
+                },
+
+                {
+                  to: "/company/purchaseorders",
+                  icon: "fas fa-file-alt",
+                  label: "Purchase orders",
+                },
+                {
+                  to: "/company/purchasereturn",
+                  icon: "fas fa-file-alt",
+                  label: "Purchase Return",
+                },
+              ],
+              "fas fa-shopping-basket"
+            )}
+
+
+
+
+
             {renderCollapsibleSection(
               "POS",
               "inventory",
@@ -289,29 +351,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
               "fas fa-file-alt"
             )}
 
-            {renderCollapsibleSection(
-              "Purchases",
-              "purchases",
-              [
-                {
-                  to: "/company/vendors",
-                  icon: "fas fa-file-alt",
-                  label: "Vendors",
-                },
-                {
-                  to: "/company/purchaseorders",
-                  icon: "fas fa-file-alt",
-                  label: "Purchase orders",
-                },
-                {
-                  to: "/company/purchasereturn",
-                  icon: "fas fa-file-alt",
-                  label: "Purchase Return",
-                },
-              ],
-              "fas fa-shopping-basket"
-            )}
-
+         
             {renderCollapsibleSection(
               "Finance & Accounts",
               "finance",
@@ -398,7 +438,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
                 {
                   to: "/company/deleteaccountrequests",
                   icon: "fas fa-trash",
-                  label: "Delete Account Request",
+                  label: "User Request",
                 },
               ],
               "fas fa-users-cog"

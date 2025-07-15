@@ -44,96 +44,13 @@ const SystemSettings = () => {
             </div>
           </div>
           <div className="text-end mt-4">
-            <button className="btn btn-success px-4">Save </button>
+            <button className="btn btn-success px-4"  style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}>Save </button>
           </div>
         </div>
       </div>
 
       {/* Security Settings */}
-      <div className="card rounded-4 shadow-sm border-0 mb-5">
-      <div className="card-body">
-        <h4 className="mb-4 text-primary">Security Rules</h4>
-        <div className="row g-4">
-          {/* 2FA Settings */}
-          <div className="col-lg-6">
-            <h6 className="mb-3">Two-Factor Authentication (2FA)</h6>
-            <div className="form-check form-switch mb-3">
-              <input
-                className="form-check-input form-switch"
-                type="checkbox"
-                id="2faToggle"
-                checked={is2FAEnabled}
-                onChange={() => setIs2FAEnabled(!is2FAEnabled)}
-              />
-              <label className="form-check-label text-warning" htmlFor="2faToggle">
-                Enable 2FA
-              </label>
-            </div>
-
-            {is2FAEnabled && (
-              <>
-                <p className="mb-2">Select 2FA method:</p>
-                {[
-                  { id: "authApp", label: "Authenticator app" },
-                  { id: "smsBased", label: "SMS-based" },
-                  { id: "emailBased", label: "Email-based" },
-                ].map((method) => (
-                  <div className="form-check mb-2" key={method.id}>
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="2faMethod"
-                      id={method.id}
-                      value={method.id}
-                      checked={selected2FAMethod === method.id}
-                      onChange={(e) => setSelected2FAMethod(e.target.value)}
-                    />
-                    <label className="form-check-label" htmlFor={method.id}>
-                      {method.label}
-                    </label>
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-
-          {/* Password Policy */}
-          <div className="col-lg-6">
-            <h6 className="mb-3">Password Policy</h6>
-            <div className="mb-3">
-              <label className="form-label">Minimum Length</label>
-              <input type="number" className="form-control" defaultValue={8} />
-            </div>
-            {[
-              { id: "specialChar", label: "Require special character" },
-              { id: "requireNumber", label: "Require number" },
-              { id: "requireUpper", label: "Require uppercase letter" },
-            ].map((rule) => (
-              <div className="form-check mb-2" key={rule.id}>
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id={rule.id}
-                  defaultChecked
-                />
-                <label className="form-check-label" htmlFor={rule.id}>
-                  {rule.label}
-                </label>
-              </div>
-            ))}
-            <div className="mb-2">
-              <label className="form-label">Password Expiration (days)</label>
-              <input type="number" className="form-control" defaultValue={90} />
-              <small className="text-muted">Set to 0 for no expiration</small>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-end mt-4">
-          <button className="btn btn-success px-4">Save Security Settings</button>
-        </div>
-      </div>
-    </div>
+   
 
 {/* Cloud Settings */}
 <div className="card rounded-4 shadow-sm border-0 mt-5">
@@ -261,7 +178,7 @@ const SystemSettings = () => {
 
     <div className="d-flex justify-content-between mt-4">
       <button className="btn btn-outline-warning">Test Connection</button>
-      <button className="btn btn-success px-4">Save Cloud Settings</button>
+      <button className="btn btn-success px-4"  style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}>Save Cloud Settings</button>
     </div>
   </div>
 </div>

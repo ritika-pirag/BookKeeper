@@ -10,7 +10,7 @@ const Vendors = () => {
       email: "john@example.com",
       phone: "9876543210",
       payable: 24,
-      credit: 865,
+      address: "Indore, India"
     },
     {
       name: "Emily Johnson Vendor",
@@ -18,7 +18,7 @@ const Vendors = () => {
       email: "emily@example.com",
       phone: "9876543211",
       payable: 820,
-      credit: 369,
+      address: "Bhopal, India"
     },
   ]);
 
@@ -33,7 +33,7 @@ const Vendors = () => {
     email: "",
     phone: "",
     payable: "",
-    credit: "",
+    address: "",
     document: null
   });
 
@@ -54,7 +54,7 @@ const Vendors = () => {
       email: "",
       phone: "",
       payable: "",
-      credit: "",
+      address: "",
       document: null
     });
     setShowAdd(false);
@@ -98,7 +98,7 @@ const Vendors = () => {
               <th>Email</th>
               <th>Phone</th>
               <th>Payables (₹)</th>
-              <th>Unused Credits (₹)</th>
+              <th>Address</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -110,7 +110,7 @@ const Vendors = () => {
                 <td className="text-muted">{vendor.email}</td>
                 <td className="text-muted">{vendor.phone}</td>
                 <td>₹{vendor.payable}</td>
-                <td>₹{vendor.credit}</td>
+                <td>{vendor.address}</td>
                 <td className="d-flex gap-2">
                   <Button
                     variant="outline-primary"
@@ -179,7 +179,7 @@ const Vendors = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            {["name", "company", "email", "phone", "payable", "credit"].map((field) => (
+            {["name", "company", "email", "phone", "payable", "address"].map((field) => (
               <Form.Group className="mb-3" key={field}>
                 <Form.Label className="text-capitalize">{field}</Form.Label>
                 <Form.Control

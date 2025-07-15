@@ -23,7 +23,7 @@ import ManageStock from "./Components/Company-Dashboard/Inventory/ManageStock";
 import LowStock from "./Components/Company-Dashboard/Inventory/LowStock";
 import PrintBarcode from "./Components/Company-Dashboard/Inventory/printBarcode";
 import Invoice from "./Components/Company-Dashboard/Sales/Invoice";
-import SalesReturn from "./Components/Company-Dashboard/Sales/SalesReturn";
+import InvoiceForm from "./Components/Company-Dashboard/Sales/InvoiceForm";
 import AccountStatement from "./Components/Company-Dashboard/Payments/AccountStatement";
 import Coupons from "./Components/Company-Dashboard/Payments/Coupons";
 import TaxReport from "./Components/Company-Dashboard/GST/TaxReport ";
@@ -43,6 +43,7 @@ import TrialBalance from "./Components/Company-Dashboard/Finance&Accounts/TrialB
 import CustomerList from "./Components/Company-Dashboard/ClientsVendors/CustomerList";
 // import Purchasedataa from "./Components/Company-Dashboard/Reports/Purchasedata";
 import salesreport from "./Components/Company-Dashboard/Reports/Salesreport";
+import NewOrderPurchase from "./Components/Company-Dashboard/Purchases/NewOrderPurchase";
 import Taxreport from "./Components/Company-Dashboard/Reports/Taxreports";
 import BalanceSheet from "./Components/Company-Dashboard/Reports/BalanceSheet";
 import CashFlow from "./Components/Company-Dashboard/Reports/CashFlow";
@@ -89,6 +90,7 @@ import DevicePage from "./Components/Company-Dashboard/Inventory/SiteData/Device
 import TaxPage from "./Components/Company-Dashboard/Inventory/TaxPage";
 import StockTransfer from "./Components/Company-Dashboard/Inventory/SiteData/StockTransfer";
 import PointOfSale from "./Components/Company-Dashboard/Inventory/Pos/PointOfSale";
+import NewOrder from "./Components/Company-Dashboard/Purchases/NewOrderPurchase";
 
 function App() {
   return (
@@ -133,8 +135,8 @@ function App() {
           <Route path="/company/invoice" element={<Invoice />} />
 
           {/* Sales */}
-          <Route path="/company/invoice" element={<Invoice />} />
-          <Route path="/company/salesreturn" element={<SalesReturn />} />
+          <Route path="/company/invoiceform" element={<InvoiceForm />} />
+         
 
           {/* Payments */}
           <Route path="/company/coupons" element={<Coupons />} />
@@ -153,6 +155,8 @@ function App() {
 
           {/* Purchases */}
           <Route path="/company/vendors" element={<Vendors />} />
+          
+          <Route path="/company/neworders" element={<NewOrderPurchase />} />
           <Route path="/company/purchaseorders" element={<Purchaseorders />} />
           <Route path="/company/purchasereturn" element={<PurchaseReturn />} />
 
