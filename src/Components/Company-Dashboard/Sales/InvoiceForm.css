@@ -1,0 +1,20 @@
+.invoice-form-container {
+  max-width: 100%;
+  background-color: #ffffff;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+textarea.form-control {
+  min-height: 70px;
+  resize: vertical;
+}
+
+@media (max-width: 768px) {
+  .table {
+    font-size: 14px;
+  }
+}

@@ -9,8 +9,9 @@ import {
   FaEye,
   FaRedo,
   FaCheck,        // ✅ Added
-  FaTimes,        // ✅ Added
-  FaEllipsisV,    // ✅ Added
+  FaTimes, 
+  FaFilePdf,       // ✅ Added
+  FaTrash ,    // ✅ Added
 } from "react-icons/fa";
 
 import { SiPaypal } from "react-icons/si";
@@ -22,7 +23,7 @@ import "./Payments.css";
 const tabs = [
   "All Payments",
   "Failed Transactions",
-  "Refund Requests",
+  // "Refund Requests",
   "Payment Settings",
 ];
 
@@ -34,7 +35,7 @@ const transactions = [
     id: "TXN-23456",
     date: "Jun 27, 2025",
     customer: "John Smith",
-    method: { icon: <BsCreditCard2FrontFill />, name: "Credit Card" },
+    method: { name: "Credit Card" },
     amount: "$1,299.99",
     status: "Success",
     reason: "",
@@ -43,7 +44,7 @@ const transactions = [
     id: "TXN-23455",
     date: "Jun 27, 2025",
     customer: "Emily Johnson",
-    method: { icon: <SiPaypal />, name: "PayPal" },
+    method: {  name: "PayPal" },
     amount: "$499.50",
     status: "Success",
     reason: "",
@@ -52,7 +53,7 @@ const transactions = [
     id: "TXN-23454",
     date: "Jun 26, 2025",
     customer: "Michael Brown",
-    method: { icon: <BsCreditCard2FrontFill />, name: "Credit Card" },
+    method: { name: "Credit Card" },
     amount: "$899.00",
     status: "Failed",
     reason: "Insufficient funds",
@@ -61,7 +62,7 @@ const transactions = [
     id: "TXN-23453",
     date: "Jun 26, 2025",
     customer: "Sarah Williams",
-    method: { icon: <BsBank2 />, name: "Bank Transfer" },
+    method: {  name: "Bank Transfer" },
     amount: "$149.99",
     status: "Success",
     reason: "",
@@ -70,7 +71,7 @@ const transactions = [
     id: "TXN-23452",
     date: "Jun 25, 2025",
     customer: "David Miller",
-    method: { icon: <BsCreditCard2FrontFill />, name: "Credit Card" },
+    method: {  name: "Credit Card" },
     amount: "$2,499.00",
     status: "Pending",
     reason: "",
@@ -79,7 +80,7 @@ const transactions = [
     id: "TXN-23451",
     date: "Jun 25, 2025",
     customer: "Jessica Davis",
-    method: { icon: <MdAccountBalanceWallet />, name: "Digital Wallet" },
+    method: {  name: "Digital Wallet" },
     amount: "$349.95",
     status: "Success",
     reason: "",
@@ -88,7 +89,7 @@ const transactions = [
     id: "TXN-23450",
     date: "Jun 24, 2025",
     customer: "Robert Wilson",
-    method: { icon: <BsCreditCard2FrontFill />, name: "Credit Card" },
+    method: {  name: "Credit Card" },
     amount: "$799.50",
     status: "Failed",
     reason: "Expired card",
@@ -100,7 +101,7 @@ const refundRequests = [
     id: "TXN-23447",
     date: "Jun 23, 2025",
     customer: "Lisa Martinez",
-    method: { icon: <BsCreditCard2FrontFill />, name: "Credit Card" },
+    method: {  name: "Credit Card" },
     amount: "$129.95",
     status: "Refund Requested",
   },
@@ -108,7 +109,7 @@ const refundRequests = [
     id: "TXN-23445",
     date: "Jun 22, 2025",
     customer: "Amanda White",
-    method: { icon: <SiPaypal />, name: "PayPal" },
+    method: {  name: "PayPal" },
     amount: "$999.00",
     status: "Refunded",
   },
@@ -118,10 +119,28 @@ const Payments = () => {
   const [activeTab, setActiveTab] = useState("All Payments");
     const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [showModal, setShowModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false); 
+  const [transactionToDelete, setTransactionToDelete] = useState(null)
 
     const handleViewDetails = (transaction) => {
     setSelectedTransaction(transaction);
     setShowModal(true);
+  };
+
+    const handleDeleteClick = (transaction) => {
+    setTransactionToDelete(transaction);
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+    // Here you would typically make an API call to delete the transaction
+    console.log("Deleting transaction:", transactionToDelete);
+    
+    // Close the modal
+    setShowDeleteModal(false);
+    setTransactionToDelete(null);
+    
+    // Show a success message or update the UI accordingly
   };
 
   const filteredTransactions =
@@ -139,72 +158,65 @@ const Payments = () => {
             </h4>
             <p className="text-muted mb-0">Manage all your payment transactions</p>
           </div>
-          <button className="btn btn-outline-dark d-flex align-items-center gap-2 px-3 py-2">
-            <FaFileExport /> Export
-          </button>
+          
+          <div className="d-flex align-items-center gap-2">
+            <button className="btn btn-outline-dark d-flex align-items-center gap-2 px-3 py-2">
+              <FaFileExport /> Export
+            </button>
+            <FaFilePdf size={18} className="text-dark" style={{ cursor: "pointer" }} />
+          </div>
+          
         </div>
 
         <div className="row g-3 mb-4">
-          <div className="col-12 col-md-6 col-lg-3">
-            <div className="card shadow-sm h-100 payments-card">
-              <div className="card-body">
-                <div className="d-flex align-items-center gap-3 mb-2">
-                  <div className="payments-icon bg-orange text-white">
-                    <FaChartLine />
-                  </div>
-                  <h6 className="text-muted mb-0">Total Revenue</h6>
-                </div>
-                <h5 className="fw-bold">$12,345.67</h5>
-                <p className="text-success small mb-0">↑ 12.5% from last month</p>
-              </div>
-            </div>
+  {/* Total Revenue Card */}
+  <div className="col-12 col-md-4">
+    <div className="card shadow-sm h-100 payments-card">
+      <div className="card-body">
+        <div className="d-flex align-items-center gap-3 mb-2">
+          <div className="payments-icon bg-orange text-white">
+            <FaChartLine />
           </div>
-
-          <div className="col-12 col-md-6 col-lg-3">
-            <div className="card shadow-sm h-100 payments-card">
-              <div className="card-body">
-                <div className="d-flex align-items-center gap-3 mb-2">
-                  <div className="payments-icon bg-success text-white">
-                    <FaCheckCircle />
-                  </div>
-                  <h6 className="text-muted mb-0">Success Rate</h6>
-                </div>
-                <h5 className="fw-bold">94.2%</h5>
-                <p className="text-success small mb-0">↑ 2.1% from last month</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-12 col-md-6 col-lg-3">
-            <div className="card shadow-sm h-100 payments-card">
-              <div className="card-body">
-                <div className="d-flex align-items-center gap-3 mb-2">
-                  <div className="payments-icon bg-danger text-white">
-                    <FaExclamationTriangle />
-                  </div>
-                  <h6 className="text-muted mb-0">Failed Transactions</h6>
-                </div>
-                <h5 className="fw-bold text-danger">24</h5>
-                <p className="text-danger small mb-0">↓ 5.3% from last month</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-12 col-md-6 col-lg-3">
-            <div className="card shadow-sm h-100 payments-card">
-              <div className="card-body">
-                <div className="d-flex align-items-center gap-3 mb-2">
-                  <div className="payments-icon bg-purple text-white">
-                    <FaUndoAlt />
-                  </div>
-                  <h6 className="text-muted mb-0">Pending Refunds</h6>
-                </div>
-                <h5 className="fw-bold">7</h5>
-                <p className="text-warning small mb-0">— Same as last month</p>
-              </div>
-            </div>
-          </div>
+          <h6 className="text-muted mb-0">Total Revenue</h6>
         </div>
+        <h5 className="fw-bold">$12,345.67</h5>
+        <p className="text-success small mb-0">↑ 12.5% from last month</p>
+      </div>
+    </div>
+  </div>
+
+  {/* Success Rate Card */}
+  <div className="col-12 col-md-4">
+    <div className="card shadow-sm h-100 payments-card">
+      <div className="card-body">
+        <div className="d-flex align-items-center gap-3 mb-2">
+          <div className="payments-icon bg-success text-white">
+            <FaCheckCircle />
+          </div>
+          <h6 className="text-muted mb-0">Success Rate</h6>
+        </div>
+        <h5 className="fw-bold">94.2%</h5>
+        <p className="text-success small mb-0">↑ 2.1% from last month</p>
+      </div>
+    </div>
+  </div>
+
+  {/* Failed Transactions Card */}
+  <div className="col-12 col-md-4">
+    <div className="card shadow-sm h-100 payments-card">
+      <div className="card-body">
+        <div className="d-flex align-items-center gap-3 mb-2">
+          <div className="payments-icon bg-danger text-white">
+            <FaExclamationTriangle />
+          </div>
+          <h6 className="text-muted mb-0">Failed Transactions</h6>
+        </div>
+        <h5 className="fw-bold text-danger">24</h5>
+        <p className="text-danger small mb-0">↓ 5.3% from last month</p>
+      </div>
+    </div>
+  </div>
+</div>
 
         <ul className="nav nav-tabs mb-3 custom-tab-hover">
           {tabs.map((tab) => (
@@ -282,7 +294,13 @@ const Payments = () => {
   >
     <FaEye />
   </button>
-  <button className="btn btn-link text-success p-0"><FaRedo /></button>
+  {/* <button className="btn btn-link text-success p-0"><FaRedo /></button> */}
+          <button 
+          className="btn btn-link text-danger p-0" 
+          onClick={() => handleDeleteClick(txn)}
+        >
+          <FaTrash />
+        </button>
 </td>
                     </tr>
                   ))}
@@ -294,7 +312,7 @@ const Payments = () => {
               <div className="text-muted small">
                 Showing 1 to {filteredTransactions.length} of {filteredTransactions.length} results
               </div>
-              <nav className="custom-pagination-orange">
+              <nav className="custom-pagination-success">
                 <ul className="pagination pagination-sm mb-0">
                   <li className="page-item disabled">
                     <button className="page-link">«</button>
@@ -424,7 +442,7 @@ const Payments = () => {
                 <button className="btn btn-outline-dark">Reset</button>
               <button
   className="btn text-white"
-  style={{ backgroundColor: '#FFA646' }}
+  style={{ backgroundColor: '#53b2a5' }}
 >
   Save Changes
 </button>
@@ -465,7 +483,7 @@ const Payments = () => {
                 <button className="btn btn-outline-dark">Reset</button>
            <button
   className="btn text-white"
-  style={{ backgroundColor: '#FFA646' }}
+  style={{ backgroundColor: '#53b2a5' }}
 >
   Save Changes
 </button>
@@ -540,6 +558,49 @@ const Payments = () => {
                   onClick={() => setShowModal(false)}
                 >
                   Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+       {/* Add the Delete Confirmation Modal */}
+      {showDeleteModal && transactionToDelete && (
+        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Confirm Deletion</h5>
+                <button 
+                  type="button" 
+                  className="btn-close" 
+                  onClick={() => setShowDeleteModal(false)}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <p>Are you sure you want to delete this transaction?</p>
+                <div className="alert alert-danger">
+                  <strong>Transaction ID:</strong> {transactionToDelete.id}<br />
+                  <strong>Amount:</strong> {transactionToDelete.amount}<br />
+                  <strong>Customer:</strong> {transactionToDelete.customer}
+                </div>
+                <p>This action cannot be undone.</p>
+              </div>
+              <div className="modal-footer">
+                <button 
+                  type="button" 
+                  className="btn btn-secondary" 
+                  onClick={() => setShowDeleteModal(false)}
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="button" 
+                  className="btn btn-danger" 
+                  onClick={handleConfirmDelete}
+                >
+                  Delete
                 </button>
               </div>
             </div>

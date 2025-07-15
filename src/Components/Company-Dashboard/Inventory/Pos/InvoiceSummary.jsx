@@ -9,7 +9,6 @@ const InvoiceSummary = () => {
   const [show, setShow] = useState(false);
   const [amounts, setAmounts] = useState({ cash: 0, eftpos: 0, afterpay: 0 });
 
-  // Make invoiceData stateful for editing
   const [invoiceData, setInvoiceData] = useState({
     customerName: "Amit Sharma",
     productDetails: [
@@ -19,15 +18,15 @@ const InvoiceSummary = () => {
     taxName: "GST",
     taxValue: 10,
   });
+
   const customerList = [
     "Amit Sharma",
     "Neha Verma",
     "Rahul Kumar",
     "Priya Singh",
-    "Suresh Yadav"
+    "Suresh Yadav",
   ];
-  
-  // Calculate subtotal and total based on current product details
+
   const calculateSubTotal = () => {
     return invoiceData.productDetails.reduce(
       (sum, item) => sum + item.quantity * item.price,
@@ -37,7 +36,8 @@ const InvoiceSummary = () => {
 
   const subTotal = calculateSubTotal();
   const total = subTotal + (subTotal * invoiceData.taxValue) / 100;
-  const totalPaid = (amounts.cash || 0) + (amounts.eftpos || 0) + (amounts.afterpay || 0);
+  const totalPaid =
+    (amounts.cash || 0) + (amounts.eftpos || 0) + (amounts.afterpay || 0);
 
   const handleAmountChange = (e, type) => {
     const value = parseFloat(e.target.value) || 0;
@@ -53,37 +53,33 @@ const InvoiceSummary = () => {
 
   return (
     <Container>
-      <div className="d-flex justify-content-start mt-3">
-  <Button variant="" onClick={() => navigate("/company/ponitofsale")}>
-    ← Back
-  </Button>
-</div>
-
-      <h3 className="text-center mb-4">Invoice Summary</h3>
-
-      <div className="d-flex justify-content-between align-items-center mb-3">
+      {/* Top Button Row - All in One Line */}
+      <div className="d-flex flex-wrap gap-2 align-items-center mt-3 mb-4">
+        <Button variant="light" onClick={() => navigate("/company/ponitofsale")}>
+          ← Back
+        </Button>
         <Button
           variant={isEditMode ? "warning" : "primary"}
           onClick={() => setIsEditMode(!isEditMode)}
         >
           {isEditMode ? "Save & Preview Invoice" : "Edit Invoice Info"}
         </Button>
-
-      
-
-        <div className="d-flex gap-2">
-  <Button variant="success" onClick={() => setShow(true)}>
-    Confirm
-  </Button>
-  <Button variant="outline-danger" onClick={() => navigate("/company/ponitofsale")}>
-    Cancel
-  </Button>
-</div>
-
-
-        
+        <Button variant="secondary">Name</Button>
+        <Button variant="info">Delivery Invoice</Button>
+        <Button variant="outline-primary">Copy Invoice</Button>
+        <Button variant="outline-success">Proforma Invoice</Button>
+        <Button variant="success" onClick={() => setShow(true)}>
+          Confirm
+        </Button>
+        <Button
+          variant="outline-danger"
+          onClick={() => navigate("/company/ponitofsale")}
+        >
+          Cancel
+        </Button>
       </div>
 
+      {/* Modal */}
       <Modal show={show} onHide={() => setShow(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Invoice Actions</Modal.Title>
@@ -94,28 +90,28 @@ const InvoiceSummary = () => {
         </Modal.Body>
       </Modal>
 
+      {/* Invoice Summary Section */}
       <div className="p-4 border rounded bg-white" style={{ minHeight: "85vh" }}>
         <Row>
           <Col md={6} className="mb-4">
             <h5>Customer Details</h5>
             <Form.Group className="mb-3">
-  <Form.Label><strong>Customer Name</strong></Form.Label>
-  <Form.Control
-    type="text"
-    list="customers"
-    placeholder="Search or enter customer name..."
-    value={invoiceData.customerName}
-    onChange={(e) =>
-      setInvoiceData((prev) => ({ ...prev, customerName: e.target.value }))
-    }
-  />
-  <datalist id="customers">
-    {customerList.map((name, idx) => (
-      <option key={idx} value={name} />
-    ))}
-  </datalist>
-</Form.Group>
-
+              <Form.Label><strong>Customer Name</strong></Form.Label>
+              <Form.Control
+                type="text"
+                list="customers"
+                placeholder="Search or enter customer name..."
+                value={invoiceData.customerName}
+                onChange={(e) =>
+                  setInvoiceData((prev) => ({ ...prev, customerName: e.target.value }))
+                }
+              />
+              <datalist id="customers">
+                {customerList.map((name, idx) => (
+                  <option key={idx} value={name} />
+                ))}
+              </datalist>
+            </Form.Group>
 
             <h5 className="mt-4">Company Info</h5>
             <p><strong>Company Name:</strong> Demo Pvt Ltd</p>

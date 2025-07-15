@@ -29,7 +29,7 @@ const EditPlanModal = ({ show, handleClose, plan, handleSave }) => {
 
   return (
     <Modal show={show} onHide={handleClose} centered>
-      <Modal.Header style={{ backgroundColor: "#FFA64D", color: "#fff" }}>
+      <Modal.Header style={{ backgroundColor: "#53b2a5", color: "#fff" }}>
         <Modal.Title>Edit Plan</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -53,7 +53,7 @@ const EditPlanModal = ({ show, handleClose, plan, handleSave }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="dark" onClick={handleClose}>Close</Button>
-        <Button style={{ backgroundColor: "#FFA64D", borderColor: "#FFA64D" }} onClick={onSave}>
+        <Button style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }} onClick={onSave}>
           Save Changes
         </Button>
       </Modal.Footer>

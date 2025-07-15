@@ -170,7 +170,7 @@ const PurchaseReturn = () => {
     return (
 
 
-            <div className="" >
+            <div className=" container px-3 mt-4 " >
                 {/* Header */}
                 <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap">
                     <h2 className="mb-0" style={{ fontWeight: '600', color: '#212529', fontSize: '28px' }}>
@@ -179,7 +179,7 @@ const PurchaseReturn = () => {
                     <button
                         className="btn d-flex align-items-center gap-2 mt-1 mt-md-0"
                         style={{
-                            backgroundColor: 'orange',
+                            backgroundColor: '#53b2a5',
                             color: 'white',
                             border: 'none',
                             borderRadius: '6px',
@@ -515,7 +515,7 @@ const PurchaseReturn = () => {
                     <nav className="mt-2 mt-md-0">
                         <ul className="pagination pagination-sm mb-0">
                             <li className="page-item disabled">
-                                <span className="page-link" style={{ color: '#6c757d', border: '1px solid orange' }}>
+                                <span className="page-link" style={{ color: '#6c757d', border: '1px solid  #53b2a5' }}>
                                     Previous
                                 </span>
                             </li>
@@ -523,7 +523,7 @@ const PurchaseReturn = () => {
                                 <span
                                     className="page-link"
                                     style={{
-                                        backgroundColor: 'orange',
+                                        backgroundColor: '#53b2a5',
                                         borderColor: '#0d6efd',
                                         color: 'white'
                                     }}
@@ -532,7 +532,7 @@ const PurchaseReturn = () => {
                                 </span>
                             </li>
                             <li className="page-item disabled">
-                                <span className="page-link" style={{ color: '#6c757d', border: '1px solid orange' }}>
+                                <span className="page-link" style={{ color: '#6c757d', border: '1px solid #53b2a5' }}>
                                     Next
                                 </span>
                             </li>

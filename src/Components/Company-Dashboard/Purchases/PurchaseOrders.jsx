@@ -1,310 +1,135 @@
-import React, { useState } from "react";
-import {
-  Container,
-  Card,
-  Table,
-  Form,
-  InputGroup,
-  Button,
-  Modal,
-  Row,
-  Col,
-} from "react-bootstrap";
-import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import React, { useState } from 'react';
+import { Table, Button, Badge, Form, Row, Col } from 'react-bootstrap';
+import { FaEye, FaDownload, FaTrash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
-const sortOptions = ["Last 7 Days", "Last 30 Days", "This Month", "This Year"];
-
-const initialData = [
-  {
-    id: "P1001",
-    name: "Lenovo IdeaPad 3",
-    warehouse: "Mumbai",
-    vendors: "Lenovo India",
-    amount: "$1000",
-    qty: 40,
-    payment: "Online",
-    date: "2025-07-10",
-  },
-  {
-    id: "P1002",
-    name: "Beats Pro",
-    warehouse: "Delhi",
-    vendors: "Beats Inc.",
-    amount: "$1500",
-    qty: 25,
-    payment: "Cash",
-    date: "2025-07-12",
-  },
+const initialOrders = [
+  { id: 1, orderNo: 1045, supplier: "Haroun Spiers", date: "15-07-2025", amount: "$ 10.90", status: "Paid" },
+  { id: 2, orderNo: 1044, supplier: "", date: "15-07-2025", amount: "$ 325.00", status: "Paid" },
+  { id: 3, orderNo: 1043, supplier: "Maureen Dotson", date: "12-07-2025", amount: "$ 75.00", status: "Paid" },
+  { id: 4, orderNo: 1042, supplier: "", date: "11-07-2025", amount: "$ 247.00", status: "Partial" },
+  { id: 5, orderNo: 1041, supplier: "", date: "09-07-2025", amount: "$ 100.00", status: "Partial" },
 ];
 
+const getStatusBadge = (status) => {
+  if (status === 'Paid') return <Badge bg="success">Paid</Badge>;
+  if (status === 'Partial') return <Badge bg="info">Partial</Badge>;
+  return <Badge bg="secondary">{status}</Badge>;
+};
+
 const PurchaseOrders = () => {
-  const [data, setData] = useState(initialData);
-  const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState(sortOptions[0]);
-  const [showAdd, setShowAdd] = useState(false);
-  const [showView, setShowView] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
-  const [selected, setSelected] = useState(null);
+  const [orders, setOrders] = useState(initialOrders); // ✅ useState to update rows
+  const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    id: "",
-    name: "",
-    warehouse: "",
-    vendors: "",
-    amount: "",
-    qty: "",
-    payment: "",
-    date: "",
-  });
-
-  const filtered = data.filter((row) =>
-    row.name.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+  // ✅ Handle Delete
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this order?")) {
+      setOrders(orders.filter(order => order.id !== id));
+    }
   };
 
-  const handleAdd = () => {
-    setData([...data, form]);
-    setForm({ id: "", name: "", warehouse: "", vendors: "", amount: "", qty: "", payment: "", date: "" });
-    setShowAdd(false);
-  };
+  // ✅ Handle Download (simulate CSV)
+  const handleDownload = (order) => {
+    const csvContent = `Order No,Supplier,Date,Amount,Status\n${order.orderNo},${order.supplier || '-'},${order.date},${order.amount},${order.status}`;
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
 
-  const handleEdit = () => {
-    setData(data.map((item) => (item.id === form.id ? form : item)));
-    setShowEdit(false);
-  };
-
-  const handleDelete = () => {
-    setData(data.filter((item) => item.id !== selected.id));
-    setShowDelete(false);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Order-${order.orderNo}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
-    <div style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
-      <Container className="py-4">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <div>
-            <h3 style={{ fontWeight: 700, color: "#002d4d" }}>Purchase Order</h3>
-            <div style={{ color: "#888" }}>Manage your Purchase Orders</div>
-          </div>
-          <Button style={{ backgroundColor: "#002d4d", border: "none" }} onClick={() => setShowAdd(true)}>
-            + Add Order
+    <div className="container my-4">
+      <h5 className="mb-3">Purchase Orders</h5>
+
+      {/* Filters Row */}
+      <Row className="align-items-center mb-3 g-2">
+        <Col xs={12} md={3}>
+          <Form.Select size="sm" defaultValue="10">
+            <option value="10">Show 10 entries</option>
+            <option value="25">Show 25 entries</option>
+            <option value="50">Show 50 entries</option>
+          </Form.Select>
+        </Col>
+        <Col xs={12} md={{ span: 3, offset: 6 }}>
+          <Form.Control size="sm" type="text" placeholder="Search" />
+        </Col>
+      </Row>
+
+      {/* Table */}
+      <div className="table-responsive">
+        <Table bordered hover className="align-middle text-center">
+          <thead className="table-light">
+            <tr>
+              <th>No</th>
+              <th>Order</th>
+              <th>Supplier</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Settings</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order, index) => (
+              <tr key={order.id}>
+                <td>{index + 1}</td>
+                <td>{order.orderNo}</td>
+                <td>{order.supplier || '-'}</td>
+                <td>{order.date}</td>
+                <td>{order.amount}</td>
+                <td>{getStatusBadge(order.status)}</td>
+                <td className="d-flex justify-content-center flex-wrap gap-1">
+                  <Button
+                    size="sm"
+                    variant="success"
+                    onClick={() => navigate('/company/purchaseview')}
+                  >
+                    <FaEye className="me-1" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="info"
+                    onClick={() => handleDownload(order)}
+                  >
+                    <FaDownload />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="danger"
+                    onClick={() => handleDelete(order.id)}
+                  >
+                    <FaTrash />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+
+      {/* Pagination */}
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3 gap-2">
+        <span className="text-muted">
+          Showing 1 to {orders.length} of {orders.length} entries
+        </span>
+        <div>
+          <Button size="sm" variant="light" className="me-1" disabled>
+            Previous
+          </Button>
+          <Button size="sm" variant="primary" active>
+            1
+          </Button>
+          <Button size="sm" variant="light" className="ms-1" disabled>
+            Next
           </Button>
         </div>
-
-        <Card className="mb-4">
-          <Card.Body>
-            <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-              <InputGroup style={{ maxWidth: 300 }}>
-                <Form.Control
-                  placeholder="Search..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </InputGroup>
-              <Form.Select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                style={{ maxWidth: 200 }}
-              >
-                {sortOptions.map((opt) => (
-                  <option key={opt}>{`Sort By : ${opt}`}</option>
-                ))}
-              </Form.Select>
-            </div>
-
-            <div style={{ overflowX: "auto" }}>
-              <Table striped bordered hover className="align-middle">
-                <thead style={{ background: "#f5f6fa" }}>
-                  <tr>
-                    <th>Product ID</th>
-                    <th>Product</th>
-                    <th>QTY</th>
-                    <th>Warehouse</th>
-                    <th>Vendors</th>
-                    <th>Amount</th>
-                    <th>Payment Type</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((row, idx) => (
-                    <tr key={idx}>
-                      <td>{row.id}</td>
-                      <td>{row.name}</td>
-                      <td>{row.qty}</td>
-                      <td>{row.warehouse}</td>
-                      <td>{row.vendors}</td>
-                      <td>{row.amount}</td>
-                      <td>{row.payment}</td>
-                      <td>{row.date}</td>
-                      <td>
-                        <div className="d-flex gap-2">
-                          <Button size="sm" variant="outline-primary" onClick={() => { setSelected(row); setShowView(true); }}>
-                            <FaEye />
-                          </Button>
-                          <Button size="sm" variant="outline-success" onClick={() => { setForm(row); setShowEdit(true); }}>
-                            <FaEdit />
-                          </Button>
-                          <Button size="sm" variant="outline-danger" onClick={() => { setSelected(row); setShowDelete(true); }}>
-                            <FaTrash />
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </div>
-          </Card.Body>
-        </Card>
-
-        {/* Add Order Modal */}
-        <Modal show={showAdd} onHide={() => setShowAdd(false)} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>Add Order</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group className="mb-2">
-                <Form.Label>Product ID</Form.Label>
-                <Form.Control name="id" value={form.id} onChange={handleChange} />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Product</Form.Label>
-                <Form.Control name="name" value={form.name} onChange={handleChange} />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Quantity</Form.Label>
-                <Form.Control name="qty" value={form.qty} onChange={handleChange} type="number" />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Warehouse</Form.Label>
-                <Form.Control name="warehouse" value={form.warehouse} onChange={handleChange} />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Vendors</Form.Label>
-                <Form.Control name="vendors" value={form.vendors} onChange={handleChange} />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Amount</Form.Label>
-                <Form.Control name="amount" value={form.amount} onChange={handleChange} />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Payment Type</Form.Label>
-                <Form.Control name="payment" value={form.payment} onChange={handleChange} />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Date</Form.Label>
-                <Form.Control name="date" value={form.date} onChange={handleChange} type="date" />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowAdd(false)}>
-              Cancel
-            </Button>
-            <Button style={{ backgroundColor: "#002d4d", border: "none" }} onClick={handleAdd}>
-              Save
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-        {/* View Modal */}
-        <Modal show={showView} onHide={() => setShowView(false)} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>View Order</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {selected && (
-              <div>
-                <p><b>Product ID:</b> {selected.id}</p>
-                <p><b>Product:</b> {selected.name}</p>
-                <p><b>Quantity:</b> {selected.qty}</p>
-                <p><b>Warehouse:</b> {selected.warehouse}</p>
-                <p><b>Vendors:</b> {selected.vendors}</p>
-                <p><b>Amount:</b> {selected.amount}</p>
-                <p><b>Payment Type:</b> {selected.payment}</p>
-                <p><b>Date:</b> {selected.date}</p>
-              </div>
-            )}
-          </Modal.Body>
-        </Modal>
-
-        {/* Edit Modal */}
-        <Modal show={showEdit} onHide={() => setShowEdit(false)} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>Edit Order</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group className="mb-2">
-                <Form.Label>Product ID</Form.Label>
-                <Form.Control name="id" value={form.id} onChange={handleChange} readOnly />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Product</Form.Label>
-                <Form.Control name="name" value={form.name} onChange={handleChange} />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Quantity</Form.Label>
-                <Form.Control name="qty" value={form.qty} onChange={handleChange} type="number" />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Warehouse</Form.Label>
-                <Form.Control name="warehouse" value={form.warehouse} onChange={handleChange} />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Vendors</Form.Label>
-                <Form.Control name="vendors" value={form.vendors} onChange={handleChange} />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Amount</Form.Label>
-                <Form.Control name="amount" value={form.amount} onChange={handleChange} />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Payment Type</Form.Label>
-                <Form.Control name="payment" value={form.payment} onChange={handleChange} />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Date</Form.Label>
-                <Form.Control name="date" value={form.date} onChange={handleChange} type="date" />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowEdit(false)}>
-              Cancel
-            </Button>
-            <Button style={{ backgroundColor: "#002d4d", border: "none" }} onClick={handleEdit}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-        {/* Delete Modal */}
-        <Modal show={showDelete} onHide={() => setShowDelete(false)} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirm Delete</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Are you sure you want to delete this record?
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowDelete(false)}>
-              Cancel
-            </Button>
-            <Button variant="danger" onClick={handleDelete}>
-              Delete
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </Container>
+      </div>
     </div>
   );
 };
