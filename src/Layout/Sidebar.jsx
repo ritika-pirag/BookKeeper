@@ -39,7 +39,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
   };
 
   const navItem = (to, icon, label) => (
-    <li className="nav-item ps-2" key={to}>
+    <li className="nav-item " key={to}>
       {" "}
       {/* Added 'ps-2' for extra left spacing */}
       <Link
@@ -173,9 +173,9 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
                 },
 
                 {
-                  to: "/company/device",
+                  to: "/company/tax",
                   icon: "fas fa-industry",
-                  label: "device",
+                  label: "Tax",
                 },
 
                 {
@@ -189,6 +189,11 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
                   label: "Invoice",
                 },
 
+                {
+                  to: "/company/manageinvoice",
+                  icon: "fas fa-file-invoice", // Font Awesome icon for invoice
+                  label: "ManageInvoice",
+                },
                 // {
                 //   to: "/company/productdetails",
                 //   icon: "fas fa-box-open",

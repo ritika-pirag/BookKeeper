@@ -1,7 +1,7 @@
 .sidebar {
   background-color: #032d45; /* Dark navy background */
   color: hsl(0, 0%, 100%);
-  width: 240px;
+  width: 250px;
   border-right: none;
   z-index: 1000 !important;
   overflow-y: auto;

@@ -17,7 +17,7 @@ import RequestPlan from "./Components/Dashboard/RequestPlan";
 import Payments from "./Components/Dashboard/Payments";
 import SystemSettings from "./Components/Dashboard/SystemSettings";
 import CompanyDashbaord from "./Components/Company-Dashboard/CompanyDashbaord";
-import ProductDetails from "./Components/Company-Dashboard/Inventory/ProductDetails";
+// import ProductDetails from "./Components/Company-Dashboard/Inventory/ProductDetails";
 import BatchExpiry from "./Components/Company-Dashboard/Inventory/BatchExpiry";
 import ManageStock from "./Components/Company-Dashboard/Inventory/ManageStock";
 import LowStock from "./Components/Company-Dashboard/Inventory/LowStock";
@@ -86,9 +86,14 @@ import BrandPage from "./Components/Company-Dashboard/Inventory/SiteData/BrandPa
 import Productt from "./Components/Company-Dashboard/Inventory/Productt";
 import AddProduct from "./Components/Company-Dashboard/Inventory/Product/AddProduct";
 import DevicePage from "./Components/Company-Dashboard/Inventory/SiteData/DevicePage";
-import TaxPage from "./Components/Company-Dashboard/Inventory/TaxPage";
+import TaxPage from "./Components/Company-Dashboard/Inventory/SiteData/TaxPage";
 import StockTransfer from "./Components/Company-Dashboard/Inventory/SiteData/StockTransfer";
 import PointOfSale from "./Components/Company-Dashboard/Inventory/Pos/PointOfSale";
+import InvoiceSummary from "./Components/Company-Dashboard/Inventory/Pos/InvoiceSummary";
+import ManageInvoices from "./Components/Company-Dashboard/Inventory/Pos/ManageInvoice";
+import ViewInvoice from "./Components/Company-Dashboard/Inventory/Pos/ViewInvoice";
+import EditInvoice from "./Components/Company-Dashboard/Inventory/Pos/EditInvoice";
+import Profile from "./Layout/ProfileModal";
 
 function App() {
   return (
@@ -97,7 +102,7 @@ function App() {
         {/* Public routes without sidebar */}
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-
+   
         {/* Admin Dashboard routes with MainLayout */}
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<Dashboardd />} />
@@ -127,14 +132,17 @@ function App() {
           <Route path="/company/product" element={<Productt />} />
           <Route path="/company/createproduct" element={<AddProduct />} />
           <Route path="/company/device" element={<DevicePage />} />
-          <Route path="/company/taxpage" element={<TaxPage />} />
+          <Route path="/company/tax" element={<TaxPage/>} />
           <Route path="/company/ponitofsale" element={<PointOfSale />} />
+          <Route path="/company/invoice-summary" element={<InvoiceSummary/>} />
           {/* Sales */}
           <Route path="/company/invoice" element={<Invoice />} />
-
+          <Route path="/company/manageinvoice" element={<ManageInvoices/>} />
+          <Route path="/company/editinvoice" element={<EditInvoice/>} />
+          <Route path="/company/viewinvoice" element={<ViewInvoice/>} />
           {/* Sales */}
-          <Route path="/company/invoice" element={<Invoice />} />
-          <Route path="/company/salesreturn" element={<SalesReturn />} />
+          {/* <Route path="/company/invoice" element={<Invoice />} /> */}
+          {/* <Route path="/company/salesreturn" element={<SalesReturn />} /> */}
 
           {/* Payments */}
           <Route path="/company/coupons" element={<Coupons />} />
