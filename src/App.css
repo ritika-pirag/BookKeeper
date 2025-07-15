@@ -9,9 +9,6 @@ a{
 input:focus{
     border: 1px solid #023047 !important;
 }
-
-
-
 /* General Modal Styling */
 .modal-backdrop {
   position: fixed;
@@ -78,12 +75,7 @@ label {
   margin-bottom: 4px;
   text-align: left !important;
 }
-
-
-
 /* Toggle Button for Status */
-
-
 .toggle-btn.active {
   background-color: #10B981; /* Green for active */
 }
@@ -128,6 +120,8 @@ label {
     width: 100%;
     margin: 8px 0;
   }
-}
 
- 
+  .sidebar-nav{
+    height: auto;
+  }
+}
