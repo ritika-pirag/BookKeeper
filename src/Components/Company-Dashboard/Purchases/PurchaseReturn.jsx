@@ -178,14 +178,7 @@ const PurchaseReturn = () => {
                     </h2>
                     <button
                         className="btn d-flex align-items-center gap-2 mt-1 mt-md-0"
-                        style={{
-                            backgroundColor: 'orange',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '6px',
-                            padding: '10px 20px',
-                            fontWeight: '500'
-                        }}
+           style={{ backgroundColor: '#3daaaa', border: '1px solid #3daaaa' }}
                         onClick={() => {
                             setIsEditMode(false);
                             setShowModal(true);
@@ -195,6 +188,7 @@ const PurchaseReturn = () => {
                         New Return
                     </button>
                 </div>
+             
 
                 {/* Filters */}
                 <div className="row mb-4 g-3">
@@ -241,134 +235,95 @@ const PurchaseReturn = () => {
                 </div>
 
                 {/* Table */}
-                <div className="card" style={{ border: 'none', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-                    <div className="table-responsive">
-                        <table className="table table-bordered text-center align-middle product-table mb-0">
-                            <thead className="table-light text-white">
-                                <tr>
-                                    <th className="py-3">
-                                        RETURN #
-                                    </th>
-                                    <th className="py-3">
-                                        INVOICE #
-                                    </th>
-                                    <th className="py-3">
-                                        VENDOR
-                                    </th>
-                                    <th className="py-3">
-                                        DATE
-                                    </th>
-                                    <th className="py-3">
-                                        AMOUNT
-                                    </th>
-                                    <th className="py-3">
-                                        STATUS
-                                    </th>
-                                    <th className="py-3">
-                                        ACTION
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredReturns.map((item) => (
-                                    <tr key={item.id}>
-                                        <td style={{
-                                            fontWeight: '500',
-                                            color: '#0066cc',
-                                            verticalAlign: 'middle',
-                                            borderBottom: '1px solid #f8f9fa',
-                                            padding: '16px 12px'
-                                        }}>
-                                            {item.id}
-                                        </td>
-                                        <td style={{
-                                            color: '#6c757d',
-                                            verticalAlign: 'middle',
-                                            borderBottom: '1px solid #f8f9fa',
-                                            padding: '16px 12px'
-                                        }}>
-                                            {item.invoice}
-                                        </td>
-                                        <td style={{
-                                            verticalAlign: 'middle',
-                                            borderBottom: '1px solid #f8f9fa',
-                                            padding: '16px 12px'
-                                        }}>
-                                            {item.vendor}
-                                        </td>
-                                        <td style={{
-                                            color: '#6c757d',
-                                            verticalAlign: 'middle',
-                                            borderBottom: '1px solid #f8f9fa',
-                                            padding: '16px 12px'
-                                        }}>
-                                            {item.date}
-                                        </td>
-                                        <td style={{
-                                            fontWeight: '500',
-                                            verticalAlign: 'middle',
-                                            borderBottom: '1px solid #f8f9fa',
-                                            padding: '16px 12px'
-                                        }}>
-                                            ₹{item.amount.toLocaleString()}
-                                        </td>
-                                        <td style={{
-                                            verticalAlign: 'middle',
-                                            borderBottom: '1px solid #f8f9fa',
-                                            padding: '16px 12px'
-                                        }}>
-                                            <span
-                                                style={{
-                                                    ...getStatusBadge(item.status),
-                                                    fontSize: '12px',
-                                                    fontWeight: '500',
-                                                    padding: '6px 12px',
-                                                    borderRadius: '4px',
-                                                    display: 'inline-block'
-                                                }}
-                                            >
-                                                {item.status}
-                                            </span>
-                                        </td>
-                                        <td style={{
-                                            verticalAlign: 'middle',
-                                            borderBottom: '1px solid #f8f9fa',
-                                            padding: '16px 12px'
-                                        }}>
-                                            <div className="d-flex gap-2 justify-content-center">
-                                                <button
-                                                    className="btn outline-info btn-sm py-1 px-1 text-info"
+            <div className="card" style={{ border: 'none', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+  <div className="table-responsive">
+    <table className="table table-bordered text-center align-middle product-table mb-0">
+      <thead className="table-light text-white">
+        <tr>
+          <th className="py-3">RETURN #</th>
+          <th className="py-3">INVOICE #</th>
+          <th className="py-3">VENDOR</th>
+          <th className="py-3">DATE</th>
+          <th className="py-3">AMOUNT</th>
+          <th className="py-3">STATUS</th>
+          <th className="py-3">ACTION</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredReturns.map((item) => (
+          <tr key={item.id}>
+            <td style={{ fontWeight: '500', color: '#0066cc', verticalAlign: 'middle', borderBottom: '1px solid #f8f9fa', padding: '16px 12px' }}>
+              {item.id}
+            </td>
+            <td style={{ color: '#6c757d', verticalAlign: 'middle', borderBottom: '1px solid #f8f9fa', padding: '16px 12px' }}>
+              {item.invoice}
+            </td>
+            <td style={{ verticalAlign: 'middle', borderBottom: '1px solid #f8f9fa', padding: '16px 12px' }}>
+              {item.vendor}
+            </td>
+            <td style={{ color: '#6c757d', verticalAlign: 'middle', borderBottom: '1px solid #f8f9fa', padding: '16px 12px' }}>
+              {item.date}
+            </td>
+            <td style={{ fontWeight: '500', verticalAlign: 'middle', borderBottom: '1px solid #f8f9fa', padding: '16px 12px' }}>
+              ₹{item.amount.toLocaleString()}
+            </td>
+            <td style={{ verticalAlign: 'middle', borderBottom: '1px solid #f8f9fa', padding: '16px 12px' }}>
+              <span
+                style={{
+                  ...getStatusBadge(item.status),
+                  fontSize: '12px',
+                  fontWeight: '500',
+                  padding: '6px 12px',
+                  borderRadius: '4px',
+                  display: 'inline-block'
+                }}
+              >
+                {item.status}
+              </span>
+            </td>
+            <td style={{ verticalAlign: 'middle', borderBottom: '1px solid #f8f9fa', padding: '16px 12px' }}>
+              <div className="d-flex gap-2 justify-content-center">
+                <button className="btn outline-info btn-sm py-1 px-1 text-info" onClick={() => handleViewClick(item)}>
+                  <FaEye size={16} />
+                </button>
+                <button className="btn outline-primary btn-sm text-warning py-1 px-1" onClick={() => handleEditClick(item)}>
+                  <FaEdit size={16} />
+                </button>
+                <button className="btn outline-primary btn-sm text-danger py-2 px-1" onClick={() => handleDeleteClick(item.id)}>
+                  <FaTrash size={16} />
+                </button>
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
 
-
-                                                    onClick={() => handleViewClick(item)}
-                                                >
-                                                    <FaEye size={16} />
-
-                                                </button>
-                                                <button
-                                                    className="btn outline-primary  btn-sm text-warning py-1 px-1"
-
-                                                    onClick={() => handleEditClick(item)}
-                                                >
-                                                    <FaEdit size={16} />
-
-                                                </button>
-                                                <button
-                                                    className="btn outline-primary btn-sm text-danger py-2 px-1"
-
-                                                    onClick={() => handleDeleteClick(item.id)}
-                                                >
-                                                    <FaTrash size={16} />
-
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+  {/* Pagination */}
+  <div className="d-flex flex-wrap justify-content-between align-items-center mt-3 px-3 gap-2">
+    <span className="small text-muted">
+      Showing 1 to {filteredReturns.length} of {filteredReturns.length} entries
+    </span>
+    <nav>
+      <ul className="pagination pagination-sm mb-0 flex-wrap">
+        <li className="page-item disabled">
+          <button className="page-link rounded-start">&laquo;</button>
+        </li>
+        <li className="page-item active">
+          <button
+            className="page-link"
+            style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+          >1</button>
+        </li>
+        <li className="page-item"><button className="page-link">2</button></li>
+        <li className="page-item">
+          <button className="page-link rounded-end">&raquo;</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
 
                 {/* View Modal */}
                 {selectedReturn && (
@@ -440,14 +395,7 @@ const PurchaseReturn = () => {
                                         type="button"
                                         className="btn"
                                         onClick={() => setSelectedReturn(null)}
-                                        style={{
-                                            backgroundColor: 'orange',
-                                            color: 'white',
-                                            border: 'none',
-                                            borderRadius: '4px',
-                                            padding: '8px 16px',
-                                            fontWeight: '500'
-                                        }}
+                                             style={{ backgroundColor: '#3daaaa', border: '1px solid #3daaaa' }}
                                     >
                                         Close
                                     </button>
@@ -507,38 +455,7 @@ const PurchaseReturn = () => {
                     </div>
                 )}
 
-                {/* Pagination */}
-                <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap">
-                    <div style={{ color: '#6c757d', fontSize: '14px' }}>
-                        Showing 1 to {filteredReturns.length} of {filteredReturns.length} entries
-                    </div>
-                    <nav className="mt-2 mt-md-0">
-                        <ul className="pagination pagination-sm mb-0">
-                            <li className="page-item disabled">
-                                <span className="page-link" style={{ color: '#6c757d', border: '1px solid orange' }}>
-                                    Previous
-                                </span>
-                            </li>
-                            <li className="page-item active">
-                                <span
-                                    className="page-link"
-                                    style={{
-                                        backgroundColor: 'orange',
-                                        borderColor: '#0d6efd',
-                                        color: 'white'
-                                    }}
-                                >
-                                    1
-                                </span>
-                            </li>
-                            <li className="page-item disabled">
-                                <span className="page-link" style={{ color: '#6c757d', border: '1px solid orange' }}>
-                                    Next
-                                </span>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+              
 
                 {/* Add/Edit Modal */}
                 {showModal && (
@@ -714,13 +631,7 @@ const PurchaseReturn = () => {
                                         type="button"
                                         className="btn"
                                         onClick={handleSubmit}
-                                        style={{
-                                            backgroundColor: 'orange',
-                                            color: 'white',
-                                            border: 'none',
-                                            borderRadius: '4px',
-                                            padding: '8px 20px'
-                                        }}
+                                                 style={{ backgroundColor: '#3daaaa', border: '1px solid #3daaaa' }}
                                     >
                                         {isEditMode ? 'Update Return' : 'Create Return'}
                                     </button>

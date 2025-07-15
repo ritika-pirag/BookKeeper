@@ -266,6 +266,8 @@ const CompanyDashboard = () => {
             ))}
           </tbody>
         </Table>
+ 
+
       </div>
     </Card>
   </Col>
@@ -333,6 +335,29 @@ const CompanyDashboard = () => {
             ))}
           </tbody>
         </Table>
+               {/* Pagination */}
+<div className="d-flex justify-content-between align-items-center mt-3 px-3">
+  <span className="small text-muted">
+    Showing 1 to {expiredProducts.length} of {expiredProducts.length} results
+  </span>
+
+  <nav>
+    <ul className="pagination pagination-sm mb-0">
+      <li className="page-item disabled">
+        <button className="page-link rounded-start">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button className="page-link" style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}>1</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link rounded-end">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
       </Card>
     </Col>
   </Row>

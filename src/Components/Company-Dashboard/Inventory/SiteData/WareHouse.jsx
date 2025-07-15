@@ -20,6 +20,8 @@ const WareHouse = () => {
       { _id: "4", name: "East Godown", location: "Kolkata" },
       { _id: "5", name: "West Hub", location: "Mumbai" },
       { _id: "6", name: "Spare Store", location: "Hyderabad" },
+      { _id: "7", name: "Test Depot", location: "Pune" },
+      { _id: "8", name: "Central Hub", location: "Lucknow" },
     ];
     setWarehouses(dummyData);
   }, []);
@@ -72,19 +74,27 @@ const WareHouse = () => {
     currentPage * itemsPerPage
   );
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div className="mx-md-5 mt-5 mx-3">
       <div className="shadow p-4">
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between flex-wrap gap-2">
           <h4 className="fw-semibold">Manage Warehouses</h4>
-          <Button className="set_btn text-white fw-semibold" onClick={() => handleModalShow()}>
+          <Button
+            className="set_btn text-white fw-semibold"
+            style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+            onClick={() => handleModalShow()}
+          >
             <i className="fa fa-plus me-2"></i> Create Warehouse
           </Button>
         </div>
 
         <div className="table-responsive mt-3">
           <Table bordered striped hover>
-            <thead>
+            <thead className="table-light">
               <tr>
                 <th>#</th>
                 <th>Warehouse Name</th>
@@ -100,10 +110,19 @@ const WareHouse = () => {
                     <td>{w.name}</td>
                     <td>{w.location}</td>
                     <td>
-                      <Button variant="warning" size="sm" className="me-2" onClick={() => handleModalShow(w)}>
+                      <Button
+                        variant="warning"
+                        size="sm"
+                        className="me-2"
+                        onClick={() => handleModalShow(w)}
+                      >
                         <FaEdit />
                       </Button>
-                      <Button variant="danger" size="sm" onClick={() => handleDelete(w._id)}>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => handleDelete(w._id)}
+                      >
                         <FaTrash />
                       </Button>
                     </td>
@@ -117,29 +136,50 @@ const WareHouse = () => {
         </div>
 
         {/* Pagination */}
-        <div className="d-flex justify-content-center gap-2 mt-4">
-          <Button
-            variant="secondary"
-            size="sm"
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage(currentPage - 1)}
-          >
-            Prev
-          </Button>
-          <span className="align-self-center">Page {currentPage} of {totalPages}</span>
-          <Button
-            variant="secondary"
-            size="sm"
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage(currentPage + 1)}
-          >
-            Next
-          </Button>
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3 gap-2 px-2">
+          <span className="small text-muted">
+            Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+            {Math.min(currentPage * itemsPerPage, warehouses.length)} of {warehouses.length} entries
+          </span>
+          <nav>
+            <ul className="pagination pagination-sm mb-0 flex-wrap">
+              <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                <button
+                  className="page-link rounded-start"
+                  onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+                >
+                  &laquo;
+                </button>
+              </li>
+              {Array.from({ length: totalPages }, (_, index) => (
+                <li
+                  key={index + 1}
+                  className={`page-item ${currentPage === index + 1 ? "active" : ""}`}
+                >
+                  <button
+                    className="page-link"
+                    style={currentPage === index + 1 ? { backgroundColor: '#3daaaa', borderColor: '#3daaaa' } : {}}
+                    onClick={() => handlePageChange(index + 1)}
+                  >
+                    {index + 1}
+                  </button>
+                </li>
+              ))}
+              <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                <button
+                  className="page-link rounded-end"
+                  onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
+                >
+                  &raquo;
+                </button>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
 
       {/* Modal */}
-      <Modal show={showModal} onHide={handleModalClose}>
+      <Modal show={showModal} onHide={handleModalClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>{editId ? "Edit Warehouse" : "Create Warehouse"}</Modal.Title>
         </Modal.Header>
@@ -167,7 +207,7 @@ const WareHouse = () => {
 
             <div className="d-flex justify-content-end mt-3">
               <Button variant="secondary" onClick={handleModalClose}>Close</Button>
-              <Button variant="primary" type="submit" className="ms-2">
+              <Button variant="primary" type="submit" className="ms-2"    style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}>
                 {editId ? "Update" : "Create"}
               </Button>
             </div>

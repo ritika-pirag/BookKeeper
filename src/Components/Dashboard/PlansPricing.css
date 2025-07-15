@@ -25,3 +25,50 @@
     }
   }
   
+   .custom-pagination-success .page-link {
+  color: #53b2a5; /* Dark green text */
+  border-color: #53b2a5; /* Dark green border */
+}
+
+.custom-pagination-success .page-item.active .page-link {
+  background-color: #53b2a5; /* Dark green background */
+  border-color: #53b2a5; /* Dark green border */
+  color: #fff; /* White text */
+}
+
+.custom-pagination-success .page-link:hover {
+  background-color: #53b2a5; /* Dark green background on hover */
+  border-color: #53b2a5; /* Dark green border on hover */
+  color: #fff; /* White text on hover */
+  opacity: 0.8; /* Slightly transparent on hover */
+}
+
+/* Optional: Add transition for smooth hover effect */
+.custom-pagination-success .page-link {
+  transition: all 0.3s ease;
+}
+  @media (max-width: 576px) {
+    .table-responsive table {
+      min-width: 600px;
+    }
+  
+    .custom-pagination-orange {
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+  
+    .input-group {
+      flex-direction: column;
+    }
+  
+    .input-group .form-control {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  
+    .input-group .btn {
+      width: 100%;
+    }
+  }
+  

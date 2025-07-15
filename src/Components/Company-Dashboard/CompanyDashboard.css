@@ -47,3 +47,17 @@
     border-radius: 1rem !important;
   }
   
+  .pagination .page-link {
+    color: #3daaaa;
+    border: 1px solid #3daaaa;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #3daaaa;
+    color: #fff;
+    border-color: #3daaaa;
+}
+
+.pagination .page-link:focus {
+    box-shadow: none;
+}

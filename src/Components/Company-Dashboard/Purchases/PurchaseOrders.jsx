@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Badge, Form, Row, Col } from 'react-bootstrap';
+import { Row, Col, Card, Table, Button, Badge, Form } from 'react-bootstrap';
 import { FaEye, FaDownload, FaTrash } from 'react-icons/fa';
 
 const orders = [
@@ -19,65 +19,90 @@ const getStatusBadge = (status) => {
 const PurchaseOrders = () => {
   return (
     <div className="container my-4">
-      <h5 className="mb-3">Purchase Orders</h5>
-
-      {/* Filters Row */}
-      <Row className="align-items-center mb-3 g-2">
-        <Col xs={12} md={3}>
-          <Form.Select size="sm" defaultValue="10">
-            <option value="10">Show 10 entries</option>
-            <option value="25">Show 25 entries</option>
-            <option value="50">Show 50 entries</option>
-          </Form.Select>
-        </Col>
-        <Col xs={12} md={{ span: 3, offset: 6 }}>
-          <Form.Control size="sm" type="text" placeholder="Search" />
-        </Col>
-      </Row>
-
-      {/* Table */}
-      <div className="table-responsive">
-        <Table bordered hover className="align-middle text-center">
-          <thead className="table-light">
-            <tr>
-              <th>No</th>
-              <th>Order </th>
-              <th>Supplier</th>
-              <th>Date</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th>Settings</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order, index) => (
-              <tr key={order.id}>
-                <td>{index + 1}</td>
-                <td>{order.orderNo}</td>
-                <td>{order.supplier || '-'}</td>
-                <td>{order.date}</td>
-                <td>{order.amount}</td>
-                <td>{getStatusBadge(order.status)}</td>
-                <td className="d-flex justify-content-center flex-wrap gap-1">
-                  <Button size="sm" variant="success"><FaEye className="me-1" /></Button>
-                  <Button size="sm" variant="info"><FaDownload /></Button>
-                  <Button size="sm" variant="danger"><FaTrash /></Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
-
-      {/* Pagination */}
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3 gap-2">
-        <span className="text-muted">Showing 1 to 5 of 5 entries</span>
-        <div>
-          <Button size="sm" variant="light" className="me-1" disabled>Previous</Button>
-          <Button size="sm" variant="primary" active>1</Button>
-          <Button size="sm" variant="light" className="ms-1">Next</Button>
+      <Card className="bg-white shadow-sm rounded-3 p-3">
+        <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+          <h5 className="fw-semibold mb-0">Purchase Orders</h5>
+          <Badge pill bg="warning" className="text-dark">
+            Recent Orders
+          </Badge>
         </div>
-      </div>
+
+        {/* Filters */}
+        <Row className="align-items-center mb-3 g-2">
+          <Col xs={12} md={3}>
+            <Form.Select size="sm" defaultValue="10">
+              <option value="10">Show 10 entries</option>
+              <option value="25">Show 25 entries</option>
+              <option value="50">Show 50 entries</option>
+            </Form.Select>
+          </Col>
+          <Col xs={12} md={{ span: 3, offset: 6 }}>
+            <Form.Control size="sm" type="text" placeholder="Search" />
+          </Col>
+        </Row>
+
+        {/* Table */}
+        <div className="table-responsive">
+          <Table hover responsive bordered className="align-middle text-center mb-0">
+            <thead className="table-light">
+              <tr>
+                <th className="py-3">No</th>
+                <th className="py-3">Order</th>
+                <th className="py-3">Supplier</th>
+                <th className="py-3">Date</th>
+                <th className="py-3">Amount</th>
+                <th className="py-3">Status</th>
+                <th className="py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order, index) => (
+                <tr key={order.id}>
+                  <td>{index + 1}</td>
+                  <td>{order.orderNo}</td>
+                  <td>{order.supplier || '-'}</td>
+                  <td>{order.date}</td>
+                  <td>{order.amount}</td>
+                  <td>{getStatusBadge(order.status)}</td>
+                  <td>
+                    <div className="d-flex justify-content-center gap-2 flex-wrap">
+                      <Button variant="outline-primary" size="sm"><FaEye /></Button>
+                      <Button variant="outline-success" size="sm"><FaDownload /></Button>
+                      <Button variant="outline-danger" size="sm"><FaTrash /></Button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+
+        {/* Pagination */}
+        <div className="d-flex flex-wrap justify-content-between align-items-center mt-3 px-2 gap-2">
+          <span className="small text-muted">
+            Showing 1 to {orders.length} of {orders.length} entries
+          </span>
+          <nav>
+            <ul className="pagination pagination-sm mb-0 flex-wrap">
+              <li className="page-item disabled">
+                <button className="page-link rounded-start">&laquo;</button>
+              </li>
+              <li className="page-item active">
+                <button
+                  className="page-link"
+                  style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+                >
+                  1
+                </button>
+              </li>
+              <li className="page-item"><button className="page-link">2</button></li>
+              <li className="page-item">
+                <button className="page-link rounded-end">&raquo;</button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </Card>
     </div>
   );
 };
