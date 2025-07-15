@@ -95,7 +95,7 @@ const MainLayout = () => {
           aria-labelledby="mobileSidebarLabel"
           data-bs-scroll="true"
           data-bs-backdrop="false"
-          style={{ width: '240px' }}
+          style={{ width: '240px'}}
         >
           <div className="offcanvas-body p-0">
             <Sidebar isMobile={true} onLinkClick={handleCloseSidebar} />
