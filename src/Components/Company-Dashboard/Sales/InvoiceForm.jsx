@@ -27,133 +27,149 @@ const InvoiceForm = () => {
   const handleClientModalShow = () => setShowClientModal(true);
 
   return (
-    <div className="container px-3 py-3 mt-2">
-      <Row>
-        <Col md={6} sm={12}>
-          <h5 className="d-flex align-items-center justify-content-between">
-            Bill To
-            <Button variant="outline-primary" size="sm" onClick={handleClientModalShow}>
-              Add Client
-            </Button>
-          </h5>
-          <Form.Group className="mb-2">
-            <Form.Control placeholder="Enter Customer Name or Mobile Number to search" />
-          </Form.Group>
-          <Form.Group className="mb-2">
-            <Form.Control placeholder="Client Details" />
-          </Form.Group>
-          <Form.Group>
-            <Form.Select>
-              <option>All</option>
-              <option>Warehouse A</option>
-              <option>Warehouse B</option>
-            </Form.Select>
-          </Form.Group>
+    <div className="invoice-form-container">
+      <Row className="g-3">
+        <Col lg={6} md={12}>
+          <div className="invoice-section-card">
+            <h5 className="d-flex align-items-center justify-content-between">
+              Bill To
+              <Button variant="outline-primary" size="sm" onClick={handleClientModalShow}>
+                Add Client
+              </Button>
+            </h5>
+            <Form.Group className="mb-2">
+              <Form.Control placeholder="Enter Customer Name or Mobile Number to search" />
+            </Form.Group>
+            <Form.Group className="mb-2">
+              <Form.Control as="textarea" rows={3} placeholder="Client Details" />
+            </Form.Group>
+            <Form.Group>
+              <Form.Select>
+                <option>All</option>
+                <option>Warehouse A</option>
+                <option>Warehouse B</option>
+              </Form.Select>
+            </Form.Group>
+          </div>
         </Col>
 
-        <Col md={6} sm={12}>
-          <h5>Invoice Properties</h5>
-          <Row className="mb-2">
-            <Col><Form.Control placeholder="Invoice Number" defaultValue="1082" /></Col>
-            <Col><Form.Control placeholder="Reference #" /></Col>
-          </Row>
-          <Row className="mb-2">
-            <Col><Form.Control type="date" defaultValue="2025-07-15" /></Col>
-            <Col><Form.Control type="date" defaultValue="2025-07-15" /></Col>
-          </Row>
-          <Row className="mb-2">
-            <Col>
-              <Form.Select>
-                <option>On</option>
-                <option>Off</option>
-              </Form.Select>
-            </Col>
-            <Col>
-              <Form.Select>
-                <option>% Discount After TAX</option>
-                <option>% Discount Before TAX</option>
-              </Form.Select>
-            </Col>
-          </Row>
-          <Form.Control as="textarea" placeholder="Invoice Note" className="mt-2" />
+        <Col lg={6} md={12}>
+          <div className="invoice-section-card">
+            <h5>Invoice Properties</h5>
+            <Row className="mb-2">
+              <Col><Form.Control placeholder="Invoice Number" defaultValue="1082" /></Col>
+              <Col><Form.Control placeholder="Reference #" /></Col>
+            </Row>
+            <Row className="mb-2">
+              <Col><Form.Control type="date" defaultValue="2025-07-15" /></Col>
+              <Col><Form.Control type="date" defaultValue="2025-07-15" /></Col>
+            </Row>
+            <Row className="mb-2">
+              <Col>
+                <Form.Select>
+                  <option>On</option>
+                  <option>Off</option>
+                </Form.Select>
+              </Col>
+              <Col>
+                <Form.Select>
+                  <option>% Discount After TAX</option>
+                  <option>% Discount Before TAX</option>
+                </Form.Select>
+              </Col>
+            </Row>
+            <Form.Control as="textarea" placeholder="Invoice Note" className="mt-2" rows={2} />
+          </div>
         </Col>
       </Row>
 
-      <div className="table-responsive mt-4">
-        <table className="table table-bordered">
-          <thead className="table-light text-nowrap">
-            <tr>
-              <th>Item Name</th>
-              <th>Quantity</th>
-              <th>Rate</th>
-              <th>Tax(%)</th>
-              <th>Tax</th>
-              <th>Discount</th>
-              <th>Amount ($)</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item, index) => (
-              <tr key={index}>
-                <td>
-                  <Form.Control placeholder="Enter Product name or Code" className="mb-2" />
-                  <Form.Control placeholder="Enter Product description" />
-                </td>
-                <td><Form.Control type="number" defaultValue={1} /></td>
-                <td><Form.Control /></td>
-                <td><Form.Control /></td>
-                <td>0</td>
-                <td><Form.Control /></td>
-                <td>$0</td>
-                <td>
-                  <Button variant="danger" size="sm" onClick={() => removeRow(index)}>
-                    ×
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <Button variant="success" onClick={addRow} className="mt-2">Add Row</Button>
-
-      <Row className="mt-4">
-        <Col md={{ span: 4, offset: 8 }} sm={12} className="text-end ms-auto">
-          <table className="table">
-            <tbody>
-              <tr><td>Total Tax</td><td>$ 0</td></tr>
-              <tr><td>Total Discount</td><td>$ 0</td></tr>
+      <div className="invoice-section-card mt-3">
+        <div className="table-responsive">
+          <table className="table table-bordered">
+            <thead className="table-light text-nowrap">
               <tr>
-                <td>Shipping</td>
-                <td><Form.Control placeholder="Value" /></td>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Rate</th>
+                <th>Tax(%)</th>
+                <th>Tax</th>
+                <th>Discount</th>
+                <th>Amount ($)</th>
+                <th>Action</th>
               </tr>
-              <tr><td><strong>Grand Total ($)</strong></td><td><strong>$ 0</strong></td></tr>
+            </thead>
+            <tbody>
+              {items.map((item, index) => (
+                <tr key={index}>
+                  <td>
+                    <Form.Control placeholder="Enter Product name or Code" className="mb-2" />
+                    <Form.Control as="textarea" rows={2} placeholder="Enter Product description" />
+                  </td>
+                  <td><Form.Control type="number" defaultValue={1} /></td>
+                  <td><Form.Control /></td>
+                  <td><Form.Control /></td>
+                  <td>0</td>
+                  <td><Form.Control /></td>
+                  <td>$0</td>
+                  <td>
+                    <Button variant="danger" size="sm" onClick={() => removeRow(index)}>
+                      ×
+                    </Button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
+        </div>
+
+        <Button variant="success" onClick={addRow} className="mt-2">Add Row</Button>
+      </div>
+
+      <Row className="mt-3">
+        <Col lg={{ span: 4, offset: 8 }} md={12}>
+          <div className="invoice-section-card">
+            <table className="table">
+              <tbody>
+                <tr><td>Total Tax</td><td>$ 0</td></tr>
+                <tr><td>Total Discount</td><td>$ 0</td></tr>
+                <tr>
+                  <td>Shipping</td>
+                  <td><Form.Control size="sm" placeholder="Value" /></td>
+                </tr>
+                <tr><td><strong>Grand Total ($)</strong></td><td><strong>$ 0</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
         </Col>
       </Row>
 
-      <Row className="mt-3 align-items-end">
-        <Col md={4} sm={12}>
-          <Form.Group>
-            <Form.Label>Payment Currency</Form.Label>
-            <Form.Select>
-              <option>Default</option>
-            </Form.Select>
-          </Form.Group>
+      <Row className="mt-3">
+        <Col lg={8} md={12}>
+          <div className="invoice-section-card">
+            <Row className="align-items-end">
+              <Col lg={6} md={12}>
+                <Form.Group>
+                  <Form.Label>Payment Currency</Form.Label>
+                  <Form.Select>
+                    <option>Default</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col lg={6} md={12}>
+                <Form.Group>
+                  <Form.Label>Payment Terms</Form.Label>
+                  <Form.Select>
+                    <option>Payment Due On Receipt</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
+          </div>
         </Col>
-        <Col md={4} sm={12}>
-          <Form.Group>
-            <Form.Label>Payment Terms</Form.Label>
-            <Form.Select>
-              <option>Payment Due On Receipt</option>
-            </Form.Select>
-          </Form.Group>
-        </Col>
-        <Col md={4} sm={12} className="text-end">
-          <Button variant="success" className="mt-2">Generate Invoice</Button>
+        <Col lg={4} md={12} className="d-flex align-items-end">
+          <div className="invoice-section-card w-100">
+            <Button variant="success" className="w-100">Generate Invoice</Button>
+          </div>
         </Col>
       </Row>
 
