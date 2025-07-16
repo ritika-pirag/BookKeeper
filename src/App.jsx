@@ -94,6 +94,7 @@ import EditInvoice from "./Components/Company-Dashboard/Inventory/Pos/EditInvoic
 import Profile from "./Layout/ProfileModal";
 import PurchaseOrderView from "./Components/Company-Dashboard/Purchases/PurchaseOrderView";
 
+import ViewInvoicee from "./Components/Company-Dashboard/Sales/ViewInvoicee";
 function App() {
   return (
     <Router>
@@ -141,6 +142,7 @@ function App() {
           <Route path="/company/viewinvoice" element={<ViewInvoice/>} />
           {/* Sales */}
           <Route path="/company/invoiceform" element={<InvoiceForm />} />
+          <Route path="/company/viewinvoicee" element={<ViewInvoicee/>} />
          
 
           {/* Payments */}

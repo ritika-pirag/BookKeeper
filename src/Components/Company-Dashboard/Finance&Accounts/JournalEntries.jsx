@@ -152,7 +152,7 @@ const JournalEntries = () => {
   };
 
   return (
-    <div className="bg-light product-header py-2">
+    <div className="bg-light product-header p-4 mt-2">
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-4 mb-4">
         <div>

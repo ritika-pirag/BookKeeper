@@ -1,54 +1,64 @@
 import React from 'react';
-import { Row, Col, Table, Button, Badge } from 'react-bootstrap';
-import logo from  "../../../assets/zirakTechh.png"
+import { Row, Col, Table, Button, Badge, Dropdown, ButtonGroup } from 'react-bootstrap';
 import {
   FaEdit, FaPrint, FaEye, FaMoneyBill, FaPaperPlane,
   FaGlobe, FaExchangeAlt, FaTimes
 } from 'react-icons/fa';
 
-const PurchaseOrderView = () => {
+const ViewInvoicee = () => {
   return (
-    <div className="mt-2 p-4">
+    <div className=" mt-4 p-4">
       {/* Action Bar */}
-<Row className="mb-4 align-items-start">
-  <Col md={8}>
-    <div className="d-flex flex-wrap gap-2">
-      <Button variant="warning" className="d-flex align-items-center gap-1">
-        <FaEdit /> <span>Edit Order</span>
-      </Button>
-      <Button variant="success" className="d-flex align-items-center gap-1">
-        <FaMoneyBill /> <span>Make Payment</span>
-      </Button>
-      <Button variant="primary" className="d-flex align-items-center gap-1">
-        <FaPaperPlane /> <span>Send</span>
-      </Button>
-      <Button variant="success" className="d-flex align-items-center gap-1">
-        <FaPrint /> <span>Print Order</span>
-      </Button>
-      <Button variant="info" className="d-flex align-items-center gap-1">
-        <FaGlobe /> <span>Public Preview</span>
-      </Button>
-      <Button variant="secondary" className="d-flex align-items-center gap-1">
-        <FaExchangeAlt /> <span>Change Status</span>
-      </Button>
-      <Button variant="danger" className="d-flex align-items-center gap-1">
-        <FaTimes /> <span>Cancel</span>
-      </Button>
-    </div>
-  </Col>
+      <Row className="mb-4 ">
+        <Col md={8}>
+          <div className="d-flex flex-wrap gap-2">
+            <Button variant="warning" className="d-flex align-items-center gap-1">
+              <FaEdit /> <span>Edit Invoice</span>
+            </Button>
+            <Button variant="success" className="d-flex align-items-center gap-1">
+              <FaMoneyBill /> <span>Receive Payment</span>
+            </Button>
+            <Button variant="primary" className="d-flex align-items-center gap-1">
+              <FaPaperPlane /> <span>Send</span>
+            </Button>
+            <Button variant="success" className="d-flex align-items-center gap-1">
+              <FaPrint /> <span>Print Invoice</span>
+            </Button>
+            <Button variant="info" className="d-flex align-items-center gap-1">
+              <FaGlobe /> <span>Public Preview</span>
+            </Button>
+            <Button variant="secondary" className="d-flex align-items-center gap-1">
+              <FaExchangeAlt /> <span>Change Status</span>
+            </Button>
+            <Button variant="danger" className="d-flex align-items-center gap-1">
+              <FaTimes /> <span>Cancel</span>
+            </Button>
 
-  <Col md={4} className="text-md-end mt-3 mt-md-0">
-    <h5 className="fw-bold mb-1">Purchase Order</h5>
-    <div>PO#1045</div>
-    <div>Reference:</div>
-    <div className="fw-bold mt-2">Gross Amount: <span className="text-success">$ 10.90</span></div>
-  </Col>
-</Row>
+            {/* Extra Dropdown Button */}
+            <Dropdown as={ButtonGroup}>
+              <Button variant="outline-info" className="text-black">Extra</Button>
+              <Dropdown.Toggle split variant="outline-info" className="text-black" id="dropdown-split-basic" />
+              <Dropdown.Menu>
+                <Dropdown.Item href="#">Delivery Note</Dropdown.Item>
+                <Dropdown.Item href="#">Proforma Invoice</Dropdown.Item>
+                <Dropdown.Item href="#">Copy Invoice</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        </Col>
 
-      {/* Supplier Info */}
+        <Col md={4} className="text-md-end mt-3 mt-md-0">
+          <h5 className="fw-bold mb-1">Invoice</h5>
+          <div>Invoice# INV-1045</div>
+          <div>Reference:</div>
+          <div className="fw-bold mt-2">Gross Amount: <span className="text-success">$ 10.90</span></div>
+        </Col>
+      </Row>
+
+      {/* Customer Info */}
       <Row className="mb-4">
         <Col md={6}>
-          <strong className="d-block mb-2">Bill From</strong>
+          <strong className="d-block mb-2">Bill To</strong>
           <div><strong className="text-primary">Haroun Spiers</strong></div>
           <div>4 Kings Park</div>
           <div>Zouparia do Monte, Portugal</div>
@@ -56,7 +66,7 @@ const PurchaseOrderView = () => {
           <div>Email: hspiers2g@redcross.org</div>
         </Col>
         <Col md={6} className="text-md-end mt-4 mt-md-0">
-          <div><strong>Order Date:</strong> 15-07-2025</div>
+          <div><strong>Invoice Date:</strong> 15-07-2025</div>
           <div><strong>Due Date:</strong> 15-07-2025</div>
           <div><strong>Terms:</strong> Payment Due On Receipt</div>
         </Col>
@@ -79,7 +89,7 @@ const PurchaseOrderView = () => {
           <tbody>
             <tr>
               <td>1</td>
-              <td>kjlkj;</td>
+              <td>Sample Product</td>
               <td>$ 10.00</td>
               <td>1</td>
               <td>$ 1.90 (19.00%)</td>
@@ -105,7 +115,7 @@ const PurchaseOrderView = () => {
                 <tr><td>TAX</td><td>$ 1.90</td></tr>
                 <tr><td>Shipping</td><td>$ 0.00</td></tr>
                 <tr className="fw-bold border-top"><td>Total</td><td>$ 10.90</td></tr>
-                <tr className="text-danger"><td>Payment Made</td><td>(-) $ 10.90</td></tr>
+                <tr className="text-danger"><td>Payment Received</td><td>(-) $ 10.90</td></tr>
                 <tr className="fw-bold border-top"><td>Balance Due</td><td>$ 0.00</td></tr>
               </tbody>
             </Table>
@@ -115,13 +125,12 @@ const PurchaseOrderView = () => {
 
       {/* Signature */}
       <div className="text-end mt-5 mb-5">
-        <img src={logo} alt="signature" height="40" />
         <div>(John Doe)</div>
         <small>Business Owner</small>
       </div>
 
-      {/* Debit Transactions */}
-      <h6 className="mb-3">Debit Transactions:</h6>
+      {/* Credit Transactions */}
+      <h6 className="mb-3">Credit Transactions:</h6>
       <div className="table-responsive mb-5">
         <Table bordered>
           <thead className="table-light">
@@ -139,7 +148,7 @@ const PurchaseOrderView = () => {
       </div>
 
       {/* Terms */}
-      <h6>Terms & Condition</h6>
+      <h6>Terms & Conditions</h6>
       <p className="mb-1 fw-bold">Payment Due On Receipt</p>
       <p className="mb-3">
         1. <strong>Prices And Payment:</strong><br />
@@ -149,12 +158,12 @@ const PurchaseOrderView = () => {
       {/* Public Access */}
       <p className="text-muted small mb-4">
         Public Access URL:<br />
-        https://billing.ultimatekode.com/neo/billing/purchase?id=1045&token=XXXXXXX
+        https://billing.ultimatekode.com/neo/billing/invoice?id=1045&token=XXXXXXX
       </p>
 
       {/* File Upload */}
       <div className="mt-4 mb-5">
-        <label className="fw-bold d-block mb-2">Files</label>
+        <label className="fw-bold d-block mb-2">Attachments</label>
         <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2">
           <Button variant="success" size="sm">Select files...</Button>
           <input type="file" />
@@ -165,4 +174,4 @@ const PurchaseOrderView = () => {
   );
 };
 
-export default PurchaseOrderView;
+export default ViewInvoicee;

@@ -170,7 +170,7 @@ const PurchaseReturn = () => {
     return (
 
 
-            <div className=" container px-3 mt-4 " >
+            <div className=" p-4 mt-4 " >
                 {/* Header */}
                 <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap">
                     <h2 className="mb-0" style={{ fontWeight: '600', color: '#212529', fontSize: '28px' }}>

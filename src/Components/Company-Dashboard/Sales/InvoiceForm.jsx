@@ -27,7 +27,7 @@ const InvoiceForm = () => {
   const handleClientModalShow = () => setShowClientModal(true);
 
   return (
-    <div className="container px-3 py-3 mt-2">
+    <div className="p-4  mt-2">
       <Row>
         <Col md={6} sm={12}>
           <h5 className="d-flex align-items-center justify-content-between">
