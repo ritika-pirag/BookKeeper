@@ -32,7 +32,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         className={`nav-link d-flex align-items-center sidebar-link px-3 py-2 ${activePath === to ? "active-link" : ""}`}
         style={linkStyle}
       >
-        <i className={`me-3 ${icon}`} style={iconStyle}></i>
+        <i className={`me-3  ${icon}`} style={iconStyle} ></i>
         <span>{label}</span>
       </Link>
     </div>
