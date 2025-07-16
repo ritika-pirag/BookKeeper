@@ -1,6 +1,6 @@
 .invoice-form-container {
   padding: 20px;
-  margin-left: 250px; /* Adjust based on your sidebar width */
+  /* margin-left: 250px; Adjust based on your sidebar width */
   transition: all 0.3s ease;
   background-color: #f8f9fa;
   min-height: 100vh;
