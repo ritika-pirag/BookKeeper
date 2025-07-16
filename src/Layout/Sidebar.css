@@ -24,7 +24,7 @@
 }
 
 .active-link {
-  background-color: #FFC107 !important;
+  background-color: #53b2a5!important;
   /* Yellow highlight */
   color: #000000 !important;
   font-weight: 600;
@@ -130,12 +130,12 @@
 }
 
 .sidebar-link:hover {
-  background-color: #FFC107 !important;
+  background-color: #53b2a5!important;
   transform: translateX(3px);
 }
 
 .active-link {
-  background-color: #FFC107 !important;
+  background-color: #53b2a5!important;
   /* Yellow highlight */
   color: #ffffff !important;
   font-weight: 600;
