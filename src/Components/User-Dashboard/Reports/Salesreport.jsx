@@ -83,7 +83,7 @@ const Salesreport = () => {
         </div>
 
         <div className="col-12 col-md-3 d-flex align-items-end">
-          <button className="btn w-100" style={{ backgroundColor: '#ffa726', color: '#fff' }}>Generate Report</button>
+          <button className="btn w-100" style={{ backgroundColor: '#3daaaaff', color: '#fff' }}>Generate Report</button>
         </div>
       </div>
 
@@ -147,6 +147,35 @@ const Salesreport = () => {
               </tr>
             </tbody>
           </table>
+          {/* Pagination */}
+<div className="d-flex justify-content-between align-items-center mt-3 px-3">
+  <span className="small text-muted">
+    Showing 1 to 3 of 3 results
+  </span>
+
+  <nav>
+    <ul className="pagination pagination-sm mb-0">
+      <li className="page-item disabled">
+        <button className="page-link rounded-start">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button
+          className="page-link"
+          style={{ backgroundColor: '#3daaaaff', borderColor: '#3daaaaff' }}
+        >
+          1
+        </button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link rounded-end">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
         </div>
       </div>
     </div>

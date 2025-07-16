@@ -14,7 +14,7 @@ import { FaFilePdf, FaFileExcel, FaPrint } from "react-icons/fa";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-const PurchaseDataa = [
+const purchaseData = [
   {
     ref: "PO2025",
     sku: "PT001",
@@ -94,7 +94,7 @@ const products = [
   "Sanford Chair Sofa",
 ];
 
-const PurchaseData= () => {
+const Purchasereport= () => {
   const [startDate, setStartDate] = useState(new Date("2025-07-03"));
   const [endDate, setEndDate] = useState(new Date("2025-07-09"));
   const [store, setStore] = useState("All");
@@ -213,7 +213,7 @@ const PurchaseData= () => {
               <Col xs={12} md={2} className="d-flex align-items-end">
                 <Button
                   style={{
-                    background: "#FFA94D",
+                    background: "#3daaaa",
                     border: "none",
                     fontWeight: 500,
                     fontSize: 17,
@@ -342,6 +342,35 @@ const PurchaseData= () => {
                   )}
                 </tbody>
               </Table>
+              {/* Pagination */}
+<div className="d-flex justify-content-between align-items-center mt-3 px-3">
+  <span className="small text-muted">
+    Showing 1 to {purchaseData.length} of {purchaseData.length} results
+  </span>
+
+  <nav>
+    <ul className="pagination pagination-sm mb-0">
+      <li className="page-item disabled">
+        <button className="page-link rounded-start">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button
+          className="page-link"
+          style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+        >
+          1
+        </button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link rounded-end">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
             </div>
           </Card.Body>
         </Card>
@@ -350,4 +379,4 @@ const PurchaseData= () => {
   );
 };
 
-export default PurchaseDataa;
+export default Purchasereport;

@@ -1,11 +1,32 @@
 .invoice-form-container {
-  max-width: 100%;
+  padding: 20px;
+  margin-left: 250px; /* Adjust based on your sidebar width */
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.invoice-section-card {
   background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .table td,
 .table th {
   vertical-align: middle;
+  padding: 12px 15px;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  background-color: #f8f9fa;
+  border-bottom-width: 1px;
 }
 
 textarea.form-control {
@@ -13,8 +34,50 @@ textarea.form-control {
   resize: vertical;
 }
 
+.form-control, .form-select {
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+}
+
+.form-control:focus, .form-select:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+}
+
+.btn-outline-primary {
+  border-color: #0d6efd;
+}
+
+.btn-success {
+  background-color: #198754;
+  border-color: #198754;
+}
+
+@media (max-width: 1199px) {
+  .invoice-form-container {
+    margin-left: 0;
+  }
+}
+
 @media (max-width: 768px) {
   .table {
+    font-size: 14px;
+  }
+  
+  .table td, .table th {
+    padding: 8px 10px;
+  }
+  
+  .invoice-section-card {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .invoice-form-container {
+    padding: 10px;
+  }
+  
+  .form-control, .form-select {
     font-size: 14px;
   }
 }

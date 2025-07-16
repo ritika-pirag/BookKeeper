@@ -113,23 +113,31 @@ const PurchaseOrders = () => {
         </Table>
       </div>
 
-      {/* Pagination */}
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3 gap-2">
-        <span className="text-muted">
-          Showing 1 to {orders.length} of {orders.length} entries
-        </span>
-        <div>
-          <Button size="sm" variant="light" className="me-1" disabled>
-            Previous
-          </Button>
-          <Button size="sm" variant="primary" active>
-            1
-          </Button>
-          <Button size="sm" variant="light" className="ms-1" disabled>
-            Next
-          </Button>
-        </div>
-      </div>
+ {/* Pagination */}
+<div className="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
+  <span className="small text-muted">
+    Showing 1 to {orders.length} of {orders.length} results
+  </span>
+  <nav>
+    <ul className="pagination pagination-sm mb-0 flex-wrap">
+      <li className="page-item disabled">
+        <button className="page-link rounded-start">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button
+          className="page-link"
+          style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+        >1</button>
+      </li>
+      <li className="page-item"><button className="page-link">2</button></li>
+      <li className="page-item">
+        <button className="page-link rounded-end">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+
     </div>
   );
 };
