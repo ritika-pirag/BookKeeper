@@ -262,36 +262,61 @@ const Expenses = () => {
                 <td>{expense.amount}</td>
                 <td className="d-flex justify-content-center gap-1">
                   <button
-                    className="btn outline-info btn-sm text-info border"
+                    className="btn outlin-info btn-sm  text-info"
                     data-bs-toggle="modal"
                     data-bs-target="#expenseDetailModal"
                     onClick={() => setSelectedExpense(expense)}
                   >
-                    <FaEye />
+                    <FaEye  size={16}/>
                   </button>
                   <button
-                    className="btn outline-warning btn-sm text-warning border"
+                    className="btn outline-warning btn-sm text-warning "
                     data-bs-toggle="modal"
                     data-bs-target="#editExpenseModal"
                     onClick={() => handleEdit(expense)}
                   >
-                    <FaEdit />
+                    <FaEdit size={16} />
                   </button>
                   <button
-                    className="btn outline-danger btn-sm text-danger border"
+                    className="btn outline-danger btn-sm text-danger "
                     data-bs-toggle="modal"
                     data-bs-target="#deleteExpenseModal"
                     onClick={() => handleDelete(expense)}
                   >
-                    <FaTrash />
+                    <FaTrash size={16}/>
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        
       </div>
-
+{/* Pagination UI */}
+<div className="d-flex justify-content-between align-items-center mt-3 px-3 flex-wrap">
+  <span className="small text-muted">Showing 1 to 5 of 10 results</span>
+  <nav>
+    <ul className="pagination pagination-sm mb-0 mt-2 mt-md-0">
+      <li className="page-item disabled">
+        <button className="page-link rounded-start">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button
+          className="page-link"
+          style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+        >
+          1
+        </button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link rounded-end">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
       {/* Add Expense Modal */}
       <div
         className="modal fade"
@@ -616,8 +641,8 @@ const Expenses = () => {
                     </button>
                     <button 
                       type="submit" 
-                      className="btn btn-warning text-white px-4"
-                      style={{ backgroundColor: "#FFA646" }}
+                      className="btn btn- text-white px-4"
+                      style={{ backgroundColor: "#3daaaa" }}
                     >
                       Save Changes
                     </button>
