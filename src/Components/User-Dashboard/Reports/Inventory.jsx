@@ -442,17 +442,7 @@ const Inventory = () => {
                 </Col>
               )}
               <Col xs={12} md={tab === "inventory" ? 1 : 2} className="d-flex align-items-end">
-                <Button
-                  style={{
-                    background: "#FFA94D",
-                    border: "none",
-                    fontWeight: 500,
-                    fontSize: 17,
-                    width: "100%",
-                  }}
-                >
-                  Generate Report
-                </Button>
+                
               </Col>
             </Row>
           </Card.Body>
@@ -623,6 +613,35 @@ const Inventory = () => {
                   )}
                 </tbody>
               </Table>
+              {/* Pagination */}
+<div className="d-flex justify-content-between align-items-center mt-3 px-3">
+  <span className="small text-muted">
+    Showing 1 to {tableData.length} of {tableData.length} results
+  </span>
+
+  <nav>
+    <ul className="pagination pagination-sm mb-0">
+      <li className="page-item disabled">
+        <button className="page-link rounded-start">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button
+          className="page-link"
+          style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+        >
+          1
+        </button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link rounded-end">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
             </div>
           </Card.Body>
         </Card>

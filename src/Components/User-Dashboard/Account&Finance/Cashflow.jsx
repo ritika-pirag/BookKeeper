@@ -248,6 +248,32 @@ const Cashflow = () => {
                   )}
                 </tbody>
               </Table>
+              <div className="d-flex justify-content-between align-items-center mt-3 px-3 pb-3">
+  <span className="small text-muted">
+    Showing 1 to {filtered.length} of {filtered.length} results
+  </span>
+  <nav>
+    <ul className="pagination pagination-sm mb-0">
+      <li className="page-item disabled">
+        <button className="page-link rounded-start">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button
+          className="page-link"
+          style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+        >
+          1
+        </button>
+        
+      </li>
+  
+      <li className="page-item disabled">
+        <button className="page-link rounded-end">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
             </div>
           </Card.Body>
         </Card>

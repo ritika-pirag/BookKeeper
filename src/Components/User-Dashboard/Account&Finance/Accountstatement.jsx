@@ -157,9 +157,15 @@ const  Accountstatement = () => {
                                 <option>Account 3</option>
                             </select>
                         </div>
-                        <div className="col-md-2 d-flex align-items-end">
-                            <button className="btn btn-warning w-100" style={{ color: "white" }}>Submit</button>
-                        </div>
+                       <div className="col-md-2 d-flex align-items-end">
+    <button
+        className="btn w-100"
+        style={{ backgroundColor: "#3daaaa", color: "white", border: "none" }}
+    >
+        Submit
+    </button>
+</div>
+
                     </div>
                 </div>
             </div>
@@ -210,6 +216,31 @@ const  Accountstatement = () => {
                                         ))}
                                     </tbody>
                                 </table>
+                                {/* Pagination */}
+<div className="d-flex justify-content-between align-items-center mt-3 px-3 pb-3">
+    <span className="small text-muted">
+        Showing 1 to {transactions.length} of {transactions.length} results
+    </span>
+    <nav>
+        <ul className="pagination pagination-sm mb-0">
+            <li className="page-item disabled">
+                <button className="page-link rounded-start">&laquo;</button>
+            </li>
+            <li className="page-item active">
+                <button
+                    className="page-link"
+                    style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+                >
+                    1
+                </button>
+            </li>
+            <li className="page-item disabled">
+                <button className="page-link rounded-end">&raquo;</button>
+            </li>
+        </ul>
+    </nav>
+</div>
+
                             </div>
                         </div>
 
@@ -256,6 +287,7 @@ const  Accountstatement = () => {
                                 <h5 className="mb-0">Total</h5>
                                 <h5 className="mb-0 text-success">$33268.53</h5>
                             </div>
+                            
                         </div>
 
                     </div>
