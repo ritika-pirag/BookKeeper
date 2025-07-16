@@ -44,7 +44,7 @@ const PurchaseOrders = () => {
   };
 
   return (
-    <div className="container my-4 px-4">
+    <div className="p-4 my-4 px-4">
       <h5 className="mb-3">Purchase Orders</h5>
 
       {/* Filters Row */}

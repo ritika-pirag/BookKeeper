@@ -151,8 +151,8 @@ const Payments = () => {
       : transactions;
 
   return (
-    <div className="payments-page-wrapper bg-light py-4 mt-4 mt-md-0">
-      <div className="container payments-dashboard">
+    <div className="payments-page-wrapper bg-light p-4">
+      <div className=" payments-dashboard">
         <div className="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
           <div>
             <h4 className="fw-bold d-flex align-items-center gap-2">

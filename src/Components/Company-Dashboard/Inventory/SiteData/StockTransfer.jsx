@@ -22,7 +22,7 @@ const StockTransfer = () => {
   };
 
   return (
-    <div className="py-4" style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+    <div className="py-4 px-4" style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
       <Card className="p-4  w-100" style={{ backgroundColor: "#fff", borderRadius: 8 }}>
         <h5 style={{ color: "#002d4d", marginBottom: 24 }}>Stock Transfer</h5>
         <Form onSubmit={handleSubmit}>

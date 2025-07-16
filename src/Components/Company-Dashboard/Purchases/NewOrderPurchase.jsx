@@ -18,7 +18,7 @@ const NewOrder = () => {
   };
 
   return (
-    <div className="container mt-4 mb-5">
+    <div className="p-4 mt-4 mb-5">
       <h5 className="mb-3">
         Bill From
         <Button variant="outline-primary" size="sm" className="ms-2" onClick={() => setShowModal(true)}>

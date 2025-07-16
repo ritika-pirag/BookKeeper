@@ -160,7 +160,7 @@ const PointOfSale = () => {
   };
 
   return (
-    <Container fluid className="mt-4 p-3 rounded-4 bg-white">
+    <div className="mt-4 p-4   bg-white">
       <div className="row">
         <div className="col-md-6 px-2">
           <CustomerList onSelectCustomer={setSelectedCustomer} />
@@ -328,7 +328,7 @@ const PointOfSale = () => {
           </div>
         </div>
       )}
-    </Container>
+    </div>
   );
 };
 

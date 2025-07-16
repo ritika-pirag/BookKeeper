@@ -157,7 +157,7 @@ const TaxReport = () => {
   );
 
   return (
-    <div className="container mt-4">
+    <div className="p-4 mt-4">
       <div className="d-flex gap-2 mb-3">
         <Button
           style={{

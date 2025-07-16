@@ -131,7 +131,7 @@ const Expense = () => {
   };
 
   return (
-    <div className=" bg-light py-2 mt-1 product-header">
+    <div className=" bg-light p-4 mt-1 product-header">
       {/* Header */}
       <div className="d-flex justify-content-between gap-4 mb-4">
         <div>

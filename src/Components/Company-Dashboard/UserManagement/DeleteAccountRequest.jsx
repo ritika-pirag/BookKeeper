@@ -36,7 +36,7 @@ const DeleteAccountRequest = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="p-2 mt-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h5>Delete Account Request</h5>
         <div className="d-flex gap-2">

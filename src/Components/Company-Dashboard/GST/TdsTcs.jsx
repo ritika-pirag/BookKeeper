@@ -148,7 +148,7 @@ const TdsTcs = () => {
   };
 
   return (
-    <div style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
+    <div  className ="p-4"style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
       <Container fluid className="py-4">
         <h3 style={{ fontWeight: 600, marginBottom: 24 }} >
           TDS/TCS

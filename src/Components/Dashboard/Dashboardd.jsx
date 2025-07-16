@@ -39,7 +39,7 @@ const monthlyData = [
 
 const Dashboardd = () => {
   return (
-    <div className="dashboard container-fluid py-4">
+    <div className="dashboard container-fluid py-4 px-3">
       {/* Cards Section */}
       <div className="row g-4 mb-4">
         {[

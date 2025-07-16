@@ -78,8 +78,8 @@ const RequestPlan = () => {
   };
 
   return (
-    <div className="bg-light py-5 request-plan-page mt-4 mt-md-0">
-      <div className="container">
+    <div className="bg-light p-4">
+      <div className="">
         <div className="d-flex align-items-center mb-3">
           <FaEnvelopeOpenText size={28} className="text-primary me-2" />
           <h3 className="fw-bold m-0">Requested Plans</h3>

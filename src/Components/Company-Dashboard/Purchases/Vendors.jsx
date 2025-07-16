@@ -74,7 +74,7 @@ const Vendors = () => {
   };
 
   return (
- <div className="card bg-white shadow-sm rounded-3 p-3 mb-4">
+ <div className="card bg-white rounded-3 p-4  mt-6 ">
   <div className="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
     <h5 className="fw-semibold mb-0">Vendor Details</h5>
     <Badge pill bg="warning" className="text-dark">

@@ -9,7 +9,8 @@ import {
   Form,
   Card,
 } from "react-bootstrap";
-import { FaTrash, FaDownload, FaFileAlt } from "react-icons/fa";
+import { FaTrash, FaDownload, FaEye } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; // navigation
 
 const invoices = [
   { id: 1083, customer: "Shawn Hoowod", date: "15-07-2025", amount: 0.0, status: "Due" },
@@ -32,9 +33,10 @@ const getStatusVariant = (status) => {
   }
 };
 
-const InvoiceTable = () => {
+const Invoice = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const navigate = useNavigate(); // 🔁 navigation setup
 
   const handleDelete = (invoice) => {
     setSelectedInvoice(invoice);
@@ -59,10 +61,10 @@ const InvoiceTable = () => {
   };
 
   return (
-    <Container className="py-1">
-      <Row className="g-4 mt-2">
+    <div  className="p-4 mt-2">
+      <Row className="g-4 ">
         <Col md={12}>
-          <Card className="bg-white shadow-sm rounded-3 p-3">
+          <Card className=" rounded-3 p-3">
             <div className="d-flex justify-content-between align-items-center mb-2">
               <h6 className="fw-semibold mb-0">Invoices</h6>
               <a href="#" className="text-decoration-none small text-primary">View All</a>
@@ -121,8 +123,12 @@ const InvoiceTable = () => {
                       </td>
                       <td>
                         <div className="d-flex gap-2 flex-wrap">
-                          <Button variant="outline-secondary" size="sm">
-                            <FaFileAlt />
+                          <Button
+                            variant="outline-secondary"
+                            size="sm"
+                            onClick={() => navigate("/company/viewinvoicee")} // 🔁 navigate to view
+                          >
+                            <FaEye />
                           </Button>
                           <Button variant="info" size="sm" onClick={() => handleDownload(invoice)}>
                             <FaDownload />
@@ -138,7 +144,7 @@ const InvoiceTable = () => {
               </Table>
             </div>
 
-            {/* Pagination Section */}
+            {/* Pagination */}
             <div className="d-flex justify-content-between align-items-center mt-3 px-3">
               <span className="small text-muted">
                 Showing 1 to {invoices.length} of {invoices.length} results
@@ -170,6 +176,7 @@ const InvoiceTable = () => {
         </Col>
       </Row>
 
+      {/* Delete Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Are you sure?</Modal.Title>
@@ -186,8 +193,8 @@ const InvoiceTable = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </Container>
+    </div>
   );
 };
 
-export default InvoiceTable;
+export default Invoice;

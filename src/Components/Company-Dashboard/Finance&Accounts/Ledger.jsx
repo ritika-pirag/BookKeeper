@@ -119,7 +119,7 @@ const Ledger = () => {
   };
 
   return (
-    <div className="mt-3 ">
+    <div className="mt-3  p-2">
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-4 mb-4">
         <div>

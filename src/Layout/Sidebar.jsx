@@ -25,7 +25,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
   };
 
   const navItem = (to, icon, label) => (
-    <div className="nav-item ">
+    <div className="nav-item ps-2 ">
       <Link
         to={to}
         onClick={() => handleMenuClick(to)}
@@ -39,7 +39,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
   );
 
   const renderCollapsibleSection = (title, key, items, icon) => (
-    <div className="mb-2">
+    <div className="mb-2 ">
       <div onClick={() => toggleMenu(key)} style={sectionHeaderStyle}>
         <span className="d-flex align-items-center">
           <i className={`${icon} me-3`} style={sectionIconStyle}></i>

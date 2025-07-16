@@ -40,21 +40,21 @@ const Taxreport = () => {
   ];
 
   const renderFilterSection = (type) => (
-    <Card className="shadow-sm p-4 rounded-4 mb-4 border-0">
-      <Row className="g-4">
-        <Col md={3}>
+    <div className="shadow-sm p-4 rounded-4 mb-4 border-0">
+      <Row className="g-3">
+        <Col lg={3} md={6}>
           <Form.Label className="fw-semibold">Choose Date</Form.Label>
           <DatePicker
             selectsRange
             startDate={startDate}
             endDate={endDate}
             onChange={(update) => setDateRange(update)}
-            isClearable={true}
+            isClearable
             className="form-control"
             dateFormat="dd/MM/yyyy"
           />
         </Col>
-        <Col md={3}>
+        <Col lg={3} md={6}>
           <Form.Label className="fw-semibold">Store</Form.Label>
           <Form.Select>
             {stores.map((store, i) => (
@@ -62,7 +62,7 @@ const Taxreport = () => {
             ))}
           </Form.Select>
         </Col>
-        <Col md={3}>
+        <Col lg={3} md={6}>
           <Form.Label className="fw-semibold">{type === "purchase" ? "Supplier" : "Customer"}</Form.Label>
           <Form.Select>
             {(type === "purchase" ? suppliers : customers).map((name, i) => (
@@ -70,7 +70,7 @@ const Taxreport = () => {
             ))}
           </Form.Select>
         </Col>
-        <Col md={2}>
+        <Col lg={2} md={6}>
           <Form.Label className="fw-semibold">Payment Method</Form.Label>
           <Form.Select>
             {payments.map((p, i) => (
@@ -78,19 +78,19 @@ const Taxreport = () => {
             ))}
           </Form.Select>
         </Col>
-    <Col md={1} className="d-flex align-items-start">
+        <Col lg={1} md={12} className="d-flex align-items-end">
           <Button variant="warning" className="w-100">
-            Generate Report
+            Generate
           </Button>
         </Col>
       </Row>
-    </Card>
+    </div>
   );
 
   const renderTable = (type) => (
     <Card className="shadow-sm rounded-4 p-4 border-0">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h5 className="fw-bold mb-0">
+      <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+        <h5 className="fw-bold mb-2 mb-md-0">
           {type === "purchase" ? "Purchase Tax Report" : "Sales Tax Report"}
         </h5>
         <div className="d-flex gap-2">
@@ -102,35 +102,38 @@ const Taxreport = () => {
           </Button>
         </div>
       </div>
-      <Table hover responsive className="mb-0">
-        <thead className="bg-light text-dark fw-semibold">
-          <tr>
-            <th>Reference</th>
-            <th>{type === "purchase" ? "Supplier" : "Customer"}</th>
-            <th>Date</th>
-            <th>Store</th>
-            <th>Amount</th>
-            <th>Payment Method</th>
-            <th>Discount</th>
-            <th>Tax Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {(type === "purchase" ? purchaseData : salesData).map((row, idx) => (
-            <tr key={idx}>
-              {row.map((cell, i) => (
-                <td key={i}>{cell}</td>
-              ))}
+
+      <div className="table-responsive">
+        <Table hover responsive className="mb-0 align-middle text-nowrap">
+          <thead className="bg-light text-dark fw-semibold">
+            <tr>
+              <th>Reference</th>
+              <th>{type === "purchase" ? "Supplier" : "Customer"}</th>
+              <th>Date</th>
+              <th>Store</th>
+              <th>Amount</th>
+              <th>Payment Method</th>
+              <th>Discount</th>
+              <th>Tax Amount</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {(type === "purchase" ? purchaseData : salesData).map((row, idx) => (
+              <tr key={idx}>
+                {row.map((cell, i) => (
+                  <td key={i}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
     </Card>
   );
 
   return (
-    <div className="container mt-4">
-      <div className="d-flex gap-2 mb-3">
+    <div className=" p-4 mt-4">
+      <div className="d-flex gap-2 mb-3 flex-wrap">
         <Button
           variant={activeTab === "purchase" ? "warning" : "outline-secondary"}
           onClick={() => setActiveTab("purchase")}
@@ -148,9 +151,9 @@ const Taxreport = () => {
       <h4 className="fw-bold text-capitalize">
         {activeTab === "purchase" ? "Purchase Tax" : "Sales Tax"}
       </h4>
-      <div className="text-muted mb-4">
+      <p className="text-muted mb-4">
         View Reports of {activeTab === "purchase" ? "Purchase Tax" : "Sales Tax"}
-      </div>
+      </p>
 
       {renderFilterSection(activeTab)}
       {renderTable(activeTab)}
