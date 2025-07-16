@@ -1,35 +1,15 @@
+/* Sidebar Container */
 .sidebar {
   background-color: #032D45;
-  /* Dark navy background */
   color: #ffffff;
   width: 250px;
   border-right: none;
   z-index: 1000 !important;
   scrollbar-width: none;
+  position: relative;
 }
 
-.sidebar-header {
-  background-color: #032D45;
-}
-
-.sidebar-link {
-  color: #ffffff !important;
-  border-radius: 0;
-  transition: background-color 0.2s;
-}
-
-.sidebar-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-}
-
-.active-link {
-  background-color: #53b2a5!important;
-  /* Yellow highlight */
-  color: #000000 !important;
-  font-weight: 600;
-}
-
+/* Hide sidebar on small screens */
 @media (max-width: 768px) {
   .sidebar {
     display: none !important;
@@ -41,18 +21,23 @@
   }
 }
 
-/* Add this in your global CSS */
+/* Sidebar Header */
+.sidebar-header {
+  background-color: #032D45;
+}
+
+/* Sidebar Container Wrapper */
 .sidebar-container {
   width: 100%;
 }
 
-
+/* Header (Top Nav) */
 .header {
   background-color: #032D45;
-  /* Dark navy background */
   color: #ffffff;
 }
 
+/* Sync Button */
 .synced-btn {
   background-color: #f8f9fa;
   border: none;
@@ -84,7 +69,7 @@
   border-radius: 50%;
 }
 
-/* Navigation Items Container */
+/* Navigation Section */
 .sidebar-nav {
   padding: 20px 15px;
   flex-grow: 1;
@@ -92,7 +77,7 @@
   scrollbar-width: none;
 }
 
-/* Menu Sections */
+/* Menu Section Titles */
 .menu-section {
   margin-bottom: 25px;
 }
@@ -107,21 +92,24 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Navigation Links */
+/* Navigation Items */
 .nav-item {
   margin-bottom: 5px;
 }
 
+/* Sidebar Links */
 .sidebar-link {
   color: #ffffff !important;
   border-radius: 6px !important;
-  transition: all 0.25s ease;
+  /* transition: all 0.25s ease; */
   padding: 12px 15px !important;
   display: flex;
   align-items: center;
   margin: 5px 0;
+  text-decoration: none;
 }
 
+/* Icon inside link */
 .sidebar-link i {
   width: 24px;
   text-align: center;
@@ -129,20 +117,47 @@
   font-size: 16px;
 }
 
+/* Hover effect */
 .sidebar-link:hover {
-  background-color: #53b2a5!important;
-  transform: translateX(3px);
+  background-color: #53b2a5 !important;
+  /* transform: translateX(3px); */
 }
 
+/* Active Link */
 .active-link {
-  background-color: #53b2a5!important;
-  /* Yellow highlight */
+  background-color: #53b2a5 !important;
   color: #ffffff !important;
   font-weight: 600;
   box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
 }
 
-/* Close Button */
+/* Dropdown Submenu Items */
+.sidebar-submenu {
+  padding-left: 40px;
+}
+
+.sidebar-submenu .sidebar-link {
+  font-size: 0.9rem;
+  padding: 10px 15px !important;
+  margin: 3px 0;
+  background-color: transparent;
+  border-left: 2px solid transparent;
+}
+
+.sidebar-submenu .sidebar-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 2px solid #53b2a5;
+  /* transform: translateX(0); */
+}
+
+.sidebar-submenu .active-link {
+  background-color: #53b2a5 !important;
+  border-left: 2px solid #ffffff;
+  font-weight: 600;
+  box-shadow: none;
+}
+
+/* Close Button for Mobile */
 .sidebar-close {
   position: absolute;
   top: 15px;
@@ -154,7 +169,7 @@
   padding: 5px !important;
 }
 
-/* Mobile Responsiveness */
+/* Mobile View */
 @media (max-width: 768px) {
   .sidebar {
     width: 260px;
@@ -167,5 +182,13 @@
 
   .sidebar-link {
     padding: 10px 12px !important;
+  }
+
+  .sidebar-submenu {
+    padding-left: 30px;
+  }
+
+  .sidebar-submenu .sidebar-link {
+    padding: 8px 12px !important;
   }
 }

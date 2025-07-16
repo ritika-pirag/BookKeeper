@@ -198,7 +198,7 @@ const PlanPricing = () => {
   };
 
   return (
-    <div className="plans-page container py-4 mt-4 mt-md-0">
+    <div className="plans-page  p-4">
       <div className="header-section mb-4 d-flex justify-content-between align-items-center">
         <div>
           <h4 className="fw-bold d-flex align-items-center gap-2">
