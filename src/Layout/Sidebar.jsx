@@ -25,7 +25,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
   };
 
   const navItem = (to, icon, label) => (
-    <div className="nav-item ps-2">
+    <div className="nav-item ">
       <Link
         to={to}
         onClick={() => handleMenuClick(to)}
