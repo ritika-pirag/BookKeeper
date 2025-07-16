@@ -311,19 +311,7 @@ const OnlineOrder = () => {
         <Card className="mb-4" style={{ borderRadius: 14 }}>
           <Card.Body style={{ background: "#fff", borderRadius: 14 }}>
             <div className="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
-              <InputGroup style={{ maxWidth: 300 }}>
-                <Form.Control
-                  placeholder="Search"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  style={{
-                    background: "#f7f7f7",
-                    border: "1px solid #eee",
-                    borderRadius: 8,
-                    fontSize: 17,
-                  }}
-                />
-              </InputGroup>
+         
               <div className="d-flex flex-wrap align-items-center gap-2">
                 <Form.Select
                   value={customer}
@@ -385,20 +373,7 @@ const OnlineOrder = () => {
                     <option key={opt}>{`Sort By : ${opt}`}</option>
                   ))}
                 </Form.Select>
-                <Button
-                  style={{
-                    background: "#FFA94D",
-                    border: "none",
-                    fontWeight: 500,
-                    fontSize: 17,
-                    borderRadius: 8,
-                    minWidth: 130,
-                  }}
-                  onClick={() => setShowAdd(true)}
-                >
-                  <FaPlus style={{ marginBottom: 3, marginRight: 6 }} />
-                  Add Sales
-                </Button>
+          
               </div>
             </div>
             <div style={{ overflowX: "auto" }}>

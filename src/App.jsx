@@ -59,6 +59,18 @@ import Pos from "./Components/User-Dashboard/Sales/Pos";
 
 import PurchaseOrder from "./Components/User-Dashboard/Purchases/PurchaseOrder";
 
+import PurchaseView from "./Components/User-Dashboard/Purchases/PurchaseView";
+
+
+import TaxData  from "./Components/User-Dashboard/GST/TaxData";
+import  ITCData  from "./Components/User-Dashboard/GST/ITCData";
+import GSTData  from "./Components/User-Dashboard/GST/GSTData";
+import Tds  from "./Components/User-Dashboard/GST/Tds";
+import EWay  from "./Components/User-Dashboard/GST/EWay";
+
+
+import InvoiceForms from "./Components/User-Dashboard/Sales/InvoiceForms";
+
 import Cashflow from "./Components/User-Dashboard/Account&Finance/Cashflow";
 import Accountstatement from "./Components/User-Dashboard/Account&Finance/Accountstatement";
 import Salesreport from "./Components/User-Dashboard/Reports/Salesreport";
@@ -214,6 +226,7 @@ function App() {
           {/* Sales */}
 
           <Route path="/user/invoices" element={<Invoices />} />
+          <Route path="/user/invoiceforms" element={<InvoiceForms />} />
           <Route path="/user/pos" element={<Pos />} />
           <Route path="/user/onlineorders" element={<OnlineOrder />} />
           {/* <Route path="/user/posorders" element={<PosOrder/>} /> */}
@@ -224,16 +237,26 @@ function App() {
 
           <Route path="/user/purchaseorder" element={<PurchaseOrder />} />
           <Route path="/user/expense" element={<Expenses />} />
-
           <Route path="/user/paymentmode" element={<PaymentMode />} />
-
           <Route path="/user/invoice" element={<Invoicee />} />
+          <Route path="/user/purchaseviews" element={<PurchaseView/>} />
+
+
+          {/* GST  */}
+          <Route path="/user/taxdata" element={<TaxData />} />
+           <Route path="/user/gstdata" element={<GSTData />} />
+      <Route path="/user/tds" element={<Tds />} /> 
+          <Route path="/user/itcdata" element={<ITCData/>} />  
+          <Route path="/user/eway" element={<EWay />} />
+
 
           {/* Finance & Accounts */}
           <Route path="/user/daybook" element={<DayBook />} />
           <Route path="/user/balancesheet" element={<Balancesheet />} />
           <Route path="/user/cashflow" element={<Cashflow />} />
           <Route path="/user/accountstatement" element={<Accountstatement />} />
+     
+
 
           {/* Reports */}
           <Route path="/user/salesreport" element={<Salesreport />} />
@@ -241,6 +264,7 @@ function App() {
           <Route path="/user/inventoryreport" element={<Inventory />} />
           <Route path="/user/invoicereport" element={<Invoicereport />} />
           <Route path="/user/taxreport" element={<Taxreports />} />
+          {/* <Route path="/user/eway" element={<Eway />} /> */}
         </Route>
       </Routes>
     </Router>
