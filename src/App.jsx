@@ -5,10 +5,7 @@ import MainLayout from "./Layout/MainLayout";
 import Login from "./Components/Auth/Login";
 import Signup from "./Components/Auth/Signup";
 
-import SalespersonDashboard from "./Components/Salesperson-Dashboard/SalespersonDashboard";
-import SalespersonInventory from "./Components/Salesperson-Dashboard/SalespersonInventory";
-import SalespersonOrder from "./Components/Salesperson-Dashboard/SalespersonOrder";
-import SalespersonCustomerInfo from "./Components/Salesperson-Dashboard/SalespersonCustomerInfo";
+
 import Dashboardd from "./Components/Dashboard/Dashboardd";
 import Company from "./Components/Dashboard/Company";
 // import CompanyDetails from './Components/Dashboard/CompanyDetails';
@@ -17,7 +14,7 @@ import RequestPlan from "./Components/Dashboard/RequestPlan";
 import Payments from "./Components/Dashboard/Payments";
 import SystemSettings from "./Components/Dashboard/SystemSettings";
 import CompanyDashbaord from "./Components/Company-Dashboard/CompanyDashbaord";
-import ProductDetails from "./Components/Company-Dashboard/Inventory/ProductDetails";
+// import ProductDetails from "./Components/Company-Dashboard/Inventory/ProductDetails";
 import BatchExpiry from "./Components/Company-Dashboard/Inventory/BatchExpiry";
 import ManageStock from "./Components/Company-Dashboard/Inventory/ManageStock";
 import LowStock from "./Components/Company-Dashboard/Inventory/LowStock";
@@ -62,15 +59,17 @@ import Pos from "./Components/User-Dashboard/Sales/Pos";
 
 import PurchaseOrder from "./Components/User-Dashboard/Purchases/PurchaseOrder";
 
-
+import PurchaseView from "./Components/User-Dashboard/Purchases/PurchaseView";
 
 
 import TaxData  from "./Components/User-Dashboard/GST/TaxData";
-// import  ITCData  from "./Components/User-Dashboard/GST/ITCData";
-// import GSTData  from "./Components/User-Dashboard/GST/GSTData";
-// import Tds  from "./Components/User-Dashboard/GST/Tds";
+import  ITCData  from "./Components/User-Dashboard/GST/ITCData";
+import GSTData  from "./Components/User-Dashboard/GST/GSTData";
+import Tds  from "./Components/User-Dashboard/GST/Tds";
+import EWay  from "./Components/User-Dashboard/GST/EWay";
 
 
+import InvoiceForms from "./Components/User-Dashboard/Sales/InvoiceForms";
 
 import Cashflow from "./Components/User-Dashboard/Account&Finance/Cashflow";
 import Accountstatement from "./Components/User-Dashboard/Account&Finance/Accountstatement";
@@ -97,10 +96,15 @@ import BrandPage from "./Components/Company-Dashboard/Inventory/SiteData/BrandPa
 import Productt from "./Components/Company-Dashboard/Inventory/Productt";
 import AddProduct from "./Components/Company-Dashboard/Inventory/Product/AddProduct";
 import DevicePage from "./Components/Company-Dashboard/Inventory/SiteData/DevicePage";
-import TaxPage from "./Components/Company-Dashboard/Inventory/TaxPage";
+import TaxPage from "./Components/Company-Dashboard/Inventory/SiteData/TaxPage";
 import StockTransfer from "./Components/Company-Dashboard/Inventory/SiteData/StockTransfer";
 import PointOfSale from "./Components/Company-Dashboard/Inventory/Pos/PointOfSale";
-import NewOrder from "./Components/Company-Dashboard/Purchases/NewOrderPurchase";
+import InvoiceSummary from "./Components/Company-Dashboard/Inventory/Pos/InvoiceSummary";
+import ManageInvoices from "./Components/Company-Dashboard/Inventory/Pos/ManageInvoice";
+import ViewInvoice from "./Components/Company-Dashboard/Inventory/Pos/ViewInvoice";
+import EditInvoice from "./Components/Company-Dashboard/Inventory/Pos/EditInvoice";
+import Profile from "./Layout/ProfileModal";
+import PurchaseOrderView from "./Components/Company-Dashboard/Purchases/PurchaseOrderView";
 
 function App() {
   return (
@@ -109,7 +113,7 @@ function App() {
         {/* Public routes without sidebar */}
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-
+   
         {/* Admin Dashboard routes with MainLayout */}
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<Dashboardd />} />
@@ -139,11 +143,14 @@ function App() {
           <Route path="/company/product" element={<Productt />} />
           <Route path="/company/createproduct" element={<AddProduct />} />
           <Route path="/company/device" element={<DevicePage />} />
-          <Route path="/company/taxpage" element={<TaxPage />} />
+          <Route path="/company/tax" element={<TaxPage/>} />
           <Route path="/company/ponitofsale" element={<PointOfSale />} />
+          <Route path="/company/invoice-summary" element={<InvoiceSummary/>} />
           {/* Sales */}
           <Route path="/company/invoice" element={<Invoice />} />
-
+          <Route path="/company/manageinvoice" element={<ManageInvoices/>} />
+          <Route path="/company/editinvoice" element={<EditInvoice/>} />
+          <Route path="/company/viewinvoice" element={<ViewInvoice/>} />
           {/* Sales */}
           <Route path="/company/invoiceform" element={<InvoiceForm />} />
          
@@ -169,7 +176,7 @@ function App() {
           <Route path="/company/neworders" element={<NewOrderPurchase />} />
           <Route path="/company/purchaseorders" element={<Purchaseorders />} />
           <Route path="/company/purchasereturn" element={<PurchaseReturn />} />
-
+          <Route path="/company/purchaseview" element={<PurchaseOrderView/>} />
           {/* Finance & Accounts */}
           <Route path="/company/daybook" element={<DayBook />} />
 
@@ -217,6 +224,7 @@ function App() {
           {/* Sales */}
 
           <Route path="/user/invoices" element={<Invoices />} />
+          <Route path="/user/invoiceforms" element={<InvoiceForms />} />
           <Route path="/user/pos" element={<Pos />} />
           <Route path="/user/onlineorders" element={<OnlineOrder />} />
           {/* <Route path="/user/posorders" element={<PosOrder/>} /> */}
@@ -227,18 +235,17 @@ function App() {
 
           <Route path="/user/purchaseorder" element={<PurchaseOrder />} />
           <Route path="/user/expense" element={<Expenses />} />
-
           <Route path="/user/paymentmode" element={<PaymentMode />} />
-
           <Route path="/user/invoice" element={<Invoicee />} />
+          <Route path="/user/purchaseviews" element={<PurchaseView/>} />
 
 
           {/* GST  */}
-          {/* <Route path="/user/taxdata" element={<TaxData />} /> */}
-           {/* <Route path="/user/gstdata" element={<GSTData />} /> */}
-          {/* <Route path="/user/tds" element={<Tds />} />
-          <Route path="/user/itcdata" element={<ITCData/>} />  */}
-
+          <Route path="/user/taxdata" element={<TaxData />} />
+           <Route path="/user/gstdata" element={<GSTData />} />
+      <Route path="/user/tds" element={<Tds />} /> 
+          <Route path="/user/itcdata" element={<ITCData/>} />  
+          <Route path="/user/eway" element={<EWay />} />
 
 
           {/* Finance & Accounts */}
@@ -246,6 +253,8 @@ function App() {
           <Route path="/user/balancesheet" element={<Balancesheet />} />
           <Route path="/user/cashflow" element={<Cashflow />} />
           <Route path="/user/accountstatement" element={<Accountstatement />} />
+     
+
 
           {/* Reports */}
           <Route path="/user/salesreport" element={<Salesreport />} />
@@ -253,6 +262,7 @@ function App() {
           <Route path="/user/inventoryreport" element={<Inventory />} />
           <Route path="/user/invoicereport" element={<Invoicereport />} />
           <Route path="/user/taxreport" element={<Taxreports />} />
+          {/* <Route path="/user/eway" element={<Eway />} /> */}
         </Route>
       </Routes>
     </Router>

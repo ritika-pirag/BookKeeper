@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import AddCustomer from "../Customer/AddCustomer";
 
-// Sample customer data (replace with API call if needed)
+// ✅ Updated: Using _id instead of id
 const sampleCustomers = [
-  { id: 1, first_name: "John", last_name: "Doe" },
-  { id: 2, first_name: "Jane", last_name: "Smith" },
-  { id: 3, first_name: "Amit", last_name: "Sharma" },
+  { _id: 1, first_name: "John", last_name: "Doe" },
+  { _id: 2, first_name: "Jane", last_name: "Smith" },
+  { _id: 3, first_name: "Amit", last_name: "Sharma" },
 ];
 
 const CustomerList = ({ onSelectCustomer }) => {
@@ -77,7 +77,7 @@ const CustomerList = ({ onSelectCustomer }) => {
           {filteredCustomers.length > 0 ? (
             filteredCustomers.map((customer) => (
               <li
-                key={customer.id}
+                key={customer._id} // ✅ Updated key here
                 className="list-group-item"
                 onClick={() => handleSelectCustomer(customer)}
                 style={{ cursor: "pointer" }}

@@ -3,7 +3,7 @@ import { Form, Row, Col, Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./InvoiceForm.css";
 
-const InvoiceForm = () => {
+const InvoiceForms = () => {
   const [items, setItems] = useState([
     { name: "", description: "", quantity: 1, rate: "", taxPercent: "", discount: "" },
   ]);
@@ -216,4 +216,4 @@ const InvoiceForm = () => {
   );
 };
 
-export default InvoiceForm;
+export default InvoiceForms;

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { Container } from "react-bootstrap";
 import CustomerList from "./CustomerList";
 import Productlistsel from "./Productlistsel";
@@ -14,6 +16,8 @@ const PointOfSale = () => {
   const [paymentStatus, setPaymentStatus] = useState("0");
   const [priceMap, setPriceMap] = useState({});
   const [price, setPrice] = useState(0);
+
+  const navigate = useNavigate();
   const [taxes, setTaxes] = useState([
     { _id: "1", taxClass: "Standard", taxValue: 10 },
     { _id: "2", taxClass: "Reduced", taxValue: 5 },
@@ -125,39 +129,30 @@ const PointOfSale = () => {
   };
 
   const handleCreateInvoice = () => {
-    if (!selectedCustomer) {
-      alert("Please select a customer.");
-      return;
-    }
-    if (selectedProducts.length === 0) {
-      alert("Please select at least one product.");
-      return;
-    }
     const subtotal = calculateSubTotal();
     const total = calculateTotal();
-
-    if (subtotal <= 0 || total <= 0) {
-      alert("Subtotal and Total must be greater than zero.");
-      return;
-    }
-
-    const data = {
-      customerId: selectedCustomer._id,
+  
+    const invoiceData = {
+      customerName: selectedCustomer
+        ? `${selectedCustomer.first_name} ${selectedCustomer.last_name}`
+        : "Walk-in Customer",
       productDetails: selectedProducts.map((product) => ({
         productId: product._id,
+        name: product.name,
         quantity: quantity[product._id] || 1,
         price: priceMap[product._id] ?? product.price,
       })),
-      tax: selectedTax?._id,
+      tax: selectedTax._id,
+      taxName: selectedTax.taxClass,
+      taxValue: selectedTax.taxValue,
       subTotal: subtotal,
       total: total,
       status: paymentStatus,
     };
-
-    console.log("Invoice Data:", data);
-    alert("Invoice created! (See console)");
+  
+    navigate("/company/invoice-summary", { state: { invoiceData } });
   };
-
+  
   const handleClear = () => {
     setSelectedCustomer(null);
     setSelectedProducts([]);
@@ -171,8 +166,7 @@ const PointOfSale = () => {
           <CustomerList onSelectCustomer={setSelectedCustomer} />
           {selectedCustomer && (
             <div className="alert alert-info mt-2">
-              Selected Customer: {selectedCustomer.first_name}{" "}
-              {selectedCustomer.last_name}
+              Selected Customer: {selectedCustomer.first_name} {selectedCustomer.last_name}
             </div>
           )}
 
@@ -187,14 +181,12 @@ const PointOfSale = () => {
             <ul>
               {selectedProducts.map((product) => {
                 const qty = quantity[product._id] || 1;
-                const unitPrice =
-                  parseFloat(priceMap[product._id] ?? product.price) || 0;
+                const unitPrice = parseFloat(priceMap[product._id] ?? product.price) || 0;
                 const total = unitPrice * qty;
 
                 return (
                   <li key={product._id} className="mb-3">
-                    {product.name} - {qty} x A${unitPrice.toFixed(2)} = A$
-                    {total.toFixed(2)}
+                    {product.name} - {qty} x A${unitPrice.toFixed(2)} = A${total.toFixed(2)}
                     <button
                       className="btn btn-danger btn-sm ms-2"
                       onClick={() => handleRemoveProduct(product._id)}

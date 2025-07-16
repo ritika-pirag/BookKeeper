@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsListUl, BsPencilSquare, BsEye } from "react-icons/bs";
+import { BsListUl, BsPencilSquare, BsEye, BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { Button, Modal, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PlansPricing.css";
@@ -9,6 +9,9 @@ const initialPlans = [
   { name: "Silver", price: "$14.99", billing: "Monthly", status: "Active", subscribers: "857" },
   { name: "Gold", price: "$24.99", billing: "Monthly", status: "Active", subscribers: "512" },
   { name: "Platinum", price: "$49.99", billing: "Monthly", status: "Active", subscribers: "326" },
+  { name: "Enterprise", price: "$99.99", billing: "Yearly", status: "Active", subscribers: "150" },
+  { name: "Starter", price: "$4.99", billing: "Monthly", status: "Deprecated", subscribers: "0" },
+  { name: "Professional", price: "$29.99", billing: "Monthly", status: "Active", subscribers: "421" },
 ];
 
 const EditPlanModal = ({ show, handleClose, plan, handleSave }) => {
@@ -149,6 +152,20 @@ const PlanPricing = () => {
   const [viewModal, setViewModal] = useState(false);
   const [viewPlan, setViewPlan] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentPlans = plans.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(plans.length / itemsPerPage);
+
+  const paginate = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
 
   const handleEditClick = (plan, index) => {
     setSelectedPlan({ ...plan, index });
@@ -175,8 +192,9 @@ const PlanPricing = () => {
   };
 
   const handleAddPlan = (newPlan) => {
-    setPlans([...plans, newPlan]);
+    setPlans([newPlan, ...plans]);
     setShowAddModal(false);
+    setCurrentPage(1); // Reset to first page when adding new plan
   };
 
   return (
@@ -209,7 +227,7 @@ const PlanPricing = () => {
         </div>
       </div>
 
-      <div className="card ">
+      <div className="card">
         <div className="card-body">
           <h6 className="fw-semibold mb-3">View All Plans</h6>
           <div className="table-responsive">
@@ -225,7 +243,7 @@ const PlanPricing = () => {
                 </tr>
               </thead>
               <tbody>
-                {plans.map((plan, i) => (
+                {currentPlans.map((plan, i) => (
                   <tr key={i}>
                     <td>
                       <span
@@ -255,7 +273,11 @@ const PlanPricing = () => {
                     <td>{plan.subscribers}</td>
                     <td>
                       <div className="d-flex gap-2">
-                        <button className="btn btn-sm text-warning p-0" onClick={() => handleEditClick(plan, i)}>
+                        <button 
+                          className="btn btn-sm text-warning p-0" 
+                          onClick={() => handleEditClick(plan, indexOfFirstItem + i)}
+                          title="Edit"
+                        >
                           <BsPencilSquare size={18} />
                         </button>
                         <button
@@ -271,6 +293,55 @@ const PlanPricing = () => {
                 ))}
               </tbody>
             </table>
+            
+            {/* Pagination */}
+                     <div className="d-flex justify-content-between align-items-center px-2 py-2">
+              <div className="text-muted small ">
+                Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, plans.length)} of {plans.length} results
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <button 
+                  className="btn btn-sm"
+                  onClick={() => paginate(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  style={{ 
+                    backgroundColor: currentPage === 1 ? "#f8f9fa" : "#53b2a5",
+                    color: currentPage === 1 ? "#6c757d" : "white",
+                    borderColor: "#53b2a5"
+                  }}
+                >
+                  <BsChevronLeft />
+                </button>
+                <div className="d-flex gap-1">
+                  {Array.from({ length: totalPages }).map((_, index) => (
+                    <button
+                      key={index}
+                      className="btn btn-sm"
+                      onClick={() => paginate(index + 1)}
+                      style={{ 
+                        backgroundColor: currentPage === index + 1 ? "#53b2a5" : "white",
+                        color: currentPage === index + 1 ? "white" : "#53b2a5",
+                        borderColor: "#53b2a5"
+                      }}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                </div>
+                <button 
+                  className="btn btn-sm"
+                  onClick={() => paginate(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  style={{ 
+                    backgroundColor: currentPage === totalPages ? "#f8f9fa" : "#53b2a5",
+                    color: currentPage === totalPages ? "#6c757d" : "white",
+                    borderColor: "#53b2a5"
+                  }}
+                >
+                  <BsChevronRight />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

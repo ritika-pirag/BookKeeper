@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Row, Col, Table, Button, Badge } from 'react-bootstrap';
 import logo from  "../../../assets/zirakTechh.png"
@@ -6,7 +7,7 @@ import {
   FaGlobe, FaExchangeAlt, FaTimes
 } from 'react-icons/fa';
 
-const PurchaseOrderView = () => {
+const PurchaseView = () => {
   return (
     <div className="container py-4 px-3">
       {/* Action Bar */}
@@ -165,4 +166,5 @@ const PurchaseOrderView = () => {
   );
 };
 
-export default PurchaseOrderView;
+export default PurchaseView;
+

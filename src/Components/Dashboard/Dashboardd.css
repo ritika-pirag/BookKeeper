@@ -68,6 +68,19 @@
   .growth-chart .btn {
     font-size: 0.85rem;
   }
+  .stat-card {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .icon-box {
+    background-color: #f3f4f6;
+    padding: 10px;
+    border-radius: 0.75rem;
+  }
   
   /* Responsive Tweaks */
   @media (max-width: 768px) {

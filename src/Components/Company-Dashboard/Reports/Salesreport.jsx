@@ -83,7 +83,7 @@ const Salesreport = () => {
         </div>
 
         <div className="col-12 col-md-3 d-flex align-items-end">
-          <button className="btn w-100" style={{ backgroundColor: '#ffa726', color: '#fff' }}>Generate Report</button>
+          <button className="btn w-100" style={{ backgroundColor: '#53b2a5', color: '#fff' }}>Generate Report</button>
         </div>
       </div>
 

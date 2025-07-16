@@ -107,9 +107,9 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           icon: "fas fa-file-alt",
           items: [
             { to: "/company/taxreport", icon: "fas fa-circle", label: "Tax Report" },
-            { to: "/company/gstreturns", icon: "fas fa-th", label: "GST Returns" },
-            { to: "/company/tdstcs", icon: "fas fa-th", label: "TDS/TCS" },
-            { to: "/company/itcreport", icon: "fas fa-th", label: "ITC Report" },
+            { to: "/company/gstreturns", icon: "fas fa-book", label: "GST Returns" },
+            { to: "/company/tdstcs", icon: "fas fa-file-alt", label: "TDS/TCS" },
+            { to: "/company/itcreport", icon: "fas fa-book-open", label: "ITC Report" },
             { to: "/company/ewaybill", icon: "fas fa-th", label: "e-Way Bill" }
           ]
         },
@@ -185,8 +185,10 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "usersales",
           icon: "fas fa-shopping-cart",
           items: [
-            { to: "/user/invoices", icon: "fas fa-file-alt", label: "Invoices" },
-            { to: "/user/pos", icon: "fas fa-desktop", label: "POS" },
+       
+            { to: "/user/invoiceforms", icon: "fas fa-file-alt", label: "New Invoice" },
+            { to: "/user/invoices", icon: "fas fa-file-alt", label: "Manage Invoice" },
+            // { to: "/user/pos", icon: "fas fa-desktop", label: "POS" },
             { to: "/user/onlineorders", icon: "fas fa-shopping-cart", label: "Online Orders" },
             { to: "/user/estimates", icon: "fas fa-file-invoice-dollar", label: "Estimates" },
             { to: "/user/deliverychallans", icon: "fas fa-truck", label: "Delivery Challans" }
@@ -198,12 +200,31 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "userpurchases",
           icon: "fas fa-shopping-basket",
           items: [
-            { to: "/user/purchaseorder", icon: "fas fa-file-alt", label: "Purchase Order" },
+            { to: "/user/purchaseorder", icon: "fas fa-file-alt", label: " New Orders " },
+            { to: "/user/invoice", icon: "fas fa-file-invoice", label: "Manage Orders" },
             { to: "/user/expense", icon: "fas fa-wallet", label: "Expense" },
-            { to: "/user/invoice", icon: "fas fa-file-invoice", label: "Invoice" },
             { to: "/user/paymentmode", icon: "fas fa-credit-card", label: "Payment Mode" }
           ]
         },
+
+        {
+          type: "section",
+          title: "POS",
+          key: "inventory",
+          icon: "fas fa-box",
+          items: [
+            { to: "/company/warehouse", icon: "fas fa-industry", label: "Warehouse" },
+            { to: "/company/stocktranfer", icon: "fas fa-industry", label: "StockTransfer" },
+            // { to: "/comapny/categorie", icon: "fas fa-tags", label: "Categories" },
+            { to: "/company/brands", icon: "fas fa-trademark", label: "Brands" },
+            { to: "/company/device", icon: "fas fa-industry", label: "device" },
+            { to: "/company/product", icon: "fas fa-box-open", label: "Product" },
+         
+          ]
+        },
+
+
+
         {
           type: "section",
           title: "Finance & Accounts",
@@ -224,10 +245,12 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           icon: "fas fa-file-alt",
           items: [
             { to: "/user/taxdata", icon: "fas fa-circle", label: "Tax Report" },
-            // { to: "/user/gstdata", icon: "fas fa-th", label: "GST Returns" },
-            // { to: "/user/tds", icon: "fas fa-th", label: "TDS/TCS" },
-            // { to: "/user/itcdata", icon: "fas fa-th", label: "ITC Report" },
-            // { to: "/user/ewaybill", icon: "fas fa-th", label: "e-Way Bill" }
+       
+            { to: "/user/gstdata", icon: "fas fa-search", label: "GST Returns" },
+      
+            { to: "/user/itcdata", icon: "fas fa-th", label: "ITC Report" },
+            { to: "/user/tds", icon: "fas fa-book", label: "TDS/TCS" },
+            { to: "/user/eway", icon: "fas fa-th", label: "e-Way Bill" }
           ]
         },
         {

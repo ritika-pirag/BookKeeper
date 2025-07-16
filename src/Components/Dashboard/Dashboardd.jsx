@@ -20,7 +20,7 @@ import {
   BsPersonPlus,
   BsCalendar2,
 } from "react-icons/bs";
-import "./Dashboardd.css";
+import "./Dashboardd.css"; // Keep your styles here
 
 const monthlyData = [
   { name: "Jan", Growth: 1200, users: 6500, revenue: 250000 },
@@ -93,7 +93,7 @@ const Dashboardd = () => {
 
       {/* Charts Section */}
       <div className="row g-4">
-        {/* Line Chart */}
+        {/* Line Chart - Growth */}
         <div className="col-12 col-md-6">
           <div className="card shadow-sm h-100">
             <div className="card-header">
@@ -120,7 +120,7 @@ const Dashboardd = () => {
           </div>
         </div>
 
-        {/* Bar Chart */}
+        {/* Bar Chart - Signup */}
         <div className="col-12 col-md-6">
           <div className="card shadow-sm h-100">
             <div className="card-header">
@@ -141,7 +141,7 @@ const Dashboardd = () => {
           </div>
         </div>
 
-        {/* Area Chart */}
+        {/* Area Chart - Revenue */}
         <div className="col-12">
           <div className="card shadow-sm">
             <div className="card-header d-flex justify-content-between align-items-center">
