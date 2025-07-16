@@ -169,16 +169,16 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             { to: "/user/dashboard", icon: "fas fa-th-large", label: "Dashboard" }
           ]
         },
-        {
-          type: "section",
-          title: "Inventory",
-          key: "userinventory",
-          icon: "fas fa-box",
-          items: [
-            { to: "/user/products", icon: "fas fa-cube", label: "Products" },
-            { to: "/user/manageproduct", icon: "fas fa-table", label: "Manage Product" }
-          ]
-        },
+        // {
+        //   type: "section",
+        //   title: "Inventory",
+        //   key: "userinventory",
+        //   icon: "fas fa-box",
+        //   items: [
+        //     { to: "/user/products", icon: "fas fa-cube", label: "Products" },
+        //     { to: "/user/manageproduct", icon: "fas fa-table", label: "Manage Product" }
+        //   ]
+        // },
         {
           type: "section",
           title: "Sales",
@@ -214,6 +214,20 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             { to: "/user/balancesheet", icon: "fas fa-clipboard", label: "Balance Sheet" },
             { to: "/user/cashflow", icon: "fas fa-search", label: "Cash Flow" },
             { to: "/user/accountstatement", icon: "fas fa-file-alt", label: "Account Statement" }
+          ]
+        },
+
+        {
+          type: "section",
+          title: "GST Filing",
+          key: "gst",
+          icon: "fas fa-file-alt",
+          items: [
+            { to: "/user/taxdata", icon: "fas fa-circle", label: "Tax Report" },
+            // { to: "/user/gstdata", icon: "fas fa-th", label: "GST Returns" },
+            // { to: "/user/tds", icon: "fas fa-th", label: "TDS/TCS" },
+            // { to: "/user/itcdata", icon: "fas fa-th", label: "ITC Report" },
+            // { to: "/user/ewaybill", icon: "fas fa-th", label: "e-Way Bill" }
           ]
         },
         {

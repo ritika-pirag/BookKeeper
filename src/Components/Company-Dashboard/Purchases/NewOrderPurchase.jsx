@@ -172,14 +172,14 @@ const NewOrder = () => {
               <Form.Control type="text" placeholder="Address" />
             </Form.Group>
             <Row className="mb-3">
-              <Col><Form.Control type="text" placeholder="City" /></Col>
-              <Col><Form.Control type="text" placeholder="Region" /></Col>
-              <Col><Form.Control type="text" placeholder="Country" /></Col>
+              <Col>Upload Document</Col>
+ <Form.Control
+                type="file"
+                name="document"
+                // onChange={handleChange}
+              />
             </Row>
-            <Row>
-              <Col><Form.Control type="text" placeholder="PostBox" /></Col>
-              <Col><Form.Control type="text" placeholder="TAX ID" /></Col>
-            </Row>
+     
           </Form>
         </Modal.Body>
         <Modal.Footer>

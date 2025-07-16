@@ -62,6 +62,16 @@ import Pos from "./Components/User-Dashboard/Sales/Pos";
 
 import PurchaseOrder from "./Components/User-Dashboard/Purchases/PurchaseOrder";
 
+
+
+
+import TaxData  from "./Components/User-Dashboard/GST/TaxData";
+// import  ITCData  from "./Components/User-Dashboard/GST/ITCData";
+// import GSTData  from "./Components/User-Dashboard/GST/GSTData";
+// import Tds  from "./Components/User-Dashboard/GST/Tds";
+
+
+
 import Cashflow from "./Components/User-Dashboard/Account&Finance/Cashflow";
 import Accountstatement from "./Components/User-Dashboard/Account&Finance/Accountstatement";
 import Salesreport from "./Components/User-Dashboard/Reports/Salesreport";
@@ -221,6 +231,15 @@ function App() {
           <Route path="/user/paymentmode" element={<PaymentMode />} />
 
           <Route path="/user/invoice" element={<Invoicee />} />
+
+
+          {/* GST  */}
+          {/* <Route path="/user/taxdata" element={<TaxData />} /> */}
+           {/* <Route path="/user/gstdata" element={<GSTData />} /> */}
+          {/* <Route path="/user/tds" element={<Tds />} />
+          <Route path="/user/itcdata" element={<ITCData/>} />  */}
+
+
 
           {/* Finance & Accounts */}
           <Route path="/user/daybook" element={<DayBook />} />
