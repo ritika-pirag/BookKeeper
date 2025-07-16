@@ -10,7 +10,7 @@ const Productlistsel = ({ onProductSelect, showModal }) => {
       device: "iPhone",
       price: 15.99,
       quantity: 8,
-      images: ["https://via.placeholder.com/80"],
+      images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQb836dE7n6zzwt1Trmp97DPyLzM-QQM_A7w&s"],
     },
     {
       _id: "2",
@@ -20,7 +20,7 @@ const Productlistsel = ({ onProductSelect, showModal }) => {
       device: "Samsung",
       price: 12.5,
       quantity: 3,
-      images: ["https://via.placeholder.com/80"],
+      images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTt1KVOtSk4-MKyQvYnQOXkpPIVlt1tQPWnA&s"],
     },
     {
       _id: "3",
@@ -30,7 +30,7 @@ const Productlistsel = ({ onProductSelect, showModal }) => {
       device: "Universal",
       price: 7.99,
       quantity: 15,
-      images: ["https://via.placeholder.com/80"],
+      images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvLmUJnzCU3iENMtwP7phDuw4SCsBW9qqfRQ&s"],
     },
   ];
 
