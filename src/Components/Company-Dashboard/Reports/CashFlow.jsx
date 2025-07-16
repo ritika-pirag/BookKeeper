@@ -14,6 +14,7 @@ import "jspdf-autotable";
 import { FaFilePdf } from "react-icons/fa";
 
 const cashFlowData = [
+  // data same hai
   {
     date: "03 Oct 2024",
     bank: "SWIZ - 3354456565687",
@@ -108,6 +109,10 @@ const CashFlow = () => {
   const [search, setSearch] = useState("");
   const [method, setMethod] = useState("All");
 
+  // pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
   const filtered = cashFlowData.filter(
     (row) =>
       (method === "All" || row.method === method) &&
@@ -116,6 +121,12 @@ const CashFlow = () => {
         row.desc.toLowerCase().includes(search.toLowerCase()) ||
         row.method.toLowerCase().includes(search.toLowerCase()))
   );
+
+  const indexOfLast = currentPage * itemsPerPage;
+  const indexOfFirst = indexOfLast - itemsPerPage;
+  const currentData = filtered.slice(indexOfFirst, indexOfLast);
+
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
   const handlePDF = () => {
     const doc = new jsPDF();
@@ -208,26 +219,20 @@ const CashFlow = () => {
                   background: "#fff",
                 }}
               >
-                <thead className="table-light ">
+                <thead className="table-light">
                   <tr>
                     <th className="px-3 py-3">Date</th>
                     <th>Bank & Account Number</th>
                     <th>Description</th>
                     <th>Credit</th>
                     <th>Debit</th>
-                    <th>
-                      Account balance{" "}
-              
-                    </th>
-                    <th>
-                      Total Balance{" "}
-         
-                    </th>
+                    <th>Account balance</th>
+                    <th>Total Balance</th>
                     <th>Payment Method</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filtered.map((row, idx) => (
+                  {currentData.map((row, idx) => (
                     <tr key={idx}>
                       <td className="px-3 py-3">{row.date}</td>
                       <td>{row.bank}</td>
@@ -239,7 +244,7 @@ const CashFlow = () => {
                       <td>{row.method}</td>
                     </tr>
                   ))}
-                  {filtered.length === 0 && (
+                  {currentData.length === 0 && (
                     <tr>
                       <td colSpan={8} className="text-center text-muted">
                         No records found.
@@ -248,6 +253,54 @@ const CashFlow = () => {
                   )}
                 </tbody>
               </Table>
+            </div>
+
+            {/* Pagination */}
+            <div className="d-flex justify-content-between align-items-center mt-3 px-3 pb-3">
+              <span className="small text-muted">
+                Showing {filtered.length === 0 ? 0 : indexOfFirst + 1} to{" "}
+                {Math.min(indexOfLast, filtered.length)} of {filtered.length} results
+              </span>
+              <nav>
+                <ul className="pagination pagination-sm mb-0">
+                  <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                    <button
+                      className="page-link rounded-start"
+                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    >
+                      &laquo;
+                    </button>
+                  </li>
+                  {Array.from({ length: totalPages }, (_, i) => (
+                    <li
+                      key={i + 1}
+                      className={`page-item ${currentPage === i + 1 ? "active" : ""}`}
+                    >
+                      <button
+                        className="page-link"
+                        style={
+                          currentPage === i + 1
+                            ? { backgroundColor: "#3daaaa", borderColor: "#3daaaa" }
+                            : {}
+                        }
+                        onClick={() => setCurrentPage(i + 1)}
+                      >
+                        {i + 1}
+                      </button>
+                    </li>
+                  ))}
+                  <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                    <button
+                      className="page-link rounded-end"
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }
+                    >
+                      &raquo;
+                    </button>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </Card.Body>
         </Card>

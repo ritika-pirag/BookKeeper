@@ -68,7 +68,17 @@ const MainLayout = () => {
       <div className="d-flex" style={{ paddingTop: "65px", flexGrow: 1 }}>
         {/* Sidebar - visible on desktop */}
         {screenSize === 'desktop' && sidebarVisible && (
-          <div className="d-none d-lg-block bg-white border-end" style={{ width: '240px', minHeight: '100vh' }}>
+          <div
+            className="d-none d-lg-block bg-white border-end"
+            style={{
+              width: '240px',
+              minHeight: '100vh',
+              position: 'fixed',
+              top: '65px',
+              left: 0,
+              zIndex: 1
+            }}
+          >
             <Sidebar isMobile={false} onClose={handleCloseSidebar} />
           </div>
         )}
@@ -79,7 +89,9 @@ const MainLayout = () => {
           style={{
             minHeight: "calc(100vh - 65px)",
             overflowX: "hidden",
-            padding: "1rem"
+            padding: "1rem",
+            marginLeft: screenSize === 'desktop' && sidebarVisible ? "240px" : "0",
+            transition: "margin 0.3s ease"
           }}
         >
           <Outlet />
@@ -95,7 +107,7 @@ const MainLayout = () => {
           aria-labelledby="mobileSidebarLabel"
           data-bs-scroll="true"
           data-bs-backdrop="false"
-          style={{ width: '240px'}}
+          style={{ width: '240px' }}
         >
           <div className="offcanvas-body p-0">
             <Sidebar isMobile={true} onLinkClick={handleCloseSidebar} />
