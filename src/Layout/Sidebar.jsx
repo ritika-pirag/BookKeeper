@@ -62,15 +62,32 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         // { to: "/superadmin/setting", icon: "fas fa-sliders-h", label: "System Settings" }
       ],
       Company: [
-        { type: "item", to: "/company/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" },
+      
+        { 
+          type: "item", 
+          to: "/company/dashboard", 
+          icon: "fas fa-tachometer-alt", 
+          label: "Dashboard", 
+          style: { 
+            padding: "12px 10px", 
+            fontWeight: 600, 
+            display: "flex", 
+            alignItems: "center" 
+          } 
+        },
+        {  to: "/company/managestock", icon: "fas fa-table", label: "Inventory", className: "top-level-item" },
+        
+   
+
+  
         {
           type: "section",
           title: "Sales",
           key: "sales",
           icon: "fas fa-chart-line",
           items: [
-            { to: "/company/InvoiceForm", icon: "fas fa-cash-register", label: "New Invoice" },
-            { to: "/company/Invoice", icon: "fas fa-file-invoice", label: "Manage Invoice" }
+            { to: "/company/InvoiceForm", icon: "fas fa-cash-register", label: "New Sale Add" },
+            { to: "/company/Invoice", icon: "fas fa-file-invoice", label: "Manage Sale " }
           ]
         },
         {
@@ -81,7 +98,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           items: [
             { to: "/company/vendors", icon: "fas fa-file-alt", label: "Vendors" },
             { to: "/company/NewOrders", icon: "fas fa-cash-register", label: "New orders" },
-            { to: "/company/purchaseorders", icon: "fas fa-file-alt", label: "Purchase orders" },
+            { to: "/company/purchaseorders", icon: "fas fa-file-alt", label: "Manage Purchase " },
             { to: "/company/purchasereturn", icon: "fas fa-file-alt", label: "Purchase Return" }
           ]
         },
@@ -175,7 +192,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "userinventory",
           icon: "fas fa-box",
           items: [
-            { to: "/user/products", icon: "fas fa-cube", label: "Products" },
+            // { to: "/user/products", icon: "fas fa-cube", label: "Products" },
             { to: "/user/manageproduct", icon: "fas fa-table", label: "Manage Product" }
           ]
         },
