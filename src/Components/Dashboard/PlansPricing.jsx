@@ -3,16 +3,34 @@ import { BsListUl, BsPencilSquare, BsEye, BsChevronLeft, BsChevronRight } from "
 import { Button, Modal, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PlansPricing.css";
-
 const initialPlans = [
-  { name: "Basic", price: "$9.99", billing: "Monthly", status: "Active", subscribers: "1,243" },
+  { name: "Bronze", price: "$9.99", billing: "Monthly", status: "Active", subscribers: "1,243" },
   { name: "Silver", price: "$14.99", billing: "Monthly", status: "Active", subscribers: "857" },
   { name: "Gold", price: "$24.99", billing: "Monthly", status: "Active", subscribers: "512" },
   { name: "Platinum", price: "$49.99", billing: "Monthly", status: "Active", subscribers: "326" },
-  { name: "Enterprise", price: "$99.99", billing: "Yearly", status: "Active", subscribers: "150" },
-  { name: "Starter", price: "$4.99", billing: "Monthly", status: "Deprecated", subscribers: "0" },
-  { name: "Professional", price: "$29.99", billing: "Monthly", status: "Active", subscribers: "421" },
 ];
+const badgeStyles = {
+  Bronze: {
+    backgroundImage: "linear-gradient(to right, #ad7c59, #cd7f32, #a97142)",
+    color: "#fff",
+    boxShadow: "0 0 6px rgba(173, 124, 89, 0.5)",
+  },
+  Silver: {
+    backgroundImage: "linear-gradient(to right, #c0c0c0, #d8d8d8, #b0b0b0)",
+    color: "#000",
+    boxShadow: "0 0 6px rgba(192, 192, 192, 0.6)",
+  },
+  Gold: {
+    backgroundImage: "linear-gradient(to right, #f5d76e, #ffd700, #e6be8a)",
+    color: "#000",
+    boxShadow: "0 0 6px rgba(255, 215, 0, 0.5)",
+  },
+  Platinum: {
+    backgroundImage: "linear-gradient(to right, #e5e4e2, #f9f9fb, #cfd8dc)",
+    color: "#000",
+    boxShadow: "0 0 6px rgba(180, 200, 220, 0.5)",
+  },
+};
 
 const EditPlanModal = ({ show, handleClose, plan, handleSave }) => {
   const [formData, setFormData] = useState(plan || {});
@@ -246,22 +264,18 @@ const PlanPricing = () => {
                 {currentPlans.map((plan, i) => (
                   <tr key={i}>
                     <td>
-                      <span
-                        className="badge px-3 py-2 rounded-pill fw-semibold"
-                        style={{
-                          backgroundColor:
-                            plan.name === "Platinum"
-                              ? "#e5e4e2"
-                              : plan.name === "Gold"
-                              ? "#ffd700"
-                              : plan.name === "Silver"
-                              ? "#c0c0c0"
-                              : "#b2dfdb",
-                          color: "#000",
-                        }}
-                      >
-                        {plan.name}
-                      </span>
+                 <span
+  className="badge px-3 py-2 rounded-pill fw-semibold"
+  style={{
+    ...(badgeStyles[plan.name] || {
+      backgroundColor: "#b2dfdb",
+      color: "#000",
+    }),
+  }}
+>
+  {plan.name}
+</span>
+
                     </td>
                     <td>{plan.price}</td>
                     <td>{plan.billing}</td>

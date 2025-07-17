@@ -62,6 +62,22 @@ const businesses = [
   },
 ];
 
+// 🧠 Plan-color mapping function
+const getPlanColor = (plan) => {
+  switch (plan) {
+    case "Bronze Plan":
+      return "#cd7f32"; // Bronze
+    case "Standard Plan":
+      return "#87CEEB"; // Sky Blue
+    case "Professional Plan":
+      return "#9370DB"; // Purple
+    case "Enterprise Plan":
+      return "#228B22"; // Green
+    default:
+      return "#f0f0f0"; // Light grey
+  }
+};
+
 const ExpirySection = () => {
   const expired = businesses.filter((b) => b.status === "Expired");
   const warning = businesses.filter((b) => b.status === "Warning" || b.status === "Pending");
@@ -113,7 +129,10 @@ const ExpirySection = () => {
               </h6>
               {active.map((e, i) => (
                 <div key={i} className="py-1">
-                  <span className="fw-semibold">{e.name}</span> <span className="text-muted small">- {(new Date(e.date) - new Date()) / (1000 * 60 * 60 * 24) | 0} days left</span>
+                  <span className="fw-semibold">{e.name}</span>{" "}
+                  <span className="text-muted small">
+                    - {(new Date(e.date) - new Date()) / (1000 * 60 * 60 * 24) | 0} days left
+                  </span>
                 </div>
               ))}
             </div>
@@ -149,31 +168,35 @@ const CompanyDetails = () => {
 
       <div className="card border-0 shadow-sm">
         <div className="list-group list-group-flush">
-          {businesses.map((biz, i) => (
-            <div
-              className="list-group-item d-flex justify-content-between align-items-center business-row"
-              key={i}
-            >
-              <div className="d-flex align-items-center gap-3">
-                <img src={biz.logo} alt="logo" className="biz-logo" />
-                <div>
-                  <h6 className="mb-1 fw-semibold">{biz.name}</h6>
-                  <div className="d-flex gap-2 align-items-center">
-                    <span className={`badge status-badge status-${biz.status.toLowerCase()}`}>
-                      {biz.status}
-                    </span>
-                    <span className="text-muted small">{biz.plan}</span>
+          {businesses.map((biz, i) => {
+            const planLabel = biz.plan === "Basic Plan" ? "Bronze Plan" : biz.plan;
+            return (
+              <div
+                className="list-group-item d-flex justify-content-between align-items-center business-row"
+                key={i}
+                style={{ backgroundColor: getPlanColor(planLabel) }}
+              >
+                <div className="d-flex align-items-center gap-3">
+                  <img src={biz.logo} alt="logo" className="biz-logo" />
+                  <div>
+                    <h6 className="mb-1 fw-semibold">{biz.name}</h6>
+                    <div className="d-flex gap-2 align-items-center">
+                      <span className={`badge status-badge status-${biz.status.toLowerCase()}`}>
+                        {biz.status}
+                      </span>
+                      <span className="text-muted small">{planLabel}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-end">
+                  <div className="text-muted small">Expiry Date</div>
+                  <div className="fw-semibold">
+                    {biz.date} <BsPencil className="ms-1 edit-icon" />
                   </div>
                 </div>
               </div>
-              <div className="text-end">
-                <div className="text-muted small">Expiry Date</div>
-                <div className="fw-semibold">
-                  {biz.date} <BsPencil className="ms-1 edit-icon" />
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

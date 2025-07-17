@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { MdOutlineCancel } from 'react-icons/md';
 
 const ProfileModal = ({ show, handleClose }) => {
-  // State to manage input values
   const [formData, setFormData] = useState({
     firstName: 'Jeffry',
     lastName: 'Jordan',
@@ -14,10 +13,25 @@ const ProfileModal = ({ show, handleClose }) => {
     password: '********'
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [profileImage, setProfileImage] = useState("https://randomuser.me/api/portraits/men/75.jpg");
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.size <= 2 * 1024 * 1024 && ['image/jpeg', 'image/png'].includes(file.type)) {
+      const imageUrl = URL.createObjectURL(file);
+      setProfileImage(imageUrl);
+    } else {
+      alert("Please upload a valid JPG/PNG image below 2MB.");
+    }
+  };
+
+  const removeImage = () => setProfileImage(null);
 
   return (
     <Modal show={show} onHide={handleClose} size="md" centered>
@@ -27,8 +41,9 @@ const ProfileModal = ({ show, handleClose }) => {
       <Modal.Body>
         <div className="card p-3">
           <h5 className="mb-3">
-            <span className="badge bg-warning text-dark fs-5">Profile</span>
+            <span className="badge" style={{ backgroundColor: "#27b2b6", color: "#fff", fontSize: '1rem' }}>Profile</span>
           </h5>
+
           <h6 className="text-primary mb-3">
             <FaUserCircle className="me-2" /> Basic Information
           </h6>
@@ -36,22 +51,33 @@ const ProfileModal = ({ show, handleClose }) => {
           <div className="d-flex align-items-center mb-4">
             <div className="position-relative me-3">
               <img
-                src="https://randomuser.me/api/portraits/men/75.jpg"
+                src={profileImage || "https://via.placeholder.com/80x80?text=No+Image"}
                 alt="Profile"
                 className="img-thumbnail rounded"
                 style={{ width: '80px', height: '80px', objectFit: 'cover' }}
               />
-              <button
-                className="btn btn-sm btn-danger position-absolute top-0 start-100 translate-middle"
-                style={{ borderRadius: '50%' }}
-              >
-                <MdOutlineCancel />
-              </button>
+              {profileImage && (
+                <button
+                  className="btn btn-sm btn-danger position-absolute top-0 start-100 translate-middle"
+                  style={{ borderRadius: '50%' }}
+                  onClick={removeImage}
+                >
+                  <MdOutlineCancel />
+                </button>
+              )}
             </div>
             <div>
-              <button className="btn btn- text-white" style={{backgroundColor:"#3daaaa"}}>Change Image</button>
+              <label className="btn text-white" style={{ backgroundColor: "#27b2b6" }}>
+                Change Image
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  onChange={handleImageChange}
+                  hidden
+                />
+              </label>
               <p className="text-muted small mt-1 mb-0">
-                Upload an image below 2 MB, JPG/PNG only.
+                Upload JPG/PNG under 2MB.
               </p>
             </div>
           </div>
@@ -116,14 +142,18 @@ const ProfileModal = ({ show, handleClose }) => {
               <label className="form-label">Password *</label>
               <div className="input-group">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   className="form-control"
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
                 />
-                <button className="btn btn-outline-secondary" type="button">
-                  <i className="bi bi-eye"></i>
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  onClick={() => setShowPassword(prev => !prev)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
             </div>
@@ -131,7 +161,7 @@ const ProfileModal = ({ show, handleClose }) => {
 
           <div className="d-flex justify-content-end gap-2 mt-4">
             <Button variant="dark" onClick={handleClose}>Cancel</Button>
-            <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} className="text-white">Save Changes</Button>
+            <Button variant="warning" className="text-white">Save Changes</Button>
           </div>
         </div>
       </Modal.Body>
