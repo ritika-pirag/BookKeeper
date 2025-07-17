@@ -3,6 +3,7 @@ import { Table, Button, Badge, Form, Row, Col } from 'react-bootstrap';
 import { FaEye, FaDownload, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
+
 const initialOrders = [
   { id: 1, orderNo: 1045, supplier: "Haroun Spiers", date: "15-07-2025", amount: "$ 10.90", status: "Paid" },
   { id: 2, orderNo: 1044, supplier: "", date: "15-07-2025", amount: "$ 325.00", status: "Paid" },
@@ -84,52 +85,71 @@ const PurchaseOrders = () => {
                 <td>{order.date}</td>
                 <td>{order.amount}</td>
                 <td>{getStatusBadge(order.status)}</td>
-                <td className="d-flex justify-content-center flex-wrap gap-1">
+                {/* <td className="d-flex justify-content-center flex-wrap gap-1">
                   <Button
                     size="sm"
-                    variant="success"
+                
                     onClick={() => navigate('/user/purchaseviews')}
                   >
-                    <FaEye className="me-1" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="info"
+                    <FaEye  />
+                  </Button> */}
+                            <td className="d-flex justify-content-center gap-1">
+                                                  <button
+                    className="btn outlin-info btn-sm  text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#couponDetailModal"
+                      onClick={() => navigate('/user/purchaseviews')}
+                  >
+                    <FaEye size={16} />
+                  </button>
+                                
+                  <button
+                       className="btn outlin-warning btn-sm text-warning"
+                    data-bs-toggle="modal"
                     onClick={() => handleDownload(order)}
                   >
-                    <FaDownload />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="danger"
+                    <FaDownload size={16} />
+                  </button>
+                  <button
+                    className='btn outline-danger btn-sm text-danger'
                     onClick={() => handleDelete(order.id)}
                   >
-                    <FaTrash />
-                  </Button>
+                    <FaTrash size={16}/>
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
+        {/* Pagination UI */}
+<div className="d-flex justify-content-between align-items-center mt-3 px-3 flex-wrap">
+  <span className="small text-muted">Showing 1 to {orders.length} of {orders.length} entries</span>
+  <nav>
+    <ul className="pagination pagination-sm mb-0 mt-2 mt-md-0">
+      <li className="page-item disabled">
+        <button className="page-link rounded-start">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button
+          className="page-link"
+          style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+        >
+          1
+        </button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link rounded-end">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
       </div>
 
-      {/* Pagination */}
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3 gap-2">
-        <span className="text-muted">
-          Showing 1 to {orders.length} of {orders.length} entries
-        </span>
-        <div>
-          <Button size="sm" variant="light" className="me-1" disabled>
-            Previous
-          </Button>
-          <Button size="sm" variant="primary" active>
-            1
-          </Button>
-          <Button size="sm" variant="light" className="ms-1" disabled>
-            Next
-          </Button>
-        </div>
-      </div>
+
     </div>
   );
 };

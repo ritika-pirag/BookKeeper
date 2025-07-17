@@ -282,7 +282,7 @@ const Inventory = () => {
           <Button 
             variant="light"
             style={{
-              background: tab === "inventory" ? "#FFA94D" : "#eaeaea",
+              background: tab === "inventory" ? "#3daaaa" : "#eaeaea",
               color: tab === "inventory" ? "#fff" : "#888",
               fontWeight: 600,
               fontSize: 18,
@@ -297,7 +297,7 @@ const Inventory = () => {
           <Button
             variant="light"
             style={{
-              background: tab === "stock" ? "#FFA94D" : "#eaeaea",
+              background: tab === "stock" ? "#3daaaa" : "#eaeaea",
               color: tab === "stock" ? "#fff" : "#888",
               fontWeight: 600,
               fontSize: 18,
@@ -312,7 +312,7 @@ const Inventory = () => {
           <Button
             variant="light"
             style={{
-              background: tab === "sold" ? "#FFA94D" : "#eaeaea",
+              background: tab === "sold" ? "#3daaaa" : "#eaeaea",
               color: tab === "sold" ? "#fff" : "#888",
               fontWeight: 600,
               fontSize: 18,

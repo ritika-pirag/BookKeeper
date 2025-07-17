@@ -59,7 +59,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         { to: "/superadmin/planpricing", icon: "fas fa-industry", label: "Plans & Pricing" },
         { to: "/superadmin/requestplan", icon: "fas fa-boxes-stacked", label: "Request Plan" },
         { to: "/superadmin/payments", icon: "fas fa-chart-line", label: "payments" },
-        { to: "/superadmin/setting", icon: "fas fa-sliders-h", label: "System Settings" }
+        // { to: "/superadmin/setting", icon: "fas fa-sliders-h", label: "System Settings" }
       ],
       Company: [
         { type: "item", to: "/company/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" },
@@ -97,7 +97,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             { to: "/company/brands", icon: "fas fa-trademark", label: "Brands" },
             { to: "/company/device", icon: "fas fa-industry", label: "device" },
             { to: "/company/product", icon: "fas fa-box-open", label: "Product" },
-            { to: "/company/ponitofsale", icon: "fas fa-file-invoice", label: "Invoice" }
+            { to: "/company/ponitofsale", icon: "fas fa-file-invoice", label: "POS Screen" }
           ]
         },
         {
@@ -169,16 +169,16 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             { to: "/user/dashboard", icon: "fas fa-th-large", label: "Dashboard" }
           ]
         },
-        // {
-        //   type: "section",
-        //   title: "Inventory",
-        //   key: "userinventory",
-        //   icon: "fas fa-box",
-        //   items: [
-        //     { to: "/user/products", icon: "fas fa-cube", label: "Products" },
-        //     { to: "/user/manageproduct", icon: "fas fa-table", label: "Manage Product" }
-        //   ]
-        // },
+        {
+          type: "section",
+          title: "Inventory",
+          key: "userinventory",
+          icon: "fas fa-box",
+          items: [
+            { to: "/user/products", icon: "fas fa-cube", label: "Products" },
+            { to: "/user/manageproduct", icon: "fas fa-table", label: "Manage Product" }
+          ]
+        },
         {
           type: "section",
           title: "Sales",

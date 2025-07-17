@@ -74,7 +74,7 @@ const GSTData = () => {
 
   return (
     <div className="container-fluid px-2 px-md-5 mt-4">
-      <h4 className="fw-bold mb-4" style={{ color: '#FFA726' }}>GST Returns</h4>
+      <h4 className="fw-bold mb-4" style={{ color: '#3daaaa' }}>GST Returns</h4>
 
       {/* Summary Cards */}
       <div className="row g-3 mb-4">
@@ -129,10 +129,10 @@ const GSTData = () => {
                     Not Filed
                   </Badge>
                 </td>
-                <td className="d-flex gap-2">
-                  <Button variant="outline-primary" size="sm" onClick={() => handleAction('view', item)}><FaEye /></Button>
-                  <Button variant="outline-warning" size="sm" onClick={() => handleAction('edit', item)}><FaEdit /></Button>
-                  <Button variant="outline-danger" size="sm" onClick={() => handleAction('delete', item)}><FaTrash /></Button>
+                <td className="d-flex justify-content-center gap-1">
+                  <button  className="btn outlin-info btn-sm  text-info"onClick={() => handleAction('view', item)}><FaEye  size={16}/></button>
+                  <button  className="btn outlin-warning btn-sm text-warning" onClick={() => handleAction('edit', item)}><FaEdit size={16}/></button>
+                  <button   className='btn outline-danger btn-sm text-danger' onClick={() => handleAction('delete', item)}><FaTrash size={16} /></button>
                 </td>
               </tr>
             ))}
@@ -140,20 +140,32 @@ const GSTData = () => {
         </table>
       </div>
 
-      {/* Pagination */}
-      <nav aria-label="Page navigation">
-        <ul className="pagination justify-content-center">
-          <li className="page-item disabled">
-            <span className="page-link">Previous</span>
-          </li>
-          <li className="page-item active">
-            <span className="page-link">1</span>
-          </li>
-          <li className="page-item disabled">
-            <span className="page-link">Next</span>
-          </li>
-        </ul>
-      </nav>
+   
+{/* Pagination UI */}
+<div className="d-flex justify-content-between align-items-center mt-3 px-3 flex-wrap">
+  <span className="small text-muted">Showing 1 to 5 of 10 results</span>
+  <nav>
+    <ul className="pagination pagination-sm mb-0 mt-2 mt-md-0">
+      <li className="page-item disabled">
+        <button className="page-link rounded-start">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button
+          className="page-link"
+          style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+        >
+          1
+        </button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link rounded-end">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
 
       {/* View Modal */}
       <Modal show={showView} onHide={() => setShowView(false)} centered>
@@ -200,7 +212,7 @@ const GSTData = () => {
           <Button variant="secondary" onClick={() => setShowEdit(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={() => setShowEdit(false)}>
+          <Button   style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }} onClick={() => setShowEdit(false)} >
             Save Changes
           </Button>
         </Modal.Footer>

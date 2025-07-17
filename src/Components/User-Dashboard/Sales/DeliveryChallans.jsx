@@ -231,6 +231,30 @@ const getStatusBadge = (status) => {
             ))}
           </tbody>
         </table>
+        <div className="d-flex justify-content-between align-items-center mt-3 px-3">
+        <span className="small text-muted">Showing 1 to 5 of 10 results</span>
+        <nav>
+          <ul className="pagination pagination-sm mb-0">
+            <li className="page-item disabled">
+              <button className="page-link rounded-start">&laquo;</button>
+            </li>
+            <li className="page-item active">
+              <button
+                className="page-link"
+                style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+              >
+                1
+              </button>
+            </li>
+            <li className="page-item">
+              <button className="page-link">2</button>
+            </li>
+            <li className="page-item">
+              <button className="page-link rounded-end">&raquo;</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
       </div>
 
 {/* Add Delivery Challan Modal */}
@@ -357,7 +381,7 @@ const getStatusBadge = (status) => {
                   </tr>
                 </tbody>
               </table>
-              <button type="button" className="btn btn-sm btn-primary">
+              <button type="button" className="btn btn-sm btn-primary " style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}}>
                 + Add Item
               </button>
             </div>
@@ -417,7 +441,7 @@ const getStatusBadge = (status) => {
             <button 
               type="submit" 
               className="btn btn-warning text-white px-4"
-              style={{ backgroundColor: "#FFA646" }}
+              style={{ backgroundColor: "#3daaaa", borderColor:"#3daaaa" }}
             >
               Create Challan
             </button>
@@ -536,7 +560,7 @@ const getStatusBadge = (status) => {
         <button
           type="button"
           className="btn btn-primary"
-          style={{ backgroundColor: "#FFA646", borderColor: "#FFA646" }}
+          style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
         >
           Print Challan
         </button>
