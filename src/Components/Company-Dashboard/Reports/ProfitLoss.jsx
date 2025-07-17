@@ -109,7 +109,7 @@ const ProfitLoss = () => {
           <Col xs="auto">
             <Button
               style={{
-                background: "#FFA94D",
+                background: "#3daaaa",
                 border: "none",
                 fontWeight: 500,
                 padding: "7px 24px",

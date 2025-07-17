@@ -177,7 +177,7 @@ const PurchaseReturn = () => {
                         Purchase Returns
                     </h2>
                     <button
-                        className="btn d-flex align-items-center gap-2 mt-1 mt-md-0"
+                        className="btn text-white d-flex align-items-center gap-2 mt-1 mt-md-0"
            style={{ backgroundColor: '#3daaaa', border: '1px solid #3daaaa' }}
                         onClick={() => {
                             setIsEditMode(false);
@@ -631,7 +631,7 @@ const PurchaseReturn = () => {
                                         type="button"
                                         className="btn"
                                         onClick={handleSubmit}
-                                                 style={{ backgroundColor: '#3daaaa', border: '1px solid #3daaaa' }}
+                                                 style={{ backgroundColor: '#3daaaa', border: '1px solid #3daaaa', color:"#fff" }}
                                     >
                                         {isEditMode ? 'Update Return' : 'Create Return'}
                                     </button>

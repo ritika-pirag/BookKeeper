@@ -130,8 +130,24 @@ const PaymentMode = () => {
             >
               Vendor
             </button>
-            <ul className="dropdown-menu custom-dropdown w-100" aria-labelledby="vendorDropdown">
-              <li><a className="dropdown-item active-orange" href="#">All</a></li>
+             <ul className="dropdown-menu w-100" aria-labelledby="vendorDropdown">
+    <li>
+      <a
+        href="#"
+        className="dropdown-item"
+        style={{ color: "#3daaaa" }}
+        onMouseOver={(e) => {
+          e.target.style.backgroundColor = "#3daaaa";
+          e.target.style.color = "white";
+        }}
+        onMouseOut={(e) => {
+          e.target.style.backgroundColor = "";
+          e.target.style.color = "#3daaaa";
+        }}
+      >
+        All
+      </a>
+    </li>
               <li><a className="dropdown-item" href="#">Christian</a></li>
               <li><a className="dropdown-item" href="#">Grayson</a></li>
               <li><a className="dropdown-item" href="#">Amara</a></li>
@@ -151,8 +167,24 @@ const PaymentMode = () => {
             >
               Mode
             </button>
-            <ul className="dropdown-menu custom-dropdown w-100" aria-labelledby="modeDropdown">
-              <li><a className="dropdown-item" href="#">All</a></li>
+            <ul className="dropdown-menu w-150" aria-labelledby="vendorDropdown">
+    <li>
+      <a
+        href="#"
+        className="dropdown-item"
+        style={{ color: "#3daaaa" }}
+        onMouseOver={(e) => {
+          e.target.style.backgroundColor = "#3daaaa";
+          e.target.style.color = "white";
+        }}
+        onMouseOut={(e) => {
+          e.target.style.backgroundColor = "";
+          e.target.style.color = "#3daaaa";
+        }}
+      >
+        All
+      </a>
+    </li>
               <li><a className="dropdown-item" href="#">Standard Chartered Bank</a></li>
               <li><a className="dropdown-item" href="#">ICICI Bank</a></li>
             </ul>
@@ -170,8 +202,24 @@ const PaymentMode = () => {
             >
               Sort By: Date
             </button>
-            <ul className="dropdown-menu custom-dropdown w-100" aria-labelledby="sortDropdown">
-              <li><a className="dropdown-item" href="#">Date</a></li>
+              <ul className="dropdown-menu w-120" aria-labelledby="vendorDropdown">
+    <li>
+      <a
+        href="#"
+        className="dropdown-item"
+        style={{ color: "#3daaaa" }}
+        onMouseOver={(e) => {
+          e.target.style.backgroundColor = "#3daaaa";
+          e.target.style.color = "white";
+        }}
+        onMouseOut={(e) => {
+          e.target.style.backgroundColor = "";
+          e.target.style.color = "#3daaaa";
+        }}
+      >
+        Date
+      </a>
+    </li>
               <li><a className="dropdown-item" href="#">Amount (High to Low)</a></li>
               <li><a className="dropdown-item" href="#">Amount (Low to High)</a></li>
               <li><a className="dropdown-item" href="#">Payment Number</a></li>

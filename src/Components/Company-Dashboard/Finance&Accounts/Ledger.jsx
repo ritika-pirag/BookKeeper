@@ -165,20 +165,20 @@ const Ledger = () => {
                 </td>
                 <td className="d-flex justify-content-center gap-1">
                   <button
-                    className="btn btn-light btn-sm border"
+                    className="btn outline-info btn-sm py-1 px-1 text-info"
                     data-bs-toggle="modal"
                     data-bs-target="#transactionDetailModal"
                     onClick={() => setSelectedTransaction(transaction)}
                   >
-                    <FaEye />
+                    <FaEye size={16} />
                   </button>
                   <button
-                    className="btn btn-warning btn-sm text-white"
+                    className="btn outline-primary btn-sm text-warning py-1 px-1" 
                     // data-bs-toggle="modal"
                     // data-bs-target="#editTransactionModal"
                     // onClick={() => handleEdit(transaction)}
                   >
-                    <FaPrint />
+                    <FaPrint size={16}/>
                   </button>
                   {/* <button
                     className="btn btn-danger btn-sm text-white"
@@ -193,7 +193,9 @@ const Ledger = () => {
             ))}
           </tbody>
         </table>
-        {/* Pagination */}
+  
+      </div>
+      {/* Pagination */}
 <div className="d-flex justify-content-between align-items-center mt-3 px-3">
   <span className="small text-muted">
     Showing 1 to {transactions.length} of {transactions.length} results
@@ -221,81 +223,80 @@ const Ledger = () => {
   </nav>
 </div>
 
-      </div>
 
       {/* Transaction Details Modal */}
-      <div
-        className="modal fade"
-        id="transactionDetailModal"
-        tabIndex="-1"
-        aria-labelledby="transactionDetailModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-lg modal-dialog-centered">
-          <div className="modal-content">
-          <div className="modal-header">
-  <h5 className="modal-title fw-bold" id="transactionDetailModalLabel">
-    Transaction Details
-  </h5>
-  <button 
-    type="button"
-    className="btn-close"
-    data-bs-dismiss="modal"
-    aria-label="Close"
-    onClick={() => setSelectedTransaction(null)}
-  ></button>
-</div>
-            <div className="modal-body">
-              {selectedTransaction && (
-                <div className="table-responsive">
-                  <table className="table table-bordered mb-0">
-                    <tbody>
-                      <tr>
-                        <td className="fw-semibold">Date</td>
-                        <td>{selectedTransaction.date}</td>
-                      </tr>
-                      <tr>
-                        <td className="fw-semibold">Type</td>
-                        <td className={getTypeColor(selectedTransaction.type)}>
-                          {selectedTransaction.type}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="fw-semibold">Reference</td>
-                        <td>{selectedTransaction.reference}</td>
-                      </tr>
-                      <tr>
-                        <td className="fw-semibold">Amount</td>
-                        <td className={getAmountColor(selectedTransaction.amount)}>
-                          {selectedTransaction.amount}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="fw-semibold">Balance</td>
-                        <td className={getBalanceColor(selectedTransaction.balance)}>
-                          {selectedTransaction.balance}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="fw-semibold">Due Date</td>
-                        <td>{selectedTransaction.dueDate}</td>
-                      </tr>
-                      <tr>
-                        <td className="fw-semibold">Status</td>
-                        <td>
-                          <span className={getStatusBadge(selectedTransaction.status)}>
-                            {selectedTransaction.status}
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+     <div
+  className="modal fade"
+  id="transactionDetailModal"
+  tabIndex="-1"
+  aria-labelledby="transactionDetailModalLabel"
+  aria-hidden="true"
+>
+  <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h5 className="modal-title fw-bold" id="transactionDetailModalLabel">
+          Transaction Details
+        </h5>
+        <button 
+          type="button"
+          className="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          onClick={() => setSelectedTransaction(null)}
+        ></button>
       </div>
+      <div className="modal-body p-0">
+        {selectedTransaction && (
+          <div className="table-responsive">
+            <table className="table table-bordered mb-0">
+              <tbody>
+                <tr className="d-flex flex-column flex-md-row">
+                  <td className="fw-semibold col-md-4 py-2 py-md-3">Date</td>
+                  <td className="col-md-8 py-2 py-md-3">{selectedTransaction.date}</td>
+                </tr>
+                <tr className="d-flex flex-column flex-md-row">
+                  <td className="fw-semibold col-md-4 py-2 py-md-3">Type</td>
+                  <td className={`col-md-8 py-2 py-md-3 ${getTypeColor(selectedTransaction.type)}`}>
+                    {selectedTransaction.type}
+                  </td>
+                </tr>
+                <tr className="d-flex flex-column flex-md-row">
+                  <td className="fw-semibold col-md-4 py-2 py-md-3">Reference</td>
+                  <td className="col-md-8 py-2 py-md-3">{selectedTransaction.reference}</td>
+                </tr>
+                <tr className="d-flex flex-column flex-md-row">
+                  <td className="fw-semibold col-md-4 py-2 py-md-3">Amount</td>
+                  <td className={`col-md-8 py-2 py-md-3 ${getAmountColor(selectedTransaction.amount)}`}>
+                    {selectedTransaction.amount}
+                  </td>
+                </tr>
+                <tr className="d-flex flex-column flex-md-row">
+                  <td className="fw-semibold col-md-4 py-2 py-md-3">Balance</td>
+                  <td className={`col-md-8 py-2 py-md-3 ${getBalanceColor(selectedTransaction.balance)}`}>
+                    {selectedTransaction.balance}
+                  </td>
+                </tr>
+                <tr className="d-flex flex-column flex-md-row">
+                  <td className="fw-semibold col-md-4 py-2 py-md-3">Due Date</td>
+                  <td className="col-md-8 py-2 py-md-3">{selectedTransaction.dueDate}</td>
+                </tr>
+                <tr className="d-flex flex-column flex-md-row">
+                  <td className="fw-semibold col-md-4 py-2 py-md-3">Status</td>
+                  <td className="col-md-8 py-2 py-md-3">
+                    <span className={getStatusBadge(selectedTransaction.status)}>
+                      {selectedTransaction.status}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
 
       {/* Edit Transaction Modal */}
       <div

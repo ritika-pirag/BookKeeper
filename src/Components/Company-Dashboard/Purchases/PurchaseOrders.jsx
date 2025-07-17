@@ -84,28 +84,28 @@ const PurchaseOrders = () => {
                 <td>{order.date}</td>
                 <td>{order.amount}</td>
                 <td>{getStatusBadge(order.status)}</td>
-                <td className="d-flex justify-content-center flex-wrap gap-1">
-                  <Button
+                <td className="d-flex gap-2 justify-content-center">
+                  <button
                     size="sm"
-                    variant="success"
+                    className="btn outline-info btn-sm py-1 px-1 text-info" 
                     onClick={() => navigate('/company/purchaseview')}
                   >
-                    <FaEye className="me-1" />
-                  </Button>
-                  <Button
+                    <FaEye size={16} className="me-1" />
+                  </button>
+                  <button
                     size="sm"
-                    variant="info"
+              className="btn outline-primary btn-sm text-warning py-1 px-1"
                     onClick={() => handleDownload(order)}
                   >
-                    <FaDownload />
-                  </Button>
-                  <Button
+                    <FaDownload size={16}/>
+                  </button>
+                  <button
                     size="sm"
-                    variant="danger"
+                   className="btn outline-primary btn-sm text-danger py-2 px-1"
                     onClick={() => handleDelete(order.id)}
                   >
-                    <FaTrash />
-                  </Button>
+                    <FaTrash size={16} />
+                  </button>
                 </td>
               </tr>
             ))}

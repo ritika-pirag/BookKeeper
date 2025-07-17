@@ -196,7 +196,7 @@ const Vendors = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => { setShowAdd(false); setShowEdit(false); }}>Cancel</Button>
-          <Button variant="primary" onClick={showAdd ? handleAddVendor : handleUpdateVendor}>
+          <Button style={{backgroundColor:"#3daaaa"}} onClick={showAdd ? handleAddVendor : handleUpdateVendor}>
             {showAdd ? "Add Vendor" : "Save Changes"}
           </Button>
         </Modal.Footer>

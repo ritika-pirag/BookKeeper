@@ -391,7 +391,7 @@ const Company = () => {
           {/* Modal Footer */}
           <div className="modal-footer border-top-0 pt-3">
             <button className="btn btn-dark px-4" onClick={() => setShowModal(false)}>Cancel</button>
-            <button className="btn btn-success px-4">Create</button>
+            <button className="btn btn- text-white px-4"   style={{backgroundColor:"#3daaaa"}}>Create</button>
           </div>
 
         </div>

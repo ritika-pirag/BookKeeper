@@ -63,7 +63,7 @@ const statusColor = (status) =>
 const ITCReport = () => (
   <div style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
     <Container fluid className="py-4">
-      <h3 style={{ color: "#FFA94D", fontWeight: 700, marginBottom: 24 }}>
+      <h3 style={{ color: "#161412ff", fontWeight: 700, marginBottom: 24 }}>
         ITC Report
       </h3>
       <Row className="g-3 mb-4">
@@ -179,9 +179,9 @@ const ITCReport = () => (
             </div>
             <div>
               <Button
-                variant="outline-warning"
+                
                 size="sm"
-                style={{ fontWeight: 500 }}
+                style={{ backgroundColor:"#3daaaa",borderColor:"#3daaaa",fontWeight: 500 }}
               >
                 <FaArrowDown style={{ marginRight: 4 }} />
                 Export

@@ -162,10 +162,10 @@ const Payments = () => {
           </div>
           
           <div className="d-flex align-items-center gap-2">
-            <button className="btn btn-outline-dark d-flex align-items-center gap-2 px-3 py-2">
+            <button className="btn btn- text-white d-flex align-items-center gap-2 px-3 py-2" style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}}>
               <FaFileExport /> Export
             </button>
-            <FaFilePdf size={18} className="text-dark" style={{ cursor: "pointer" }} />
+            <FaFilePdf size={18} className="text-danger" style={{ cursor: "pointer" }} />
           </div>
           
         </div>
@@ -244,7 +244,7 @@ const Payments = () => {
 </div>
 
         {(activeTab === "All Payments" || activeTab === "Failed Transactions") && (
-          <div className="bg-white rounded shadow-sm p-3">
+          <div className="bg-white rounded shadow-sm p-3" >
             <h5 className="fw-bold mb-1">{activeTab}</h5>
             <p className="text-muted small mb-3">
               {activeTab === "All Payments"

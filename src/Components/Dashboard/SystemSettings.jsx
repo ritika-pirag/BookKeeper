@@ -17,7 +17,7 @@ const SystemSettings = () => {
 
   return (
     <div className="container-fluid py-4 px-4 bg-light min-vh-100 mt-4 mt-md-0">
-      <h3 className="fw-semibold mb-3 text-primary">System Settings</h3>
+      <h3 className="fw-semibold mb-3 text-dark" >System Settings</h3>
       <p className="text-muted mb-4">
         Manage global configurations for your system. Changes apply to all users and modules.
       </p>
@@ -25,7 +25,7 @@ const SystemSettings = () => {
       {/* Super Admin Settings */}
       <div className="card rounded-4 shadow-sm border-0 mb-5">
         <div className="card-body">
-          <h4 className="mb-4 text-primary">Super Admin Settings</h4>
+          <h4 className="mb-4 text-dark">Super Admin Settings</h4>
           <div className="row g-4">
             <div className="col-md-6">
               <label className="form-label">Business Name</label>
@@ -177,8 +177,8 @@ const SystemSettings = () => {
     </div>
 
     <div className="d-flex justify-content-between mt-4">
-      <button className="btn btn-outline-warning">Test Connection</button>
-      <button className="btn btn-success px-4"  style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}>Save Cloud Settings</button>
+      <button className="btn btn- text-white" style={{backgroundColor:"#3daaaa"}}>Test Connection</button>
+      <button className="btn btn- text-white px-4"  style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}>Save Cloud Settings</button>
     </div>
   </div>
 </div>

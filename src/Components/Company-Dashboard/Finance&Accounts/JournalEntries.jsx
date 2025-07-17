@@ -174,7 +174,7 @@ const JournalEntries = () => {
             <button 
               className="btn  w-100" 
               type="button" 
-              style={{ backgroundColor: "#53b2a5 " }}
+              style={{ backgroundColor: "#53b2a5 ", color:"#fff" }}
             >
               Export
             </button>
@@ -211,27 +211,29 @@ const JournalEntries = () => {
                 </td>
                 <td className="d-flex justify-content-center gap-1">
                   <button
-                    className="btn btn-warning btn-sm text-white"
+                    className="btn outline-primary btn-sm text-warning py-1 px-1" 
                     data-bs-toggle="modal"
                     data-bs-target="#editEntryModal"
                     onClick={() => handleEdit(entry)}
                   >
-                    <FaEdit />
+                    <FaEdit size={16}/>
                   </button>
                   <button
-                    className="btn btn-danger btn-sm text-white"
+                    className="btn outline-primary btn-sm text-danger py-2 px-1"
                     data-bs-toggle="modal"
                     data-bs-target="#deleteEntryModal"
                     onClick={() => handleDelete(entry)}
                   >
-                    <FaTrash />
+                    <FaTrash size={16}/>
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        {/* Pagination */}
+ 
+      </div>
+             {/* Pagination */}
 <div className="d-flex justify-content-between align-items-center mt-3 px-3">
   <span className="small text-muted">
     Showing 1 to {entries.length} of {entries.length} results
@@ -259,7 +261,6 @@ const JournalEntries = () => {
   </nav>
 </div>
 
-      </div>
 
       {/* Add Entry Modal */}
       <div className="modal fade" id="addEntryModal" tabIndex="-1" aria-hidden="true">
@@ -425,7 +426,7 @@ const JournalEntries = () => {
                     <button type="button" className="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
                       Cancel
                     </button>
-                    <button type="submit" className="btn btn-warning text-white px-4" style={{ backgroundColor: "#FFA646" }}>
+                    <button type="submit" className="btn btn-warning text-white px-4" style={{ backgroundColor: "#3daaaa", borderColor:"#3daaaa" }}>
                       Save Changes
                     </button>
                   </div>
@@ -455,7 +456,7 @@ const JournalEntries = () => {
                 </button>
                 <button 
                   className="btn px-4 py-2" 
-                  style={{ background: "#FFA646", color: "#fff", fontWeight: "600" }}
+                  style={{ background: "#3daaaa", color: "#fff", fontWeight: "600" }}
                   onClick={confirmDelete}
                   data-bs-dismiss="modal"
                 >

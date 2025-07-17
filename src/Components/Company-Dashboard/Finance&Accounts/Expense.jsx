@@ -147,8 +147,8 @@ const Expense = () => {
             <FaFileExcel />
           </button>
           <button
-            className="btn text-black border bg-white d-flex align-items-center gap-2"
-            // style={{ backgroundColor: "#FFA646" }}
+            className="btn text-white d-flex align-items-center gap-2"
+            style={{ backgroundColor: "#3daaaa" }}
             data-bs-toggle="modal"
             data-bs-target="#addExpenseModal"
           >
@@ -170,65 +170,115 @@ const Expense = () => {
         </div>
 
         {/* Dropdowns - Stack vertically on small screens, horizontally on larger ones */}
-        <div className="d-flex flex-column flex-sm-row gap-2 flex-grow-1 flex-md-grow-0 w-100 w-md-auto">
-          {/* Expense Account Dropdown */}
-          <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
-            <button 
-              className="btn text-black border bg-white  dropdown-toggle w-100" 
-              type="button" 
-              id="accountDropdown"
-              data-bs-toggle="dropdown" 
-              aria-expanded="false"
-            >
-              Expense Account
-            </button>
-            <ul className="dropdown-menu custom-dropdown w-100" aria-labelledby="accountDropdown">
-              <li><a className="dropdown-item active-orange" href="#">All</a></li>
-              <li><a className="dropdown-item" href="#">delectus</a></li>
-              <li><a className="dropdown-item" href="#">accusantium</a></li>
-              <li><a className="dropdown-item" href="#">deserunt</a></li>
-              <li><a className="dropdown-item" href="#">aut</a></li>
-            </ul>
-          </div>
+     <div className="d-flex flex-column flex-sm-row gap-2 flex-grow-1 flex-md-grow-0 w-100 w-md-auto">
 
-          {/* Status Dropdown */}
-          <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
-            <button 
-              className="btn text-black border bg-white  dropdown-toggle w-100" 
-              type="button" 
-              id="statusDropdown"
-              data-bs-toggle="dropdown" 
-              aria-expanded="false"
-            >
-              Status
-            </button>
-            <ul className="dropdown-menu custom-dropdown w-100" aria-labelledby="statusDropdown">
-              <li><a className="dropdown-item" href="#">All</a></li>
-              <li><a className="dropdown-item" href="#">Paid</a></li>
-              <li><a className="dropdown-item" href="#">Pending</a></li>
-              <li><a className="dropdown-item" href="#">Rejected</a></li>
-            </ul>
-          </div>
+  {/* Expense Account Dropdown */}
+  <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
+    <button
+      className="btn text-white border dropdown-toggle w-100"
+      type="button"
+      id="accountDropdown"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+      style={{ backgroundColor: "#3daaaa", color: "white" }}
+    >
+      Expense Account
+    </button>
+    <ul className="dropdown-menu w-100" aria-labelledby="accountDropdown">
+      {["All", "delectus", "accusantium", "deserunt", "aut"].map((item, idx) => (
+        <li key={idx}>
+          <a
+            className="dropdown-item"
+            href="#"
+            style={{ color: "#3daaaa" }}
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = "#3daaaa";
+              e.target.style.color = "white";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = "";
+              e.target.style.color = "#3daaaa";
+            }}
+          >
+            {item}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
 
-          {/* Sort By Dropdown */}
-          <div className="dropdown flex-grow-1">
-            <button 
-              className="btn text-black border bg-white  dropdown-toggle w-100" 
-              type="button" 
-              id="sortDropdown"
-              data-bs-toggle="dropdown" 
-              aria-expanded="false"
-            >
-              Sort By: Date
-            </button>
-            <ul className="dropdown-menu custom-dropdown w-100" aria-labelledby="sortDropdown">
-              <li><a className="dropdown-item" href="#">Date</a></li>
-              <li><a className="dropdown-item" href="#">Amount (High to Low)</a></li>
-              <li><a className="dropdown-item" href="#">Amount (Low to High)</a></li>
-              <li><a className="dropdown-item" href="#">Vendor Name</a></li>
-            </ul>
-          </div>
-        </div>
+  {/* Status Dropdown */}
+  <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
+    <button
+      className="btn text-white border dropdown-toggle w-100"
+      type="button"
+      id="statusDropdown"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+      style={{ backgroundColor: "#3daaaa", color: "white" }}
+    >
+      Status
+    </button>
+    <ul className="dropdown-menu w-100" aria-labelledby="statusDropdown">
+      {["All", "Paid", "Pending", "Rejected"].map((item, idx) => (
+        <li key={idx}>
+          <a
+            className="dropdown-item"
+            href="#"
+            style={{ color: "#3daaaa" }}
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = "#3daaaa";
+              e.target.style.color = "white";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = "";
+              e.target.style.color = "#3daaaa";
+            }}
+          >
+            {item}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  {/* Sort By Dropdown */}
+  <div className="dropdown flex-grow-1">
+    <button
+      className="btn text-white border dropdown-toggle w-100"
+      type="button"
+      id="sortDropdown"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+      style={{ backgroundColor: "#3daaaa", color: "white" }}
+    >
+      Sort By: Date
+    </button>
+    <ul className="dropdown-menu w-120" aria-labelledby="sortDropdown">
+      {["Date", "Amount (High to Low)", "Amount (Low to High)", "Vendor Name"].map((item, idx) => (
+        <li key={idx}>
+          <a
+            className="dropdown-item"
+            href="#"
+            style={{ color: "#3daaaa" }}
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = "#3daaaa";
+              e.target.style.color = "white";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = "";
+              e.target.style.color = "#3daaaa";
+            }}
+          >
+            {item}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+</div>
+
       </div>
 
       {/* Table */}
@@ -260,36 +310,39 @@ const Expense = () => {
                   <span className={getStatusBadge(expense.status)}>{expense.status}</span>
                 </td>
                 <td>{expense.amount}</td>
-                <td className="d-flex justify-content-center gap-1">
+                <td className="d-flex gap-2 justify-content-center">
                   <button
-                    className="btn outline-info btn-sm text-info border"
+                    className="btn outline-info btn-sm py-1 px-1 text-info"
                     data-bs-toggle="modal"
                     data-bs-target="#expenseDetailModal"
                     onClick={() => setSelectedExpense(expense)}
                   >
-                    <FaEye />
+                    <FaEye size={16} />
                   </button>
                   <button
-                    className="btn outline-warning btn-sm text-warning border"
+                    className="btn outline-primary btn-sm text-warning py-1 px-1" 
                     data-bs-toggle="modal"
                     data-bs-target="#editExpenseModal"
                     onClick={() => handleEdit(expense)}
                   >
-                    <FaEdit />
+                    <FaEdit size={16}/>
                   </button>
                   <button
-                    className="btn outline-danger btn-sm text-danger border"
+                    className="btn outline-primary btn-sm text-danger py-2 px-1"
                     data-bs-toggle="modal"
                     data-bs-target="#deleteExpenseModal"
                     onClick={() => handleDelete(expense)}
                   >
-                    <FaTrash />
+                    <FaTrash size={16}/>
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+
+
+      </div>
         {/* Pagination */}
 <div className="d-flex justify-content-between align-items-center mt-3 px-3">
   <span className="small text-muted">
@@ -317,9 +370,6 @@ const Expense = () => {
     </ul>
   </nav>
 </div>
-
-      </div>
-
       {/* Add Expense Modal */}
       <div
         className="modal fade"
@@ -434,7 +484,7 @@ const Expense = () => {
     <button 
       type="submit" 
       className="btn btn-warning text-white px-4"
-      style={{ backgroundColor: "#FFA646" }}
+      style={{ backgroundColor: "#3daaaa" }}
     >
       Add Expense
     </button>
@@ -635,7 +685,7 @@ const Expense = () => {
                     <button 
                       type="submit" 
                       className="btn btn-warning text-white px-4"
-                      style={{ backgroundColor: "#FFA646" }}
+                      style={{ backgroundColor: "#3daaaa", borderColor:"#3daaaa" }}
                     >
                       Save Changes
                     </button>
@@ -683,7 +733,7 @@ const Expense = () => {
                 </button>
                 <button
                   className="btn"
-                  style={{ background: "#FFA646", color: "#fff", fontWeight: 600, padding: "0.5rem 2rem" }}
+                  style={{ background: "#3daaaa", color: "#fff", fontWeight: 600, padding: "0.5rem 2rem" }}
                   data-bs-dismiss="modal"
                   onClick={confirmDelete}
                 >

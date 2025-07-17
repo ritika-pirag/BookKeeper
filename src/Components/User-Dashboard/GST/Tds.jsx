@@ -247,9 +247,11 @@ const Tds= () => {
   {/* Right: Buttons */}
   <div className="d-flex gap-2 flex-wrap justify-content-md-end w-100 w-md-auto">
     <Button
-      variant="outline-warning"
+
       size="sm"
       style={{
+        backgroundColor:"#3daaaa",
+        borderColor:"#3daaaa",
         fontWeight: 500,
         display: "flex",
         alignItems: "center",
@@ -261,10 +263,12 @@ const Tds= () => {
     </Button>
 
     <Button
-      variant="light border"
+    
       size="sm"
       onClick={() => setShowAdd(true)}
       style={{
+        backgroundColor:"#3daaaa",
+        borderColor:"#3daaaa",
         fontWeight: 500,
         display: "flex",
         alignItems: "center",
@@ -569,7 +573,7 @@ const Tds= () => {
             Cancel
           </Button>
           <Button
-            variant="primary"
+            style={{backgroundColor:"#3daaaa"}}
             onClick={handleAddSave}
             disabled={
               !addForm.party ||

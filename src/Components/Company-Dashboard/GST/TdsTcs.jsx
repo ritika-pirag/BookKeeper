@@ -247,9 +247,11 @@ const TdsTcs = () => {
   {/* Right: Buttons */}
   <div className="d-flex gap-2 flex-wrap justify-content-md-end w-100 w-md-auto">
     <Button
-      variant="outline-warning"
+   
       size="sm"
       style={{
+        backgroundColor:"#3daaaa",
+        borderColor:"#3daaaa",
         fontWeight: 500,
         display: "flex",
         alignItems: "center",
@@ -261,10 +263,12 @@ const TdsTcs = () => {
     </Button>
 
     <Button
-      variant="light border"
+  
       size="sm"
       onClick={() => setShowAdd(true)}
       style={{
+        backgroundColor:"#3daaaa",
+        borderColor:"#3daaaa",
         fontWeight: 500,
         display: "flex",
         alignItems: "center",
@@ -317,10 +321,10 @@ const TdsTcs = () => {
           <td>{row.date}</td>
           <td className="d-flex justify-content-center gap-1">
             <button
-              className=""
+              className="btn outline-info btn-sm py-1 px-1 text-info"
               onClick={() => handleView(row)}
             >
-              <FaEye />
+              <FaEye size={16}/>
             </button>
             <button
               className="btn outline-warning btn-sm text-warning py-1 px-1"
@@ -339,6 +343,9 @@ const TdsTcs = () => {
       ))}
     </tbody>
   </table>
+
+
+</div>
 
   {/* Pagination */}
 <div className="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
@@ -366,8 +373,6 @@ const TdsTcs = () => {
       </li>
     </ul>
   </nav>
-</div>
-
 </div>
 
 
@@ -473,7 +478,7 @@ const TdsTcs = () => {
           <Button variant="secondary" onClick={() => setShowEdit(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleEditSave}>
+          <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} onClick={handleEditSave}>
             Save Changes
           </Button>
         </Modal.Footer>
@@ -574,7 +579,7 @@ const TdsTcs = () => {
             Cancel
           </Button>
           <Button
-            variant="primary"
+            style={{backgroundColor:"#3daaaa"}}
             onClick={handleAddSave}
             disabled={
               !addForm.party ||

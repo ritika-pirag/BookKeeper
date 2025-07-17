@@ -234,22 +234,22 @@ const  Daybook = () => {
                 <td>
                   <span className={getStatusBadge(entry.status)}>{entry.status}</span>
                 </td>
-                <td className="d-flex justify-content-center gap-1">
+                <td className="d-flex gap-2 justify-content-center">
                   <button
-                    className="btn btn-warning btn-sm text-white"
+                    className="btn outline-primary btn-sm text-warning py-1 px-1"
                     data-bs-toggle="modal"
                     data-bs-target="#editEntryModal"
                     onClick={() => handleEdit(entry)}
                   >
-                    <FaEdit />
+                    <FaEdit size={16}/>
                   </button>
                   <button
-                    className="btn btn-danger btn-sm text-white"
+                    className="btn outline-primary btn-sm text-danger py-2 px-1" 
                     data-bs-toggle="modal"
                     data-bs-target="#deleteEntryModal"
                     onClick={() => handleDelete(entry)}
                   >
-                    <FaTrash />
+                    <FaTrash size={16}/>
                   </button>
                 </td>
               </tr>
@@ -461,7 +461,7 @@ const  Daybook = () => {
                     <button type="button" className="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
                       Cancel
                     </button>
-                    <button type="submit" className="btn btn-warning text-white px-4" style={{ backgroundColor: "#FFA646" }}>
+                    <button type="submit" className="btn btn-warning text-white px-4" style={{ backgroundColor: "#3daaaa", borderColor:"#3daaaa" }}>
                       Save Changes
                     </button>
                   </div>
@@ -491,7 +491,7 @@ const  Daybook = () => {
                 </button>
                 <button 
                   className="btn px-4 py-2" 
-                  style={{ background: "#FFA646", color: "#fff", fontWeight: "600" }}
+                  style={{ background: "#3daaaa", color: "#fff", fontWeight: "600" }}
                   onClick={confirmDelete}
                   data-bs-dismiss="modal"
                 >

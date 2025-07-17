@@ -49,7 +49,7 @@ const ProfileModal = ({ show, handleClose }) => {
               </button>
             </div>
             <div>
-              <button className="btn btn-warning">Change Image</button>
+              <button className="btn btn- text-white" style={{backgroundColor:"#3daaaa"}}>Change Image</button>
               <p className="text-muted small mt-1 mb-0">
                 Upload an image below 2 MB, JPG/PNG only.
               </p>
@@ -131,7 +131,7 @@ const ProfileModal = ({ show, handleClose }) => {
 
           <div className="d-flex justify-content-end gap-2 mt-4">
             <Button variant="dark" onClick={handleClose}>Cancel</Button>
-            <Button variant="warning" className="text-white">Save Changes</Button>
+            <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} className="text-white">Save Changes</Button>
           </div>
         </div>
       </Modal.Body>
