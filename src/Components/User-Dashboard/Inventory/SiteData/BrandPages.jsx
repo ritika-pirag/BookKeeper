@@ -11,7 +11,7 @@ import {
 } from "../../../../redux/slices/createBrand";
 import { Pagination } from "@mui/material";
 import { FaEdit, FaTrash } from "react-icons/fa";
-const BrandPage = () => {
+const BrandPages = () => {
   const dispatch = useDispatch();
   const { brands, loading } = useSelector((state) => state.brands);
   const { categories } = useSelector((state) => state.categories);
@@ -240,4 +240,4 @@ const BrandPage = () => {
   );
 };
 
-export default BrandPage;
+export default BrandPages;

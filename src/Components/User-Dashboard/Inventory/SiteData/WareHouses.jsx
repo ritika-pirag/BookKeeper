@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Modal, Button, Form } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const WareHouse = () => {
+const WareHouses= () => {
   const [warehouses, setWarehouses] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [warehouseName, setWarehouseName] = useState("");
@@ -218,4 +218,4 @@ const WareHouse = () => {
   );
 };
 
-export default WareHouse;
+export default WareHouses;

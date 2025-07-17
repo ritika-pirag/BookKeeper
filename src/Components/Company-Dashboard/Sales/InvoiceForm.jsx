@@ -188,20 +188,17 @@ const InvoiceForm = () => {
               <Form.Control className="mb-2" placeholder="Address" />
               <Row>
                 <Col><Form.Control className="mb-2" placeholder="City" /></Col>
-                <Col><Form.Control className="mb-2" placeholder="Region" /></Col>
+
               </Row>
               <Row>
                 <Col><Form.Control className="mb-2" placeholder="Country" /></Col>
-                <Col><Form.Control className="mb-2" placeholder="PostBox" /></Col>
+
               </Row>
               <Row>
                 <Col><Form.Control className="mb-2" placeholder="Company" /></Col>
-                <Col><Form.Control className="mb-2" placeholder="TAX ID" /></Col>
+
               </Row>
-              <Form.Select className="mb-2">
-                <option>Groupe A</option>
-                <option>Groupe B</option>
-              </Form.Select>
+          
             </Col>
 
             <Col md={6} sm={12}>
@@ -214,11 +211,11 @@ const InvoiceForm = () => {
               <Form.Control className="mb-2" placeholder="Address" />
               <Row>
                 <Col><Form.Control className="mb-2" placeholder="City" /></Col>
-                <Col><Form.Control className="mb-2" placeholder="Region" /></Col>
+
               </Row>
               <Row>
                 <Col><Form.Control className="mb-2" placeholder="Country" /></Col>
-                <Col><Form.Control className="mb-2" placeholder="PostBox" /></Col>
+ 
               </Row>
             </Col>
           </Row>

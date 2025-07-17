@@ -51,14 +51,12 @@ import DeleteAccountRequest from "./Components/Company-Dashboard/UserManagement/
 import CompanyInfo from "./Components/Company-Dashboard/Settings/CompanyInfo";
 import LanguageSetting from "./Components/Company-Dashboard/Settings/LanguageSetting";
 import UserDashboard from "./Components/User-Dashboard/UserDashboard";
-import Product from "./Components/User-Dashboard/Inventory/Product";
+import Productts from "./Components/User-Dashboard/Inventory/Product";
 import ManageProduct from "./Components/User-Dashboard/Inventory/MangeProduct";
 
 import Invoices from "./Components/User-Dashboard/Sales/Invoices";
 import Pos from "./Components/User-Dashboard/Sales/Pos";
-
 import PurchaseOrder from "./Components/User-Dashboard/Purchases/PurchaseOrder";
-
 import PurchaseView from "./Components/User-Dashboard/Purchases/PurchaseView";
 
 
@@ -67,7 +65,6 @@ import  ITCData  from "./Components/User-Dashboard/GST/ITCData";
 import GSTData  from "./Components/User-Dashboard/GST/GSTData";
 import Tds  from "./Components/User-Dashboard/GST/Tds";
 import EWay  from "./Components/User-Dashboard/GST/EWay";
-
 
 import InvoiceForms from "./Components/User-Dashboard/Sales/InvoiceForms";
 
@@ -88,6 +85,32 @@ import PaymentMode from "./Components/User-Dashboard/Purchases/PaymentMode";
 import Invoicee from "./Components/User-Dashboard/Purchases/Invoicee";
 import Expenses from "./Components/User-Dashboard/Purchases/Expenses";
 import PurchaseData from "./Components/User-Dashboard/Reports/Purchasereport";
+
+
+import WareHouses from "./Components/User-Dashboard/Inventory/SiteData/WareHouses";
+import Categoriess from "./Components/User-Dashboard/Inventory/SiteData/Categoriess";
+import BrandPages from "./Components/User-Dashboard/Inventory/SiteData/BrandPages";
+
+
+import Product from "./Components/User-Dashboard/Inventory/Product";
+// import AddProducts from "./Components/User-Dashboard/Inventory/Product/AddProduct";
+import  DevicePages from "./Components/User-Dashboard/Inventory/SiteData/DevicePages";
+import TaxPages from "./Components/User-Dashboard/Inventory/SiteData/TaxPage";
+import StockTransferss from "./Components/User-Dashboard/Inventory/SiteData/StockTransfers";
+import PointOfSales from "./Components/Company-Dashboard/Inventory/Pos/PointOfSale";
+import InvoiceSummarys from "./Components/Company-Dashboard/Inventory/Pos/InvoiceSummary";
+import ManageInvoicess from "./Components/Company-Dashboard/Inventory/Pos/ManageInvoice";
+import ViewInvoices from "./Components/Company-Dashboard/Inventory/Pos/ViewInvoice";
+import EditInvoices from "./Components/Company-Dashboard/Inventory/Pos/EditInvoice";
+
+
+
+
+
+
+
+
+
 import WareHouse from "./Components/Company-Dashboard/Inventory/SiteData/WareHouse";
 import Categories from "./Components/Company-Dashboard/Inventory/SiteData/Categories";
 
@@ -105,8 +128,9 @@ import ViewInvoice from "./Components/Company-Dashboard/Inventory/Pos/ViewInvoic
 import EditInvoice from "./Components/Company-Dashboard/Inventory/Pos/EditInvoice";
 import Profile from "./Layout/ProfileModal";
 import PurchaseOrderView from "./Components/Company-Dashboard/Purchases/PurchaseOrderView";
-
 import ViewInvoicee from "./Components/Company-Dashboard/Sales/ViewInvoicee";
+
+
 function App() {
   return (
     <Router>
@@ -220,8 +244,12 @@ function App() {
           <Route path="/user/dashboard" element={<UserDashboard />} />
 
           {/* Inventory */}
-          <Route path="/user/products" element={<Product />} />
+          <Route path="/user/product" element={<Productts />} />
           <Route path="/user/manageproduct" element={<ManageProduct />} />
+          <Route path="/user/warehouse" element={<WareHouses/>} />
+          <Route path="/user/stocktranfer" element={<StockTransferss/>} />
+          <Route path="/user/categories" element={<Categories/>} />
+          <Route path="/user/BrandPages" element={<BrandPages/>} />
 
           {/* Sales */}
 
@@ -240,12 +268,12 @@ function App() {
           <Route path="/user/paymentmode" element={<PaymentMode />} />
           <Route path="/user/invoice" element={<Invoicee />} />
           <Route path="/user/purchaseviews" element={<PurchaseView/>} />
-
-
+          <Route path="/user/device" element={<DevicePages />} />
+          <Route path="/user/product" element={<Product/>} />
           {/* GST  */}
           <Route path="/user/taxdata" element={<TaxData />} />
            <Route path="/user/gstdata" element={<GSTData />} />
-      <Route path="/user/tds" element={<Tds />} /> 
+         <Route path="/user/tds" element={<Tds />} /> 
           <Route path="/user/itcdata" element={<ITCData/>} />  
           <Route path="/user/eway" element={<EWay />} />
 

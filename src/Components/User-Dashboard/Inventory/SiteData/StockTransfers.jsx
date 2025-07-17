@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Row, Col, Card } from "react-bootstrap";
 
-const StockTransfer = () => {
+const StockTransfers = () => {
   const [formData, setFormData] = useState({
     transferFrom: "NewYork Warehouse",
     product: "",
@@ -94,4 +94,4 @@ const StockTransfer = () => {
   );
 };
 
-export default StockTransfer;
+export default StockTransfers;

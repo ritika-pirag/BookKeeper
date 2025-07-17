@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import AddCustomer from "../Customer/AddCustomer";
+import AddCustomer from "../Customer/Addcustomer";
+
 
 // ✅ Updated: Using _id instead of id
 const sampleCustomers = [

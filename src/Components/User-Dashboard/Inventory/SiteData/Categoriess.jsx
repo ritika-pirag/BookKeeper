@@ -10,7 +10,7 @@ import {
 } from "../../../../redux/slices/createCategory";
 import { Pagination } from "@mui/material"; // Importing MUI Pagination
 import { FaEdit, FaTrash } from "react-icons/fa";
-const Categories = () => {
+const Categoriess= () => {
   const dispatch = useDispatch();
   const { categories, loading } = useSelector((state) => state.categories);
 
@@ -262,4 +262,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default Categoriess;
