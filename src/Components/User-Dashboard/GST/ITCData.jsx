@@ -63,7 +63,7 @@ const statusColor = (status) =>
 const ITCData = () => (
   <div style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
     <Container fluid className="py-4">
-      <h3 style={{ color: "#FFA94D", fontWeight: 700, marginBottom: 24 }}>
+      <h3 style={{ color: "#3daaaa", fontWeight: 700, marginBottom: 24 }}>
         ITC Report
       </h3>
       <Row className="g-3 mb-4">
@@ -247,6 +247,31 @@ const ITCData = () => (
                 ))}
               </tbody>
             </Table>
+            {/* Pagination UI */}
+<div className="d-flex justify-content-between align-items-center mt-3 px-3 flex-wrap">
+  <span className="small text-muted">Showing 1 to 5 of 10 results</span>
+  <nav>
+    <ul className="pagination pagination-sm mb-0 mt-2 mt-md-0">
+      <li className="page-item disabled">
+        <button className="page-link rounded-start">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button
+          className="page-link"
+          style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+        >
+          1
+        </button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link rounded-end">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
           </div>
         </Card.Body>
       </Card>

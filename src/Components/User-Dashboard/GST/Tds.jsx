@@ -150,7 +150,7 @@ const Tds= () => {
   return (
     <div style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
       <Container fluid className="py-4">
-        <h3 style={{ fontWeight: 600, marginBottom: 24 }} >
+        <h3 style={{  color: '#3daaaa' ,fontWeight: 600, marginBottom: 24 }} >
           TDS/TCS
         </h3>
         <Row className="g-3 mb-4">
@@ -317,19 +317,19 @@ const Tds= () => {
           <td>{row.date}</td>
           <td className="d-flex justify-content-center gap-1">
             <button
-              className=""
+              className="btn outlin-info btn-sm  text-info"
               onClick={() => handleView(row)}
             >
-              <FaEye />
+              <FaEye size={16}/>
             </button>
             <button
-              className="btn outline-warning btn-sm text-warning py-1 px-1"
+              className="btn outlin-warning btn-sm text-warning"
               onClick={() => handleEdit(row, idx)}
             >
               <FaEdit size={16} />
             </button>
             <button
-              className="btn outline-primary btn-sm text-danger py-2 px-1"
+              className="btn outline-danger btn-sm text-danger"
               onClick={() => handleDelete(row, idx)}
             >
               <FaTrash size={16} />
@@ -339,6 +339,31 @@ const Tds= () => {
       ))}
     </tbody>
   </table>
+  {/* Pagination UI */}
+<div className="d-flex justify-content-between align-items-center mt-3 px-3 flex-wrap">
+  <span className="small text-muted">Showing 1 to 5 of 10 results</span>
+  <nav>
+    <ul className="pagination pagination-sm mb-0 mt-2 mt-md-0">
+      <li className="page-item disabled">
+        <button className="page-link rounded-start">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button
+          className="page-link"
+          style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+        >
+          1
+        </button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link rounded-end">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
 </div>
 
           </Card.Body>
@@ -443,7 +468,7 @@ const Tds= () => {
           <Button variant="secondary" onClick={() => setShowEdit(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleEditSave}>
+          <Button style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }} onClick={handleEditSave}>
             Save Changes
           </Button>
         </Modal.Footer>

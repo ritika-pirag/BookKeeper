@@ -32,7 +32,7 @@ const InvoiceForms = () => {
         <Col md={6} sm={12}>
           <h5 className="d-flex align-items-center justify-content-between">
             Bill To
-            <Button variant="outline-primary" size="sm" onClick={handleClientModalShow}>
+            <Button style={{backgroundColor:"#3daaaa"}} size="sm" onClick={handleClientModalShow}>
               Add Client
             </Button>
           </h5>
@@ -117,7 +117,7 @@ const InvoiceForms = () => {
         </table>
       </div>
 
-      <Button variant="success" onClick={addRow} className="mt-2">Add Row</Button>
+      <Button style={{backgroundColor:"#3daaaa"}} onClick={addRow} className="mt-2">Add Row</Button>
 
       <Row className="mt-4">
         <Col md={{ span: 4, offset: 8 }} sm={12} className="text-end ms-auto">
@@ -153,7 +153,7 @@ const InvoiceForms = () => {
           </Form.Group>
         </Col>
         <Col md={4} sm={12} className="text-end">
-          <Button variant="success" className="mt-2">Generate Invoice</Button>
+          <Button style={{backgroundColor:"#3daaaa"}} className="mt-2">Generate Invoice</Button>
         </Col>
       </Row>
 
@@ -209,7 +209,7 @@ const InvoiceForms = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClientModalClose}>Close</Button>
-          <Button variant="primary">ADD</Button>
+          <Button style={{backgroundColor:"#3daaaa"}}>ADD</Button>
         </Modal.Footer>
       </Modal>
     </div>

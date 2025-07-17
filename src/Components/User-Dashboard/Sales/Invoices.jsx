@@ -120,16 +120,16 @@ const Invoices = () => {
                         </span>
                       </td>
                       <td>
-                        <div className="d-flex gap-2 flex-wrap">
-                          <Button variant="outline-secondary" size="sm">
-                            <FaFileAlt />
-                          </Button>
-                          <Button variant="info" size="sm" onClick={() => handleDownload(invoice)}>
-                            <FaDownload />
-                          </Button>
-                          <Button variant="danger" size="sm" onClick={() => handleDelete(invoice)}>
-                            <FaTrash />
-                          </Button>
+                        <div className="d-flex justify-content-center gap-1">
+                          <button variant="outline-secondary">
+                            <FaFileAlt size={16} />
+                          </button>
+                          <button  className="btn outlin-warning btn-sm text-warning" onClick={() => handleDownload(invoice)}>
+                            <FaDownload size={16}/>
+                          </button>
+                          <button  className='btn outline-danger btn-sm text-danger' onClick={() => handleDelete(invoice)}>
+                            <FaTrash size={16}/>
+                          </button>
                         </div>
                       </td>
                     </tr>

@@ -95,7 +95,7 @@ const PaymentMode = () => {
           </button>
           <button
             className="btn text-white d-flex align-items-center gap-2"
-            style={{ backgroundColor: "#FFA646" }}
+            style={{ backgroundColor: "#3daaaa" }}
             data-bs-toggle="modal"
             data-bs-target="#addPaymentModal"
           >
@@ -121,6 +121,7 @@ const PaymentMode = () => {
           {/* Vendor Dropdown */}
           <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
             <button 
+               style={{ backgroundColor: "#3daaaa" }}
               className="btn btn-orange dropdown-toggle w-100" 
               type="button" 
               id="vendorDropdown"
@@ -141,6 +142,7 @@ const PaymentMode = () => {
           {/* Mode Dropdown */}
           <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
             <button 
+              style={{ backgroundColor: "#3daaaa" }}
               className="btn btn-orange dropdown-toggle w-100" 
               type="button" 
               id="modeDropdown"
@@ -159,6 +161,7 @@ const PaymentMode = () => {
           {/* Sort By Dropdown */}
           <div className="dropdown flex-grow-1">
             <button 
+              style={{ backgroundColor: "#3daaaa" }}
               className="btn btn-orange dropdown-toggle w-100" 
               type="button" 
               id="sortDropdown"
@@ -206,35 +209,61 @@ const PaymentMode = () => {
                 <td>{payment.unusedAmount}</td>
                 <td className="d-flex justify-content-center gap-1">
                   <button
-                    className="btn btn-light btn-sm border"
+                    className="btn outlin-info btn-sm  text-info"
                     data-bs-toggle="modal"
                     data-bs-target="#paymentDetailModal"
                     onClick={() => setSelectedPayment(payment)}
                   >
-                    <FaEye />
+                    <FaEye size={16}/>
                   </button>
                   <button
-                    className="btn btn-warning btn-sm text-white"
+                    className="btn outlin-warning btn-sm text-warning"
                     data-bs-toggle="modal"
                     data-bs-target="#editPaymentModal"
                     onClick={() => handleEdit(payment)}
                   >
-                    <FaEdit />
+                    <FaEdit size={16}/>
                   </button>
                   <button
-                    className="btn btn-danger btn-sm text-white"
+                    className="btn outline-danger btn-sm text-danger"
                     data-bs-toggle="modal"
                     data-bs-target="#deletePaymentModal"
                     onClick={() => handleDelete(payment)}
                   >
-                    <FaTrash />
+                    <FaTrash size={16}/>
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        
       </div>
+      {/* Pagination UI */}
+<div className="d-flex justify-content-between align-items-center mt-3 px-3 flex-wrap">
+  <span className="small text-muted">Showing 1 to 5 of 10 results</span>
+  <nav>
+    <ul className="pagination pagination-sm mb-0 mt-2 mt-md-0">
+      <li className="page-item disabled">
+        <button className="page-link rounded-start">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button
+          className="page-link"
+          style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+        >
+          1
+        </button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link rounded-end">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
 
       {/* Add Payment Modal */}
       <div
@@ -358,7 +387,7 @@ const PaymentMode = () => {
                   <button 
                     type="submit" 
                     className="btn btn-warning text-white px-4"
-                    style={{ backgroundColor: "#FFA646" }}
+                    style={{ backgroundColor: "#3daaaa" }}
                   >
                     Add Payment
                   </button>
@@ -560,8 +589,8 @@ const PaymentMode = () => {
                     </button>
                     <button 
                       type="submit" 
-                      className="btn btn-warning text-white px-4"
-                      style={{ backgroundColor: "#FFA646" }}
+                      className="btn btn- text-white px-4"
+                      style={{ backgroundColor: "#3daaaa" }}
                     >
                       Save Changes
                     </button>
@@ -609,7 +638,7 @@ const PaymentMode = () => {
                 </button>
                 <button
                   className="btn"
-                  style={{ background: "#FFA646", color: "#fff", fontWeight: 600, padding: "0.5rem 2rem" }}
+                  style={{ background: "#3daaaa", color: "#fff", fontWeight: 600, padding: "0.5rem 2rem" }}
                   data-bs-dismiss="modal"
                   onClick={confirmDelete}
                 >

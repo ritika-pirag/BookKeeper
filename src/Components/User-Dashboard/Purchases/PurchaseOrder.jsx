@@ -21,7 +21,7 @@ const NewOrder = () => {
     <div className="container mt-4 mb-5">
       <h5 className="mb-3">
         Bill From
-        <Button variant="outline-primary" size="sm" className="ms-2" onClick={() => setShowModal(true)}>
+        <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} size="sm" className="ms-2" onClick={() => setShowModal(true)}>
           Add Vendors
         </Button>
       </h5>
@@ -119,7 +119,7 @@ const NewOrder = () => {
             ))}
           </tbody>
         </table>
-        <Button variant="success" onClick={addRow}><BsPlusCircle className="me-1" /> Add Row</Button>
+        <Button style={{backgroundColor:"#3daaaa" , borderColor:"#3daaaa"}} onClick={addRow}><BsPlusCircle className="me-1" /> Add Row</Button>
       </div>
 
       <Row className="mb-3">
@@ -148,7 +148,7 @@ const NewOrder = () => {
             <InputGroup.Text>Grand Total ($)</InputGroup.Text>
             <Form.Control />
           </InputGroup>
-          <Button variant="success">Generate Order</Button>
+          <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}}>Generate Order</Button>
         </Col>
       </Row>
 
@@ -184,7 +184,7 @@ const NewOrder = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="light" onClick={handleClose}>Close</Button>
-          <Button style={{ backgroundColor: '#b28efc', color: '#fff' }} onClick={handleClose}>ADD</Button>
+          <Button style={{ backgroundColor: '#3daaaa', color: '#fff' }} onClick={handleClose}>ADD</Button>
         </Modal.Footer>
       </Modal>
     </div>

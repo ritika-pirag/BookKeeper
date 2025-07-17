@@ -304,21 +304,21 @@ const  DayBook = () => {
                 </td>
                 <td className="d-flex justify-content-center gap-1">
                   <button
-                    className="btn btn-warning btn-sm text-white"
+                    className="btn outlin-warning btn-sm text-warning"
                     data-bs-toggle="modal"
                     data-bs-target="#editEntryModal"
                     onClick={() => handleEdit(entry)}
                   >
                     <FaEdit />
                   </button>
-                  <button
-                    className="btn btn-danger btn-sm text-white"
-                    data-bs-toggle="modal"
-                    data-bs-target="#deleteEntryModal"
-                    onClick={() => handleDelete(entry)}
-                  >
-                    <FaTrash />
-                  </button>
+                    <button
+                      className="btn outline-danger btn-sm text-danger"
+                      data-bs-toggle="modal"
+                      data-bs-target="#deleteEntryModal"
+                      onClick={() => handleDelete(entry)}
+                    >
+                      <FaTrash />
+                    </button>
                 </td>
               </tr>
             ))}
@@ -520,7 +520,7 @@ const  DayBook = () => {
                     <button type="button" className="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
                       Cancel
                     </button>
-                    <button type="submit" className="btn btn-warning text-white px-4" style={{ backgroundColor: "#FFA646" }}>
+                    <button type="submit" className="btn btn- text-white px-4" style={{ backgroundColor: "#3daaaa" }}>
                       Save Changes
                     </button>
                   </div>
