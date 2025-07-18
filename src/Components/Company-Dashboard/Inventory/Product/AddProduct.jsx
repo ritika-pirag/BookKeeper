@@ -7,7 +7,7 @@ import { fetchBrands } from "../../../../redux/slices/createBrand";
 import { fetchCategories } from "../../../../redux/slices/createCategory";
 import { fetchTaxes } from "../../../../redux/slices/taxSlice";
 import { fetchDevices } from "../../../../redux/slices/deviceSlice";
-
+import CreatableSelect from "react-select/creatable";
 
 const AddProduct = () => {
   const dispatch = useDispatch();
@@ -125,80 +125,140 @@ const AddProduct = () => {
               <label className="form-label fw-semibold">Name</label>
               <input type="text" className="form-control" name="name" value={formData.name} onChange={handleChange} required />
             </div>
-            <div className="col-md-6 col-lg-6">
-  <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
-    Category
-    <button
-      type="button"
-      className="btn btn-outline-primary btn-sm"
-      onClick={() => navigate("/company/categories")} // 🔁 Update this route as per your app
-    >
-      + Add Category
-    </button>
-  </label>
-  <select className="form-control" name="category" value={selectedCategory} onChange={handleCategoryChange} required>
-    <option value="">Select Category</option>
-    {categories?.map((cat) => (
-      <option key={cat._id} value={cat.category_name}>{cat.category_name}</option>
-    ))}
-  </select>
-</div>
 
-<div className="col-md-6 col-lg-6">
-  <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
-    Brand / Manufacturer
-    <button
-      type="button"
-      className="btn btn-outline-primary btn-sm"
-      onClick={() => navigate("/company/brands")} // 🔁 Update accordingly
-      disabled={!selectedCategory}
-    >
-      + Add Brand
-    </button>
-  </label>
-  <select className="form-control" name="brand" value={selectedBrand} onChange={handleBrandChange} disabled={!selectedCategory}>
-    <option value="">Select Brand</option>
-    {brands
-      ?.filter((brand) => brand?.category?.category_name === selectedCategory)
-      .map((brand) => (
-        <option key={brand._id} value={brand.brand_name}>{brand.brand_name}</option>
-      ))}
-  </select>
-</div>
 
-<div className="col-md-6 col-lg-6">
-  <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
-    Device
-    <button
-      type="button"
-      className="btn btn-outline-primary btn-sm"
-      onClick={() => navigate("/company/device")} // 🔁 Update accordingly
-      disabled={!selectedBrand}
-    >
-      + Add Device
-    </button>
-  </label>
-  <select className="form-control" name="device" onChange={handleDeviceChange} disabled={!selectedBrand}>
-    <option value="">Select Device</option>
-    {devices
-      ?.filter((device) => device?.brand?.brand_name === selectedBrand)
-      .map((device) => (
-        <option key={device._id} value={device._id}>{device.device_name}</option>
-      ))}
-  </select>
-</div>
+
+
+
+            {/* <div className="col-md-6 col-lg-6">
+              <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
+                Category
+                <button
+                  type="button"
+                  className="btn btn-outline-primary btn-sm"
+                  onClick={() => navigate("/company/categories")} // 🔁 Update this route as per your app
+                >
+                  + Add Category
+                </button>
+              </label>
+              <select className="form-control" name="category" value={selectedCategory} onChange={handleCategoryChange} required>
+                <option value="">Select Category</option>
+                {categories?.map((cat) => (
+                  <option key={cat._id} value={cat.category_name}>{cat.category_name}</option>
+                ))}
+              </select>
+            </div> */}
+
+            <div className="col-md-6">
+              <label className="form-label">Category</label>
+              <CreatableSelect
+                // options={selectOptions.subBrand}
+                // value={selectOptions.subBrand.find((opt) => opt.value === formData.subBrand)}
+                // onChange={(option) =>
+                //   setFormData((prev) => ({ ...prev, subBrand: option?.value || "" }))
+                // }
+                // onCreateOption={handleCreateOption('subBrand')}
+                isClearable
+                required
+              />
+            </div>
+
+            {/* <div className="col-md-6 col-lg-6">
+              <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
+                Brand / Manufacturer
+                <button
+                  type="button"
+                  className="btn btn-outline-primary btn-sm"
+                  onClick={() => navigate("/company/brands")} // 🔁 Update accordingly
+                  disabled={!selectedCategory}
+                >
+                  + Add Brand
+                </button>
+              </label>
+              <select className="form-control" name="brand" value={selectedBrand} onChange={handleBrandChange} disabled={!selectedCategory}>
+                <option value="">Select Brand</option>
+                {brands
+                  ?.filter((brand) => brand?.category?.category_name === selectedCategory)
+                  .map((brand) => (
+                    <option key={brand._id} value={brand.brand_name}>{brand.brand_name}</option>
+                  ))}
+              </select>
+            </div> */}
+
+            <div className="col-md-6">
+              <label className="form-label">Brand / Manufacturer</label>
+              <CreatableSelect
+                // options={selectOptions.subBrand}
+                // value={selectOptions.subBrand.find((opt) => opt.value === formData.subBrand)}
+                // onChange={(option) =>
+                //   setFormData((prev) => ({ ...prev, subBrand: option?.value || "" }))
+                // }
+                // onCreateOption={handleCreateOption('subBrand')}
+                isClearable
+                required
+              />
+            </div>
+
+            {/* <div className="col-md-6 col-lg-6">
+              <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
+                Device
+                <button
+                  type="button"
+                  className="btn btn-outline-primary btn-sm"
+                  onClick={() => navigate("/company/device")} // 🔁 Update accordingly
+                  disabled={!selectedBrand}
+                >
+                  + Add Device
+                </button>
+              </label>
+              <select className="form-control" name="device" onChange={handleDeviceChange} disabled={!selectedBrand}>
+                <option value="">Select Device</option>
+                {devices
+                  ?.filter((device) => device?.brand?.brand_name === selectedBrand)
+                  .map((device) => (
+                    <option key={device._id} value={device._id}>{device.device_name}</option>
+                  ))}
+              </select>
+            </div> */}
+
+    <div className="col-md-6">
+              <label className="form-label">Device</label>
+              <CreatableSelect
+                // options={selectOptions.subBrand}
+                // value={selectOptions.subBrand.find((opt) => opt.value === formData.subBrand)}
+                // onChange={(option) =>
+                //   setFormData((prev) => ({ ...prev, subBrand: option?.value || "" }))
+                // }
+                // onCreateOption={handleCreateOption('subBrand')}
+                isClearable
+                required
+              />
+            </div>
 
             <div className="col-md-6 col-lg-6">
               <label className="form-label fw-semibold">Quantity</label>
               <input type="text" className="form-control" name="quantity" value={formData.quantity} onChange={handleChange} />
             </div>
 
-            <div className="col-md-6 col-lg-6">
+            {/* <div className="col-md-6 col-lg-6">
               <label className="form-label fw-semibold">Warranty</label>
               <select className="form-control" name="warranty" value={formData.warranty} onChange={handleChange}>
                 <option value="No Warranty">No Warranty</option>
                 <option value="Warranty">Warranty</option>
               </select>
+            </div> */}
+                <div className="col-md-6">
+              <label className="form-label">Warranty</label>
+              <CreatableSelect
+                // options={selectOptions.subBrand}
+                // value={selectOptions.subBrand.find((opt) => opt.value === formData.subBrand)}
+                // onChange={(option) =>
+                //   setFormData((prev) => ({ ...prev, subBrand: option?.value || "" }))
+                // }
+                // onCreateOption={handleCreateOption('subBrand')}
+                isClearable
+                required
+              />
             </div>
 
             {formData.warranty === "Warranty" && (
