@@ -1,9 +1,9 @@
+// Daybook.js
 import React, { useState } from "react";
 import {
   FaFilePdf,
   FaFileExcel,
   FaPlusCircle,
-  FaSearch,
   FaEdit,
   FaTrash
 } from "react-icons/fa";
@@ -11,497 +11,282 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./Daybook.css";
 
-const  Daybook = () => {
-  const [selectedEntry, setSelectedEntry] = useState(null);
-  const [editEntry, setEditEntry] = useState(null);
-  const [deleteEntry, setDeleteEntry] = useState(null);
+const Daybook = () => {
   const [entries, setEntries] = useState([
     {
       id: 1,
-      reference: "(2565)",
-      name: "Electricity Payment",
-
-      description: "	Electricity Bill",
-      date: "2024-12-24",
-      amount: "500",
-      status: "Paid"
+      voucherDate: "2024-12-24",
+      voucherNo: "VCH-001",
+      voucherType: "Payment",
+      debit: "Electricity Expense",
+      credit: "Bank A/C",
+      debitAmount: 500,
+      creditAmount: 500
     },
     {
       id: 2,
-      reference: "(2566)",
-      name: "Dictionary Purchase",
-
-      description: "Stationery items for office",
-      date: "2024-12-30",
-      amount: "50",
-      status: "Paid"
+      voucherDate: "2024-12-26",
+      voucherNo: "VCH-002",
+      voucherType: "Receipt",
+      debit: "Bank A/C",
+      credit: "Client Payment",
+      debitAmount: 700,
+      creditAmount: 700
     },
     {
       id: 3,
-      reference: "(2567)",
-      name: "AC Repair Service",
-
-      description: "AC Repair for Office",
-      date: "2024-11-27",
-      amount: "800",
-      status: "Paid"
+      voucherDate: "2025-01-05",
+      voucherNo: "VCH-003",
+      voucherType: "Journal",
+      debit: "Salaries Expense",
+      credit: "Cash",
+      debitAmount: 1500,
+      creditAmount: 1500
     },
     {
       id: 4,
-      reference: "(2568)",
-      name: "Social Media Promotion",
-
-      description: "Social Media Arts Campaign",
-      date: "2024-11-18",
-      amount: "100",
-      status: "Paid"
+      voucherDate: "2025-01-07",
+      voucherNo: "VCH-004",
+      voucherType: "Contra",
+      debit: "Cash",
+      credit: "Bank A/C",
+      debitAmount: 1000,
+      creditAmount: 1000
     },
     {
       id: 5,
-      reference: "(2569)",
-      name: "Client Meeting",
-  
-      description: "Travel fee for client meeting",
-      date: "2024-11-06",
-      amount: "700",
-      status: "Paid"
+      voucherDate: "2025-01-10",
+      voucherNo: "VCH-005",
+      voucherType: "Payment",
+      debit: "Office Supplies",
+      credit: "Cash",
+      debitAmount: 250,
+      creditAmount: 250
     },
     {
       id: 6,
-      reference: "(2564)",
-      name: "Team Lunch",
-
-      description: "Team Lunch at Restaurant",
-      date: "2024-10-26",
-      amount: "1000",
-      status: "Paid"
+      voucherDate: "2025-01-12",
+      voucherNo: "VCH-006",
+      voucherType: "Receipt",
+      debit: "Bank A/C",
+      credit: "Customer A",
+      debitAmount: 900,
+      creditAmount: 900
     },
     {
       id: 7,
-      reference: "(2561)",
-      name: "Business Flight Ticket",
- 
-      description: "Flight tickets for meetings",
-      date: "2024-10-14",
-      amount: "1200",
-      status: "Paid"
+      voucherDate: "2025-01-15",
+      voucherNo: "VCH-007",
+      voucherType: "Journal",
+      debit: "Depreciation",
+      credit: "Equipment",
+      debitAmount: 400,
+      creditAmount: 400
     },
     {
       id: 8,
-      reference: "(2562)",
-      name: "Chair Purchase",
-
-      description: "Exposure chairs for staff",
-      date: "2024-10-03",
-      amount: "750",
-      status: "Paid"
+      voucherDate: "2025-01-18",
+      voucherNo: "VCH-008",
+      voucherType: "Payment",
+      debit: "Rent Expense",
+      credit: "Bank A/C",
+      debitAmount: 1200,
+      creditAmount: 1200
     },
-    
+    {
+      id: 9,
+      voucherDate: "2025-01-20",
+      voucherNo: "VCH-009",
+      voucherType: "Receipt",
+      debit: "Bank A/C",
+      credit: "Interest Income",
+      debitAmount: 300,
+      creditAmount: 300
+    },
+    {
+      id: 10,
+      voucherDate: "2025-01-22",
+      voucherNo: "VCH-010",
+      voucherType: "Contra",
+      debit: "Bank B",
+      credit: "Bank A/C",
+      debitAmount: 2000,
+      creditAmount: 2000
+    }
   ]);
 
-  const formatDate = (dateString) => {
-    const options = { day: 'numeric', month: 'short', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
-  };
-
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case "Paid":
-        return "badge bg-success";
-      case "Unpaid":
-        return "badge bg-warning text-dark";
-      case "Overdue":
-        return "badge bg-danger";
-      default:
-        return "badge bg-secondary";
-    }
-  };
-
-  const handleEdit = (entry) => {
-    setEditEntry({...entry});
-  };
-
-  const handleDelete = (entry) => {
-    setDeleteEntry(entry);
-  };
-
-  const confirmDelete = () => {
-    setEntries(entries.filter(entry => entry.id !== deleteEntry.id));
-    setDeleteEntry(null);
-  };
+  const [editEntry, setEditEntry] = useState(null);
+  const [deleteEntry, setDeleteEntry] = useState(null);
 
   const handleAddEntry = (e) => {
     e.preventDefault();
     const form = e.target;
     const newEntry = {
       id: entries.length + 1,
-      reference: `(${Math.floor(1000 + Math.random() * 9000)})`,
-      name: form.entryName.value,
-      category: form.category.value,
-      description: form.description.value,
-      date: form.date.value,
-      amount: form.amount.value,
-      status: form.status.value
+      voucherDate: form.voucherDate.value,
+      voucherNo: form.voucherNo.value,
+      voucherType: form.voucherType.value,
+      debit: form.debit.value,
+      credit: form.credit.value,
+      debitAmount: parseFloat(form.debitAmount.value),
+      creditAmount: parseFloat(form.creditAmount.value),
     };
     setEntries([...entries, newEntry]);
     form.reset();
     document.getElementById('addEntryModal').querySelector('.btn-close').click();
   };
 
+  const handleEdit = (entry) => setEditEntry({ ...entry });
+
   const handleUpdateEntry = (e) => {
     e.preventDefault();
     const form = e.target;
     const updatedEntry = {
       ...editEntry,
-      name: form.entryName.value,
-      category: form.category.value,
-      description: form.description.value,
-      date: form.date.value,
-      amount: form.amount.value,
-      status: form.status.value
+      voucherDate: form.voucherDate.value,
+      voucherNo: form.voucherNo.value,
+      voucherType: form.voucherType.value,
+      debit: form.debit.value,
+      credit: form.credit.value,
+      debitAmount: parseFloat(form.debitAmount.value),
+      creditAmount: parseFloat(form.creditAmount.value),
     };
     setEntries(entries.map(entry => entry.id === editEntry.id ? updatedEntry : entry));
     document.getElementById('editEntryModal').querySelector('.btn-close').click();
   };
 
+  const handleDelete = (entry) => setDeleteEntry(entry);
+
+  const confirmDelete = () => {
+    setEntries(entries.filter(entry => entry.id !== deleteEntry.id));
+    setDeleteEntry(null);
+  };
+
   return (
     <div className="container-fluid bg-light py-4 px-4">
       {/* Header */}
-      <div className="d-flex justify-content-between align-items-center flex-wrap gap-4 mb-4">
+      <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
           <h5 className="fw-bold mb-1">DayBook</h5>
-          <p className="text-muted mb-0">Manage Your DayBook</p>
+          <p className="text-muted mb-0">Manage Your Vouchers</p>
         </div>
-
-        <div className="d-flex align-items-center gap-2 flex-wrap">
-          <button className="btn btn-light border text-danger">
-            <FaFilePdf />
+        <div className="d-flex gap-2">
+          <button className="btn btn-light border text-danger"><FaFilePdf /></button>
+          <button className="btn btn-light border text-success"><FaFileExcel /></button>
+          <button className="btn text-white" style={{ backgroundColor: "#53b2a5" }} data-bs-toggle="modal" data-bs-target="#addEntryModal">
+            <FaPlusCircle /> Add Voucher
           </button>
-          <button className="btn btn-light border text-success">
-            <FaFileExcel />
-          </button>
-          <button
-            className="btn text-white d-flex align-items-center gap-2"
-            style={{ backgroundColor: "#53b2a5 " }}
-            data-bs-toggle="modal"
-            data-bs-target="#addEntryModal"
-          >
-            <FaPlusCircle />
-            Add DayBook
-          </button>
-        </div>
-      </div>
-
-      {/* Filters */}
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-stretch align-items-md-center gap-3 mb-3">
-        <div className="input-group flex-grow-1 flex-md-grow-0" style={{ minWidth: "250px" }}>
-          
-          <input type="text" className="form-control border-start-0" placeholder="Search" />
-        </div>
-
-        <div className="d-flex flex-column flex-sm-row gap-2 flex-grow-1 flex-md-grow-0 w-100 w-md-auto">
-  
-
-  
-
         </div>
       </div>
 
       {/* Table */}
       <div className="table-responsive">
-        <table className="table table-bordered align-middle mb-0">
-          <thead className="table-light text-white">
+        <table className="table table-bordered align-middle">
+          <thead className="table-light">
             <tr>
-              <th className="px-3 py-3">Reference</th>
-              <th>Name</th>
-
-              <th>Description</th>
-              <th>Date</th>
-              <th>Amount</th>
-              <th>Status</th>
+              <th>Voucher Date</th>
+              <th>Voucher No</th>
+              <th>Voucher Type</th>
+              <th>Debit</th>
+              <th>Credit</th>
+              <th>Debit Amount</th>
+              <th>Credit Amount</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {entries.map((entry) => (
               <tr key={entry.id}>
-                <td className="px-3 py-3">{entry.reference}</td>
-                <td>{entry.name}</td>
-     
-                <td>{entry.description}</td>
-                <td>{formatDate(entry.date)}</td>
-                <td>${entry.amount}</td>
-                <td>
-                  <span className={getStatusBadge(entry.status)}>{entry.status}</span>
-                </td>
+                <td>{entry.voucherDate}</td>
+                <td>{entry.voucherNo}</td>
+                <td>{entry.voucherType}</td>
+                <td>{entry.debit}</td>
+                <td>{entry.credit}</td>
+                <td>${entry.debitAmount}</td>
+                <td>${entry.creditAmount}</td>
                 <td className="d-flex gap-2 justify-content-center">
-                  <button
-                    className="btn outline-primary btn-sm text-warning py-1 px-1"
-                    data-bs-toggle="modal"
-                    data-bs-target="#editEntryModal"
-                    onClick={() => handleEdit(entry)}
-                  >
-                    <FaEdit size={16}/>
-                  </button>
-                  <button
-                    className="btn outline-primary btn-sm text-danger py-2 px-1" 
-                    data-bs-toggle="modal"
-                    data-bs-target="#deleteEntryModal"
-                    onClick={() => handleDelete(entry)}
-                  >
-                    <FaTrash size={16}/>
-                  </button>
+                  <button className="btn btn-sm text-warning" data-bs-toggle="modal" data-bs-target="#editEntryModal" onClick={() => handleEdit(entry)}><FaEdit /></button>
+                  <button className="btn btn-sm text-danger" data-bs-toggle="modal" data-bs-target="#deleteEntryModal" onClick={() => handleDelete(entry)}><FaTrash /></button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-            {/* Pagination */}
-<div className="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
-  <span className="small text-muted">
-    Showing 1 to {entries.length} of {entries.length} results
-  </span>
-  <nav>
-    <ul className="pagination pagination-sm mb-0 flex-wrap">
-      <li className="page-item disabled">
-        <button className="page-link rounded-start">&laquo;</button>
-      </li>
-      <li className="page-item active">
-        <button
-          className="page-link"
-          style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
-        >
-          1
-        </button>
-      </li>
-      <li className="page-item">
-        <button className="page-link">2</button>
-      </li>
-      <li className="page-item">
-        <button className="page-link rounded-end">&raquo;</button>
-      </li>
-    </ul>
-  </nav>
-</div>
-
       </div>
 
-     
-      {/* Add Entry Modal - Updated to match your image */}
+      {/* Pagination */}
+      <div className="d-flex justify-content-between mt-3 small text-muted">
+        <span>Showing 1 to {entries.length} of {entries.length} entries</span>
+        <nav>
+          <ul className="pagination pagination-sm mb-0">
+            <li className="page-item disabled"><button className="page-link">&laquo;</button></li>
+            <li className="page-item active"><button className="page-link">1</button></li>
+            <li className="page-item"><button className="page-link">2</button></li>
+            <li className="page-item"><button className="page-link">&raquo;</button></li>
+          </ul>
+        </nav>
+      </div>
+
+      {/* Add Modal */}
       <div className="modal fade" id="addEntryModal" tabIndex="-1" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header border-0">
-              <h5 className="modal-title fw-bold">Add DayBook</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              <form onSubmit={handleAddEntry}>
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    DayBook Name <span className="text-danger">*</span>
-                  </label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    name="entryName"
-                    required 
-                  />
-                </div>
+        <div className="modal-dialog modal-dialog-centered"><div className="modal-content">
+          <div className="modal-header border-0"><h5 className="modal-title">Add Voucher</h5><button className="btn-close" data-bs-dismiss="modal"></button></div>
+          <div className="modal-body">
+            <form onSubmit={handleAddEntry}>
+              <div className="mb-2"><label className="form-label">Voucher Date</label><input type="date" name="voucherDate" className="form-control" required /></div>
+              <div className="mb-2"><label className="form-label">Voucher No</label><input type="text" name="voucherNo" className="form-control" required /></div>
+              <div className="mb-2"><label className="form-label">Voucher Type</label><input type="text" name="voucherType" className="form-control" required /></div>
+              <div className="mb-2"><label className="form-label">Debit</label><input type="text" name="debit" className="form-control" required /></div>
+              <div className="mb-2"><label className="form-label">Credit</label><input type="text" name="credit" className="form-control" required /></div>
+              <div className="mb-2"><label className="form-label">Debit Amount</label><input type="number" name="debitAmount" className="form-control" required /></div>
+              <div className="mb-2"><label className="form-label">Credit Amount</label><input type="number" name="creditAmount" className="form-control" required /></div>
+              <div className="d-flex justify-content-end mt-3">
+                <button className="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                <button className="btn text-white" style={{ backgroundColor: "#53b2a5" }}>Add</button>
+              </div>
+            </form>
+          </div>
+        </div></div>
+      </div>
 
-                <div className="row mb-3">
-               
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    Description <span className="text-danger">*</span>
-                  </label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    name="reference"
-                    required 
-                  />
-                </div>
-
-                <div className="row mb-3">
-                  <div className="col-md-12">
-                    <label className="form-label fw-semibold">
-                      Start Date <span className="text-danger">*</span>
-                    </label>
-                    <input 
-                      type="date" 
-                      className="form-control" 
-                      name="startDate"
-                      required 
-                    />
-                  </div>
-              
-                </div>
-
-        
-                 <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    Amount <span className="text-danger">*</span>
-                  </label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    name="reference"
-                    required 
-                  />
-                </div>
-
-
-              
-                <div className="mb-3">
-  <label className="form-label fw-semibold">Status</label>
-  <input
-    type="text"
-    className="form-control"
-    name="status"
-    placeholder="Enter status (e.g. Paid, Unpaid)"
-  />
-</div>
-
-
-                <div className="d-flex justify-content-end gap-3 mt-4">
-                  <button type="button" className="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
-                    Cancel
-                  </button>
-                  <button type="submit" className="btn btn-warning text-white px-4"      style={{ backgroundColor: "#53b2a5 " }}>
-                    Add DayBook
-                  </button>
+      {/* Edit Modal */}
+      <div className="modal fade" id="editEntryModal" tabIndex="-1" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered"><div className="modal-content">
+          <div className="modal-header border-0"><h5 className="modal-title">Edit Voucher</h5><button className="btn-close" data-bs-dismiss="modal"></button></div>
+          <div className="modal-body">
+            {editEntry && (
+              <form onSubmit={handleUpdateEntry}>
+                <div className="mb-2"><label>Voucher Date</label><input type="date" name="voucherDate" className="form-control" defaultValue={editEntry.voucherDate} required /></div>
+                <div className="mb-2"><label>Voucher No</label><input type="text" name="voucherNo" className="form-control" defaultValue={editEntry.voucherNo} required /></div>
+                <div className="mb-2"><label>Voucher Type</label><input type="text" name="voucherType" className="form-control" defaultValue={editEntry.voucherType} required /></div>
+                <div className="mb-2"><label>Debit</label><input type="text" name="debit" className="form-control" defaultValue={editEntry.debit} required /></div>
+                <div className="mb-2"><label>Credit</label><input type="text" name="credit" className="form-control" defaultValue={editEntry.credit} required /></div>
+                <div className="mb-2"><label>Debit Amount</label><input type="number" name="debitAmount" className="form-control" defaultValue={editEntry.debitAmount} required /></div>
+                <div className="mb-2"><label>Credit Amount</label><input type="number" name="creditAmount" className="form-control" defaultValue={editEntry.creditAmount} required /></div>
+                <div className="d-flex justify-content-end mt-3">
+                  <button className="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                  <button className="btn text-white" style={{ backgroundColor: "#3daaaa" }}>Save</button>
                 </div>
               </form>
-            </div>
+            )}
           </div>
-        </div>
+        </div></div>
       </div>
 
-      {/* Edit Entry Modal */}
-      <div className="modal fade" id="editEntryModal" tabIndex="-1" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header border-0">
-              <h5 className="modal-title fw-bold">Edit Entry</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              {editEntry && (
-                <form onSubmit={handleUpdateEntry}>
-                  <div className="mb-3">
-                    <label className="form-label fw-semibold">Name <span className="text-danger">*</span></label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      name="entryName"
-                      defaultValue={editEntry.name}
-                      required 
-                    />
-                  </div>
-
-                         <div className="mb-3">
-                    <label className="form-label fw-semibold">Description</label>
-                    <textarea 
-                      className="form-control" 
-                      rows="3" 
-                      name="description"
-                      defaultValue={editEntry.description}
-                    ></textarea>
-                  </div>
-
-
-                  <div className="mb-3">
-                    <label className="form-label fw-semibold">Category <span className="text-danger">*</span></label>
-                    <select className="form-select" name="category" defaultValue={editEntry.category} required>
-                      <option value="Volume">Utilities</option>
-                      <option value="Office Supplier">Office Suplies</option>
-                  
-                    </select>
-                  </div>
-
-           
-                  <div className="row mb-3">
-                    <div className="col-md-6">
-                      <label className="form-label fw-semibold">Date <span className="text-danger">*</span></label>
-                      <input 
-                        type="date" 
-                        className="form-control" 
-                        name="date"
-                        defaultValue={editEntry.date}
-                        required 
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <label className="form-label fw-semibold">Amount ($) <span className="text-danger">*</span></label>
-                      <input 
-                        type="number" 
-                        className="form-control" 
-                        name="amount"
-                        defaultValue={editEntry.amount}
-                        min="0"
-                        step="0.01"
-                        required 
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mb-3">
-                    <label className="form-label fw-semibold">Status <span className="text-danger">*</span></label>
-                    <select className="form-select" name="status" defaultValue={editEntry.status} required>
-                      <option value="Paid">Approved</option>
-                      <option value="Unpaid">Pending</option>
-                   
-                    </select>
-                  </div>
-
-                  <div className="d-flex justify-content-end gap-3 mt-4">
-                    <button type="button" className="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
-                      Cancel
-                    </button>
-                    <button type="submit" className="btn btn-warning text-white px-4" style={{ backgroundColor: "#3daaaa", borderColor:"#3daaaa" }}>
-                      Save Changes
-                    </button>
-                  </div>
-                </form>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Delete Entry Modal */}
+      {/* Delete Modal */}
       <div className="modal fade" id="deleteEntryModal" tabIndex="-1" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content border-0" style={{ borderRadius: "16px" }}>
-            <div className="modal-body text-center py-4">
-              <div className="mx-auto mb-3 d-flex align-items-center justify-content-center" 
-                   style={{ width: "70px", height: "70px", background: "#FFF5F2", borderRadius: "50%" }}>
-                <FaTrash size={32} color="#F04438" />
-              </div>
-              <h4 className="fw-bold mb-2">Delete Entry</h4>
-              <p className="mb-4" style={{ color: "#555", fontSize: "1.08rem" }}>
-                Are you sure you want to delete this entry?
-              </p>
-              <div className="d-flex justify-content-center gap-3">
-                <button className="btn btn-dark px-4 py-2" data-bs-dismiss="modal">
-                  No, Cancel
-                </button>
-                <button 
-                  className="btn px-4 py-2" 
-                  style={{ background: "#3daaaa", color: "#fff", fontWeight: "600" }}
-                  onClick={confirmDelete}
-                  data-bs-dismiss="modal"
-                >
-                  Yes, Delete
-                </button>
-              </div>
+          <div className="modal-content text-center p-4">
+            <FaTrash size={40} className="text-danger mb-3" />
+            <h5>Are you sure you want to delete?</h5>
+            <div className="d-flex justify-content-center gap-3 mt-4">
+              <button className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button className="btn btn-danger" onClick={confirmDelete} data-bs-dismiss="modal">Delete</button>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   );
 };

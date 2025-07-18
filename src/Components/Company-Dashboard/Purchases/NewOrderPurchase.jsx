@@ -4,7 +4,17 @@ import { BsCalendar, BsBookmark, BsPlusCircle } from 'react-icons/bs';
 
 const NewOrder = () => {
   const [showModal, setShowModal] = useState(false);
-  const handleClose = () => setShowModal(false); // ✅ Fix: Define the handler
+  const [showTaxModal, setShowTaxModal] = useState(false);
+  const [showDiscountModal, setShowDiscountModal] = useState(false);
+
+  const [isTaxOn, setIsTaxOn] = useState(true);
+  const [isDiscountOn, setIsDiscountOn] = useState(true);
+
+  const [taxClass, setTaxClass] = useState('');
+  const [taxValue, setTaxValue] = useState('');
+  const [discountName, setDiscountName] = useState('');
+  const [discountValue, setDiscountValue] = useState('');
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const [items, setItems] = useState([
     { name: '', description: '', quantity: 1, rate: '', tax: '', discount: '', amount: 0 }
@@ -17,20 +27,35 @@ const NewOrder = () => {
     ]);
   };
 
+  const handleTaxFormSubmit = (e) => {
+    e.preventDefault();
+    setShowTaxModal(false);
+  };
+
+  const handleDiscountFormSubmit = (e) => {
+    e.preventDefault();
+    setShowDiscountModal(false);
+  };
+
   return (
     <div className="p-4 mt-4 mb-5">
-      <h5 className="mb-3">
-        Bill From
-        <Button style={ {backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} size="sm" className="ms-2" onClick={() => setShowModal(true)}>
+      {/* Header */}
+      <div className="d-flex align-items-center justify-content-between mb-3">
+        <h5 className="mb-0">Bill From</h5>
+        <Button
+          style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+          size="sm"
+          onClick={() => setShowModal(true)}
+        >
           Add Vendors
         </Button>
-      </h5>
+      </div>
 
-      {/* --- Your Form Fields --- */}
+      {/* Vendor Info */}
       <Row className="mb-3">
         <Col md={4}>
           <Form.Label>Search Vendors</Form.Label>
-          <Form.Control placeholder="Enter Vendors Name or Mobile Number to search" />
+          <Form.Control placeholder="Enter Vendor Name or Mobile Number" />
         </Col>
         <Col md={2}>
           <Form.Label>Bill #</Form.Label>
@@ -54,7 +79,7 @@ const NewOrder = () => {
           </InputGroup>
         </Col>
         <Col md={2}>
-          <Form.Label>Order Due Date</Form.Label>
+          <Form.Label>Due Date</Form.Label>
           <InputGroup>
             <InputGroup.Text><BsCalendar /></InputGroup.Text>
             <Form.Control type="date" value="2025-07-15" />
@@ -62,31 +87,62 @@ const NewOrder = () => {
         </Col>
       </Row>
 
+      {/* Tax & Discount */}
       <Row className="mb-3">
-        <Col md={4}>
-          <Form.Label>Vendors Details</Form.Label>
-          <Form.Control disabled />
+        <Col md={12} className="mb-2">
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex align-items-center">
+              <Form.Label className="mb-0 fw-semibold me-3">Tax</Form.Label>
+              <div className="d-flex align-items-center gap-4">
+                <Form.Check
+                  type="radio"
+                  label="On"
+                  name="tax"
+                  checked={isTaxOn}
+                  onChange={() => setIsTaxOn(true)}
+                  className="mb-0"
+                />
+                <Form.Check
+                  type="radio"
+                  label="Off"
+                  name="tax"
+                  checked={!isTaxOn}
+                  onChange={() => setIsTaxOn(false)}
+                  className="mb-0"
+                />
+              </div>
+            </div>
+            <Button variant="outline-primary" size="sm" onClick={() => setShowTaxModal(true)}>+ Add Tax</Button>
+          </div>
         </Col>
-        <Col md={4}>
-          <Form.Label>Warehouse</Form.Label>
-          <Form.Select>
-            <option>All</option>
-          </Form.Select>
-        </Col>
-        <Col md={2}>
-          <Form.Label>Tax</Form.Label>
-          <Form.Select>
-            <option>On</option>
-          </Form.Select>
-        </Col>
-        <Col md={2}>
-          <Form.Label>Discount</Form.Label>
-          <Form.Select>
-            <option>% Discount After TAX</option>
-          </Form.Select>
+
+        <Col md={12}>
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex align-items-center gap-3">
+              <Form.Label className="mb-0 fw-semibold">Discount</Form.Label>
+              <Form.Check
+                inline
+                type="radio"
+                label="On"
+                name="discount"
+                checked={isDiscountOn}
+                onChange={() => setIsDiscountOn(true)}
+              />
+              <Form.Check
+                inline
+                type="radio"
+                label="Off"
+                name="discount"
+                checked={!isDiscountOn}
+                onChange={() => setIsDiscountOn(false)}
+              />
+            </div>
+            <Button variant="outline-primary" size="sm" onClick={() => setShowDiscountModal(true)}>+ Add Discount</Button>
+          </div>
         </Col>
       </Row>
 
+      {/* Items Table */}
       <div className="table-responsive mb-3">
         <table className="table table-bordered align-middle">
           <thead>
@@ -94,9 +150,9 @@ const NewOrder = () => {
               <th>Item Name</th>
               <th>Quantity</th>
               <th>Rate</th>
-              <th>Tax(%)</th>
-              <th>Tax</th>
-              <th>Discount</th>
+              {isTaxOn && <th>Tax(%)</th>}
+              {isTaxOn && <th>Tax</th>}
+              {isDiscountOn && <th>Discount</th>}
               <th>Amount ($)</th>
               <th>Action</th>
             </tr>
@@ -110,19 +166,26 @@ const NewOrder = () => {
                 </td>
                 <td><Form.Control type="number" defaultValue={1} /></td>
                 <td><Form.Control /></td>
-                <td><Form.Control /></td>
-                <td>0</td>
-                <td><Form.Control /></td>
+                {isTaxOn && <td><Form.Control /></td>}
+                {isTaxOn && <td>0</td>}
+                {isDiscountOn && <td><Form.Control /></td>}
                 <td>$ 0</td>
                 <td>-</td>
               </tr>
             ))}
           </tbody>
         </table>
-        <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} onClick={addRow}><BsPlusCircle className="me-1" /> Add Row</Button>
+        <Button
+          className="d-flex align-items-center mt-2"
+          style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+          onClick={addRow}
+        >
+          <BsPlusCircle className="me-1" /> Add Row
+        </Button>
       </div>
 
-      <Row className="mb-3">
+      {/* Payment Terms */}
+      <Row className="mb-4">
         <Col md={4}>
           <Form.Label>Payment Terms</Form.Label>
           <Form.Select>
@@ -136,10 +199,11 @@ const NewOrder = () => {
         </Col>
       </Row>
 
-      <Row className="justify-content-end text-end mb-3">
+      {/* Totals */}
+      <Row className="justify-content-end text-end mb-5">
         <Col md={4}>
-          <p>Total Tax: <strong>$ 0</strong></p>
-          <p>Total Discount: <strong>$ 0</strong></p>
+          <p>Total Tax: <strong>{isTaxOn ? '$ 0' : '-'}</strong></p>
+          <p>Total Discount: <strong>{isDiscountOn ? '$ 0' : '-'}</strong></p>
           <InputGroup className="mb-2">
             <InputGroup.Text>Shipping</InputGroup.Text>
             <Form.Control placeholder="Value" />
@@ -148,44 +212,81 @@ const NewOrder = () => {
             <InputGroup.Text>Grand Total ($)</InputGroup.Text>
             <Form.Control />
           </InputGroup>
-          <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}}>Generate Order</Button>
+          <Button style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}>
+            Generate Order
+          </Button>
         </Col>
       </Row>
 
-      {/* --- Add Vendors Modal --- */}
-      <Modal show={showModal} onHide={handleClose} size="lg" centered>
+      {/* Vendor Modal */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>Add Vendors</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
+            <Form.Group className="mb-3"><Form.Control type="text" placeholder="Name" /></Form.Group>
+            <Form.Group className="mb-3"><Form.Control type="text" placeholder="Phone" /></Form.Group>
+            <Form.Group className="mb-3"><Form.Control type="email" placeholder="Email" /></Form.Group>
+            <Form.Group className="mb-3"><Form.Control type="text" placeholder="Address" /></Form.Group>
             <Form.Group className="mb-3">
-              <Form.Control type="text" placeholder="Name" />
+              <Form.Label>Upload Document</Form.Label>
+              <Form.Control type="file" name="document" />
             </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Control type="text" placeholder="Phone" />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Control type="email" placeholder="Email" />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Control type="text" placeholder="Address" />
-            </Form.Group>
-            <Row className="mb-3">
-              <Col>Upload Document</Col>
- <Form.Control
-                type="file"
-                name="document"
-                // onChange={handleChange}
-              />
-            </Row>
-     
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="light" onClick={handleClose}>Close</Button>
-          <Button style={{ backgroundColor: '#3daaaa',borderColor:"#3daaaa", color: '#fff' }} onClick={handleClose}>ADD</Button>
+          <Button variant="light" onClick={() => setShowModal(false)}>Close</Button>
+          <Button style={{ backgroundColor: '#3daaaa', borderColor: "#3daaaa", color: '#fff' }} onClick={() => setShowModal(false)}>ADD</Button>
         </Modal.Footer>
+      </Modal>
+
+      {/* Tax Modal */}
+      <Modal show={showTaxModal} onHide={() => setShowTaxModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>{isEditMode ? "Edit Tax" : "Create New Tax"}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleTaxFormSubmit}>
+            <Form.Group controlId="taxClass">
+              <Form.Label>Tax Class</Form.Label>
+              <Form.Control type="text" value={taxClass} onChange={(e) => setTaxClass(e.target.value)} required />
+            </Form.Group>
+            <Form.Group controlId="taxValue" className="mt-3">
+              <Form.Label>Tax Value (%)</Form.Label>
+              <Form.Control type="number" value={taxValue} onChange={(e) => setTaxValue(e.target.value)} required />
+            </Form.Group>
+            <div className="d-flex justify-content-end mt-3">
+              <Button variant="secondary" onClick={() => setShowTaxModal(false)}>Close</Button>
+              <Button variant="primary" type="submit" className="ms-2">
+                {isEditMode ? "Update" : "Submit"}
+              </Button>
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
+      {/* Discount Modal */}
+      <Modal show={showDiscountModal} onHide={() => setShowDiscountModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Discount</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleDiscountFormSubmit}>
+            <Form.Group controlId="discountName">
+              <Form.Label>Discount Name</Form.Label>
+              <Form.Control type="text" value={discountName} onChange={(e) => setDiscountName(e.target.value)} required />
+            </Form.Group>
+            <Form.Group controlId="discountValue" className="mt-3">
+              <Form.Label>Discount Value (%)</Form.Label>
+              <Form.Control type="number" value={discountValue} onChange={(e) => setDiscountValue(e.target.value)} required />
+            </Form.Group>
+            <div className="d-flex justify-content-end mt-3">
+              <Button variant="secondary" onClick={() => setShowDiscountModal(false)}>Close</Button>
+              <Button variant="primary" type="submit" className="ms-2">Submit</Button>
+            </div>
+          </Form>
+        </Modal.Body>
       </Modal>
     </div>
   );
