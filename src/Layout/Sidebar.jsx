@@ -118,6 +118,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             { to: "/company/ponitofsale", icon: "fas fa-file-invoice", label: "POS Screen" }
           ]
         },
+<<<<<<< HEAD
         {  to: "/company/managestock", icon: "fas fa-table", label: "Inventory", className: "top-level-item" },
 
         {
@@ -133,6 +134,9 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             { to: "/company/ewaybill", icon: "fas fa-th", label: "e-Way Bill" }
           ]
         },
+=======
+     
+>>>>>>> f50614cdb999c94e0dd3fa6c395753a62b6e4985
         {
           type: "section",
           title: "Finance & Accounts",
@@ -151,11 +155,26 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "reports",
           icon: "fas fa-chart-pie",
           items: [
-            { to: "/company/salesreport", icon: "fas fa-search", label: "Sales Report" },
-            { to: "/company/taxreport", icon: "fas fa-search", label: "Tax Report" },
-            { to: "/company/balancesheet", icon: "fas fa-search", label: "Balance Sheet" },
+            { to: "/company/salesreport", icon: "fas fa-book", label: "Sales Report" },
+            { to: "/company/taxreport", icon: "fas fa-book-open", label: "Tax Report" },
+            { to: "/company/product", icon: "fas fa-box-open", label: "Product" },
+            { to: "/company/balancesheet", icon: "", label: "Balance Sheet" },
             { to: "/company/cashflow", icon: "fas fa-search", label: "Cash Flow" },
             { to: "/company/profitloss", icon: "fas fa-stopwatch", label: "Profit & Loss" }
+          ]
+        },
+
+        {
+          type: "section",
+          title: "GST Filing",
+          key: "gst",
+          icon: "fas fa-file-alt",
+          items: [
+            { to: "/company/taxreport", icon: "fas fa-circle", label: "Tax Report" },
+            { to: "/company/gstreturns", icon: "fas fa-book", label: "GST Returns" },
+            { to: "/company/tdstcs", icon: "fas fa-file-alt", label: "TDS/TCS" },
+            { to: "/company/itcreport", icon: "fas fa-book-open", label: "ITC Report" },
+            { to: "/company/ewaybill", icon: "fas fa-th", label: "e-Way Bill" }
           ]
         },
         {

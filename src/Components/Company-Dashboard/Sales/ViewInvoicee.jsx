@@ -2,7 +2,8 @@ import React from 'react';
 import { Row, Col, Table, Button, Badge, Dropdown, ButtonGroup } from 'react-bootstrap';
 import {
   FaEdit, FaPrint, FaEye, FaMoneyBill, FaPaperPlane,
-  FaGlobe, FaExchangeAlt, FaTimes
+  FaGlobe, FaExchangeAlt, FaTimes,
+  FaCaretUp
 } from 'react-icons/fa';
 
 const ViewInvoicee = () => {
@@ -25,25 +26,27 @@ const ViewInvoicee = () => {
               <FaPrint /> <span>Print Invoice</span>
             </Button>
             <Button variant="info" className="d-flex align-items-center gap-1">
-              <FaGlobe /> <span>Public Preview</span>
+              <FaGlobe /> <span>Print Preview</span>
             </Button>
             <Button variant="secondary" className="d-flex align-items-center gap-1">
               <FaExchangeAlt /> <span>Change Status</span>
             </Button>
+          
+            <Button variant="success" className="d-flex align-items-center gap-1">
+              <FaEdit /> <span>Delivery Note</span>
+            </Button>
+            <Button variant="info" className="d-flex align-items-center gap-1">
+              <FaEye/> <span>Proforma Invoice</span>
+            </Button>
+            <Button variant="secondary" className="d-flex align-items-center gap-1">
+              <FaCaretUp /> <span>Copy Invoice</span>
+            </Button>
+
+
             <Button variant="danger" className="d-flex align-items-center gap-1">
               <FaTimes /> <span>Cancel</span>
             </Button>
-
-            {/* Extra Dropdown Button */}
-            <Dropdown as={ButtonGroup}>
-              <Button variant="outline-info" className="text-black">Extra</Button>
-              <Dropdown.Toggle split variant="outline-info" className="text-black" id="dropdown-split-basic" />
-              <Dropdown.Menu>
-                <Dropdown.Item href="#">Delivery Note</Dropdown.Item>
-                <Dropdown.Item href="#">Proforma Invoice</Dropdown.Item>
-                <Dropdown.Item href="#">Copy Invoice</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+      
           </div>
         </Col>
 

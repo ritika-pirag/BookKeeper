@@ -74,83 +74,111 @@ const Vendors = () => {
   };
 
   return (
- <div className="card bg-white rounded-3 p-4  mt-6 ">
-  <div className="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
-    <h5 className="fw-semibold mb-0">Vendor Details</h5>
-    <Badge pill bg="warning" className="text-dark">
-      Update GST details for 520 vendors
-    </Badge>
-  </div>
+    <div className="card bg-white rounded-3 p-4 mt-4">
+      {/* Header with title, badge, and Add Vendor button */}
+      <div className="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+        <h5 className="fw-semibold mb-0">Vendor Details</h5>
 
-  <div className="table-responsive">
-    <table className="table table-hover align-middle mb-0">
-      <thead className="table-light">
-        <tr>
-          <th>Name</th>
-          <th>Company</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Payables (₹)</th>
-          <th>Address</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {vendors.map((vendor, idx) => (
-          <tr key={idx}>
-            <td>{vendor.name}</td>
-            <td>{vendor.company}</td>
-            <td className="text-muted">{vendor.email}</td>
-            <td className="text-muted">{vendor.phone}</td>
-            <td>₹{vendor.payable}</td>
-            <td>{vendor.address}</td>
-            <td>
-              <div className="d-flex flex-wrap gap-2">
-                <Button variant="link" className="p-0 text-info" size="sm"
-                  onClick={() => { setSelectedVendor(vendor); setShowView(true); }}>
-                  <FaEye size={18} />
-                </Button>
-                <Button variant="link" className="p-0 text-warning" size="sm"
-                  onClick={() => { setSelectedVendor(vendor); setNewVendor(vendor); setShowEdit(true); }}>
-                  <FaEdit size={18} />
-                </Button>
-                <Button variant="link" className="p-0 text-danger" size="sm"
-                  onClick={() => { setSelectedVendor(vendor); setShowDelete(true); }}>
-                  <FaTrash size={18} />
-                </Button>
-              </div>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
+        <div className="d-flex gap-2">
+          <Badge pill bg="warning" className="text-dark align-self-center">
+            Update GST details for 520 vendors
+          </Badge>
 
-  {/* Pagination inside card */}
-  <div className="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
-    <span className="small text-muted">
-      Showing 1 to {vendors.length} of {vendors.length} results
-    </span>
-    <nav>
-      <ul className="pagination pagination-sm mb-0 flex-wrap">
-        <li className="page-item disabled">
-          <button className="page-link rounded-start">&laquo;</button>
-        </li>
-        <li className="page-item active">
-          <button
-            className="page-link"
-            style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
-          >1</button>
-        </li>
-        <li className="page-item"><button className="page-link">2</button></li>
-        <li className="page-item">
-          <button className="page-link rounded-end">&raquo;</button>
-        </li>
-      </ul>
-    </nav>
-  </div>
-        {/* Modals (same as before) */}
-      {/* View Vendor */}
+          <Button
+            variant="success"
+            className="d-flex align-items-center gap-2"
+            onClick={() => {
+              setNewVendor({
+                name: "",
+                company: "",
+                email: "",
+                phone: "",
+                payable: "",
+                address: "",
+                document: null
+              });
+              setShowAdd(true);
+            }}
+          >
+            <FaPlus /> Add Vendor
+          </Button>
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="table-responsive">
+        <table className="table table-hover align-middle mb-0">
+          <thead className="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Company</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Payables (₹)</th>
+              <th>Address</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {vendors.map((vendor, idx) => (
+              <tr key={idx}>
+                <td>{vendor.name}</td>
+                <td>{vendor.company}</td>
+                <td className="text-muted">{vendor.email}</td>
+                <td className="text-muted">{vendor.phone}</td>
+                <td>₹{vendor.payable}</td>
+                <td>{vendor.address}</td>
+                <td>
+                  <div className="d-flex flex-wrap gap-2">
+                    <Button variant="link" className="p-0 text-info" size="sm"
+                      onClick={() => { setSelectedVendor(vendor); setShowView(true); }}>
+                      <FaEye size={18} />
+                    </Button>
+                    <Button variant="link" className="p-0 text-warning" size="sm"
+                      onClick={() => {
+                        setSelectedVendor(vendor);
+                        setNewVendor(vendor);
+                        setShowEdit(true);
+                      }}>
+                      <FaEdit size={18} />
+                    </Button>
+                    <Button variant="link" className="p-0 text-danger" size="sm"
+                      onClick={() => { setSelectedVendor(vendor); setShowDelete(true); }}>
+                      <FaTrash size={18} />
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
+        <span className="small text-muted">
+          Showing 1 to {vendors.length} of {vendors.length} results
+        </span>
+        <nav>
+          <ul className="pagination pagination-sm mb-0 flex-wrap">
+            <li className="page-item disabled">
+              <button className="page-link rounded-start">&laquo;</button>
+            </li>
+            <li className="page-item active">
+              <button
+                className="page-link"
+                style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+              >1</button>
+            </li>
+            <li className="page-item"><button className="page-link">2</button></li>
+            <li className="page-item">
+              <button className="page-link rounded-end">&raquo;</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      {/* View Vendor Modal */}
       <Modal show={showView} onHide={() => setShowView(false)} centered>
         <Modal.Header closeButton><Modal.Title>Vendor Details</Modal.Title></Modal.Header>
         <Modal.Body>
@@ -170,7 +198,7 @@ const Vendors = () => {
         </Modal.Footer>
       </Modal>
 
-      {/* Add / Edit Vendor */}
+      {/* Add / Edit Vendor Modal */}
       <Modal show={showAdd || showEdit} onHide={() => { setShowAdd(false); setShowEdit(false); }} centered>
         <Modal.Header closeButton>
           <Modal.Title>{showAdd ? "Add Vendor" : "Edit Vendor"}</Modal.Title>
@@ -196,13 +224,13 @@ const Vendors = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => { setShowAdd(false); setShowEdit(false); }}>Cancel</Button>
-          <Button style={{backgroundColor:"#3daaaa"}} onClick={showAdd ? handleAddVendor : handleUpdateVendor}>
+          <Button style={{ backgroundColor: "#3daaaa" }} onClick={showAdd ? handleAddVendor : handleUpdateVendor}>
             {showAdd ? "Add Vendor" : "Save Changes"}
           </Button>
         </Modal.Footer>
       </Modal>
 
-      {/* Delete Vendor */}
+      {/* Delete Confirmation Modal */}
       <Modal show={showDelete} onHide={() => setShowDelete(false)} centered>
         <Modal.Header closeButton><Modal.Title>Confirm Delete</Modal.Title></Modal.Header>
         <Modal.Body>Are you sure you want to delete this vendor?</Modal.Body>
@@ -211,9 +239,7 @@ const Vendors = () => {
           <Button variant="danger" onClick={handleDeleteVendor}>Yes, Delete</Button>
         </Modal.Footer>
       </Modal>
-</div>
-
-
+    </div>
   );
 };
 
