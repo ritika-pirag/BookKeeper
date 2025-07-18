@@ -161,9 +161,7 @@ const ProfileModal = ({ show, handleClose }) => {
 
           <div className="d-flex justify-content-end gap-2 mt-4">
             <Button variant="dark" onClick={handleClose}>Cancel</Button>
-            <Button style={{ backgroundColor: "#27b2b6", borderColor: "#27b2b6" }} className="text-white">
-              Save Changes
-            </Button>
+            <Button variant="warning" className="text-white">Save Changes</Button>
           </div>
         </div>
       </Modal.Body>

@@ -74,7 +74,7 @@ const GSTReturns = () => {
 
   return (
     <div className="container-fluid px-2 px-md-5 mt-4">
-      <h4 className="fw-bold mb-4" style={{ color: '#FFA726' }}>GST Returns</h4>
+      <h4 className="fw-bold mb-4" style={{ color: '#15110aff' }}>GST Returns</h4>
 
       {/* Summary Cards */}
       <div className="row g-3 mb-4">
@@ -130,9 +130,9 @@ const GSTReturns = () => {
                   </Badge>
                 </td>
                 <td className="d-flex gap-2">
-                  <Button variant="outline-primary" size="sm" onClick={() => handleAction('view', item)}><FaEye /></Button>
-                  <Button variant="outline-warning" size="sm" onClick={() => handleAction('edit', item)}><FaEdit /></Button>
-                  <Button variant="outline-danger" size="sm" onClick={() => handleAction('delete', item)}><FaTrash /></Button>
+                  <button className="btn outline-info btn-sm py-1 px-1 text-info"  size="sm" onClick={() => handleAction('view', item)}><FaEye size={16}/></button>
+                  <button className="btn outline-primary btn-sm text-warning py-1 px-1"  size="sm" onClick={() => handleAction('edit', item)}><FaEdit size={16}/></button>
+                  <button className="btn outline-primary btn-sm text-danger py-2 px-1"size="sm" onClick={() => handleAction('delete', item)}><FaTrash size={16}/></button>
                 </td>
               </tr>
             ))}
@@ -214,7 +214,7 @@ const GSTReturns = () => {
           <Button variant="secondary" onClick={() => setShowEdit(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={() => setShowEdit(false)}>
+          <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} onClick={() => setShowEdit(false)}>
             Save Changes
           </Button>
         </Modal.Footer>

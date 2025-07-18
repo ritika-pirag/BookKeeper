@@ -21,7 +21,7 @@ const NewOrder = () => {
     <div className="container mt-4 mb-5">
       <h5 className="mb-3">
         Bill From
-        <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} size="sm" className="ms-2" onClick={() => setShowModal(true)}>
+        <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} size="sm" className="ms-4" onClick={() => setShowModal(true)}>
           Add Vendors
         </Button>
       </h5>

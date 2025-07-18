@@ -121,6 +121,9 @@ const PurchaseOrders = () => {
             ))}
           </tbody>
         </Table>
+
+
+      </div>
         {/* Pagination UI */}
 <div className="d-flex justify-content-between align-items-center mt-3 px-3 flex-wrap">
   <span className="small text-muted">Showing 1 to {orders.length} of {orders.length} entries</span>
@@ -146,9 +149,6 @@ const PurchaseOrders = () => {
     </ul>
   </nav>
 </div>
-
-      </div>
-
 
     </div>
   );

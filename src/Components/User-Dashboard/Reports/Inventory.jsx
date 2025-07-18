@@ -275,17 +275,18 @@ const Inventory = () => {
   };
 
   return (
-    <div  style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
-      <Container fluid className="py-4 ">
+    <div style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
+      <Container fluid className="py-4">
         {/* Tabs */}
-        <div className="mb-4 d-flex gap-3">
+        <div className="mb-4 d-flex flex-wrap gap-2">
           <Button 
             variant="light"
+            className="flex-grow-1 flex-md-grow-0"
             style={{
               background: tab === "inventory" ? "#3daaaa" : "#eaeaea",
               color: tab === "inventory" ? "#fff" : "#888",
               fontWeight: 600,
-              fontSize: 18,
+              fontSize: "clamp(14px, 2vw, 18px)",
               border: "none",
               borderRadius: 10,
               minWidth: 180,
@@ -296,11 +297,12 @@ const Inventory = () => {
           </Button>
           <Button
             variant="light"
+            className="flex-grow-1 flex-md-grow-0"
             style={{
               background: tab === "stock" ? "#3daaaa" : "#eaeaea",
               color: tab === "stock" ? "#fff" : "#888",
               fontWeight: 600,
-              fontSize: 18,
+              fontSize: "clamp(14px, 2vw, 18px)",
               border: "none",
               borderRadius: 10,
               minWidth: 180,
@@ -311,11 +313,12 @@ const Inventory = () => {
           </Button>
           <Button
             variant="light"
+            className="flex-grow-1 flex-md-grow-0"
             style={{
               background: tab === "sold" ? "#3daaaa" : "#eaeaea",
               color: tab === "sold" ? "#fff" : "#888",
               fontWeight: 600,
-              fontSize: 18,
+              fontSize: "clamp(14px, 2vw, 18px)",
               border: "none",
               borderRadius: 10,
               minWidth: 180,
@@ -327,14 +330,14 @@ const Inventory = () => {
         </div>
 
         {/* Heading */}
-        <div style={{ fontWeight: 700, fontSize: 28, marginBottom: 0  }}>
+        <div style={{ fontWeight: 700, fontSize: "clamp(20px, 4vw, 28px)", marginBottom: 0 }}>
           {tab === "inventory"
             ? "Inventory"
             : tab === "stock"
             ? "Stock History"
             : "Sold Stock"}
         </div>
-        <div style={{ color: "#888", fontSize: 17, marginBottom: 24 }}>
+        <div style={{ color: "#888", fontSize: "clamp(14px, 2vw, 17px)", marginBottom: 24 }}>
           View Reports of{" "}
           {tab === "inventory"
             ? "Inventory"
@@ -344,10 +347,10 @@ const Inventory = () => {
         </div>
 
         {/* Filters */}
-        <Card className="mb-4 " style={{ borderRadius: 14 }}>
+        <Card className="mb-4" style={{ borderRadius: 14 }}>
           <Card.Body style={{ background: "#fff", borderRadius: 14 }}>
             <Row className="align-items-end g-3">
-              <Col xs={12} md={3}>
+              <Col xs={12} md={6} lg={3}>
                 <Form.Label style={{ color: "#888", fontWeight: 500 }}>
                   Choose Date
                 </Form.Label>
@@ -386,7 +389,7 @@ const Inventory = () => {
                   />
                 </InputGroup>
               </Col>
-              <Col xs={12} md={3}>
+              <Col xs={12} md={6} lg={2}>
                 <Form.Label style={{ color: "#888", fontWeight: 500 }}>
                   Category
                 </Form.Label>
@@ -399,7 +402,7 @@ const Inventory = () => {
                   ))}
                 </Form.Select>
               </Col>
-              <Col xs={12} md={3}>
+              <Col xs={12} md={6} lg={2}>
                 <Form.Label style={{ color: "#888", fontWeight: 500 }}>
                   Products
                 </Form.Label>
@@ -413,7 +416,7 @@ const Inventory = () => {
                 </Form.Select>
               </Col>
               {tab === "inventory" && (
-                <Col xs={12} md={2}>
+                <Col xs={12} md={6} lg={2}>
                   <Form.Label style={{ color: "#888", fontWeight: 500 }}>
                     Units
                   </Form.Label>
@@ -428,12 +431,13 @@ const Inventory = () => {
                 </Col>
               )}
               {tab !== "inventory" && (
-                <Col xs={12} md={2}>
-                  <Form.Label style={{ color: "#fff" }}>-</Form.Label>
+                <Col xs={12} md={6} lg={2}>
+                  <Form.Label style={{ color: "#888", fontWeight: 500 }}>
+                    Store
+                  </Form.Label>
                   <Form.Select
                     value={store}
                     onChange={(e) => setStore(e.target.value)}
-                    style={{ display: "none" }}
                   >
                     {stores.map((s) => (
                       <option key={s}>{s}</option>
@@ -441,9 +445,6 @@ const Inventory = () => {
                   </Form.Select>
                 </Col>
               )}
-              <Col xs={12} md={tab === "inventory" ? 1 : 2} className="d-flex align-items-end">
-                
-              </Col>
             </Row>
           </Card.Body>
         </Card>
@@ -451,11 +452,18 @@ const Inventory = () => {
         {/* Table */}
         <Card style={{ borderRadius: 14 }}>
           <Card.Body style={{ background: "#fff", borderRadius: 14 }}>
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <div style={{ fontWeight: 700, fontSize: 22 }}>Customer Report</div>
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 gap-2">
+              <div style={{ fontWeight: 700, fontSize: "clamp(18px, 2vw, 22px)" }}>
+                {tab === "inventory"
+                  ? "Inventory Report"
+                  : tab === "stock"
+                  ? "Stock History Report"
+                  : "Sold Stock Report"}
+              </div>
               <div className="d-flex gap-2">
                 <Button
                   variant="light"
+                  className="p-2"
                   style={{
                     border: "none",
                     background: "#fff",
@@ -464,10 +472,11 @@ const Inventory = () => {
                   onClick={handlePDF}
                   title="Download PDF"
                 >
-                  <FaFilePdf size={22} color="#ff6f61" />
+                  <FaFilePdf size={20} color="#ff6f61" />
                 </Button>
                 <Button
                   variant="light"
+                  className="p-2"
                   style={{
                     border: "none",
                     background: "#fff",
@@ -476,10 +485,11 @@ const Inventory = () => {
                   title="Download Excel"
                   disabled
                 >
-                  <FaFileExcel size={22} color="#27ae60" />
+                  <FaFileExcel size={20} color="#27ae60" />
                 </Button>
                 <Button
                   variant="light"
+                  className="p-2"
                   style={{
                     border: "none",
                     background: "#fff",
@@ -488,7 +498,7 @@ const Inventory = () => {
                   title="Print"
                   disabled
                 >
-                  <FaPrint size={22} color="#2563eb" />
+                  <FaPrint size={20} color="#2563eb" />
                 </Button>
               </div>
             </div>
@@ -497,8 +507,8 @@ const Inventory = () => {
                 responsive
                 className="align-middle mb-0"
                 style={{
-                  minWidth: 900,
-                  fontSize: 17,
+                  minWidth: "100%",
+                  fontSize: "clamp(12px, 1.5vw, 16px)",
                   background: "#fff",
                 }}
               >
@@ -517,20 +527,20 @@ const Inventory = () => {
                       <>
                         <th>SKU</th>
                         <th>Product</th>
-                        <th>Initial Quantity</th>
-                        <th>Added Quantity</th>
-                        <th>Sold Quantity</th>
-                        <th>Defective Quantity</th>
-                        <th>Final Quantity</th>
+                        <th>Initial</th>
+                        <th>Added</th>
+                        <th>Sold</th>
+                        <th>Defective</th>
+                        <th>Final</th>
                       </>
                     )}
                     {tab === "sold" && (
                       <>
                         <th>SKU</th>
-                        <th>Product Name</th>
+                        <th>Product</th>
                         <th>Unit</th>
-                        <th>Quantity</th>
-                        <th>Tax Value</th>
+                        <th>Qty</th>
+                        <th>Tax</th>
                         <th>Total</th>
                       </>
                     )}
@@ -541,19 +551,20 @@ const Inventory = () => {
                     <tr key={row.sku + idx}>
                       <td>{row.sku}</td>
                       <td>
-                        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                           <div
                             style={{
-                              width: 38,
-                              height: 38,
-                              borderRadius: 8,
+                              width: 36,
+                              height: 36,
+                              borderRadius: 6,
                               background: "#f5f5f5",
                               overflow: "hidden",
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
-                              fontSize: 13,
+                              fontSize: 12,
                               color: "#aaa",
+                              flexShrink: 0,
                             }}
                           >
                             <img
@@ -566,7 +577,9 @@ const Inventory = () => {
                               }}
                             />
                           </div>
-                          <span>{row.name}</span>
+                          <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                            {row.name}
+                          </span>
                         </div>
                       </td>
                       {tab === "inventory" && (
@@ -614,34 +627,33 @@ const Inventory = () => {
                 </tbody>
               </Table>
               {/* Pagination */}
-<div className="d-flex justify-content-between align-items-center mt-3 px-3">
-  <span className="small text-muted">
-    Showing 1 to {tableData.length} of {tableData.length} results
-  </span>
+              <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3 px-3 gap-2">
+                <span className="small text-muted">
+                  Showing 1 to {tableData.length} of {tableData.length} results
+                </span>
 
-  <nav>
-    <ul className="pagination pagination-sm mb-0">
-      <li className="page-item disabled">
-        <button className="page-link rounded-start">&laquo;</button>
-      </li>
-      <li className="page-item active">
-        <button
-          className="page-link"
-          style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
-        >
-          1
-        </button>
-      </li>
-      <li className="page-item">
-        <button className="page-link">2</button>
-      </li>
-      <li className="page-item">
-        <button className="page-link rounded-end">&raquo;</button>
-      </li>
-    </ul>
-  </nav>
-</div>
-
+                <nav>
+                  <ul className="pagination pagination-sm mb-0">
+                    <li className="page-item disabled">
+                      <button className="page-link rounded-start">&laquo;</button>
+                    </li>
+                    <li className="page-item active">
+                      <button
+                        className="page-link"
+                        style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+                      >
+                        1
+                      </button>
+                    </li>
+                    <li className="page-item">
+                      <button className="page-link">2</button>
+                    </li>
+                    <li className="page-item">
+                      <button className="page-link rounded-end">&raquo;</button>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
             </div>
           </Card.Body>
         </Card>

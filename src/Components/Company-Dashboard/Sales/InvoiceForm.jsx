@@ -33,7 +33,7 @@ const InvoiceForm = () => {
           <div className="invoice-section-card">
             <h5 className="d-flex align-items-center justify-content-between">
               Bill To
-              <Button variant="outline-primary" size="sm" onClick={handleClientModalShow}>
+              <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} size="sm" onClick={handleClientModalShow}>
                 Add Client
               </Button>
             </h5>
@@ -122,7 +122,7 @@ const InvoiceForm = () => {
           </table>
         </div>
 
-        <Button variant="success" onClick={addRow} className="mt-2">Add Row</Button>
+        <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} onClick={addRow} className="mt-2">Add Row</Button>
       </div>
 
       <Row className="mt-3">
@@ -168,7 +168,7 @@ const InvoiceForm = () => {
         </Col>
         <Col lg={4} md={12} className="d-flex align-items-end">
           <div className="invoice-section-card w-100">
-            <Button variant="success" className="w-100">Generate Invoice</Button>
+            <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} className="w-100">Generate Invoice</Button>
           </div>
         </Col>
       </Row>
@@ -222,7 +222,7 @@ const InvoiceForm = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClientModalClose}>Close</Button>
-          <Button variant="primary">ADD</Button>
+          <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}}>ADD</Button>
         </Modal.Footer>
       </Modal>
     </div>

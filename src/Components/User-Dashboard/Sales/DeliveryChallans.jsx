@@ -106,8 +106,8 @@ const getStatusBadge = (status) => {
             <FaFileExcel />
           </button>
           <button
-            className="btn text-black border d-flex align-items-center gap-2"
-            // style={{ backgroundColor: "#FFA646" }}
+            className="btn text-white d-flex align-items-center gap-2"
+            style={{ backgroundColor: "#3daaaa" }}
             data-bs-toggle="modal"
             data-bs-target="#addCouponModal"
           >
@@ -139,41 +139,89 @@ const getStatusBadge = (status) => {
 
     {/* Status Dropdown */}
     <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
-      <button 
-        className="btn text-black border dropdown-toggle w-100 bg-white" 
-        type="button" 
-        id="statusDropdown"
-        data-bs-toggle="dropdown" 
-        aria-expanded="false"
+   <button
+    className="btn text-white border dropdown-toggle w-100"
+    type="button"
+    id="statusDropdown"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+    style={{ backgroundColor: "#3daaaa", color: "white" }}
+  >
+    Status
+  </button>
+  <ul className="dropdown-menu w-100" aria-labelledby="statusDropdown">
+    <li>
+      <a
+        className="dropdown-item"
+        href="#"
+        style={{ color: "#3daaaa" }}
+        onMouseOver={(e) => {
+          e.target.style.backgroundColor = "#3daaaa";
+          e.target.style.color = "white";
+        }}
+        onMouseOut={(e) => {
+          e.target.style.backgroundColor = "";
+          e.target.style.color = "#3daaaa";
+        }}
       >
-        Status
-      </button>
-      <ul className="dropdown-menu custom-dropdown w-100" aria-labelledby="statusDropdown">
-        <li><a className="dropdown-item" href="#">Active</a></li>
-        <li><a className="dropdown-item" href="#">Inactive</a></li>
-      
-      </ul>
+        Active
+      </a>
+    </li>
+    <li>
+      <a
+        className="dropdown-item"
+        href="#"
+        style={{ color: "#3daaaa" }}
+        onMouseOver={(e) => {
+          e.target.style.backgroundColor = "#3daaaa";
+          e.target.style.color = "white";
+        }}
+        onMouseOut={(e) => {
+          e.target.style.backgroundColor = "";
+          e.target.style.color = "#3daaaa";
+        }}
+      >
+        Inactive
+      </a>
+    </li>
+  </ul>
     </div>
 
     {/* Sort By Dropdown */}
-    <div className="dropdown flex-grow-1">
-      <button 
-        className="btn text-black border bg-white dropdown-toggle w-100" 
-        type="button" 
-        id="sortDropdown"
-        data-bs-toggle="dropdown" 
-        aria-expanded="false"
-      >
-        Sort By: Last 7 Days
-      </button>
-      <ul className="dropdown-menu custom-dropdown w-100" aria-labelledby="sortDropdown">
-        <li><a className="dropdown-item" href="#">Recently Added</a></li>
-        <li><a className="dropdown-item" href="#">Ascending</a></li>
-        <li><a className="dropdown-item" href="#">Desending</a></li>
-        <li><a className="dropdown-item" href="#">Last Month</a></li>
-        <li><a className="dropdown-item" href="#">Last 7 days</a></li>
-      </ul>
-    </div>
+   <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
+  <button
+    className="btn text-white border dropdown-toggle w-100"
+    type="button"
+    id="sortDropdown"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+    style={{ backgroundColor: "#3daaaa", color: "white" }}
+  >
+    Sort By: Last 7 Days
+  </button>
+  <ul className="dropdown-menu w-100" aria-labelledby="sortDropdown">
+    {["Recently Added", "Ascending", "Desending", "Last Month", "Last 7 days"].map((item, index) => (
+      <li key={index}>
+        <a
+          className="dropdown-item"
+          href="#"
+          style={{ color: "#3daaaa" }}
+          onMouseOver={(e) => {
+            e.target.style.backgroundColor = "#3daaaa";
+            e.target.style.color = "white";
+          }}
+          onMouseOut={(e) => {
+            e.target.style.backgroundColor = "";
+            e.target.style.color = "#3daaaa";
+          }}
+        >
+          {item}
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+
   </div>
 </div>
      {/* Table */}
@@ -231,6 +279,8 @@ const getStatusBadge = (status) => {
             ))}
           </tbody>
         </table>
+      
+      </div>
         <div className="d-flex justify-content-between align-items-center mt-3 px-3">
         <span className="small text-muted">Showing 1 to 5 of 10 results</span>
         <nav>
@@ -254,7 +304,6 @@ const getStatusBadge = (status) => {
             </li>
           </ul>
         </nav>
-      </div>
       </div>
 
 {/* Add Delivery Challan Modal */}

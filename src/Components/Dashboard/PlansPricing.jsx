@@ -308,55 +308,59 @@ const PlanPricing = () => {
               </tbody>
             </table>
             
-            {/* Pagination */}
-                     <div className="d-flex justify-content-between align-items-center px-2 py-2">
-              <div className="text-muted small ">
-                Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, plans.length)} of {plans.length} results
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <button 
-                  className="btn btn-sm"
-                  onClick={() => paginate(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  style={{ 
-                    backgroundColor: currentPage === 1 ? "#f8f9fa" : "#53b2a5",
-                    color: currentPage === 1 ? "#6c757d" : "white",
-                    borderColor: "#53b2a5"
-                  }}
-                >
-                  <BsChevronLeft />
-                </button>
-                <div className="d-flex gap-1">
-                  {Array.from({ length: totalPages }).map((_, index) => (
-                    <button
-                      key={index}
-                      className="btn btn-sm"
-                      onClick={() => paginate(index + 1)}
-                      style={{ 
-                        backgroundColor: currentPage === index + 1 ? "#53b2a5" : "white",
-                        color: currentPage === index + 1 ? "white" : "#53b2a5",
-                        borderColor: "#53b2a5"
-                      }}
-                    >
-                      {index + 1}
-                    </button>
-                  ))}
-                </div>
-                <button 
-                  className="btn btn-sm"
-                  onClick={() => paginate(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  style={{ 
-                    backgroundColor: currentPage === totalPages ? "#f8f9fa" : "#53b2a5",
-                    color: currentPage === totalPages ? "#6c757d" : "white",
-                    borderColor: "#53b2a5"
-                  }}
-                >
-                  <BsChevronRight />
-                </button>
-              </div>
-            </div>
+
+
           </div>
+                  {/* Pagination */}
+<div className="d-flex justify-content-between align-items-center px-2 py-2">
+  <div className="text-muted small">
+    Showing 1 to 5 of 9 results
+  </div>
+  <div className="d-flex align-items-center gap-2">
+    <button
+      className="btn btn-sm "
+      style={{
+        backgroundColor: "#f8f9fa",
+        color: "#6c757d",
+        borderColor: "#53b2a5",
+      }}
+    >
+      <BsChevronLeft />
+    </button>
+    <div className="d-flex gap-1">
+      <button
+        className="btn btn-sm "
+        style={{
+          backgroundColor: "#53b2a5",
+          color: "white",
+          borderColor: "#53b2a5",
+        }}
+      >
+        1
+      </button>
+      <button
+        className="btn btn-sm "
+        style={{
+          backgroundColor: "white",
+          color: "#53b2a5",
+          borderColor: "#53b2a5",
+        }}
+      >
+        2
+      </button>
+    </div>
+    <button
+      className="btn btn-sm rounded"
+      style={{
+        backgroundColor: "#53b2a5",
+        color: "white",
+        borderColor: "#53b2a5",
+      }}
+    >
+      <BsChevronRight />
+    </button>
+  </div>
+</div>
         </div>
       </div>
 

@@ -102,7 +102,7 @@ const getStatusBadge = (status) => {
         <div className="d-flex align-items-center gap-2 flex-wrap">
       
           <button
-            className="btn text-black border bg-white  d-flex align-items-center gap-2"
+            className="btn text-white d-flex align-items-center gap-2"
             style={{ backgroundColor: "#3daaaa" }}
             data-bs-toggle="modal"
             data-bs-target="#addCouponModal"
@@ -157,7 +157,9 @@ const getStatusBadge = (status) => {
             ))}
           </tbody>
         </table>
-        {/* Pagination UI */}
+
+      </div>
+              {/* Pagination UI */}
 <div className="d-flex justify-content-between align-items-center mt-3 px-3">
   <span className="small text-muted">Showing 1 to 5 of 10 results</span>
   <nav>
@@ -182,7 +184,6 @@ const getStatusBadge = (status) => {
     </ul>
   </nav>
 </div>
-      </div>
 {/* Add Estimate Modal */}
 <div
   className="modal fade"

@@ -156,7 +156,7 @@ const PurchaseOrderView = () => {
       <div className="mt-4 mb-5">
         <label className="fw-bold d-block mb-2">Files</label>
         <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2">
-          <Button variant="success" size="sm">Select files...</Button>
+          <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} size="sm">Select files...</Button>
           <input type="file" />
         </div>
         <small className="text-muted">Allowed: gif, jpeg, png, docx, docs, txt, pdf, xls</small>

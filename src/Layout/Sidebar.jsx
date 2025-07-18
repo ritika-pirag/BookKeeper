@@ -136,9 +136,10 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "reports",
           icon: "fas fa-chart-pie",
           items: [
-            { to: "/company/salesreport", icon: "fas fa-search", label: "Sales Report" },
-            { to: "/company/taxreport", icon: "fas fa-search", label: "Tax Report" },
-            { to: "/company/balancesheet", icon: "fas fa-search", label: "Balance Sheet" },
+            { to: "/company/salesreport", icon: "fas fa-book", label: "Sales Report" },
+            { to: "/company/taxreport", icon: "fas fa-book-open", label: "Tax Report" },
+            { to: "/company/product", icon: "fas fa-box-open", label: "Product" },
+            { to: "/company/balancesheet", icon: "", label: "Balance Sheet" },
             { to: "/company/cashflow", icon: "fas fa-search", label: "Cash Flow" },
             { to: "/company/profitloss", icon: "fas fa-stopwatch", label: "Profit & Loss" }
           ]
