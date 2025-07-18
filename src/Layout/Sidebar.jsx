@@ -118,7 +118,6 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             { to: "/company/ponitofsale", icon: "fas fa-file-invoice", label: "POS Screen" }
           ]
         },
-<<<<<<< HEAD
         {  to: "/company/managestock", icon: "fas fa-table", label: "Inventory", className: "top-level-item" },
 
         {
@@ -134,9 +133,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             { to: "/company/ewaybill", icon: "fas fa-th", label: "e-Way Bill" }
           ]
         },
-=======
-     
->>>>>>> f50614cdb999c94e0dd3fa6c395753a62b6e4985
+
         {
           type: "section",
           title: "Finance & Accounts",

@@ -15,6 +15,7 @@ import Productlistsel from "./Productlistsel";
 import { fetchProducts } from "../../../../redux/slices/productSlice";
 import axiosInstance from "../../../../utils/axiosInstance";
 import { fetchTaxes } from "../../../../redux/slices/taxSlice";
+import jsPDF from "jspdf";
 
 const PointOfSale = () => {
   const dispatch = useDispatch();
@@ -163,6 +164,13 @@ const PointOfSale = () => {
       return;
     }
 
+    // Get shopId from localStorage
+    const shopId = localStorage.getItem("shopId");
+    if (!shopId) {
+      alert("Shop ID not found. Please login again or select a shop.");
+      return;
+    }
+
     const data = {
       customerId: selectedCustomer ? selectedCustomer._id : null,
       productDetails: selectedProducts.map((product) => ({
@@ -174,14 +182,15 @@ const PointOfSale = () => {
       subTotal: subTotal,
       total: total,
       status: paymentStatus,
+      shopId: shopId, // <-- Add shopId here
     };
 
     try {
       const response = await axiosInstance.post("invoice/", data);
       if (response.status === 201) {
-        alert("Invoice created successfully!");
+        // Generate PDF invoice using jsPDF
         const invoiceData = response.data.data;
-        navigate("/company/invoice-summary", { state: { invoiceData } });
+        generatePDFInvoice(invoiceData);
       } else {
         throw new Error("Failed to create invoice");
       }
@@ -189,6 +198,37 @@ const PointOfSale = () => {
       alert(error.response?.data?.message || "Something went wrong.");
     }
   };
+
+  // PDF generation function (simple version, you can enhance as needed)
+  function generatePDFInvoice(invoiceData) {
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+    let y = 10;
+    doc.setFontSize(16).text("Invoice", 10, y);
+    y += 10;
+    doc.setFontSize(10).text(`Invoice ID: ${invoiceData._id || "-"}`, 10, y);
+    y += 6;
+    doc.text(`Customer: ${invoiceData.customerId?.first_name || ""} ${invoiceData.customerId?.last_name || ""}`, 10, y);
+    y += 6;
+    doc.text(`Date: ${new Date(invoiceData.createdAt).toLocaleString()}`, 10, y);
+    y += 10;
+    doc.text("Products:", 10, y);
+    y += 6;
+    invoiceData.productDetails.forEach((item, idx) => {
+      doc.text(
+        `${idx + 1}. ${item.productId?.name || ""} x${item.quantity} @ A$${item.price}`,
+        12,
+        y
+      );
+      y += 6;
+    });
+    y += 4;
+    doc.text(`Subtotal: A$${invoiceData.subTotal}`, 10, y);
+    y += 6;
+    doc.text(`Tax: A$${invoiceData.taxValue || 0}`, 10, y);
+    y += 6;
+    doc.text(`Total: A$${invoiceData.total}`, 10, y);
+    doc.save("invoice.pdf");
+  }
 
   const handleClear = () => {
     setSelectedCustomer(null);
