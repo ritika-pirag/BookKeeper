@@ -1,43 +1,40 @@
 import { useState, useEffect } from "react";
+import { useSelector,useDispatch } from "react-redux";
 import AddCustomer from "../Customer/AddCustomer";
+import { getCustomers } from "../../../../redux/slices/customerSlice";
 
-// ✅ Updated: Using _id instead of id
-const sampleCustomers = [
-  { _id: 1, first_name: "John", last_name: "Doe" },
-  { _id: 2, first_name: "Jane", last_name: "Smith" },
-  { _id: 3, first_name: "Amit", last_name: "Sharma" },
-];
-
-const CustomerList = ({ onSelectCustomer }) => {
+const CustomerList = ({ onSelectCustomer, selectedShop }) => {
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [customers, setCustomers] = useState([]);
+
+  const { customers } = useSelector((state) => state.customer);
 
   useEffect(() => {
-    // Simulate API call
-    setCustomers(sampleCustomers);
-  }, []);
+    dispatch(getCustomers());
+  }, [dispatch, selectedShop]);
 
+
+
+  // Handle selecting a customer
   const handleSelectCustomer = (customer) => {
     onSelectCustomer(customer);
     setIsDropdownOpen(false);
   };
 
-  const handleAddCustomer = (newCustomer) => {
-    setCustomers((prev) => [...prev, newCustomer]);
+  // Handle adding a new customer
+  const handleAddCustomer = () => {
     setIsModalOpen(false);
+    dispatch(getCustomers());
   };
 
+  // Handle input blur to close dropdown
   const handleBlur = () => {
+    // Delay hiding dropdown to allow for selection click
     setTimeout(() => setIsDropdownOpen(false), 150);
   };
-
-  const filteredCustomers = customers.filter((customer) =>
-    `${customer.first_name} ${customer.last_name}`
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-  );
 
   return (
     <div className="customer-search-container position-relative mx-3 my-3">
@@ -53,11 +50,11 @@ const CustomerList = ({ onSelectCustomer }) => {
             setIsDropdownOpen(true);
           }}
           onFocus={() => setIsDropdownOpen(true)}
-          onBlur={handleBlur}
+          onBlur={handleBlur} // Close dropdown when input loses focus
         />
         <span
-          className="input-group-text btn bg-dark text-white"
-          style={{ cursor: "pointer" }}
+          className="input-group-text btn bg-[#1d1b31] text-white"
+          style={{ backgroundColor: "#1d1b31", cursor: "pointer" }}
           onClick={() => setIsModalOpen(!isModalOpen)}
         >
           <i className="fa fa-plus"></i>
@@ -74,10 +71,10 @@ const CustomerList = ({ onSelectCustomer }) => {
             zIndex: 1000,
           }}
         >
-          {filteredCustomers.length > 0 ? (
-            filteredCustomers.map((customer) => (
+          {customers.length > 0 ? (
+            customers.map((customer) => (
               <li
-                key={customer._id} // ✅ Updated key here
+                key={customer.id}
                 className="list-group-item"
                 onClick={() => handleSelectCustomer(customer)}
                 style={{ cursor: "pointer" }}
@@ -90,12 +87,11 @@ const CustomerList = ({ onSelectCustomer }) => {
           )}
         </ul>
       )}
-
+      {/* Customer Form Modal */}
       {isModalOpen && (
         <div
           className="modal fade show d-block"
-          style={{ background: "rgba(0,0,0,0.5)" }}
-        >
+          style={{ background: "rgba(0,0,0,0.5)" }}>
           <div
             className="modal-dialog modal-lg"
             style={{ maxWidth: "850px", marginLeft: "auto" }}
@@ -121,4 +117,4 @@ const CustomerList = ({ onSelectCustomer }) => {
   );
 };
 
-export default CustomerList;
+export default CustomerList ;

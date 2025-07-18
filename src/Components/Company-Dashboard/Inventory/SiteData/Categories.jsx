@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal, Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { BsArrowLeft } from "react-icons/bs";
+
 import Swal from "sweetalert2";
 import {
   createCategory,
@@ -113,6 +115,16 @@ const Categories = () => {
   return (
     <div>
       <div className="mx-md-5 mt-5 mx-3">
+      <div className="mb-3">
+  <button
+    type="button"
+    className="btn "
+    onClick={() => navigate("/company/createproduct")}
+  >
+    ← Back
+  </button>
+</div>
+
         <div className="shadow p-4">
           <div className="row d-flex justify-content-between">
             <div className="col-md-9">

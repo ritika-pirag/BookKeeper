@@ -51,31 +51,26 @@ const RequestPlan = () => {
   };
 
   const renderActionButtons = (status, index) => {
-    if (status === "Pending") {
-      return (
-        <div className="d-flex gap-1 gap-sm-2 justify-content-center flex-wrap">
-          <button
-            className="btn btn-outline-success btn-sm rounded-pill px-2 px-sm-3"
-            onClick={() => handleAction(index, "Approved")}
-          >
-            Approve
-          </button>
-          <button
-            className="btn btn-outline-danger btn-sm rounded-pill px-2 px-sm-3"
-            onClick={() => handleAction(index, "Rejected")}
-          >
-            Reject
-          </button>
-        </div>
-      );
-    } else {
-      return (
-        <button className="btn btn-outline-secondary btn-sm rounded-pill px-2 px-sm-3" disabled>
-          {status}
+    return (
+      <div className="d-flex gap-1 gap-sm-2 justify-content-center flex-wrap">
+        <button
+          className="btn btn-outline-success btn-sm rounded-pill px-2 px-sm-3"
+          disabled={status === "Approved"}
+          onClick={() => handleAction(index, "Approved")}
+        >
+          Approve
         </button>
-      );
-    }
+        <button
+          className="btn btn-outline-danger btn-sm rounded-pill px-2 px-sm-3"
+          disabled={status === "Rejected"}
+          onClick={() => handleAction(index, "Rejected")}
+        >
+          Reject
+        </button>
+      </div>
+    );
   };
+  
 
   return (
     <div className="container-fluid p-3 p-md-4 bg-light">

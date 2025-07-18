@@ -166,7 +166,8 @@ function App() {
           <Route path="/company/categories" element={<Categories />} />
           <Route path="/company/brands" element={<BrandPage />} />
           <Route path="/company/product" element={<Productt />} />
-          <Route path="/company/createproduct" element={<AddProduct />} />
+          <Route path="/company/createproduct" element={<AddProduct/>} />
+          <Route path="/company/update-product/:id" element={<AddProduct/>} />
           <Route path="/company/device" element={<DevicePage />} />
           <Route path="/company/tax" element={<TaxPage/>} />
           <Route path="/company/ponitofsale" element={<PointOfSale />} />

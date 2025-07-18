@@ -75,7 +75,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             alignItems: "center" 
           } 
         },
-        {  to: "/company/managestock", icon: "fas fa-table", label: "Inventory", className: "top-level-item" },
+ 
         
    
 
@@ -113,10 +113,13 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             { to: "/company/categories", icon: "fas fa-tags", label: "Categories" },
             { to: "/company/brands", icon: "fas fa-trademark", label: "Brands" },
             { to: "/company/device", icon: "fas fa-industry", label: "device" },
+            { to: "/company/tax", icon: "fas fa-box-open", label: "Tax" },
             { to: "/company/product", icon: "fas fa-box-open", label: "Product" },
             { to: "/company/ponitofsale", icon: "fas fa-file-invoice", label: "POS Screen" }
           ]
         },
+        {  to: "/company/managestock", icon: "fas fa-table", label: "Inventory", className: "top-level-item" },
+
         {
           type: "section",
           title: "GST Filing",
@@ -186,16 +189,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             { to: "/user/dashboard", icon: "fas fa-th-large", label: "Dashboard" }
           ]
         },
-        {
-          type: "section",
-          title: "Inventory",
-          key: "userinventory",
-          icon: "fas fa-box",
-          items: [
-            // { to: "/user/products", icon: "fas fa-cube", label: "Products" },
-            { to: "/user/manageproduct", icon: "fas fa-table", label: "Manage Product" }
-          ]
-        },
+ 
         {
           type: "section",
           title: "Sales",
@@ -240,7 +234,16 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           ]
         },
 
-
+        {
+          type: "section",
+          title: "Inventory",
+          key: "userinventory",
+          icon: "fas fa-box",
+          items: [
+            // { to: "/user/products", icon: "fas fa-cube", label: "Products" },
+            { to: "/user/manageproduct", icon: "fas fa-table", label: "Manage Product" }
+          ]
+        },
 
         {
           type: "section",

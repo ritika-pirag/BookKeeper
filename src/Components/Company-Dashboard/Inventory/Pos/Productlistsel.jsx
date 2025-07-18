@@ -1,65 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const Productlistsel = ({ onProductSelect, showModal }) => {
-  const sampleProducts = [
-    {
-      _id: "1",
-      sku: "PROD001",
-      name: "Screen Protector",
-      brand: "TechBrand",
-      device: "iPhone",
-      price: 15.99,
-      quantity: 8,
-      images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQb836dE7n6zzwt1Trmp97DPyLzM-QQM_A7w&s"],
-    },
-    {
-      _id: "2",
-      sku: "PROD002",
-      name: "Phone Case",
-      brand: "Gear",
-      device: "Samsung",
-      price: 12.5,
-      quantity: 3,
-      images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTt1KVOtSk4-MKyQvYnQOXkpPIVlt1tQPWnA&s"],
-    },
-    {
-      _id: "3",
-      sku: "PROD003",
-      name: "USB Cable",
-      brand: "CablePro",
-      device: "Universal",
-      price: 7.99,
-      quantity: 15,
-      images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvLmUJnzCU3iENMtwP7phDuw4SCsBW9qqfRQ&s"],
-    },
-  ];
-
-  const [products] = useState(sampleProducts);
+const Productlistsel = ({ products = [], onProductSelect, showModal }) => {
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  const filteredProducts = products
-    .filter((product) => {
-      const query = searchQuery.toLowerCase();
-      return (
-        product.name.toLowerCase().includes(query) ||
-        product.brand.toLowerCase().includes(query) ||
-        product.device.toLowerCase().includes(query) ||
-        product.sku.toLowerCase().includes(query)
+  useEffect(() => {
+    if (!Array.isArray(products)) return;
+
+    let updatedList = products;
+
+    if (searchQuery) {
+      updatedList = updatedList.filter(
+        (product) =>
+          product.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.brand?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.device?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.sku?.toLowerCase().includes(searchQuery.toLowerCase())
       );
-    })
-    .sort((a, b) =>
+    }
+
+    updatedList = [...updatedList].sort((a, b) =>
       sortOrder === "asc" ? a.price - b.price : b.price - a.price
     );
 
+    setFilteredProducts(updatedList);
+  }, [searchQuery, sortOrder, products]);
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentProducts = filteredProducts.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const currentProducts = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handleSelectProduct = (product) => {
+    onProductSelect((prev) => {
+      const exists = prev.some((p) => p.sku === product.sku);
+      return exists
+        ? prev.filter((p) => p.sku !== product.sku)
+        : [...prev, { ...product, quantity: 1 }];
+    });
+  };
 
   const getStockStatus = (quantity) => {
     if (quantity < 5) return { color: "red", label: "Low Stock" };
@@ -68,74 +49,62 @@ const Productlistsel = ({ onProductSelect, showModal }) => {
   };
 
   return (
-    <div className="container my-4 p-3 border rounded shadow-sm bg-white">
-      <h3 className="mb-4 text-dark">📦 Product List</h3>
+    <div className=" p-3 ml-2">
+      <h5 className="my-3">📦 Product List</h5>
 
-      {/* Search and Sort */}
-      <div className="row mb-4 g-2 align-items-center">
-        <div className="col-md-8">
-          <input
-            type="text"
-            placeholder="🔍 Search by Name, Brand, Device, or SKU..."
-            className="form-control form-control-lg"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-        <div className="col-md-4 text-end">
-          <button
-            className="btn btn-light border btn-lg w-100 d-flex justify-content-between align-items-center"
-            onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-          >
-            <span>Sort by Price</span>
-            <span>{sortOrder === "asc" ? "⬆️" : "⬇️"}</span>
-          </button>
-        </div>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <input
+          type="text"
+          placeholder="Search by Name, Brand, Device, or SKU..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="form-control w-50"
+        />
+        <button
+          className="btn btn-dark ms-3"
+          onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+        >
+          Sort by Price {sortOrder === "asc" ? "🔼" : "🔽"}
+        </button>
       </div>
 
-      {/* Product Table */}
       <div className="table-responsive">
-        <table className="table table-bordered table-hover text-center align-middle">
-          <thead className="table-light text-black fs-5">
+        <table className="table table-bordered table-hover">
+          <thead className="table-light">
             <tr>
-              <th className="px-3 py-3">Image</th>
-              <th>SKU & Name</th>
+              <th>Image</th>
+              <th>Product</th>
               <th>Brand</th>
               <th>Device</th>
               <th>Price</th>
               <th>Qty</th>
             </tr>
           </thead>
-          <tbody className="fs-6">
+          <tbody>
             {currentProducts.map((product) => {
-              const { color, label } = getStockStatus(product.quantity);
+              const { color } = getStockStatus(product.quantity);
               return (
                 <tr
-                  key={product._id}
-                  style={{ cursor: "pointer" }}
+                  key={product.sku}
                   onClick={() => showModal(product)}
+                  style={{ cursor: "pointer" }}
                 >
-                  <td className="px-3 py-3">
+                  <td>
                     <img
-                      src={product.images[0]}
-                      width="60"
-                      height="60"
-                      className="rounded"
-                      alt="product"
+                      src={product.images?.[0] || "https://via.placeholder.com/80"}
+                      alt="Product"
+                      style={{ width: 50, height: 50 }}
                     />
                   </td>
                   <td>
-                    <div className="fw-bold">{product.sku}</div>
-                    <div>{product.name}</div>
+                    <small>{product.sku}</small>
+                    <br />
+                    <small>{product.name}</small>
                   </td>
                   <td>{product.brand}</td>
                   <td>{product.device}</td>
-                  <td className="fw-semibold">A${product.price.toFixed(2)}</td>
-                  <td style={{ color }}>
-                    {product.quantity}
-                    <br />
-                    <small>{label}</small>
-                  </td>
+                  <td>A${product.price}</td>
+                  <td style={{ color }}>{product.quantity}</td>
                 </tr>
               );
             })}
@@ -143,18 +112,17 @@ const Productlistsel = ({ onProductSelect, showModal }) => {
         </table>
       </div>
 
-      {/* Pagination Controls */}
-      <div className="d-flex justify-content-between align-items-center mt-4">
+      <div className="d-flex justify-content-between mt-3">
         <button
-          className="btn btn-outline-secondary btn-lg"
+          className="btn btn-primary"
           disabled={currentPage === 1}
           onClick={() => setCurrentPage((prev) => prev - 1)}
         >
-          ⬅️ Previous
+          ⬅️ Prev
         </button>
-        <span className="fs-5">Page {currentPage}</span>
+        <span className="align-self-center">Page {currentPage}</span>
         <button
-          className="btn btn-outline-secondary btn-lg"
+          className="btn btn-primary"
           disabled={indexOfLastItem >= filteredProducts.length}
           onClick={() => setCurrentPage((prev) => prev + 1)}
         >

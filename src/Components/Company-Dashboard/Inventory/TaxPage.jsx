@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Modal, Button, Form, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   fetchTaxes,
-//   createTax,
-//   updateTax,
-//   deleteTax,
-// } from "../../../redux/slices/taxSlice";
+import { fetchTaxes, createTax, updateTax, deleteTax } from "../../../../redux/slices/taxSlice";
 import Swal from "sweetalert2";
 import { Pagination } from "@mui/material"; // Import MUI Pagination component
 
@@ -96,9 +91,8 @@ const TaxPage = () => {
     });
   };
 
-  const filteredTaxes = currentTaxes.filter(
-    (tax) =>
-      tax.taxClass && tax.taxClass.toLowerCase().includes(search.toLowerCase())
+  const filteredTaxes = currentTaxes.filter((tax) =>
+    tax.taxClass && tax.taxClass.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -106,11 +100,8 @@ const TaxPage = () => {
       <div className="card p-4 shadow">
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h3 className="fw-semibold">Manage Taxes</h3>
-          <Button
-            className="btn text-white rounded px-4 py-2 fw-semibold "
-            style={{ backgroundColor: "#06223a" }}
-            onClick={handleModalShow}
-          >
+          <Button className="btn text-white rounded px-4 py-2 fw-semibold "
+                style={{ backgroundColor: "#06223a" }} onClick={handleModalShow}>
             <i className="fa-solid fa-plus" /> Add New Tax
           </Button>
         </div>
@@ -135,9 +126,7 @@ const TaxPage = () => {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="4" className="text-center">
-                  Loading...
-                </td>
+                <td colSpan="4" className="text-center">Loading...</td>
               </tr>
             ) : filteredTaxes.length > 0 ? (
               filteredTaxes.map((tax, index) => (
@@ -146,19 +135,10 @@ const TaxPage = () => {
                   <td>{tax.taxClass}</td>
                   <td>{tax.taxValue}%</td>
                   <td>
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() => handleDeleteTax(tax._id)}
-                      className="ms-2"
-                    >
+                    <Button variant="danger" size="sm" onClick={() => handleDeleteTax(tax._id)} className="ms-2">
                       <i className="fa-solid fa-trash" />
                     </Button>
-                    <Button
-                      variant="warning"
-                      size="sm"
-                      onClick={() => handleEditTax(tax)}
-                    >
+                    <Button variant="warning" size="sm" onClick={() => handleEditTax(tax)}>
                       <i className="fa-solid fa-pen" />
                     </Button>
                   </td>
@@ -166,9 +146,7 @@ const TaxPage = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="text-center">
-                  No taxes found.
-                </td>
+                <td colSpan="4" className="text-center">No taxes found.</td>
               </tr>
             )}
           </tbody>
@@ -187,9 +165,7 @@ const TaxPage = () => {
 
       <Modal show={showModal} onHide={handleModalClose}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            {isEditMode ? "Edit Tax" : "Create New Tax"}
-          </Modal.Title>
+          <Modal.Title>{isEditMode ? "Edit Tax" : "Create New Tax"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleTaxFormSubmit}>

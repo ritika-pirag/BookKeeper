@@ -1,88 +1,112 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  Container,
+  Alert,
+  Modal,
+  Button,
+  Form,
+  Row,
+  Col
+} from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import { Container } from "react-bootstrap";
 import CustomerList from "./CustomerList";
 import Productlistsel from "./Productlistsel";
+import { fetchProducts } from "../../../../redux/slices/productSlice";
+import axiosInstance from "../../../../utils/axiosInstance";
+import { fetchTaxes } from "../../../../redux/slices/taxSlice";
 
 const PointOfSale = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [quantity, setQuantity] = useState({});
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [quantityError, setQuantityError] = useState("");
-  const [selectedTax, setSelectedTax] = useState({ taxValue: 10 });
+  const [selectedTax, setSelectedTax] = useState({ taxValue: 0 });
   const [paymentStatus, setPaymentStatus] = useState("0");
   const [priceMap, setPriceMap] = useState({});
   const [price, setPrice] = useState(0);
 
-  const navigate = useNavigate();
-  const [taxes, setTaxes] = useState([
-    { _id: "1", taxClass: "Standard", taxValue: 10 },
-    { _id: "2", taxClass: "Reduced", taxValue: 5 },
-  ]);
-  const [products, setProducts] = useState([
-    { _id: "101", name: "Item A", price: 100 },
-    { _id: "102", name: "Item B", price: 200 },
-  ]);
+  const { products } = useSelector((state) => state.product);
+  const { taxes } = useSelector((state) => state.tax);
+  const [updatedTaxes, setTaxes] = useState(taxes);
+
+  const productList = Array.isArray(products?.data) ? products.data : [];
+
+  useEffect(() => {
+    if (taxes?.length > 0) {
+      setSelectedTax(taxes[0]);
+    }
+  }, [taxes]);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+    dispatch(fetchTaxes());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setTaxes(taxes);
+  }, [taxes]);
 
   const handleTaxSelect = (e) => {
-    const taxId = e.target.value;
-    const tax = taxes.find((t) => t._id === taxId);
-    if (tax) setSelectedTax(tax);
-  };
-
-  const calculateSubTotal = () => {
-    return selectedProducts
-      .reduce((total, item) => {
-        const productPrice = parseFloat(priceMap[item._id] ?? item.price);
-        const productQuantity = quantity[item._id] || 1;
-        const priceWithoutGST =
-          productPrice / (1 + (selectedTax.taxValue || 0) / 100);
-        return total + priceWithoutGST * productQuantity;
-      }, 0)
-      .toFixed(2);
-  };
-
-  const calculateTotal = () => {
-    return selectedProducts
-      .reduce((sum, item) => {
-        const productPrice = parseFloat(priceMap[item._id] ?? item.price);
-        const qty = quantity[item._id] || 1;
-        return sum + productPrice * qty;
-      }, 0)
-      .toFixed(2);
-  };
-
-  const handleQuantityChange = (e) => {
-    const val = parseInt(e.target.value, 10);
-    if (!isNaN(val) && val > 0) {
-      setQuantity((prev) => ({ ...prev, [currentProduct._id]: val }));
-      setQuantityError("");
-    } else {
-      setQuantityError("Quantity must be a positive number");
-    }
+    const value = e.target.value;
+    const tax = updatedTaxes.find((tax) => tax._id === value);
+    setSelectedTax(tax);
   };
 
   const handlePriceChange = (e) => {
-    const val = e.target.value;
-    setPrice(val);
-    const newPrice = parseFloat(val);
+    const value = e.target.value;
+    setPrice(value);
+
+    const newPrice = parseFloat(value);
     if (!isNaN(newPrice)) {
-      setPriceMap((prev) => ({ ...prev, [currentProduct._id]: newPrice }));
+      setPriceMap((prev) => ({
+        ...prev,
+        [currentProduct._id]: newPrice,
+      }));
     }
   };
 
+  const calculateSubTotal = () => {
+    const productSubTotal = selectedProducts.reduce((total, item) => {
+      const productPrice = parseFloat(priceMap[item._id] ?? item.price);
+      const productQuantity = quantity[item._id] || 1;
+      const priceWithoutGST = productPrice / (1 + (selectedTax.taxValue || 0) / 100);
+      return total + priceWithoutGST * productQuantity;
+    }, 0);
+    return parseFloat(productSubTotal.toFixed(2));
+  };
+
+  const calculateTotal = () => {
+    const total = selectedProducts.reduce((sum, item) => {
+      const productPrice = parseFloat(priceMap[item._id] ?? item.price);
+      const qty = quantity[item._id] || 1;
+      return sum + productPrice * qty;
+    }, 0);
+    return parseFloat(total.toFixed(2));
+  };
+
+  const handleQuantityChange = (productId, quantityValue) => {
+    setQuantity((prevQuantity) => ({
+      ...prevQuantity,
+      [productId]: quantityValue,
+    }));
+    setQuantityError("");
+  };
+
   const handleProductSelection = (product) => {
-    const index = selectedProducts.findIndex((p) => p._id === product._id);
-    if (index > -1) {
-      const updated = [...selectedProducts];
-      updated[index] = {
-        ...updated[index],
+    const productIndex = selectedProducts.findIndex((p) => p._id === product._id);
+    if (productIndex > -1) {
+      const updatedProducts = [...selectedProducts];
+      updatedProducts[productIndex] = {
+        ...updatedProducts[productIndex],
         quantity: quantity[product._id] || 1,
       };
-      setSelectedProducts(updated);
+      setSelectedProducts(updatedProducts);
     } else {
       setSelectedProducts((prev) => [...prev, { ...product, quantity: 1 }]);
     }
@@ -91,32 +115,28 @@ const PointOfSale = () => {
   const showModal = (product) => {
     setCurrentProduct(product);
     setPrice(product.price);
-    setQuantity((prev) => ({ ...prev, [product._id]: prev[product._id] || 1 }));
+    setQuantity((prev) => ({
+      ...prev,
+      [product._id]: prev[product._id] || 1,
+    }));
     setIsModalVisible(true);
   };
 
   const handleOk = () => {
-    if (!quantity[currentProduct._id] || quantity[currentProduct._id] < 1) {
-      setQuantityError("Quantity must be at least 1");
-      return;
-    }
-
-    const index = selectedProducts.findIndex(
-      (p) => p._id === currentProduct._id
-    );
-    const updated = [...selectedProducts];
-    if (index > -1) {
-      updated[index] = {
-        ...updated[index],
-        quantity: quantity[currentProduct._id],
+    const productIndex = selectedProducts.findIndex((p) => p._id === currentProduct._id);
+    const updatedProducts = [...selectedProducts];
+    if (productIndex > -1) {
+      updatedProducts[productIndex] = {
+        ...updatedProducts[productIndex],
+        quantity: quantity[currentProduct._id] || 1,
       };
     } else {
-      updated.push({
+      updatedProducts.push({
         ...currentProduct,
-        quantity: quantity[currentProduct._id],
+        quantity: quantity[currentProduct._id] || 1,
       });
     }
-    setSelectedProducts(updated);
+    setSelectedProducts(updatedProducts);
     setIsModalVisible(false);
   };
 
@@ -125,34 +145,51 @@ const PointOfSale = () => {
   };
 
   const handleRemoveProduct = (productId) => {
-    setSelectedProducts((prev) => prev.filter((p) => p._id !== productId));
+    const updatedProducts = selectedProducts.filter((product) => product._id !== productId);
+    setSelectedProducts(updatedProducts);
   };
 
-  const handleCreateInvoice = () => {
-    const subtotal = calculateSubTotal();
+  const handleCreateInvoice = async () => {
+    if (selectedProducts.length === 0) {
+      alert("Please select at least one product.");
+      return;
+    }
+
+    const subTotal = calculateSubTotal();
     const total = calculateTotal();
-  
-    const invoiceData = {
-      customerName: selectedCustomer
-        ? `${selectedCustomer.first_name} ${selectedCustomer.last_name}`
-        : "Walk-in Customer",
+
+    if (subTotal <= 0 || total <= 0) {
+      alert("Subtotal and Total must be greater than zero.");
+      return;
+    }
+
+    const data = {
+      customerId: selectedCustomer ? selectedCustomer._id : null,
       productDetails: selectedProducts.map((product) => ({
         productId: product._id,
-        name: product.name,
         quantity: quantity[product._id] || 1,
         price: priceMap[product._id] ?? product.price,
       })),
-      tax: selectedTax._id,
-      taxName: selectedTax.taxClass,
-      taxValue: selectedTax.taxValue,
-      subTotal: subtotal,
+      tax: selectedTax ? selectedTax._id : null,
+      subTotal: subTotal,
       total: total,
       status: paymentStatus,
     };
-  
-    navigate("/company/invoice-summary", { state: { invoiceData } });
+
+    try {
+      const response = await axiosInstance.post("invoice/", data);
+      if (response.status === 201) {
+        alert("Invoice created successfully!");
+        const invoiceData = response.data.data;
+        navigate("/company/invoice-summary", { state: { invoiceData } });
+      } else {
+        throw new Error("Failed to create invoice");
+      }
+    } catch (error) {
+      alert(error.response?.data?.message || "Something went wrong.");
+    }
   };
-  
+
   const handleClear = () => {
     setSelectedCustomer(null);
     setSelectedProducts([]);
@@ -160,175 +197,130 @@ const PointOfSale = () => {
   };
 
   return (
-    <div className="mt-4 p-4   bg-white">
-      <div className="row">
-        <div className="col-md-6 px-2">
+    <Container fluid className="mt-4 p-3 rounded-4 bg-white">
+      <Row>
+        <Col md={6} className="px-2">
           <CustomerList onSelectCustomer={setSelectedCustomer} />
           {selectedCustomer && (
-            <div className="alert alert-info mt-2">
+            <Alert variant="info" className="mt-2">
               Selected Customer: {selectedCustomer.first_name} {selectedCustomer.last_name}
-            </div>
+            </Alert>
           )}
 
-          <Productlistsel
-            products={products}
-            onProductSelect={handleProductSelection}
-            showModal={showModal}
-          />
-
-          <div className="m-2 border-2 p-3">
-            <h4>Selected Products</h4>
+          <Productlistsel products={productList} onProductSelect={handleProductSelection} showModal={showModal} />
+       
+          <div className="m-4 border-2">
+            <h4>Accessories</h4>
             <ul>
               {selectedProducts.map((product) => {
                 const qty = quantity[product._id] || 1;
                 const unitPrice = parseFloat(priceMap[product._id] ?? product.price) || 0;
                 const total = unitPrice * qty;
-
                 return (
                   <li key={product._id} className="mb-3">
                     {product.name} - {qty} x A${unitPrice.toFixed(2)} = A${total.toFixed(2)}
-                    <button
-                      className="btn btn-danger btn-sm ms-2"
-                      onClick={() => handleRemoveProduct(product._id)}
-                    >
+                    <Button variant="danger" onClick={() => handleRemoveProduct(product._id)} className="ms-2">
                       Remove
-                    </button>
+                    </Button>
                   </li>
                 );
               })}
             </ul>
           </div>
-        </div>
+        </Col>
 
-        <div className="col-md-6 p-4 border rounded bg-light">
-          <div className="mb-3">
-            <label>Tax</label>
-            <select
-              className="form-select"
-              value={selectedTax?._id || ""}
-              onChange={handleTaxSelect}
-            >
-              {taxes.map((tax) => (
-                <option key={tax._id} value={tax._id}>
-                  {tax.taxClass} - {tax.taxValue}%
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="mb-3">
-            <label>Payment Status</label>
-            <select
-              className="form-select"
-              value={paymentStatus}
-              onChange={(e) => setPaymentStatus(e.target.value)}
-            >
-              <option value="1">Paid</option>
-              <option value="0">Unpaid</option>
-            </select>
-          </div>
+        <Col md={6} className="p-4 border rounded bg-light">
+          <Row className="mb-3">
+            <Col>
+              <Form.Select value={selectedTax?._id} onChange={handleTaxSelect}>
+                {taxes?.map((tax) => (
+                  <option key={tax._id} value={tax._id}>
+                    {tax.taxClass} - {tax.taxValue}% Tax
+                  </option>
+                ))}
+              </Form.Select>
+            </Col>
+            <Col>
+              <Form.Select
+                value={paymentStatus}
+                onChange={(e) => setPaymentStatus(e.target.value)}
+              >
+                <option value="1">Paid</option>
+                <option value="0">Unpaid</option>
+              </Form.Select>
+            </Col>
+          </Row>
 
           <div className="border p-3 rounded bg-white">
             <div className="d-flex justify-content-between mb-3">
               <strong>Subtotal:</strong>
               <span>A${calculateSubTotal()}</span>
             </div>
-            <div className="d-flex justify-content-between mb-3">
+            <div className="d-flex mb-2 border-bottom pb-2">
               <strong>GST:</strong>
-              <span>{selectedTax?.taxValue || 0}%</span>
+              <input
+                type="text"
+                value="10%"
+                readOnly
+                className="form-control-plaintext ms-auto text-end"
+              />
             </div>
-            <div className="d-flex justify-content-between border-top pt-2">
+            <div className="d-flex justify-content-between mb-2 border-bottom pb-2">
               <h5>Total:</h5>
               <h5>A${calculateTotal()}</h5>
             </div>
           </div>
+        </Col>
 
-          <div className="mt-3 d-flex gap-2 flex-column flex-sm-row-reverse">
-            <button
-              className="btn btn-primary"
-              onClick={handleCreateInvoice}
-              disabled={selectedProducts.length === 0}
-            >
-              Generate Invoice 🧾
-            </button>
-            <button
-              className="btn btn-danger"
-              onClick={handleClear}
-              disabled={selectedProducts.length === 0}
-            >
-              Clear Selection ❌
-            </button>
-          </div>
+        <div className="mt-3 d-flex gap-2 flex-column flex-sm-row-reverse">
+          <Button variant="primary" onClick={handleCreateInvoice} disabled={selectedProducts.length === 0}>
+            Generate Invoice 🗋️
+          </Button>
+          <Button variant="danger" onClick={handleClear} disabled={selectedProducts.length === 0}>
+            Clear Selection ❌
+          </Button>
         </div>
-      </div>
+      </Row>
 
-      {isModalVisible && (
-        <div
-          className="modal show d-block"
-          tabIndex="-1"
-          role="dialog"
-          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-        >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Enter Product Quantity</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={handleCancel}
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body">
-                <h5>{currentProduct?.name}</h5>
-                <input
-                  type="number"
-                  min="1"
-                  className="form-control my-3"
-                  value={quantity[currentProduct?._id] || 1}
-                  onChange={handleQuantityChange}
-                />
-                <label>Price per unit:</label>
-                <input
-                  type="number"
-                  className="form-control mb-3"
-                  value={price}
-                  onChange={handlePriceChange}
-                  placeholder="Enter price"
-                  min="0"
-                />
-                <p>
-                  <strong>Total Price:</strong> A$
-                  {isNaN(price * (quantity[currentProduct?._id] || 1))
-                    ? "0.00"
-                    : (price * (quantity[currentProduct._id] || 1)).toFixed(2)}
-                </p>
-                {quantityError && (
-                  <div className="text-danger">{quantityError}</div>
-                )}
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleCancel}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleOk}
-                >
-                  Confirm
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+      <Modal show={isModalVisible} onHide={handleCancel} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Enter Product Quantity</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h5>{currentProduct?.name}</h5>
+          <Form.Group className="mb-3">
+            <Form.Label>Quantity</Form.Label>
+            <Form.Control
+              type="number"
+              min={1}
+              value={quantity[currentProduct?._id] || 1}
+              onChange={(e) => handleQuantityChange(currentProduct._id, parseInt(e.target.value))}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Price per unit (A$)</Form.Label>
+            <Form.Control
+              type="number"
+              value={price}
+              onChange={handlePriceChange}
+              placeholder="Enter price"
+            />
+          </Form.Group>
+          <p className="mt-3">
+            <strong>Total Price:</strong> A${
+              isNaN(price * (quantity[currentProduct?._id] || 1))
+                ? "0.00"
+                : (price * (quantity[currentProduct?._id] || 1)).toFixed(2)
+            }
+          </p>
+          {quantityError && <div className="text-danger">{quantityError}</div>}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCancel}>Cancel</Button>
+          <Button variant="primary" onClick={handleOk}>OK</Button>
+        </Modal.Footer>
+      </Modal>
+    </Container>
   );
 };
 

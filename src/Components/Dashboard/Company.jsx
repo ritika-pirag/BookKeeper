@@ -12,8 +12,11 @@ import {
     BsTrash,
     BsShieldLock,
     BsGear,
-    BsSlashCircle
+    BsSlashCircle,
+
+    BsEye,
 } from "react-icons/bs";
+
 import "./Company.css";
 import { useNavigate } from "react-router-dom";
 
@@ -26,7 +29,7 @@ const initialCompanies = [
         date: "2025-07-03",
         time: "10:30:44",
         expired: "Dec 18, 2025",
-        counts: { calendar: 27, users: 6, members: 8 },
+        counts: {  users: 890, },
     },
     {
         name: "Murray Group",
@@ -36,7 +39,7 @@ const initialCompanies = [
         date: "2025-07-03",
         time: "05:04:53",
         expired: "Apr 10, 2025",
-        counts: { calendar: 0, users: 0, members: 0 },
+        counts: { users: 680, },
     },
     {
         name: "Larson LLC",
@@ -46,7 +49,7 @@ const initialCompanies = [
         date: "2025-07-03",
         time: "05:04:53",
         expired: "Apr 10, 2025",
-        counts: { calendar: 2, users: 1, members: 4 },
+        counts: {  users: 90, },
     },
     {
         name: "Abhishek Dwivedi",
@@ -56,7 +59,7 @@ const initialCompanies = [
         date: "2025-07-03",
         time: "05:04:53",
         expired: "Apr 10, 2025",
-        counts: { calendar: 0, users: 0, members: 0 },
+        counts: { users: 120,  },
     },
     {
         name: "Shiane Mcdowell",
@@ -66,7 +69,7 @@ const initialCompanies = [
         date: "2025-07-03",
         time: "05:04:53",
         expired: "Apr 10, 2025",
-        counts: { calendar: 0, users: 0, members: 0 },
+        counts: {  users: 80},
     },
     {
         name: "Kylie Lawson",
@@ -76,7 +79,7 @@ const initialCompanies = [
         date: "2025-07-02",
         time: "08:20:10",
         expired: "May 30, 2025",
-        counts: { calendar: 0, users: 0, members: 0 },
+        counts: { users: 360,  },
     },
     {
         name: "Delta Corp",
@@ -86,7 +89,7 @@ const initialCompanies = [
         date: "2025-07-01",
         time: "11:50:33",
         expired: "Jun 11, 2025",
-        counts: { calendar: 0, users: 0, members: 0 },
+        counts: {  users: 700,  },
     },
     {
         name: "Nova Enterprises",
@@ -96,7 +99,7 @@ const initialCompanies = [
         date: "2025-07-03",
         time: "09:10:00",
         expired: "May 25, 2025",
-        counts: { calendar: 0, users: 0, members: 0 },
+        counts: {  users: 100, },
     },
 ];
 
@@ -109,7 +112,14 @@ const Company = () => {
     const [deleteIndex, setDeleteIndex] = useState(null);
     const [resetIndex, setResetIndex] = useState(null);
     const [newPassword, setNewPassword] = useState("");
+    const [viewMode, setViewMode] = useState("card"); // 'card' or 'table'
 
+    const [filter, setFilter] = useState({
+        plan: "",
+        startDate: "",
+        endDate: "",
+      });
+      
     const [newCompany, setNewCompany] = useState({
         name: "",
         email: "",
@@ -117,7 +127,15 @@ const Company = () => {
         expired: "",
         plan: ""
     });
-    
+    const filteredCompanies = companies.filter((company) => {
+        const matchPlan = filter.plan === "" || company.plan === filter.plan;
+        const matchStart =
+          filter.startDate === "" || new Date(company.date) >= new Date(filter.startDate);
+        const matchEnd =
+          filter.endDate === "" || new Date(company.expired) <= new Date(filter.endDate);
+        return matchPlan && matchStart && matchEnd;
+      });
+      
     const navigate = useNavigate();
 
     const toggleMenu = (index) => {
@@ -185,103 +203,298 @@ const Company = () => {
         <div className="container-fluid py-4 px-4 mt-4 mt-md-0" style={{
             backgroundColor: "#f7f7f7", minHeight: "100vh"
         }}>
-            <div className="d-flex justify-content-between align-items-center mb-4">
-                <h4 className="fw-bold d-flex align-items-center mb-0">
-                    <BsBuildings className="me-2 fs-4 text-warning" />
-                    Manage Companies
-                </h4>
+{/* Container with vertical spacing */}
+<div className="mb-4">
 
-                <button
-                    className="btn btn-success d-flex align-items-center gap-2"
-                    onClick={() => setShowModal(true)}
-                    style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}
+  {/* Heading + Add Company Button Row */}
+{/* Heading + Add Company Button Row */}
+<div className="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+
+  {/* Left: Heading */}
+  <div className="d-flex align-items-center gap-3">
+    <h4 className="fw-bold mb-0 d-flex align-items-center">
+      <BsBuildings className="me-2 fs-4 text-warning" />
+      Manage Companies
+    </h4>
+  </div>
+
+  {/* Right: View Toggle Buttons + Add Company Button */}
+  <div className="d-flex align-items-center gap-2">
+    {/* 🔄 View Toggle Button */}
+    <div className="d-flex gap-2">
+      <button
+        className={`btn btn-sm ${viewMode === "card" ? "btn-dark" : "btn-outline-secondary"}`}
+        onClick={() => setViewMode("card")}
+        style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}
+      >
+        Card View
+      </button>
+
+      <button
+        className={`btn btn-sm ${viewMode === "table" ? "btn-dark" : "btn-outline-secondary"}`}
+        onClick={() => setViewMode("table")}
+        style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}
+      >
+        Table View
+      </button>
+    </div>
+
+    {/* ➕ Add Company Button */}
+    <button
+      className="btn btn-success btn-sm d-flex align-items-center gap-2"
+      onClick={() => setShowModal(true)}
+      style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}
+    >
+      <BsPlusCircle className="fs-6" />
+      <span className="fw-semibold">Add Company</span>
+    </button>
+  </div>
+</div>
+
+
+  {/* Filters Row - aligned to right end */}
+  <div className="d-flex flex-wrap align-items-center justify-content-end gap-3">
+
+{/* Date Filters Row */}
+<div className="d-flex align-items-center flex-wrap gap-3 justify-content-end">
+
+  {/* Start Date */}
+  <div className="d-flex align-items-center" style={{ minWidth: "220px" }}>
+    <label
+      className="form-label mb-0 fw-semibold small me-2"
+      style={{ width: "80px", whiteSpace: "nowrap" }}
+    >
+      Start Date
+    </label>
+    <input type="date" className="form-control form-control-sm" />
+  </div>
+
+  {/* Expiry Date */}
+  <div className="d-flex align-items-center" style={{ minWidth: "220px" }}>
+    <label
+      className="form-label mb-0 fw-semibold small me-2"
+      style={{ width: "80px", whiteSpace: "nowrap" }}
+    >
+      Expiry Date
+    </label>
+    <input type="date" className="form-control form-control-sm" />
+  </div>
+
+</div>
+
+
+    {/* Plan Dropdown */}
+    <div className="d-flex align-items-center" style={{ minWidth: "220px" }}>
+      <label className="form-label mb-0 fw-semibold small me-2" style={{ width: "80px" }}>
+        Plan
+      </label>
+      <select className="form-select form-select-sm">
+        <option value="">All Plans</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="platinum">Platinum</option>
+        <option value="bronze">Bronze</option>
+        <option value="enterprises">Enterprises</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
+
+{/* ✅ Conditional View Rendering */}
+{viewMode === "card" ? (
+ 
+
+<div className="row g-4">
+{filteredCompanies.map((company, index) => (
+    <div className="col-lg-3 col-md-6" key={index}>
+        <div className="card shadow-sm rounded-4 p-3 border-0 card-hover position-relative" style={{ minHeight: "260px" }}>
+            {/* Header: Badge + Menu */}
+            <div className="d-flex justify-content-between align-items-start mb-3">
+                <span
+                    className="badge px-3 py-2 rounded-pill fw-semibold"
+                    style={badgeStyles[company.plan]}
                 >
-                    <BsPlusCircle className="fs-5" />
-                    <span className="fw-semibold">Add Company</span>
-                </button>
-            </div>
+                    {company.plan}
+                </span>
 
-            <div className="row g-4">
-                {companies.map((company, index) => (
-                    <div className="col-lg-3 col-md-6" key={index}>
-                        <div className="card shadow-sm rounded-4 p-3 border-0 card-hover position-relative" style={{ minHeight: "260px" }}>
-                            {/* Header: Badge + Menu */}
-                            <div className="d-flex justify-content-between align-items-start mb-3">
-                                <span
-                                    className="badge px-3 py-2 rounded-pill fw-semibold"
-                                    style={badgeStyles[company.plan]}
-                                >
-                                    {company.plan}
-                                </span>
-
-                                <div className="dropdown-icon position-relative">
-                                    <BsThreeDotsVertical
-                                        className="text-muted"
-                                        style={{ cursor: "pointer" }}
-                                        onClick={() => toggleMenu(index)}
-                                    />
-                                    {activeMenuIndex === index && (
-                                        <div className="custom-dropdown shadow rounded-3">
-                                            <div className="dropdown-item text-warning fw-semibold" onClick={() => handleEdit(index)}>
-                                                <BsPencilSquare className="me-2" /> Edit
-                                            </div>
-                                            <div
-                                                className="dropdown-item"
-                                                onClick={() => navigate("/company/dashboard")}
-                                                style={{ cursor: "pointer" }}
-                                            >
-                                                <BsShieldLock className="me-2" /> Login As Company
-                                            </div>
-                                            <hr className="my-1" />
-                                            <div className="dropdown-item text-danger">
-                                                <BsSlashCircle className="me-2" /> Login Disable
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+                <div className="dropdown-icon position-relative">
+                    <BsThreeDotsVertical
+                        className="text-muted"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => toggleMenu(index)}
+                    />
+                    {activeMenuIndex === index && (
+                        <div className="custom-dropdown shadow rounded-3">
+                            <div className="dropdown-item text-warning fw-semibold" onClick={() => handleEdit(index)}>
+                                <BsPencilSquare className="me-2" /> Edit
                             </div>
-                        
-                            {/* Avatar & Info */}
-                            <div className="d-flex align-items-center gap-3 mb-2">
-                                <img
-                                    src={company.avatar}
-                                    alt={company.name}
-                                    className="rounded-circle"
-                                    width="45"
-                                    height="45"
-                                />
-                                <div>
-                                    <h6 className="mb-0 fw-semibold">{company.name}</h6>
-                                    <small className="text-muted">{company.email}</small>
-                                </div>
+                            <div
+                                className="dropdown-item"
+                                onClick={() => navigate("/")}
+                                style={{ cursor: "pointer" }}
+                            >
+                                <BsShieldLock className="me-2" /> Login As Company
                             </div>
-                        
-                            {/* Start & Expiry Dates in Separate Rows */}
-                            <div className="text-muted small mb-2 mt-3 px-1 ">
-                                <div className="mb-1 d-flex align-items-center">
-                                    <BsCalendarEvent className="me-3 text-primary" />
-                                    <strong className="me-1">Start:</strong> {company.date}
-                                </div>
-                                <div className="d-flex align-items-center">
-                                    <BsCalendarEvent className="me-3 text-danger" />
-                                    <strong className="me-1">End:</strong> {company.expired}
-                                </div>
-                            </div>
-
-                            {/* Centered Button */}
-                            <div className="d-flex justify-content-center mt-2">
-                                <button
-                                    className="btn btn-sm px-4 text-white"
-                                    style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}
-                                    onClick={() => navigate("/superadmin/planpricing")}
-                                >
-                                    Upgrade Plan
-                                </button>
+                            <hr className="my-1" />
+                            <div className="dropdown-item text-danger">
+                                <BsSlashCircle className="me-2" /> Login Disable
                             </div>
                         </div>
-                    </div>
-                ))}
+                    )}
+                </div>
             </div>
+        
+            {/* Avatar & Info */}
+            <div className="d-flex align-items-center gap-3 mb-2">
+                <img
+                    src={company.avatar}
+                    alt={company.name}
+                    className="rounded-circle"
+                    width="45"
+                    height="45"
+                />
+                <div>
+                    <h6 className="mb-0 fw-semibold">{company.name}</h6>
+                    <small className="text-muted">{company.email}</small>
+                </div>
+            </div>
+        
+            {/* Start & Expiry Dates in Separate Rows */}
+            <div className="text-muted small mb-2 mt-3 px-1 ">
+                <div className="mb-1 d-flex align-items-center">
+                    <BsCalendarEvent className="me-3 text-primary" />
+                    <strong className="me-1">Start:</strong> {company.date}
+                </div>
+                <div className="d-flex align-items-center">
+                    <BsCalendarEvent className="me-3 text-danger" />
+                    <strong className="me-1">End:</strong> {company.expired}
+                </div>
+            </div>
+
+            {/* Centered Button */}
+{/* Centered Buttons in Same Row */}
+{/* Centered Small Buttons in Same Row */}
+<div className="d-flex justify-content-center gap-2 mt-2">
+<button
+className="btn btn-sm py-1 px-2 text-white"
+style={{
+backgroundColor: "#53b2a5",
+borderColor: "#53b2a5",
+fontSize: "0.75rem",
+}}
+onClick={() => navigate("/superadmin/planpricing")}
+>
+Upgrade
+</button>
+
+<button
+className="btn btn-outline-secondary btn-sm py-1 px-2 text-black "
+style={{ fontSize: "0.75rem" }}
+title="Total Users"
+>
+Users: {company.counts.users}
+</button>
+</div>
+
+
+
+        </div>
+    </div>
+))}
+</div>
+
+) : (
+  <div className="card mt-4 shadow-sm rounded-4">
+                             {/* Company Table View */}
+<div className="mt-3 mb-2 rounded-4">
+  <div className="card-header bg-white border-bottom-0">
+    <h5 className="mb-0 fw-bold">Company Table View</h5>
+  </div>
+  <div className=" table-responsive">
+    <table className="table table-bordered table-hover align-middle">
+      <thead className="table-light">
+        <tr>
+          <th>#</th>
+          <th>Avatar</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Plan</th>
+          <th>Start Date</th>
+          <th>Expiry Date</th>
+          <th>Total Users</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredCompanies.map((company, index) => (
+          <tr key={index}>
+            <td>{index + 1}</td>
+            <td>
+              <img
+                src={company.avatar}
+                alt={company.name}
+                className="rounded-circle"
+                width="40"
+                height="40"
+              />
+            </td>
+            <td>{company.name}</td>
+            <td>{company.email}</td>
+            <td>
+              <span
+                className="badge px-3 py-2 rounded-pill fw-semibold"
+                style={badgeStyles[company.plan]}
+              >
+                {company.plan}
+              </span>
+            </td>
+            <td>{company.date}</td>
+            <td>{company.expired}</td>
+            <td>{company.counts.users}</td>
+            <td>
+              <div className="btn-group" role="group">
+                <button
+                  className="btn btn-sm text-warning p-0" 
+                  onClick={() => handleEdit(index)}
+                >
+                  <BsPencilSquare  size={18}/>
+            
+                </button>
+                <button
+                  className="btn btn-sm text-danger  "
+                  onClick={() => handleDelete(index)}
+                >
+                  <BsTrash size={18}/>
+                </button>
+        
+
+                 
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+  </div>
+)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             {showModal && (
                 <div className="modal d-flex align-items-center justify-content-center" style={{
@@ -544,6 +757,9 @@ const Company = () => {
                 </div>
             )}
         </div>
+
+
+
     );
 };
 
