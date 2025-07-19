@@ -39,15 +39,16 @@ const ProfileModal = ({ show, handleClose }) => {
         <Modal.Title>User Profile</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="card p-3">
+        <div className="p-3">
           <h5 className="mb-3">
-            <span className="badge" style={{ backgroundColor: "#27b2b6", color: "#fff", fontSize: '1rem' }}>Profile</span>
+            <span className="badge bg-info text-white" style={{ fontSize: '1rem' }}>Profile</span>
           </h5>
 
-          <h6 className="text-primary mb-3">
+          <h6 className="text-primary mb-3 d-flex align-items-center">
             <FaUserCircle className="me-2" /> Basic Information
           </h6>
 
+          {/* Avatar Section */}
           <div className="d-flex align-items-center mb-4">
             <div className="position-relative me-3">
               <img
@@ -67,7 +68,7 @@ const ProfileModal = ({ show, handleClose }) => {
               )}
             </div>
             <div>
-              <label className="btn text-white" style={{ backgroundColor: "#27b2b6" }}>
+              <label className="btn text-white mb-1" style={{ backgroundColor: "#27b2b6" }}>
                 Change Image
                 <input
                   type="file"
@@ -76,69 +77,35 @@ const ProfileModal = ({ show, handleClose }) => {
                   hidden
                 />
               </label>
-              <p className="text-muted small mt-1 mb-0">
+              <p className="text-muted small mb-0">
                 Upload JPG/PNG under 2MB.
               </p>
             </div>
           </div>
 
-          <div className="row g-2">
-            <div className="col-md-6">
-              <label className="form-label">First Name *</label>
-              <input
-                type="text"
-                className="form-control"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleInputChange}
-              />
-            </div>
+          {/* Form Fields */}
+          <div className="row g-3">
+            {[
+              { label: 'First Name *', name: 'firstName', type: 'text' },
+              { label: 'Last Name *', name: 'lastName', type: 'text' },
+              { label: 'Email *', name: 'email', type: 'email' },
+              { label: 'Phone Number *', name: 'phone', type: 'text' },
+              { label: 'Username *', name: 'username', type: 'text' },
+            ].map((field, idx) => (
+              <div className="col-12" key={idx}>
+                <label className="form-label">{field.label}</label>
+                <input
+                  type={field.type}
+                  className="form-control"
+                  name={field.name}
+                  value={formData[field.name]}
+                  onChange={handleInputChange}
+                />
+              </div>
+            ))}
 
-            <div className="col-md-6">
-              <label className="form-label">Last Name *</label>
-              <input
-                type="text"
-                className="form-control"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className="col-md-6">
-              <label className="form-label">Email *</label>
-              <input
-                type="email"
-                className="form-control"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className="col-md-6">
-              <label className="form-label">Phone Number *</label>
-              <input
-                type="text"
-                className="form-control"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className="col-md-6">
-              <label className="form-label">User Name *</label>
-              <input
-                type="text"
-                className="form-control"
-                name="username"
-                value={formData.username}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className="col-md-6">
+            {/* Password Field */}
+            <div className="col-12">
               <label className="form-label">Password *</label>
               <div className="input-group">
                 <input
@@ -159,8 +126,9 @@ const ProfileModal = ({ show, handleClose }) => {
             </div>
           </div>
 
+          {/* Footer Buttons */}
           <div className="d-flex justify-content-end gap-2 mt-4">
-            <Button variant="dark" onClick={handleClose}>Cancel</Button>
+            <Button variant="secondary" onClick={handleClose}>Cancel</Button>
             <Button variant="warning" className="text-white">Save Changes</Button>
           </div>
         </div>
