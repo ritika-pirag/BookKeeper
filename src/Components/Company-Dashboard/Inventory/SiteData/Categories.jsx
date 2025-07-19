@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal, Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { BsArrowLeft } from "react-icons/bs";
-
 import Swal from "sweetalert2";
-import {
-  createCategory,
-  fetchCategories,
-  deleteCategory,
-  updateCategory,
-} from "../../../../redux/slices/createCategory";
-import { Pagination } from "@mui/material"; // Importing MUI Pagination
+import { createCategory, fetchCategories, deleteCategory, updateCategory } from "../../../../redux/slices/createCategory";
+import { Pagination } from '@mui/material'; // Importing MUI Pagination
 import { FaEdit, FaTrash } from "react-icons/fa";
 const Categories = () => {
   const dispatch = useDispatch();
@@ -32,10 +25,7 @@ const Categories = () => {
   // Pagination Logic: Get current categories based on page
   const indexOfLastCategory = currentPage * categoriesPerPage;
   const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
-  const currentCategories = categories.slice(
-    indexOfFirstCategory,
-    indexOfLastCategory
-  );
+  const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory);
 
   const totalPages = Math.ceil(categories.length / categoriesPerPage); // Total pages calculation
 
@@ -76,17 +66,11 @@ const Categories = () => {
 
     const categoryData = {
       category_name: categoryName,
-      p_image:
-        image || categories.find((cat) => cat._id === editCategoryId)?.p_image,
+      p_image: image || categories.find(cat => cat._id === editCategoryId)?.p_image,
     };
 
     if (editCategoryId) {
-      dispatch(
-        updateCategory({
-          categoryId: editCategoryId,
-          updatedData: categoryData,
-        })
-      );
+      dispatch(updateCategory({ categoryId: editCategoryId, updatedData: categoryData }));
       dispatch(fetchCategories());
     } else {
       dispatch(createCategory(categoryData));
@@ -115,16 +99,6 @@ const Categories = () => {
   return (
     <div>
       <div className="mx-md-5 mt-5 mx-3">
-      <div className="mb-3">
-  <button
-    type="button"
-    className="btn "
-    onClick={() => navigate("/company/createproduct")}
-  >
-    ← Back
-  </button>
-</div>
-
         <div className="shadow p-4">
           <div className="row d-flex justify-content-between">
             <div className="col-md-9">
@@ -140,71 +114,49 @@ const Categories = () => {
               </button>
             </div>
           </div>
-          <div className="table-responsive">
-            <Table striped bordered hover className="mt-3">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Category Name</th>
-                  <th>Image</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <tr>
-                    <td colSpan="4" className="text-center">
-                      Loading...
+<div className="table-responsive">
+          <Table striped bordered hover className="mt-3">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Category Name</th>
+                <th>Image</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr><td colSpan="4" className="text-center">Loading...</td></tr>
+              ) : currentCategories.length > 0 ? (
+                currentCategories.map((category, index) => (
+                  <tr key={category._id}>
+                    <td>{index + 1 + (currentPage - 1) * categoriesPerPage}</td>
+                    <td>{category.category_name}</td>
+                    <td>
+                      <img
+                        src={category.p_image}
+                        alt={category.category_name}
+                        style={{ width: "80px", height: "50px", objectFit: "cover" }}
+                      />
                     </td>
-                  </tr>
-                ) : currentCategories.length > 0 ? (
-                  currentCategories.map((category, index) => (
-                    <tr key={category._id}>
-                      <td>
-                        {index + 1 + (currentPage - 1) * categoriesPerPage}
-                      </td>
-                      <td>{category.category_name}</td>
-                      <td>
-                        <img
-                          src={category.p_image}
-                          alt={category.category_name}
-                          style={{
-                            width: "80px",
-                            height: "50px",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </td>
-                      <td>
-                        <Button
-                          variant="warning"
-                          size="sm"
-                          className="me-2"
-                          onClick={() => handleModalShow(category)}
-                        >
-                          <FaEdit />
-                        </Button>
+                    <td>
+                   <Button variant="warning" size="sm" className="me-2" onClick={() => handleModalShow(category)}>
+  <FaEdit />
+</Button>
 
-                        <Button
-                          variant="danger"
-                          size="sm"
-                          onClick={() => handleDeleteCategory(category._id)}
-                        >
-                          <FaTrash />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="4" className="text-center">
-                      No categories found.
+<Button variant="danger" size="sm" onClick={() => handleDeleteCategory(category._id)}>
+  <FaTrash />
+</Button>
+
                     </td>
                   </tr>
-                )}
-              </tbody>
-            </Table>
-          </div>
+                ))
+              ) : (
+                <tr><td colSpan="4" className="text-center">No categories found.</td></tr>
+              )}
+            </tbody>
+          </Table>
+</div>
           {/* Pagination Component */}
           <div className="d-flex justify-content-center mt-4">
             <Pagination
@@ -220,9 +172,7 @@ const Categories = () => {
       {/* Create / Edit Modal */}
       <Modal show={showModal} onHide={handleModalClose}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            {editCategoryId ? "Edit Category" : "Create Category"}
-          </Modal.Title>
+          <Modal.Title>{editCategoryId ? "Edit Category" : "Create Category"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleFormSubmit}>
@@ -238,31 +188,17 @@ const Categories = () => {
 
             <Form.Group controlId="image" className="mt-3">
               <Form.Label>Upload Image</Form.Label>
-              <Form.Control
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
+              <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
             </Form.Group>
 
             {image && (
               <div className="mt-3 text-center">
-                <img
-                  src={image}
-                  alt="Preview"
-                  style={{
-                    maxWidth: "100%",
-                    maxHeight: "150px",
-                    objectFit: "cover",
-                  }}
-                />
+                <img src={image} alt="Preview" style={{ maxWidth: "100%", maxHeight: "150px", objectFit: "cover" }} />
               </div>
             )}
 
             <div className="d-flex justify-content-end mt-3">
-              <Button variant="secondary" onClick={handleModalClose}>
-                Close
-              </Button>
+              <Button variant="secondary" onClick={handleModalClose}>Close</Button>
               <Button variant="primary" type="submit" className="ms-2">
                 {editCategoryId ? "Update Category" : "Create Category"}
               </Button>

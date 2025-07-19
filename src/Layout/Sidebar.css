@@ -192,3 +192,7 @@
 .top-level-item:hover {
   background-color: #f5f5f5; /* Match your section header hover color */
 }
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: 0.3s ease;
+}
