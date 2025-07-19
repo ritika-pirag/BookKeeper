@@ -38,9 +38,9 @@ const NewOrder = () => {
   };
 
   return (
-    <div className="p-4 mt-4 mb-5">
+    <div className="p-4 mt-4 mb-5 border">
       {/* Header */}
-      <div className="d-flex align-items-center justify-content-between mb-3">
+      <div className="d-flex align-items-center justify-content-between mb-3 ">
         <h5 className="mb-0">Bill From</h5>
         <Button
           style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
@@ -52,33 +52,33 @@ const NewOrder = () => {
       </div>
 
       {/* Vendor Info */}
-      <Row className="mb-3">
+      <Row className="mb-3 Ca">
         <Col md={4}>
           <Form.Label>Search Vendors</Form.Label>
           <Form.Control placeholder="Enter Vendor Name or Mobile Number" />
         </Col>
-        <Col md={2}>
+        <Col md={4}>
           <Form.Label>Bill #</Form.Label>
           <InputGroup>
             <InputGroup.Text><BsCalendar /></InputGroup.Text>
             <Form.Control value="1046" />
           </InputGroup>
         </Col>
-        <Col md={2}>
+        <Col md={4} className='mt-2'>
           <Form.Label>Reference</Form.Label>
           <InputGroup>
             <InputGroup.Text><BsBookmark /></InputGroup.Text>
             <Form.Control placeholder="Reference #" />
           </InputGroup>
         </Col>
-        <Col md={2}>
+        <Col md={4}>
           <Form.Label>Order Date</Form.Label>
           <InputGroup>
             <InputGroup.Text><BsCalendar /></InputGroup.Text>
             <Form.Control type="date" value="2025-07-15" />
           </InputGroup>
         </Col>
-        <Col md={2}>
+        <Col md={4}>
           <Form.Label>Due Date</Form.Label>
           <InputGroup>
             <InputGroup.Text><BsCalendar /></InputGroup.Text>
@@ -87,60 +87,65 @@ const NewOrder = () => {
         </Col>
       </Row>
 
-      {/* Tax & Discount */}
-      <Row className="mb-3">
-        <Col md={12} className="mb-2">
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="d-flex align-items-center">
-              <Form.Label className="mb-0 fw-semibold me-3">Tax</Form.Label>
-              <div className="d-flex align-items-center gap-4">
-                <Form.Check
-                  type="radio"
-                  label="On"
-                  name="tax"
-                  checked={isTaxOn}
-                  onChange={() => setIsTaxOn(true)}
-                  className="mb-0"
-                />
-                <Form.Check
-                  type="radio"
-                  label="Off"
-                  name="tax"
-                  checked={!isTaxOn}
-                  onChange={() => setIsTaxOn(false)}
-                  className="mb-0"
-                />
-              </div>
-            </div>
-            <Button variant="outline-primary" size="sm" onClick={() => setShowTaxModal(true)}>+ Add Tax</Button>
-          </div>
-        </Col>
+  {/* Tax & Discount */}
+<Row className="mb-3">
+  <Col md={12} className="mb-2">
+    <div className="d-flex justify-content-between align-items-center">
+      <div className="d-flex align-items-center">
+        <Form.Label className="mb-0 fw-semibold me-3 small">Tax</Form.Label>
+        <div className="d-flex align-items-center gap-3">
+          <Form.Check
+            type="radio"
+            label={<span className="small">On</span>}
+            name="tax"
+            checked={isTaxOn}
+            onChange={() => setIsTaxOn(true)}
+            className="mb-0"
+            style={{ transform: "scale(0.85)" }}
+          />
+          <Form.Check
+            type="radio"
+            label={<span className="small">Off</span>}
+            name="tax"
+            checked={!isTaxOn}
+            onChange={() => setIsTaxOn(false)}
+            className="mb-0"
+            style={{ transform: "scale(0.85)" }}
+          />
+        </div>
+      </div>
+      <Button size="sm" onClick={() => setShowTaxModal(true)}    style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }} >+ Add Tax</Button>
+    </div>
+  </Col>
 
-        <Col md={12}>
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="d-flex align-items-center gap-3">
-              <Form.Label className="mb-0 fw-semibold">Discount</Form.Label>
-              <Form.Check
-                inline
-                type="radio"
-                label="On"
-                name="discount"
-                checked={isDiscountOn}
-                onChange={() => setIsDiscountOn(true)}
-              />
-              <Form.Check
-                inline
-                type="radio"
-                label="Off"
-                name="discount"
-                checked={!isDiscountOn}
-                onChange={() => setIsDiscountOn(false)}
-              />
-            </div>
-            <Button variant="outline-primary" size="sm" onClick={() => setShowDiscountModal(true)}>+ Add Discount</Button>
-          </div>
-        </Col>
-      </Row>
+  <Col md={12}>
+    <div className="d-flex justify-content-between align-items-center">
+      <div className="d-flex align-items-center gap-3">
+        <Form.Label className="mb-0 fw-semibold small">Discount</Form.Label>
+        <Form.Check
+          inline
+          type="radio"
+          label={<span className="small">On</span>}
+          name="discount"
+          checked={isDiscountOn}
+          onChange={() => setIsDiscountOn(true)}
+          style={{ transform: "scale(0.85)" }}
+        />
+        <Form.Check
+          inline
+          type="radio"
+          label={<span className="small">Off</span>}
+          name="discount"
+          checked={!isDiscountOn}
+          onChange={() => setIsDiscountOn(false)}
+          style={{ transform: "scale(0.85)" }}
+        />
+      </div>
+      <Button  size="sm" onClick={() => setShowDiscountModal(true)}     style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}>+ Add Discount</Button>
+    </div>
+  </Col>
+</Row>
+
 
       {/* Items Table */}
       <div className="table-responsive mb-3">
@@ -176,7 +181,7 @@ const NewOrder = () => {
           </tbody>
         </table>
         <Button
-          className="d-flex align-items-center mt-2"
+          className="d-flex align-items-center mt-4 mb-2"
           style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
           onClick={addRow}
         >

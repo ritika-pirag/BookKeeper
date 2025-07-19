@@ -1,14 +1,24 @@
 import { useState, useEffect } from "react";
-import { useSelector,useDispatch } from "react-redux";
-import AddCustomer from "../Customer/AddCustomer";
+import { useSelector, useDispatch } from "react-redux";
 import { getCustomers } from "../../../../redux/slices/customerSlice";
 
 const CustomerList = ({ onSelectCustomer, selectedShop }) => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    address: "",
+    postcode: "",
+    city: "",
+    state: "",
+    country: "",
+  });
 
   const { customers } = useSelector((state) => state.customer);
 
@@ -16,24 +26,30 @@ const CustomerList = ({ onSelectCustomer, selectedShop }) => {
     dispatch(getCustomers());
   }, [dispatch, selectedShop]);
 
+  useEffect(() => {
+    document.body.style.overflow = isModalOpen ? "hidden" : "auto";
+  }, [isModalOpen]);
 
-
-  // Handle selecting a customer
   const handleSelectCustomer = (customer) => {
     onSelectCustomer(customer);
     setIsDropdownOpen(false);
   };
 
-  // Handle adding a new customer
-  const handleAddCustomer = () => {
-    setIsModalOpen(false);
-    dispatch(getCustomers());
+  const handleBlur = () => {
+    setTimeout(() => setIsDropdownOpen(false), 150);
   };
 
-  // Handle input blur to close dropdown
-  const handleBlur = () => {
-    // Delay hiding dropdown to allow for selection click
-    setTimeout(() => setIsDropdownOpen(false), 150);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // TODO: API call to save customer
+    console.log("Submitting:", formData);
+    setIsModalOpen(false);
+    dispatch(getCustomers());
   };
 
   return (
@@ -50,12 +66,12 @@ const CustomerList = ({ onSelectCustomer, selectedShop }) => {
             setIsDropdownOpen(true);
           }}
           onFocus={() => setIsDropdownOpen(true)}
-          onBlur={handleBlur} // Close dropdown when input loses focus
+          onBlur={handleBlur}
         />
         <span
           className="input-group-text btn bg-[#1d1b31] text-white"
           style={{ backgroundColor: "#1d1b31", cursor: "pointer" }}
-          onClick={() => setIsModalOpen(!isModalOpen)}
+          onClick={() => setIsModalOpen(true)}
         >
           <i className="fa fa-plus"></i>
         </span>
@@ -87,28 +103,130 @@ const CustomerList = ({ onSelectCustomer, selectedShop }) => {
           )}
         </ul>
       )}
-      {/* Customer Form Modal */}
+
+      {/* Customer Add Modal (Inline Form) */}
       {isModalOpen && (
         <div
           className="modal fade show d-block"
-          style={{ background: "rgba(0,0,0,0.5)" }}>
+          tabIndex="-1"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", overflowY: "auto" }}
+          onClick={() => setIsModalOpen(false)}
+        >
           <div
-            className="modal-dialog modal-lg"
-            style={{ maxWidth: "850px", marginLeft: "auto" }}
+            className="modal-dialog modal-lg modal-dialog-centered"
+            style={{ maxWidth: "850px", margin: "3rem auto" }}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="modal-content">
               <div className="modal-header">
+                <h5 className="modal-title">Add Customer</h5>
                 <button
+                  type="button"
                   className="btn-close"
                   onClick={() => setIsModalOpen(false)}
                 ></button>
               </div>
-              <div className="modal-body">
-                <AddCustomer
-                  onClose={() => setIsModalOpen(false)}
-                  onAdd={handleAddCustomer}
-                />
-              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="modal-body p-4">
+                  <div className="row g-3">
+                    <div className="col-md-6">
+                      <label className="form-label">First Name</label>
+                      <input
+                        type="text"
+                        name="first_name"
+                        value={formData.first_name}
+                        onChange={handleInputChange}
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Last Name</label>
+                      <input
+                        type="text"
+                        name="last_name"
+                        value={formData.last_name}
+                        onChange={handleInputChange}
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Email</label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Phone</label>
+                      <input
+                        type="text"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Address</label>
+                      <input
+                        type="text"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleInputChange}
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Postcode</label>
+                      <input
+                        type="text"
+                        name="postcode"
+                        value={formData.postcode}
+                        onChange={handleInputChange}
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">City</label>
+                      <input
+                        type="text"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleInputChange}
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">State</label>
+                      <input
+                        type="text"
+                        name="state"
+                        value={formData.state}
+                        onChange={handleInputChange}
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Country</label>
+                      <input
+                        type="text"
+                        name="country"
+                        value={formData.country}
+                        onChange={handleInputChange}
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button type="submit" className="btn btn-dark">
+                    Add Customer
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -117,4 +235,4 @@ const CustomerList = ({ onSelectCustomer, selectedShop }) => {
   );
 };
 
-export default CustomerList ;
+export default CustomerList;
