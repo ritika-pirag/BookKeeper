@@ -83,8 +83,8 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "sales",
           icon: "fas fa-chart-line",
           items: [
-            { to: "/company/InvoiceForm", label: "New Sale Add" },
-            { to: "/company/Invoice",  label: "Manage Sale" },
+            { to: "/company/Customer", icon: "fas fa-file-invoice", label: "Customer" },
+            { to: "/company/Invoice", icon: "fas fa-file-invoice-dollar", label: "Invoice" },
           ],
         },
         {
