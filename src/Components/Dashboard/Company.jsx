@@ -180,20 +180,24 @@ const Company = () => {
         boxShadow: "0 0 8px rgba(173, 124, 89, 0.5)",
       },
       Silver: {
-        backgroundImage: "linear-gradient(to right, #c0c0c0, #d8d8d8, #b0b0b0)", // Slightly darker gray
+        backgroundImage: "linear-gradient(to right, #a9a9a9, #bdbdbd, #d3d3d3)", // Graphite to light silver
         color: "#000",
-        boxShadow: "0 0 8px rgba(192, 192, 192, 0.6)",
+        boxShadow: "0 0 10px rgba(140, 140, 140, 0.5)",
+        buttonColor: "#6e6e6e" // Metallic steel
       },
+      
       Gold: {
         backgroundImage: "linear-gradient(to right, #f5d76e, #ffd700, #e6be8a)",
         color: "#000",
         boxShadow: "0 0 8px rgba(255, 215, 0, 0.6)",
       },
       Platinum: {
-        backgroundImage: "linear-gradient(to right, #e5e4e2, #f9f9fb, #cfd8dc)", // Cooler bluish-white tint
+        backgroundImage: "linear-gradient(to right, #cfe9f9, #e3f2fd, #f5f7fa)", // Frosted bluish white
         color: "#000",
-        boxShadow: "0 0 8px rgba(180, 200, 220, 0.5)",
-      },
+        boxShadow: "0 0 10px rgba(120, 160, 200, 0.4)",
+        buttonColor: "#4a6fa5" // Deep ice-blue
+      }
+      
     };
     
     
@@ -219,37 +223,69 @@ const Company = () => {
   </div>
 
   {/* Right: View Toggle Buttons + Add Company Button */}
-  <div className="d-flex align-items-center gap-2">
-    {/* 🔄 View Toggle Button */}
-    <div className="d-flex gap-2">
-      <button
-        className={`btn btn-sm ${viewMode === "card" ? "btn-dark" : "btn-outline-secondary"}`}
-        onClick={() => setViewMode("card")}
-        style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}
-      >
-        Card View
-      </button>
 
-      <button
-        className={`btn btn-sm ${viewMode === "table" ? "btn-dark" : "btn-outline-secondary"}`}
-        onClick={() => setViewMode("table")}
-        style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}
-      >
-        Table View
-      </button>
-    </div>
-
-    {/* ➕ Add Company Button */}
+ 
+  <div className="d-flex align-items-center gap-3">
+  {/* 🔄 View Toggle Buttons */}
+  <div className="d-flex gap-2">
     <button
-      className="btn btn-success btn-sm d-flex align-items-center gap-2"
-      onClick={() => setShowModal(true)}
-      style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5" }}
+      className={`btn btn-sm d-flex align-items-center gap-2 ${
+        viewMode === "card" ? "btn-dark" : "btn-outline-secondary"
+      }`}
+      onClick={() => setViewMode("card")}
+      style={{
+        backgroundColor: viewMode === "card" ? "#53b2a5" : "transparent",
+        color: viewMode === "card" ? "#fff" : "#53b2a5",
+        borderColor: "#53b2a5",
+        padding: "6px 12px",
+        borderRadius: "25px",
+        transition: "all 0.3s ease"
+      }}
     >
-      <BsPlusCircle className="fs-6" />
-      <span className="fw-semibold">Add Company</span>
+      <i className="fas fa-border-all"></i>
+    </button>
+
+    <button
+      className={`btn btn-sm d-flex align-items-center gap-2 ${
+        viewMode === "table" ? "btn-dark" : "btn-outline-secondary"
+      }`}
+      onClick={() => setViewMode("table")}
+      style={{
+        backgroundColor: viewMode === "table" ? "#53b2a5" : "transparent",
+        color: viewMode === "table" ? "#fff" : "#53b2a5",
+        borderColor: "#53b2a5",
+        padding: "6px 12px",
+        borderRadius: "25px",
+        transition: "all 0.3s ease"
+      }}
+    >
+      <i className="fas fa-list-alt"></i>
     </button>
   </div>
+
+  {/* ➕ Add Company Button */}
+  <button
+    className="btn btn-sm d-flex align-items-center gap-2"
+    onClick={() => setShowModal(true)}
+    style={{
+      backgroundColor: "#53b2a5",
+      borderColor: "#53b2a5",
+      color: "#fff",
+      padding: "6px 14px",
+      borderRadius: "25px",
+      fontWeight: "500",
+      boxShadow: "0 4px 10px rgba(83, 178, 165, 0.3)",
+      transition: "all 0.3s ease"
+    }}
+  >
+    <BsPlusCircle className="fs-6" />
+    Add Company
+  </button>
 </div>
+
+
+  </div>
+
 
 
   {/* Filters Row - aligned to right end */}
@@ -326,22 +362,48 @@ const Company = () => {
                         onClick={() => toggleMenu(index)}
                     />
                     {activeMenuIndex === index && (
-                        <div className="custom-dropdown shadow rounded-3">
-                            <div className="dropdown-item text-warning fw-semibold" onClick={() => handleEdit(index)}>
-                                <BsPencilSquare className="me-2" /> Edit
-                            </div>
-                            <div
-                                className="dropdown-item"
-                                onClick={() => navigate("/")}
-                                style={{ cursor: "pointer" }}
-                            >
-                                <BsShieldLock className="me-2" /> Login As Company
-                            </div>
-                            <hr className="my-1" />
-                            <div className="dropdown-item text-danger">
-                                <BsSlashCircle className="me-2" /> Login Disable
-                            </div>
-                        </div>
+                <div className="custom-dropdown shadow rounded-3 p-2">
+                <div className="d-flex justify-content-between align-items-center gap-2 mb-2">
+                  {/* ✏️ Edit Button */}
+                  <div
+                    className="dropdown-item text-warning fw-semibold flex-grow-1 text-start"
+                    onClick={() => handleEdit(index)}
+                    style={{ cursor: "pointer", backgroundColor: "#fff", borderRadius: "6px", padding: "6px" }}
+                  >
+                    <BsPencilSquare className="me-1" />
+                    Edit
+                  </div>
+              
+                  {/* 🛡️ Login as Company */}
+                  <div
+                    className="dropdown-item flex-grow-1 text-center"
+                    onClick={() => navigate("/")}
+                    style={{
+                      cursor: "pointer",
+                      backgroundColor: "#fff",
+                      borderRadius: "6px",
+                      padding: "6px",
+                      color: "#338871",
+                      fontWeight: "500"
+                    }}
+                  >
+                    <BsShieldLock className="me-1" />
+                    Login as Company
+                  </div>
+                </div>
+              
+                <hr className="my-1" />
+              
+                {/* ❌ Login Disable */}
+                <div
+                  className="dropdown-item text-danger text-center"
+                  style={{ padding: "6px", borderRadius: "6px" }}
+                >
+                  <BsSlashCircle className="me-1" />
+                  Login Disable
+                </div>
+              </div>
+              
                     )}
                 </div>
             </div>
