@@ -131,6 +131,8 @@ import PurchaseOrderView from "./Components/Company-Dashboard/Purchases/Purchase
 import ViewInvoicee from "./Components/Company-Dashboard/Sales/ViewInvoicee";
 
 import Categories from "./Components/Company-Dashboard/Inventory/SiteData/Categories";
+import AddCustomer from "./Components/Company-Dashboard/Inventory/Customer/AddCustomer";
+import PurchasOrder from "./Components/Company-Dashboard/Purchases/PurchasOrder";
 
 
 
@@ -176,6 +178,7 @@ function App() {
           <Route path="/company/tax" element={<TaxPage/>} />
           <Route path="/company/ponitofsale" element={<PointOfSale />} />
           <Route path="/company/invoice-summary" element={<InvoiceSummary/>} />
+          <Route path="/company/addcustomer" element={<AddCustomer/>} />
           {/* Sales */}
           <Route path="/company/invoice" element={<Invoice />} />
           <Route path="/company/manageinvoice" element={<ManageInvoices/>} />
@@ -206,6 +209,7 @@ function App() {
           
           {/* <Route path="/company/neworders" element={<NewOrderPurchase />} /> */}
           <Route path="/company/purchaseorders" element={<Purchaseorders />} />
+          <Route path="/company/purchasorder" element={<PurchasOrder/>} />
           <Route path="/company/purchasereturn" element={<PurchaseReturn />} />
           <Route path="/company/purchaseview" element={<PurchaseOrderView/>} />
           {/* Finance & Accounts */}

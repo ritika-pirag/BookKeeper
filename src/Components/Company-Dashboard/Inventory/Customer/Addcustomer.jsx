@@ -184,4 +184,4 @@ const AddCustomer = () => {
   );
 };
 
-export default AddCustomer ;
+export default AddCustomer;
