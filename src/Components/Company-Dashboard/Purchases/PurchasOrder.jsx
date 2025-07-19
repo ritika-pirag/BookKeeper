@@ -18,7 +18,7 @@ const getStatusBadge = (status) => {
   return <Badge bg="secondary">{status}</Badge>;
 };
 
-const PurchaseOrders = () => {
+const PurchasOrder = () => {
   const [orders, setOrders] = useState(initialOrders);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -53,11 +53,8 @@ const PurchaseOrders = () => {
 
       {/* Header and New Button */}
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5 className="mb-0">Manage Bills</h5>
-        <Button  size="sm" onClick={() => setShowModal(true)} 
-          style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}>
-          Create Bill +
-        </Button>
+        <h5 className="mb-0">Purchase Orders</h5>
+    
       </div>
 
       {/* Filters Row */}
@@ -152,4 +149,4 @@ const PurchaseOrders = () => {
   );
 };
 
-export default PurchaseOrders;
+export default PurchasOrder;

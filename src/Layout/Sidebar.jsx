@@ -94,8 +94,9 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           icon: "fas fa-shopping-basket",
           items: [
             { to: "/company/vendors", label: "Vendors" },
-            { to: "/company/NewOrders", label: "New Orders" },
-            { to: "/company/purchaseorders", label: "Manage Purchase" },
+            // { to: "/company/NewOrders", label: "New Orders" },
+            { to: "/company/purchaseorders", label: "Bill" },
+            { to: "/company/purchasorder", label: "Purchase Order" },
             { to: "/company/purchasereturn",  label: "Purchase Return" },
           ],
         },
@@ -107,10 +108,10 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           items: [
             { to: "/company/warehouse",  label: "Warehouse" },
             { to: "/company/stocktranfer",  label: "StockTransfer" },
-            { to: "/company/categories", label: "Categories" },
-            { to: "/company/brands", label: "Brands" },
-            { to: "/company/device", label: "Device" },
-            { to: "/company/tax",  label: "Tax" },
+            // { to: "/company/categories", label: "Categories" },
+            // { to: "/company/brands", label: "Brands" },
+            // { to: "/company/device", label: "Device" },
+            // { to: "/company/tax",  label: "Tax" },
             { to: "/company/product",  label: "Product" },
             { to: "/company/ponitofsale",  label: "POS Screen" },
           ],
@@ -175,7 +176,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         },
       ],
       User: [  {
-          to: "/company/dashboard",
+          to: "/user/dashboard",
           icon: "fas fa-tachometer-alt",
           label: "Dashboard",
         },
@@ -208,6 +209,8 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           ]
         },
 
+
+        
         {
           type: "section",
           title: "POS",
@@ -224,17 +227,12 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           ]
         },
 
+     
         {
-          type: "section",
-          title: "Inventory",
-          key: "userinventory",
+          to: "/user/manageproduct",
           icon: "fas fa-box",
-          items: [
-            // { to: "/user/products", icon: "fas fa-cube", label: "Products" },
-            { to: "/user/manageproduct",  label: "Manage Product" }
-          ]
+          label: "Inventory",
         },
-
         {
           type: "section",
           title: "Finance & Accounts",

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, Badge, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import { FaEye, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 
 const Vendors = () => {
@@ -20,8 +20,42 @@ const Vendors = () => {
       payable: 820,
       address: "Bhopal, India"
     },
+    {
+      name: "Amit Sharma Vendor",
+      company: "globex",
+      email: "amit@globex.com",
+      phone: "9876543222",
+      payable: 1300,
+      address: "Pune, India"
+    },
+    {
+      name: "Sara Ali Vendor",
+      company: "cyberdyne",
+      email: "sara@cyberdyne.ai",
+      phone: "9876543333",
+      payable: 450,
+      address: "Delhi, India"
+    },
+    {
+      name: "Rajesh Mehta Vendor",
+      company: "initech",
+      email: "rajesh@initech.com",
+      phone: "9876543444",
+      payable: 760,
+      address: "Ahmedabad, India"
+    },
+    {
+      name: "Nina Kapoor Vendor",
+      company: "umbrella",
+      email: "nina@umbrella.org",
+      phone: "9876543555",
+      payable: 390,
+      address: "Mumbai, India"
+    }
   ]);
+  
 
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [showView, setShowView] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
@@ -73,112 +107,110 @@ const Vendors = () => {
     setShowDelete(false);
   };
 
+  const filteredVendors = vendors.filter((v) =>
+    v.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    v.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    v.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    v.phone.includes(searchTerm)
+  );
+
   return (
-    <div className="card bg-white rounded-3 p-4 mt-4">
-      {/* Header with title, badge, and Add Vendor button */}
-      <div className="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
-        <h5 className="fw-semibold mb-0">Vendor Details</h5>
+    <div className="mt-4 p-2">
+      {/* ✅ Title, Search and Add Button */}
+      <Row className="align-items-center mb-3">
+  <Col xs={12} md={4} className="mb-1 mb-md-0">
+    <h4 className="fw-bold mb-0">Manage Vendors</h4>
+  </Col>
+  <Col xs={12} md={8}>
+    <div className="d-flex gap-2 flex-nowrap">
+      <Form.Control
+        type="text"
+        placeholder="Search vendor..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={{ flex: "1 1 auto" }}
+      />
+      <Button
+        variant="success"
+        className="d-flex align-items-center gap-2"
+        onClick={() => {
+          setNewVendor({
+            name: "",
+            company: "",
+            email: "",
+            phone: "",
+            payable: "",
+            address: "",
+            document: null
+          });
+          setShowAdd(true);
+        }}
+        style={{ whiteSpace: "nowrap", backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+      >
+        <FaPlus /> Add Vendor
+      </Button>
+    </div>
+  </Col>
+</Row>
 
-        <div className="d-flex gap-2">
-          <Badge pill bg="warning" className="text-dark align-self-center">
-            Update GST details for 520 vendors
-          </Badge>
 
-          <Button
-            variant="success"
-            className="d-flex align-items-center gap-2"
-            onClick={() => {
-              setNewVendor({
-                name: "",
-                company: "",
-                email: "",
-                phone: "",
-                payable: "",
-                address: "",
-                document: null
-              });
-              setShowAdd(true);
-            }}
-          >
-            <FaPlus /> Add Vendor
-          </Button>
+      {/* ✅ Card Starts */}
+      <div className="card bg-white rounded-3 p-4">
+        {/* Table */}
+        <div className="table-responsive">
+          <table className="table table-hover align-middle mb-0">
+            <thead className="table-light">
+              <tr>
+                <th>Name</th>
+                <th>Company</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Balance</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredVendors.length > 0 ? (
+                filteredVendors.map((vendor, idx) => (
+                  <tr key={idx}>
+                    <td>{vendor.name}</td>
+                    <td>{vendor.company}</td>
+                    <td className="text-muted">{vendor.email}</td>
+                    <td className="text-muted">{vendor.phone}</td>
+                    <td>{vendor.payable}$</td>
+                    <td>
+                      <div className="d-flex flex-wrap gap-2">
+                        <Button variant="link" className="p-0 text-info" size="sm"
+                          onClick={() => { setSelectedVendor(vendor); setShowView(true); }}>
+                          <FaEye size={18} />
+                        </Button>
+                        <Button variant="link" className="p-0 text-warning" size="sm"
+                          onClick={() => {
+                            setSelectedVendor(vendor);
+                            setNewVendor(vendor);
+                            setShowEdit(true);
+                          }}>
+                          <FaEdit size={18} />
+                        </Button>
+                        <Button variant="link" className="p-0 text-danger" size="sm"
+                          onClick={() => { setSelectedVendor(vendor); setShowDelete(true); }}>
+                          <FaTrash size={18} />
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center text-muted">No vendor found.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
 
-      {/* Table */}
-      <div className="table-responsive">
-        <table className="table table-hover align-middle mb-0">
-          <thead className="table-light">
-            <tr>
-              <th>Name</th>
-              <th>Company</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Payables (₹)</th>
-              <th>Address</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {vendors.map((vendor, idx) => (
-              <tr key={idx}>
-                <td>{vendor.name}</td>
-                <td>{vendor.company}</td>
-                <td className="text-muted">{vendor.email}</td>
-                <td className="text-muted">{vendor.phone}</td>
-                <td>₹{vendor.payable}</td>
-                <td>{vendor.address}</td>
-                <td>
-                  <div className="d-flex flex-wrap gap-2">
-                    <Button variant="link" className="p-0 text-info" size="sm"
-                      onClick={() => { setSelectedVendor(vendor); setShowView(true); }}>
-                      <FaEye size={18} />
-                    </Button>
-                    <Button variant="link" className="p-0 text-warning" size="sm"
-                      onClick={() => {
-                        setSelectedVendor(vendor);
-                        setNewVendor(vendor);
-                        setShowEdit(true);
-                      }}>
-                      <FaEdit size={18} />
-                    </Button>
-                    <Button variant="link" className="p-0 text-danger" size="sm"
-                      onClick={() => { setSelectedVendor(vendor); setShowDelete(true); }}>
-                      <FaTrash size={18} />
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Pagination */}
-      <div className="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
-        <span className="small text-muted">
-          Showing 1 to {vendors.length} of {vendors.length} results
-        </span>
-        <nav>
-          <ul className="pagination pagination-sm mb-0 flex-wrap">
-            <li className="page-item disabled">
-              <button className="page-link rounded-start">&laquo;</button>
-            </li>
-            <li className="page-item active">
-              <button
-                className="page-link"
-                style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
-              >1</button>
-            </li>
-            <li className="page-item"><button className="page-link">2</button></li>
-            <li className="page-item">
-              <button className="page-link rounded-end">&raquo;</button>
-            </li>
-          </ul>
-        </nav>
-      </div>
-
-      {/* View Vendor Modal */}
+      {/* View Modal */}
       <Modal show={showView} onHide={() => setShowView(false)} centered>
         <Modal.Header closeButton><Modal.Title>Vendor Details</Modal.Title></Modal.Header>
         <Modal.Body>
@@ -198,39 +230,81 @@ const Vendors = () => {
         </Modal.Footer>
       </Modal>
 
-      {/* Add / Edit Vendor Modal */}
-      <Modal show={showAdd || showEdit} onHide={() => { setShowAdd(false); setShowEdit(false); }} centered>
+      {/* Add/Edit Modal */}
+      <Modal show={showAdd || showEdit} onHide={() => { setShowAdd(false); setShowEdit(false); }} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>{showAdd ? "Add Vendor" : "Edit Vendor"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            {["name", "company", "email", "phone", "payable", "address"].map((field) => (
-              <Form.Group className="mb-3" key={field}>
-                <Form.Label className="text-capitalize">{field}</Form.Label>
-                <Form.Control
-                  type="text"
-                  name={field}
-                  value={newVendor[field]}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            ))}
-            <Form.Group className="mb-3">
-              <Form.Label>Upload Document</Form.Label>
-              <Form.Control type="file" name="document" onChange={handleChange} />
-            </Form.Group>
+            <h6 className="mb-3">Basic Info</h6>
+            <Row>
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control type="text" name="name" value={newVendor.name || ''} onChange={handleChange} placeholder="Vendor Name" />
+                </Form.Group>
+              </Col>
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control type="email" name="email" value={newVendor.email || ''} onChange={handleChange} placeholder="Email Address" />
+                </Form.Group>
+              </Col>
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Phone</Form.Label>
+                  <Form.Control type="text" name="phone" value={newVendor.phone || ''} onChange={handleChange} placeholder="Contact Number" />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <h6 className="mb-3">Billing Address</h6>
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Company</Form.Label>
+                  <Form.Control type="text" name="company" value={newVendor.company || ''} onChange={handleChange} placeholder="Company Name" />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Payable</Form.Label>
+                  <Form.Control type="text" name="payable" value={newVendor.payable || ''} onChange={handleChange} placeholder="Amount Payable" />
+                </Form.Group>
+              </Col>
+              <Col md={12}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Billing Address</Form.Label>
+                  <Form.Control type="text" name="address" value={newVendor.address || ''} onChange={handleChange} placeholder="Street, City, Country" />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <h6 className="mb-3">Shipping Address</h6>
+            <Row>
+              <Col md={12}>
+                <Form.Check type="checkbox" label="Same as Billing Address" name="sameAsBilling" className="mb-2" onChange={handleChange} />
+                <p className="text-muted small">Leave blank if not needed on invoice.</p>
+              </Col>
+              <Col md={12}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Shipping Address</Form.Label>
+                  <Form.Control type="text" name="shippingAddress" value={newVendor.shippingAddress || ''} onChange={handleChange} placeholder="Street, City, Country" />
+                </Form.Group>
+              </Col>
+            </Row>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => { setShowAdd(false); setShowEdit(false); }}>Cancel</Button>
-          <Button style={{ backgroundColor: "#3daaaa" }} onClick={showAdd ? handleAddVendor : handleUpdateVendor}>
+          <Button style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }} onClick={showAdd ? handleAddVendor : handleUpdateVendor}>
             {showAdd ? "Add Vendor" : "Save Changes"}
           </Button>
         </Modal.Footer>
       </Modal>
 
-      {/* Delete Confirmation Modal */}
+      {/* Delete Modal */}
       <Modal show={showDelete} onHide={() => setShowDelete(false)} centered>
         <Modal.Header closeButton><Modal.Title>Confirm Delete</Modal.Title></Modal.Header>
         <Modal.Body>Are you sure you want to delete this vendor?</Modal.Body>

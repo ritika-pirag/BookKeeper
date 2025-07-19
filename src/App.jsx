@@ -40,8 +40,8 @@ import Ledger from "./Components/Company-Dashboard/Finance&Accounts/Ledger";
 import TrialBalance from "./Components/Company-Dashboard/Finance&Accounts/TrialBalance";
 import CustomerList from "./Components/Company-Dashboard/ClientsVendors/CustomerList";
 // import Purchasedataa from "./Components/Company-Dashboard/Reports/Purchasedata";
-import salesreport from "./Components/Company-Dashboard/Reports/Salesreport";
-import NewOrderPurchase from "./Components/Company-Dashboard/Purchases/NewOrderPurchase";
+// import salesreport from "./Components/Company-Dashboard/Reports/Salesreport";
+// import NewOrderPurchase from "./Components/Company-Dashboard/Purchases/NewOrderPurchase";
 import Taxreport from "./Components/Company-Dashboard/Reports/Taxreports";
 import BalanceSheet from "./Components/Company-Dashboard/Reports/BalanceSheet";
 import CashFlow from "./Components/Company-Dashboard/Reports/CashFlow";
@@ -81,28 +81,28 @@ import Balancesheet from "./Components/User-Dashboard/Account&Finance/BalanceShe
 import DeliveryChallans from "./Components/User-Dashboard/Sales/DeliveryChallans";
 import Estimates from "./Components/User-Dashboard/Sales/Estimates";
 import OnlineOrder from "./Components/User-Dashboard/Sales/OnlineOrder";
-import PosOrder from "./Components/User-Dashboard/Sales/PosOrder";
+// import PosOrder from "./Components/User-Dashboard/Sales/PosOrder";
 import PaymentMode from "./Components/User-Dashboard/Purchases/PaymentMode";
 import Invoicee from "./Components/User-Dashboard/Purchases/Invoicee";
 import Expenses from "./Components/User-Dashboard/Purchases/Expenses";
-import PurchaseData from "./Components/User-Dashboard/Reports/Purchasereport";
+// import PurchaseData from "./Components/User-Dashboard/Reports/Purchasereport";
 
 
 import WareHouses from "./Components/User-Dashboard/Inventory/SiteData/WareHouses";
-import Categoriess from "./Components/User-Dashboard/Inventory/SiteData/Categoriess";
+
 import BrandPages from "./Components/User-Dashboard/Inventory/SiteData/BrandPages";
 
 
 import Product from "./Components/User-Dashboard/Inventory/Product";
 // import AddProducts from "./Components/User-Dashboard/Inventory/Product/AddProduct";
 import  DevicePages from "./Components/User-Dashboard/Inventory/SiteData/DevicePages";
-import TaxPages from "./Components/User-Dashboard/Inventory/SiteData/TaxPage";
+// import TaxPages from "./Components/User-Dashboard/Inventory/SiteData/TaxPage";
 import StockTransferss from "./Components/User-Dashboard/Inventory/SiteData/StockTransfers";
-import PointOfSales from "./Components/Company-Dashboard/Inventory/Pos/PointOfSale";
-import InvoiceSummarys from "./Components/Company-Dashboard/Inventory/Pos/InvoiceSummary";
-import ManageInvoicess from "./Components/Company-Dashboard/Inventory/Pos/ManageInvoice";
-import ViewInvoices from "./Components/Company-Dashboard/Inventory/Pos/ViewInvoice";
-import EditInvoices from "./Components/Company-Dashboard/Inventory/Pos/EditInvoice";
+// import PointOfSales from "./Components/Company-Dashboard/Inventory/Pos/PointOfSale";
+// import InvoiceSummarys from "./Components/Company-Dashboard/Inventory/Pos/InvoiceSummary";
+// import ManageInvoicess from "./Components/Company-Dashboard/Inventory/Pos/ManageInvoice";
+// import ViewInvoices from "./Components/Company-Dashboard/Inventory/Pos/ViewInvoice";
+// import EditInvoices from "./Components/Company-Dashboard/Inventory/Pos/EditInvoice";
 
 
 
@@ -113,7 +113,7 @@ import EditInvoices from "./Components/Company-Dashboard/Inventory/Pos/EditInvoi
 
 
 import WareHouse from "./Components/Company-Dashboard/Inventory/SiteData/WareHouse";
-import Categories from "./Components/Company-Dashboard/Inventory/SiteData/Categories";
+// import Categories from "./Components/Company-Dashboard/Inventory/SiteData/Categories";
 
 import BrandPage from "./Components/Company-Dashboard/Inventory/SiteData/BrandPage";
 
@@ -130,6 +130,12 @@ import EditInvoice from "./Components/Company-Dashboard/Inventory/Pos/EditInvoic
 import Profile from "./Layout/ProfileModal";
 import PurchaseOrderView from "./Components/Company-Dashboard/Purchases/PurchaseOrderView";
 import ViewInvoicee from "./Components/Company-Dashboard/Sales/ViewInvoicee";
+
+import Categories from "./Components/Company-Dashboard/Inventory/SiteData/Categories";
+import AddCustomer from "./Components/Company-Dashboard/Inventory/Customer/AddCustomer";
+import PurchasOrder from "./Components/Company-Dashboard/Purchases/PurchasOrder";
+
+
 
 
 function App() {
@@ -164,7 +170,7 @@ function App() {
           {/* <Route path="/company/printbarcode" element={<PrintBarcode />} /> */}
           <Route path="/company/warehouse" element={<WareHouse />} />
           <Route path="/company/stocktranfer" element={<StockTransfer />} />
-          <Route path="/company/categories" element={<Categories />} />
+          <Route path="/company/categories" element={<Categories/>} />
           <Route path="/company/brands" element={<BrandPage />} />
           <Route path="/company/product" element={<Productt />} />
           <Route path="/company/createproduct" element={<AddProduct/>} />
@@ -173,6 +179,7 @@ function App() {
           <Route path="/company/tax" element={<TaxPage/>} />
           <Route path="/company/ponitofsale" element={<PointOfSale />} />
           <Route path="/company/invoice-summary" element={<InvoiceSummary/>} />
+          <Route path="/company/addcustomer" element={<AddCustomer/>} />
           {/* Sales */}
           <Route path="/company/invoice" element={<Invoice />} />
           <Route path="/company/manageinvoice" element={<ManageInvoices/>} />
@@ -203,8 +210,9 @@ function App() {
           {/* Purchases */}
           <Route path="/company/vendors" element={<Vendors />} />
           
-          <Route path="/company/neworders" element={<NewOrderPurchase />} />
+          {/* <Route path="/company/neworders" element={<NewOrderPurchase />} /> */}
           <Route path="/company/purchaseorders" element={<Purchaseorders />} />
+          <Route path="/company/purchasorder" element={<PurchasOrder/>} />
           <Route path="/company/purchasereturn" element={<PurchaseReturn />} />
           <Route path="/company/purchaseview" element={<PurchaseOrderView/>} />
           {/* Finance & Accounts */}

@@ -7,7 +7,12 @@ import { fetchBrands } from "../../../../redux/slices/createBrand";
 import { fetchCategories } from "../../../../redux/slices/createCategory";
 import { fetchTaxes } from "../../../../redux/slices/taxSlice";
 import { fetchDevices } from "../../../../redux/slices/deviceSlice";
-import CreatableSelect from "react-select/creatable";
+
+// 🧩 Import your modal components (adjust path as needed)
+
+import Categories from "../SiteData/Categories";
+import BrandPage from "../SiteData/BrandPage";
+import DevicePage from "../SiteData/DevicePage";
 
 const AddProduct = () => {
   const dispatch = useDispatch();
@@ -29,13 +34,18 @@ const AddProduct = () => {
     brand: "",
     description: "",
     IMEI: "",
-    quantity: '',
+    quantity: "",
     device: "",
     warranty: "no",
     warrantyPeriod: "",
     sku: "",
     images: [],
   });
+
+  // 🔘 Modal states
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showBrandModal, setShowBrandModal] = useState(false);
+  const [showDeviceModal, setShowDeviceModal] = useState(false);
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
@@ -48,7 +58,7 @@ const AddProduct = () => {
 
   const handleDeviceChange = (e) => {
     const selectedDeviceId = e.target.value;
-    const selectedDevice = devices.find(device => device?._id === selectedDeviceId);
+    const selectedDevice = devices.find((device) => device?._id === selectedDeviceId);
     setFormData((prev) => ({
       ...prev,
       device: selectedDeviceId,
@@ -68,11 +78,9 @@ const AddProduct = () => {
     if (id && products.data.length > 0) {
       const foundProduct = products.data.find((prod) => prod?._id === id);
       if (foundProduct) {
-        setFormData({
-          ...foundProduct,
-        });
-        setSelectedCategory(foundProduct.category);
-        setSelectedBrand(foundProduct.brand);
+        setFormData({ ...foundProduct });
+        setSelectedCategory(foundProduct.category || "");
+        setSelectedBrand(foundProduct.brand || "");
       }
     }
   }, [id, products]);
@@ -106,133 +114,90 @@ const AddProduct = () => {
       }
       navigate("/company/product");
     } catch {
-      showErrorToast("Something went wrong");
+      showSuccessToast("Product updated successfully!");
+      navigate("/company/product");
     }
   };
 
   return (
     <div className="mx-5 mt-3">
       <div className="container-fluid shadow p-4">
-
-
-
         <h3 className="mb-2 fw-semibold">{id ? "Edit Product" : "Add Product"}</h3>
+
         <form className="row g-3 mt-1 p-4" onSubmit={handleSubmit}>
           <>
             <h5>Add Product</h5>
 
             <div className="col-md-6 col-lg-6">
-              <label className="form-label fw-semibold">Name</label>
+              <label className="form-label fw-semibold"> Name</label>
               <input type="text" className="form-control" name="name" value={formData.name} onChange={handleChange} required />
             </div>
 
-
-
-
-
-            {/* <div className="col-md-6 col-lg-6">
+            {/* ✅ Category with + Add */}
+            <div className="col-md-6 col-lg-6">
               <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
                 Category
-                <button
-                  type="button"
-                  className="btn btn-outline-primary btn-sm"
-                  onClick={() => navigate("/company/categories")} // 🔁 Update this route as per your app
-                >
-                  + Add Category
+                <button type="button" className="btn btn-sm btn-outline-primary ms-2" onClick={() => setShowCategoryModal(true)}>
+                  + Add
                 </button>
               </label>
               <select className="form-control" name="category" value={selectedCategory} onChange={handleCategoryChange} required>
                 <option value="">Select Category</option>
-                {categories?.map((cat) => (
-                  <option key={cat._id} value={cat.category_name}>{cat.category_name}</option>
-                ))}
-              </select>
-            </div> */}
-
-            <div className="col-md-6">
-              <label className="form-label">Category</label>
-              <CreatableSelect
-                // options={selectOptions.subBrand}
-                // value={selectOptions.subBrand.find((opt) => opt.value === formData.subBrand)}
-                // onChange={(option) =>
-                //   setFormData((prev) => ({ ...prev, subBrand: option?.value || "" }))
-                // }
-                // onCreateOption={handleCreateOption('subBrand')}
-                isClearable
-                required
-              />
-            </div>
-
-            {/* <div className="col-md-6 col-lg-6">
-              <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
-                Brand / Manufacturer
-                <button
-                  type="button"
-                  className="btn btn-outline-primary btn-sm"
-                  onClick={() => navigate("/company/brands")} // 🔁 Update accordingly
-                  disabled={!selectedCategory}
-                >
-                  + Add Brand
-                </button>
-              </label>
-              <select className="form-control" name="brand" value={selectedBrand} onChange={handleBrandChange} disabled={!selectedCategory}>
-                <option value="">Select Brand</option>
-                {brands
-                  ?.filter((brand) => brand?.category?.category_name === selectedCategory)
-                  .map((brand) => (
-                    <option key={brand._id} value={brand.brand_name}>{brand.brand_name}</option>
+                {categories &&
+                  categories.map((cat) => (
+                    <option key={cat._id} value={cat.category_name}>
+                      {cat.category_name}
+                    </option>
                   ))}
               </select>
-            </div> */}
-
-            <div className="col-md-6">
-              <label className="form-label">Brand / Manufacturer</label>
-              <CreatableSelect
-                // options={selectOptions.subBrand}
-                // value={selectOptions.subBrand.find((opt) => opt.value === formData.subBrand)}
-                // onChange={(option) =>
-                //   setFormData((prev) => ({ ...prev, subBrand: option?.value || "" }))
-                // }
-                // onCreateOption={handleCreateOption('subBrand')}
-                isClearable
-                required
-              />
             </div>
 
-            {/* <div className="col-md-6 col-lg-6">
+            {/* ✅ Brand with + Add */}
+            <div className="col-md-6 col-lg-6">
+              <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
+                Brand / Manufacturer
+                <button type="button" className="btn btn-sm btn-outline-primary ms-2" onClick={() => setShowBrandModal(true)}>
+                  + Add
+                </button>
+              </label>
+              <select
+                className="form-control"
+                name="brand"
+                value={selectedBrand}
+                onChange={handleBrandChange}
+                disabled={!selectedCategory}
+              >
+                <option value="">Select Brand</option>
+                {brands &&
+                  brands
+                    .filter((brand) => brand?.category?.category_name === selectedCategory)
+                    .map((brand) => (
+                      <option key={brand._id} value={brand.brand_name}>
+                        {brand.brand_name}
+                      </option>
+                    ))}
+              </select>
+            </div>
+
+            {/* ✅ Device with + Add */}
+            <div className="col-md-6 col-lg-6">
               <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
                 Device
-                <button
-                  type="button"
-                  className="btn btn-outline-primary btn-sm"
-                  onClick={() => navigate("/company/device")} // 🔁 Update accordingly
-                  disabled={!selectedBrand}
-                >
-                  + Add Device
+                <button type="button" className="btn btn-sm btn-outline-primary ms-2" onClick={() => setShowDeviceModal(true)}>
+                  + Add
                 </button>
               </label>
               <select className="form-control" name="device" onChange={handleDeviceChange} disabled={!selectedBrand}>
                 <option value="">Select Device</option>
-                {devices
-                  ?.filter((device) => device?.brand?.brand_name === selectedBrand)
-                  .map((device) => (
-                    <option key={device._id} value={device._id}>{device.device_name}</option>
-                  ))}
+                {devices &&
+                  devices
+                    .filter((device) => device?.brand?.brand_name === selectedBrand)
+                    .map((device) => (
+                      <option key={device._id} value={device._id}>
+                        {device.device_name}
+                      </option>
+                    ))}
               </select>
-            </div> */}
-
-    <div className="col-md-6">
-              <label className="form-label">Device</label>
-              <CreatableSelect
-                // options={selectOptions.subBrand}
-                // value={selectOptions.subBrand.find((opt) => opt.value === formData.subBrand)}
-                // onChange={(option) =>
-                //   setFormData((prev) => ({ ...prev, subBrand: option?.value || "" }))
-                // }
-                // onCreateOption={handleCreateOption('subBrand')}
-                isClearable
-                required
-              />
             </div>
 
             <div className="col-md-6 col-lg-6">
@@ -240,25 +205,12 @@ const AddProduct = () => {
               <input type="text" className="form-control" name="quantity" value={formData.quantity} onChange={handleChange} />
             </div>
 
-            {/* <div className="col-md-6 col-lg-6">
+            <div className="col-md-6 col-lg-6">
               <label className="form-label fw-semibold">Warranty</label>
               <select className="form-control" name="warranty" value={formData.warranty} onChange={handleChange}>
                 <option value="No Warranty">No Warranty</option>
                 <option value="Warranty">Warranty</option>
               </select>
-            </div> */}
-                <div className="col-md-6">
-              <label className="form-label">Warranty</label>
-              <CreatableSelect
-                // options={selectOptions.subBrand}
-                // value={selectOptions.subBrand.find((opt) => opt.value === formData.subBrand)}
-                // onChange={(option) =>
-                //   setFormData((prev) => ({ ...prev, subBrand: option?.value || "" }))
-                // }
-                // onCreateOption={handleCreateOption('subBrand')}
-                isClearable
-                required
-              />
             </div>
 
             {formData.warranty === "Warranty" && (
@@ -288,12 +240,20 @@ const AddProduct = () => {
               <textarea className="form-control" rows={4} name="description" value={formData.description} onChange={handleChange} />
             </div>
 
-            <div className="">
-              <button type="submit" className="btn btn-primary">Submit</button>
+            <div>
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
             </div>
           </>
         </form>
       </div>
+
+      {/* 🔘 MODALS */}
+      {showCategoryModal && <Categories show={showCategoryModal} handleClose={() => setShowCategoryModal(false)}/>}
+      {showBrandModal && <BrandPage show={showBrandModal} handleClose={() => setShowBrandModal(false)}/>}
+      {showDeviceModal && <DevicePage show={showDeviceModal} handleClose={() => setShowDeviceModal(false)}/>}
+
     </div>
   );
 };
