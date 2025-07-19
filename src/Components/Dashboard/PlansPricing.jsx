@@ -3,12 +3,44 @@ import { BsListUl, BsPencilSquare, BsEye, BsChevronLeft, BsChevronRight } from "
 import { Button, Modal, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PlansPricing.css";
+import { BsTrash } from "react-icons/bs";
+import Swal from "sweetalert2";
+
 const initialPlans = [
-  { name: "Bronze", price: "$9.99", billing: "Monthly", status: "Active", subscribers: "1,243" },
-  { name: "Silver", price: "$14.99", billing: "Monthly", status: "Active", subscribers: "857" },
-  { name: "Gold", price: "$24.99", billing: "Monthly", status: "Active", subscribers: "512" },
-  { name: "Platinum", price: "$49.99", billing: "Monthly", status: "Active", subscribers: "326" },
+  {
+    name: "Bronze",
+    price: "$9.99",
+    billing: "Monthly",
+    status: "Active",
+    subscribers: "1,243",
+    descriptions: ["Basic access", "Community support", "Limited features"],
+  },
+  {
+    name: "Silver",
+    price: "$14.99",
+    billing: "Monthly",
+    status: "Active",
+    subscribers: "857",
+    descriptions: ["Priority email support", "Extended features", "Access to updates"],
+  },
+  {
+    name: "Gold",
+    price: "$24.99",
+    billing: "Monthly",
+    status: "Active",
+    subscribers: "512",
+    descriptions: ["All Silver features", "Advanced analytics", "Custom branding"],
+  },
+  {
+    name: "Platinum",
+    price: "$49.99",
+    billing: "Monthly",
+    status: "Active",
+    subscribers: "326",
+    descriptions: ["All Gold features", "Dedicated account manager", "24/7 support"],
+  },
 ];
+
 const badgeStyles = {
   Bronze: {
     backgroundImage: "linear-gradient(to right, #ad7c59, #cd7f32, #a97142)",
@@ -33,12 +65,15 @@ const badgeStyles = {
 };
 
 const EditPlanModal = ({ show, handleClose, plan, handleSave }) => {
-  const [formData, setFormData] = useState(plan || {});
+  // const [formData, setFormData] = useState(plan || {});
+  const [formData, setFormData] = useState({ ...plan, descriptions: plan?.descriptions || [""] });
 
+
+  
   React.useEffect(() => {
-    setFormData(plan || {});
+    setFormData(plan ? { ...plan, descriptions: plan.descriptions || [""] } : {});
   }, [plan]);
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -46,7 +81,23 @@ const EditPlanModal = ({ show, handleClose, plan, handleSave }) => {
 
   const onSave = () => {
     handleSave(formData);
+
+
+    
   };
+  const handleDescriptionChange = (index, value) => {
+    const updated = [...formData.descriptions];
+    updated[index] = value;
+    setFormData((prev) => ({ ...prev, descriptions: updated }));
+  };
+  
+  const addDescriptionField = () => {
+    setFormData((prev) => ({
+      ...prev,
+      descriptions: [...(prev.descriptions || []), ""],
+    }));
+  };
+  
 
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -70,6 +121,7 @@ const EditPlanModal = ({ show, handleClose, plan, handleSave }) => {
               <option value="Yearly">Yearly</option>
             </Form.Select>
           </Form.Group>
+          
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -90,11 +142,24 @@ const ViewPlanModal = ({ show, handleClose, plan }) => {
         <Modal.Title>View Plan</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p><strong>Plan Name:</strong> {plan.name}</p>
-        <p><strong>Price:</strong> {plan.price}</p>
-        <p><strong>Billing:</strong> {plan.billing}</p>
-        <p><strong>Status:</strong> {plan.status}</p>
-        <p><strong>Subscribers:</strong> {plan.subscribers}</p>
+      <p><strong>Plan Name:</strong> {plan.name}</p>
+<p><strong>Price:</strong> {plan.price}</p>
+<p><strong>Billing:</strong> {plan.billing}</p>
+<p><strong>Status:</strong> {plan.status}</p>
+<p><strong>Subscribers:</strong> {plan.subscribers}</p>
+
+{plan.descriptions && plan.descriptions.length > 0 && (
+  <div>
+    <strong>Descriptions:</strong>
+    <ul>
+      {plan.descriptions.map((desc, i) => (
+        <li key={i}>{desc}</li>
+      ))}
+    </ul>
+  </div>
+)}
+
+        
       </Modal.Body>
       <Modal.Footer>
         <Button variant="dark" onClick={handleClose}>Close</Button>
@@ -110,8 +175,23 @@ const AddPlanModal = ({ show, handleClose, handleAdd }) => {
     billing: "Monthly",
     status: "Active",
     subscribers: "0",
+    descriptions: [""]
+    
+
   });
 
+
+
+  const handleDescriptionChange = (index, value) => {
+    const updated = [...formData.descriptions];
+    updated[index] = value;
+    setFormData((prev) => ({ ...prev, descriptions: updated }));
+  };
+  
+  const addDescriptionField = () => {
+    setFormData((prev) => ({ ...prev, descriptions: [...prev.descriptions, ""] }));
+  };
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -148,9 +228,27 @@ const AddPlanModal = ({ show, handleClose, handleAdd }) => {
             <Form.Label>Status</Form.Label>
             <Form.Select name="status" value={formData.status} onChange={handleChange}>
               <option value="Active">Active</option>
-              <option value="Deprecated">Deprecated</option>
+              <option value="Deprecated">InActive</option>
             </Form.Select>
           </Form.Group>
+          <Form.Group className="mb-3">
+  <Form.Label>Descriptions</Form.Label>
+  {formData.descriptions.map((desc, idx) => (
+    <div key={idx} className="d-flex mb-2 gap-2 align-items-center">
+      <Form.Control
+        value={desc}
+        onChange={(e) => handleDescriptionChange(idx, e.target.value)}
+        placeholder={`Description ${idx + 1}`}
+      />
+      {idx === formData.descriptions.length - 1 && (
+        <Button variant="outline-success" size="sm" onClick={addDescriptionField}>
+          +
+        </Button>
+      )}
+    </div>
+  ))}
+</Form.Group>
+
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -189,6 +287,26 @@ const PlanPricing = () => {
     setSelectedPlan({ ...plan, index });
     setShowModal(true);
   };
+  const handleDeleteClick = (index) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This plan will be deleted permanently!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#aaa",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updatedPlans = [...plans];
+        updatedPlans.splice(index, 1);
+        setPlans(updatedPlans);
+        Swal.fire("Deleted!", "The plan has been deleted.", "success");
+      }
+    });
+  };
+  
+  
 
   const handleModalClose = () => setShowModal(false);
 
@@ -231,20 +349,7 @@ const PlanPricing = () => {
         </Button>
       </div>
 
-      <div className="row g-3 mb-4">
-        <div className="col-md-6">
-          <div className="card h-100 shadow-sm">
-            <div className="card-body d-flex align-items-center gap-3">
-              <BsListUl size={30} className="text-primary" />
-              <div>
-                <h6 className="fw-semibold mb-1">View All Plans</h6>
-                <p className="text-muted small mb-0">Review and manage your existing plans</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+  
       <div className="card">
         <div className="card-body">
           <h6 className="fw-semibold mb-3">View All Plans</h6>
@@ -256,7 +361,10 @@ const PlanPricing = () => {
                   <th>Price</th>
                   <th>Billing Cycle</th>
                   <th>Status</th>
+                  <th>Descriptions</th>
                   <th>Subscribers</th>
+                 
+
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -284,8 +392,24 @@ const PlanPricing = () => {
                         {plan.status}
                       </span>
                     </td>
+
+                    <td>
+  {plan.descriptions && plan.descriptions.length > 0 ? (
+    <ul className="mb-0 ps-3 small">
+      {plan.descriptions.map((desc, idx) => (
+        <li key={idx}>{desc}</li>
+      ))}
+    </ul>
+  ) : (
+    <span className="text-muted">—</span>
+  )}
+</td>
+
                     <td>{plan.subscribers}</td>
                     <td>
+
+
+
                       <div className="d-flex gap-2">
                         <button 
                           className="btn btn-sm text-warning p-0" 
@@ -301,6 +425,21 @@ const PlanPricing = () => {
                         >
                           <BsEye size={18} />
                         </button>
+                      
+                        <button
+  className="btn btn-sm text-danger p-0"
+  onClick={() => handleDeleteClick(indexOfFirstItem + i)}
+  title="Delete"
+>
+  <BsTrash size={18} />
+</button>
+
+
+
+
+
+
+                   
                       </div>
                     </td>
                   </tr>

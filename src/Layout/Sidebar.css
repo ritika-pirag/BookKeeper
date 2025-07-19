@@ -29,6 +29,26 @@
   border-radius: 6px;
 }
 
+.sidebar::-webkit-scrollbar {
+  width: 2px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+
+
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #53b2a5;
+  border-radius: 6px;
+}
+
+
+
+
 .sidebar-header {
   background-color: #032D45;
 }
