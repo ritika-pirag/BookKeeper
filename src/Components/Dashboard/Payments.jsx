@@ -156,7 +156,7 @@ const Payments = () => {
         <div className="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
           <div>
             <h4 className="fw-bold d-flex align-items-center gap-2">
-              <span role="img" aria-label="coins">🪙</span> Payments
+              <span role="img" aria-label="coins"></span> Payments
             </h4>
             <p className="text-muted mb-0">Manage all your payment transactions</p>
           </div>
