@@ -65,11 +65,11 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
   const getMenuItems = () => {
     const menuItems = {
       SuperAdmin: [
-        { to: "/dashboard", icon: "fas fa-th-large", label: "Dashboard" },
-        { to: "/superadmin/company", icon: "fas fa-store", label: "Company" },
-        { to: "/superadmin/planpricing", icon: "fas fa-industry", label: "Plans & Pricing" },
-        { to: "/superadmin/requestplan", icon: "fas fa-boxes-stacked", label: "Request Plan" },
-        { to: "/superadmin/payments", icon: "fas fa-chart-line", label: "Payments" },
+        { to: "/dashboard",  label: "Dashboard" },
+        { to: "/superadmin/company", label: "Company" },
+        { to: "/superadmin/planpricing", label: "Plans & Pricing" },
+        { to: "/superadmin/requestplan",  label: "Request Plan" },
+        { to: "/superadmin/payments", label: "Payments" },
       ],
       Company: [
         {
@@ -83,8 +83,8 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "sales",
           icon: "fas fa-chart-line",
           items: [
-            { to: "/company/Customer", icon: "fas fa-file-invoice", label: "Customer" },
-            { to: "/company/Invoice", icon: "fas fa-file-invoice-dollar", label: "Invoice" },
+            { to: "/company/Customer", label: "Customer" },
+            { to: "/company/Invoice", label: "Invoice" },
           ],
         },
         {
