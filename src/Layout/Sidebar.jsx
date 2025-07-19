@@ -174,36 +174,25 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           items: [{ to: "/company/companyinfo",  label: "Company Info" }],
         },
       ],
-      User: [ {
-          type: "section",
-          title: "User Dashboard",
-          key: "userdash",
-          icon: "fas fa-th-large",
-          items: [
-            { to: "/user/dashboard", label: "Dashboard" }
-          ]
+      User: [  {
+          to: "/company/dashboard",
+          icon: "fas fa-tachometer-alt",
+          label: "Dashboard",
         },
-        {
-          type: "section",
-          title: "Inventory",
-          key: "userinventory",
-          icon: "fas fa-box",
-          items: [
-            { to: "/user/products",  label: "Products" },
-            { to: "/user/manageproduct",  label: "Manage Product" }
-          ]
-        },
+ 
         {
           type: "section",
           title: "Sales",
           key: "usersales",
           icon: "fas fa-shopping-cart",
           items: [
-            { to: "/user/invoices", label: "Invoices" },
-            { to: "/user/pos", label: "POS" },
+       
+            { to: "/user/invoiceforms",  label: "New Invoice" },
+            { to: "/user/invoices", label: "Manage Invoice" },
+            // { to: "/user/pos", icon: "fas fa-desktop", label: "POS" },
             { to: "/user/onlineorders",  label: "Online Orders" },
             { to: "/user/estimates", label: "Estimates" },
-            { to: "/user/deliverychallans",  label: "Delivery Challans" }
+            { to: "/user/deliverychallans", label: "Delivery Challans" }
           ]
         },
         {
@@ -212,12 +201,40 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "userpurchases",
           icon: "fas fa-shopping-basket",
           items: [
-            { to: "/user/purchaseorder", label: "Purchase Order" },
-            { to: "/user/expense", label: "Expense" },
-            { to: "/user/invoice",  label: "Invoice" },
-            { to: "/user/paymentmode", label: "Payment Mode" }
+            { to: "/user/purchaseorder",  label: " New Orders " },
+            { to: "/user/invoice",  label: "Manage Orders" },
+            { to: "/user/expense",  label: "Expense" },
+            { to: "/user/paymentmode",  label: "Payment Mode" }
           ]
         },
+
+        {
+          type: "section",
+          title: "POS",
+          key: "inventory",
+          icon: "fas fa-box",
+          items: [
+            { to: "/user/warehouse",  label: "Warehouse" },
+            { to: "/user/stocktranfer",  label: "StockTransfer" },
+            { to: "/user/categories", label: "Categories" },
+            // { to: "/user/brands", icon: "fas fa-trademark", label: "Brands" },
+            // { to: "/user/device", icon: "fas fa-industry", label: "device" },
+            { to: "/user/product",  label: "Product" },
+         
+          ]
+        },
+
+        {
+          type: "section",
+          title: "Inventory",
+          key: "userinventory",
+          icon: "fas fa-box",
+          items: [
+            // { to: "/user/products", icon: "fas fa-cube", label: "Products" },
+            { to: "/user/manageproduct",  label: "Manage Product" }
+          ]
+        },
+
         {
           type: "section",
           title: "Finance & Accounts",
@@ -227,7 +244,23 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             { to: "/user/daybook", label: "DayBook" },
             { to: "/user/balancesheet",  label: "Balance Sheet" },
             { to: "/user/cashflow",  label: "Cash Flow" },
-            { to: "/user/accountstatement", label: "Account Statement" }
+            { to: "/user/accountstatement",  label: "Account Statement" }
+          ]
+        },
+
+        {
+          type: "section",
+          title: "GST Filing",
+          key: "gst",
+          icon: "fas fa-file-alt",
+          items: [
+            { to: "/user/taxdata", label: "Tax Report" },
+       
+            { to: "/user/gstdata", label: "GST Returns" },
+      
+            { to: "/user/itcdata",  label: "ITC Report" },
+            { to: "/user/tds",  label: "TDS/TCS" },
+            { to: "/user/eway",  label: "e-Way Bill" }
           ]
         },
         {
@@ -239,7 +272,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
             { to: "/user/salesreport",  label: "Sales Report" },
             { to: "/user/purchasereport",  label: "Purchase Report" },
             { to: "/user/inventoryreport",  label: "Inventory Report" },
-            { to: "/user/invoicereport",label: "Invoice Report" },
+            { to: "/user/invoicereport",  label: "Invoice Report" },
             { to: "/user/taxreport", label: "Tax Report" }
           ]
         }]
@@ -319,7 +352,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
       </div>
 
       {/* Added scrollable container */}
-      <div className="overflow-auto  scrollbar-hidden flex-grow-2 " style={{ minHeight: 0, }}>
+      <div className="overflow-auto   flex-grow-2 " style={{ minHeight: 0, }}>
         <div className="p-2">{getMenuItems()}</div>
       </div>
 
