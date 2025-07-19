@@ -111,8 +111,8 @@ const CompanyInfo = () => {
             <Form.Control type="text" placeholder="Company Name *" className="mb-3" />
             <Form.Control type="email" placeholder="Company Email Address *" className="mb-3" />
             <Form.Control type="tel" placeholder="Phone Number *" className="mb-3" />
-            <Form.Control type="text" placeholder="Fax *" className="mb-3" />
-            <Form.Control type="text" placeholder="Website *" className="mb-3" />
+            {/* <Form.Control type="text" placeholder="Fax *" className="mb-3" />
+            <Form.Control type="text" placeholder="Website *" className="mb-3" /> */}
           </Form.Group>
 
           <hr className="my-4" />

@@ -5,27 +5,33 @@ const StockTransfer = () => {
   const [formData, setFormData] = useState({
     transferFrom: "NewYork Warehouse",
     product: "",
+    quantity: "",
+    bulkTransfer: false,
     transferTo: "NewYork Warehouse",
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+    const val = type === "checkbox" ? checked : value;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: val,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Stock Transfer Submitted:", formData);
+    // You can integrate submission logic here (API call etc.)
   };
 
   return (
     <div className="py-4 px-4" style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
-      <Card className="p-4  w-100" style={{ backgroundColor: "#fff", borderRadius: 8 }}>
+      <Card className="p-4 w-100" style={{ backgroundColor: "#fff", borderRadius: 8 }}>
         <h5 style={{ color: "#002d4d", marginBottom: 24 }}>Stock Transfer</h5>
         <Form onSubmit={handleSubmit}>
+          
+          {/* 🔁 Transfer From */}
           <Row className="mb-3">
             <Form.Label column sm={2}>
               Transfer From
@@ -43,21 +49,53 @@ const StockTransfer = () => {
             </Col>
           </Row>
 
+          {/* 📦 Bulk Transfer Toggle */}
           <Row className="mb-3">
-            <Form.Label column sm={2}>
-              Products
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                type="text"
-                name="product"
-                value={formData.product}
+            <Form.Label column sm={2}>Bulk Transfer</Form.Label>
+            <Col sm={10} className="d-flex align-items-center">
+              <Form.Check
+                type="checkbox"
+                name="bulkTransfer"
+                label="Enable Bulk Transfer"
+                checked={formData.bulkTransfer}
                 onChange={handleChange}
-                placeholder="Enter product name"
               />
             </Col>
           </Row>
 
+          {/* 🔢 Product & Quantity — only if bulkTransfer is OFF */}
+          {!formData.bulkTransfer && (
+            <>
+              <Row className="mb-3">
+                <Form.Label column sm={2}>Product</Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    type="text"
+                    name="product"
+                    value={formData.product}
+                    onChange={handleChange}
+                    placeholder="Enter product name"
+                  />
+                </Col>
+              </Row>
+
+              <Row className="mb-3">
+                <Form.Label column sm={2}>Quantity</Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    type="number"
+                    name="quantity"
+                    value={formData.quantity}
+                    onChange={handleChange}
+                    placeholder="Enter quantity"
+                    min="1"
+                  />
+                </Col>
+              </Row>
+            </>
+          )}
+
+          {/* 🎯 Transfer To */}
           <Row className="mb-4">
             <Form.Label column sm={2}>
               Transfer To
@@ -75,6 +113,7 @@ const StockTransfer = () => {
             </Col>
           </Row>
 
+          {/* ✅ Submit */}
           <div className="text-end">
             <Button
               type="submit"
