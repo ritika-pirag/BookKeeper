@@ -4,12 +4,6 @@
   width: 250px;
   border-right: none;
   z-index: 1000 !important;
-<<<<<<< HEAD
-
-  overflow-y: auto;  /* Add this */
-  scrollbar-width: none; /* Optional: make it thinner in Firefox */
-  
-=======
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -19,6 +13,12 @@
   flex: 1;
   overflow-y: auto;
   padding-bottom: 20px;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  background-color: #032D45;
+  width: 100%;
 }
 
 /* Custom scrollbar styling */
@@ -33,7 +33,6 @@
 .sidebar-menu-container::-webkit-scrollbar-thumb {
   background-color: #53b2a5;
   border-radius: 6px;
->>>>>>> b0c7b765d5b261cf7ee548edd0e1ce5ba27133c8
 }
 
 .sidebar::-webkit-scrollbar {
@@ -44,17 +43,10 @@
   background: transparent;
 }
 
-
-
-
-
 .sidebar::-webkit-scrollbar-thumb {
   background-color: #53b2a5;
   border-radius: 6px;
 }
-
-
-
 
 .sidebar-header {
   background-color: #032D45;
@@ -229,3 +221,25 @@
   transform: rotate(180deg);
   transition: 0.3s ease;
 }
+
+/* Logout button styling */
+.logout-btn {
+  border-color: #53b2a5 !important;
+  color: #53b2a5 !important;
+  padding: 8px 16px !important;
+  font-size: 15px !important;
+}
+
+.logout-btn:hover {
+  background-color: #53b2a5 !important;
+  color: white !important;
+}
+
+/* jfdsjfks */
+
+
+
+
+
+
+
