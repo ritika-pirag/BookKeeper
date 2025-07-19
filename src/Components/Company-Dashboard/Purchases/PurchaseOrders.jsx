@@ -54,7 +54,8 @@ const PurchaseOrders = () => {
       {/* Header and New Button */}
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h5 className="mb-0">Purchase Orders</h5>
-        <Button variant="primary" size="sm" onClick={() => setShowModal(true)}>
+        <Button  size="sm" onClick={() => setShowModal(true)} 
+          style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}>
           + New Order
         </Button>
       </div>
@@ -79,7 +80,7 @@ const PurchaseOrders = () => {
           <thead className="table-light">
             <tr>
               <th>No</th>
-              <th>Order</th>
+              <th>Bill No</th>
               <th>Supplier</th>
               <th>Date</th>
               <th>Amount</th>

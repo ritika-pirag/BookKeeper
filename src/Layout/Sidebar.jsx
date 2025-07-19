@@ -47,7 +47,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
   );
 
   const renderCollapsibleSection = (title, key, items, icon) => (
-    <div className="mb-2" key={key}>
+    <div className="mb-2 ms-2" key={key}>
       <div onClick={() => toggleMenu(key)} style={sectionHeaderStyle}>
         <span className="d-flex align-items-center">
           <i className={`${icon} me-3`} style={sectionIconStyle}></i>
@@ -83,8 +83,8 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "sales",
           icon: "fas fa-chart-line",
           items: [
-            { to: "/company/InvoiceForm", icon: "fas fa-cash-register", label: "New Sale Add" },
-            { to: "/company/Invoice", icon: "fas fa-file-invoice", label: "Manage Sale" },
+            { to: "/company/InvoiceForm", label: "New Sale Add" },
+            { to: "/company/Invoice",  label: "Manage Sale" },
           ],
         },
         {
@@ -93,10 +93,10 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "purchases",
           icon: "fas fa-shopping-basket",
           items: [
-            { to: "/company/vendors", icon: "fas fa-file-alt", label: "Vendors" },
-            { to: "/company/NewOrders", icon: "fas fa-cash-register", label: "New Orders" },
-            { to: "/company/purchaseorders", icon: "fas fa-file-alt", label: "Manage Purchase" },
-            { to: "/company/purchasereturn", icon: "fas fa-file-alt", label: "Purchase Return" },
+            { to: "/company/vendors", label: "Vendors" },
+            // { to: "/company/NewOrders", label: "New Orders" },
+            { to: "/company/purchaseorders", label: " Purchase Order" },
+            { to: "/company/purchasereturn",  label: "Purchase Return" },
           ],
         },
         {
@@ -105,14 +105,14 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "inventory",
           icon: "fas fa-box",
           items: [
-            { to: "/company/warehouse", icon: "fas fa-industry", label: "Warehouse" },
-            { to: "/company/stocktranfer", icon: "fas fa-industry", label: "StockTransfer" },
-            { to: "/company/categories", icon: "fas fa-tags", label: "Categories" },
-            { to: "/company/brands", icon: "fas fa-trademark", label: "Brands" },
-            { to: "/company/device", icon: "fas fa-industry", label: "Device" },
-            { to: "/company/tax", icon: "fas fa-box-open", label: "Tax" },
-            { to: "/company/product", icon: "fas fa-box-open", label: "Product" },
-            { to: "/company/ponitofsale", icon: "fas fa-file-invoice", label: "POS Screen" },
+            { to: "/company/warehouse",  label: "Warehouse" },
+            { to: "/company/stocktranfer",  label: "StockTransfer" },
+            { to: "/company/categories", label: "Categories" },
+            { to: "/company/brands", label: "Brands" },
+            { to: "/company/device", label: "Device" },
+            { to: "/company/tax",  label: "Tax" },
+            { to: "/company/product",  label: "Product" },
+            { to: "/company/ponitofsale",  label: "POS Screen" },
           ],
         },
         { to: "/company/managestock", icon: "fas fa-table", label: "Inventory" },
@@ -122,11 +122,11 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "gst",
           icon: "fas fa-file-alt",
           items: [
-            { to: "/company/taxreport", icon: "fas fa-circle", label: "Tax Report" },
-            { to: "/company/gstreturns", icon: "fas fa-book", label: "GST Returns" },
-            { to: "/company/tdstcs", icon: "fas fa-file-alt", label: "TDS/TCS" },
-            { to: "/company/itcreport", icon: "fas fa-book-open", label: "ITC Report" },
-            { to: "/company/ewaybill", icon: "fas fa-th", label: "e-Way Bill" },
+            { to: "/company/taxreport", label: "Tax Report" },
+            { to: "/company/gstreturns", label: "GST Returns" },
+            { to: "/company/tdstcs",  label: "TDS/TCS" },
+            { to: "/company/itcreport",  label: "ITC Report" },
+            { to: "/company/ewaybill", label: "e-Way Bill" },
           ],
         },
         {
@@ -135,10 +135,10 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "finance",
           icon: "fas fa-wallet",
           items: [
-            { to: "/company/daybook", icon: "fas fa-book", label: "DayBook" },
-            { to: "/company/expense", icon: "fas fa-file-alt", label: "Expenses" },
-            { to: "/company/journalentries", icon: "fas fa-clipboard-list", label: "Journal Entries" },
-            { to: "/company/ledger", icon: "fas fa-book-open", label: "Ledger" },
+            { to: "/company/daybook", label: "DayBook" },
+            { to: "/company/expense",label: "Expenses" },
+            { to: "/company/journalentries", label: "Journal Entries" },
+            { to: "/company/ledger",  label: "Ledger" },
           ],
         },
         {
@@ -147,12 +147,12 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "reports",
           icon: "fas fa-chart-pie",
           items: [
-            { to: "/company/salesreport", icon: "fas fa-book", label: "Sales Report" },
-            { to: "/company/taxreport", icon: "fas fa-book-open", label: "Tax Report" },
-            { to: "/company/product", icon: "fas fa-box-open", label: "Product" },
-            { to: "/company/balancesheet", icon: "fas fa-chart-bar", label: "Balance Sheet" },
-            { to: "/company/cashflow", icon: "fas fa-search", label: "Cash Flow" },
-            { to: "/company/profitloss", icon: "fas fa-stopwatch", label: "Profit & Loss" },
+            { to: "/company/salesreport",  label: "Sales Report" },
+            { to: "/company/taxreport",  label: "Tax Report" },
+            { to: "/company/product", label: "Product" },
+            { to: "/company/balancesheet", label: "Balance Sheet" },
+            { to: "/company/cashflow",label: "Cash Flow" },
+            { to: "/company/profitloss", label: "Profit & Loss" },
           ],
         },
         {
@@ -161,9 +161,9 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           key: "users",
           icon: "fas fa-users-cog",
           items: [
-            { to: "/company/users", icon: "fas fa-user-friends", label: "Users" },
-            { to: "/company/rolespermissions", icon: "fas fa-link", label: "Roles & Permissions" },
-            { to: "/company/deleteaccountrequests", icon: "fas fa-trash", label: "User Request" },
+            { to: "/company/users",  label: "Users" },
+            { to: "/company/rolespermissions",  label: "Roles & Permissions" },
+            { to: "/company/deleteaccountrequests",  label: "User Request" },
           ],
         },
         {
@@ -171,11 +171,78 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           title: "Settings",
           key: "settings",
           icon: "fas fa-cog",
-          items: [{ to: "/company/companyinfo", icon: "fas fa-globe", label: "Company Info" }],
+          items: [{ to: "/company/companyinfo",  label: "Company Info" }],
         },
       ],
-      // Keep your User role as is
-      User: [/* ... unchanged ... */]
+      User: [ {
+          type: "section",
+          title: "User Dashboard",
+          key: "userdash",
+          icon: "fas fa-th-large",
+          items: [
+            { to: "/user/dashboard", label: "Dashboard" }
+          ]
+        },
+        {
+          type: "section",
+          title: "Inventory",
+          key: "userinventory",
+          icon: "fas fa-box",
+          items: [
+            { to: "/user/products",  label: "Products" },
+            { to: "/user/manageproduct",  label: "Manage Product" }
+          ]
+        },
+        {
+          type: "section",
+          title: "Sales",
+          key: "usersales",
+          icon: "fas fa-shopping-cart",
+          items: [
+            { to: "/user/invoices", label: "Invoices" },
+            { to: "/user/pos", label: "POS" },
+            { to: "/user/onlineorders",  label: "Online Orders" },
+            { to: "/user/estimates", label: "Estimates" },
+            { to: "/user/deliverychallans",  label: "Delivery Challans" }
+          ]
+        },
+        {
+          type: "section",
+          title: "Purchases",
+          key: "userpurchases",
+          icon: "fas fa-shopping-basket",
+          items: [
+            { to: "/user/purchaseorder", label: "Purchase Order" },
+            { to: "/user/expense", label: "Expense" },
+            { to: "/user/invoice",  label: "Invoice" },
+            { to: "/user/paymentmode", label: "Payment Mode" }
+          ]
+        },
+        {
+          type: "section",
+          title: "Finance & Accounts",
+          key: "userfinance",
+          icon: "fas fa-wallet",
+          items: [
+            { to: "/user/daybook", label: "DayBook" },
+            { to: "/user/balancesheet",  label: "Balance Sheet" },
+            { to: "/user/cashflow",  label: "Cash Flow" },
+            { to: "/user/accountstatement", label: "Account Statement" }
+          ]
+        },
+        {
+          type: "section",
+          title: "Reports",
+          key: "userreports",
+          icon: "fas fa-chart-pie",
+          items: [
+            { to: "/user/salesreport",  label: "Sales Report" },
+            { to: "/user/purchasereport",  label: "Purchase Report" },
+            { to: "/user/inventoryreport",  label: "Inventory Report" },
+            { to: "/user/invoicereport",label: "Invoice Report" },
+            { to: "/user/taxreport", label: "Tax Report" }
+          ]
+        }]
     };
 
     return menuItems[role]?.map((item) =>
@@ -251,16 +318,20 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         </button>
       </div>
 
-      <div className="p-2">{getMenuItems()}</div>
+      {/* Added scrollable container */}
+      <div className="overflow-auto  scrollbar-hidden flex-grow-2 " style={{ minHeight: 0, }}>
+        <div className="p-2">{getMenuItems()}</div>
+      </div>
+
       <div className="p-3">
         <Link to="/" className="text-decoration-none">
           <button
             className="btn btn-outline w-100"
             style={{
-              borderColor: "#53b2a5",
-              color: "#53b2a5",
-              padding: "8px 16px",
-              fontSize: "15px",
+           borderColor: "#53b2a5",
+                color: "#53b2a5",
+                padding: "8px 16px",
+                fontSize: "15px",
             }}
           >
             <i className="fas fa-sign-out-alt me-2"></i> Logout

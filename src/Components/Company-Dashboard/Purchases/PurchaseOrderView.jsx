@@ -3,7 +3,7 @@ import { Row, Col, Table, Button, Badge } from 'react-bootstrap';
 import logo from  "../../../assets/zirakTechh.png"
 import {
   FaEdit, FaPrint, FaEye, FaMoneyBill, FaPaperPlane,
-  FaGlobe, FaExchangeAlt, FaTimes
+  FaGlobe, FaExchangeAlt, FaTimes,FaCaretUp
 } from 'react-icons/fa';
 
 const PurchaseOrderView = () => {
@@ -34,6 +34,16 @@ const PurchaseOrderView = () => {
       <Button variant="danger" className="d-flex align-items-center gap-1">
         <FaTimes /> <span>Cancel</span>
       </Button>
+         <Button variant="success" className="d-flex align-items-center gap-1">
+                    <FaEdit /> <span>Delivery Note</span>
+                  </Button>
+                  <Button variant="info" className="d-flex align-items-center gap-1">
+                    <FaEye/> <span>Proforma Invoice</span>
+                  </Button>
+                  <Button variant="secondary" className="d-flex align-items-center gap-1">
+                    <FaCaretUp /> <span>Copy Invoice</span>
+                  </Button>
+      
     </div>
   </Col>
 

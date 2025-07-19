@@ -181,7 +181,7 @@ const NewOrder = () => {
           </tbody>
         </table>
         <Button
-          className="d-flex align-items-center mt-2"
+          className="d-flex align-items-center mt-4 mb-2"
           style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
           onClick={addRow}
         >

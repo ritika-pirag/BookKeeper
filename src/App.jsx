@@ -40,7 +40,7 @@ import TrialBalance from "./Components/Company-Dashboard/Finance&Accounts/TrialB
 import CustomerList from "./Components/Company-Dashboard/ClientsVendors/CustomerList";
 // import Purchasedataa from "./Components/Company-Dashboard/Reports/Purchasedata";
 // import salesreport from "./Components/Company-Dashboard/Reports/Salesreport";
-import NewOrderPurchase from "./Components/Company-Dashboard/Purchases/NewOrderPurchase";
+// import NewOrderPurchase from "./Components/Company-Dashboard/Purchases/NewOrderPurchase";
 import Taxreport from "./Components/Company-Dashboard/Reports/Taxreports";
 import BalanceSheet from "./Components/Company-Dashboard/Reports/BalanceSheet";
 import CashFlow from "./Components/Company-Dashboard/Reports/CashFlow";
@@ -204,7 +204,7 @@ function App() {
           {/* Purchases */}
           <Route path="/company/vendors" element={<Vendors />} />
           
-          <Route path="/company/neworders" element={<NewOrderPurchase />} />
+          {/* <Route path="/company/neworders" element={<NewOrderPurchase />} /> */}
           <Route path="/company/purchaseorders" element={<Purchaseorders />} />
           <Route path="/company/purchasereturn" element={<PurchaseReturn />} />
           <Route path="/company/purchaseview" element={<PurchaseOrderView/>} />
