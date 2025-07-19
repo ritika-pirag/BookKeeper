@@ -181,13 +181,8 @@ const Users = () => {
               </Col>
               <Col xs={6} md={3} className="text-end">
                 <Button
-                  style={{
-                    background: "#FFA94D",
-                    border: "none",
-                    fontWeight: 500,
-                    fontSize: 17,
-                    padding: "7px 18px",
-                  }}
+              
+                  style={{ whiteSpace: "nowrap", backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
                   onClick={handleAdd}
                 >
                   <FaPlus className="me-2 mb-1" />

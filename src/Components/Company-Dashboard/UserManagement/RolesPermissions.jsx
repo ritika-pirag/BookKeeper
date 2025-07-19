@@ -159,15 +159,7 @@ const RolesPermissions = () => {
             <FaFileExcel color="#2ecc71" />
           </Button>
           <Button
-            style={{
-              background: "#FFA94D",
-              border: "none",
-              fontWeight: 500,
-              fontSize: 16,
-              padding: "7px 16px",
-              borderRadius: 6,
-              color: "#fff",
-            }}
+             style={{ whiteSpace: "nowrap", backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
             onClick={handleAdd}
           >
             + Add Role
@@ -377,165 +369,167 @@ const RolesPermissions = () => {
       </Modal>
 
       {/* Edit Role Modal - Updated Design */}
-     <Modal show={showEdit} onHide={() => setShowEdit(false)} centered size="lg">
-      <Modal.Header closeButton style={{ borderBottom: "1px solid #e9ecef" }}>
-        <Modal.Title style={{ fontWeight: 600, fontSize: 18 }}>Role Edit</Modal.Title>
-      </Modal.Header>
+{/* Edit Role Modal - Updated Design */}
+<Modal show={showEdit} onHide={() => setShowEdit(false)} centered size="lg">
+  <Modal.Header closeButton style={{ borderBottom: "1px solid #e9ecef" }}>
+    <Modal.Title style={{ fontWeight: 600, fontSize: 18 }}>Role Edit</Modal.Title>
+  </Modal.Header>
 
-      <Modal.Body style={{ padding: "20px" }}>
-        <Form>
-          <Form.Group className="mb-3">
-            <Form.Label style={{ fontWeight: 500 }}>Name *</Form.Label>
-            <Form.Control
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              style={{
-                border: "1px solid #e0e0e0",
-                borderRadius: 6,
-                padding: "8px 12px",
-                fontSize: 14
-              }}
-            />
-          </Form.Group>
+  <Modal.Body style={{ padding: "20px" }}>
+    <Form>
+      <Form.Group className="mb-3">
+        <Form.Label style={{ fontWeight: 500 }}>Name *</Form.Label>
+        <Form.Control
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          style={{
+            border: "1px solid #e0e0e0",
+            borderRadius: 6,
+            padding: "8px 12px",
+            fontSize: 14
+          }}
+        />
+      </Form.Group>
 
-          {/* Department Tags */}
-          <div className="mb-4">
-            <div className="d-flex flex-wrap gap-2">
-              {["Staff", "CRM", "Project", "HRM", "Account", "POS"].map((dept) => (
-                <Button
-                  key={dept}
-                  variant={dept === "Staff" ? "success" : "outline-success"}
-                  size="sm"
+   {/* Department Tags */}
+<div className="mb-4">
+  <div className="d-flex flex-wrap gap-2">
+    {["Inventory", "POS", "Report", "Finance", "Account"].map((dept) => (
+      <Button
+        key={dept}
+        variant="outline"
+        size="sm"
+        style={{
+          background: dept === "Inventory" ? "#53b2a5" : "#fff",
+          color: dept === "Inventory" ? "#fff" : "#53b2a5",
+          border: "1px solid #53b2a5",
+          borderRadius: 4,
+          fontSize: 12,
+          fontWeight: 500,
+          padding: "4px 12px"
+        }}
+      >
+        {dept}
+      </Button>
+    ))}
+  </div>
+</div>
+
+
+      {/* Permissions Section */}
+      <div className="mb-3">
+        <h6 className="fw-semibold mb-3" style={{ fontSize: 14 }}>
+          Assign General Permission to Roles
+        </h6>
+
+        <div style={{ overflowX: "auto", maxHeight: "300px" }}>
+          <Table responsive="sm" size="sm" style={{ fontSize: 13 }}>
+            <thead>
+              <tr style={{ background: "#f8f9fa" }}>
+                <th style={{ width: 30, border: "none", padding: "8px 12px" }}>
+                  <Form.Check />
+                </th>
+                <th style={{ border: "none", fontWeight: 600, padding: "8px 12px" }}>
+                  MODULE
+                </th>
+                <th
                   style={{
-                    background: dept === "Staff" ? "#28a745" : "#fff",
-                    color: dept === "Staff" ? "#fff" : "#28a745",
-                    border: "1px solid #28a745",
-                    borderRadius: 4,
-                    fontSize: 12,
-                    fontWeight: 500,
-                    padding: "4px 12px"
+                    border: "none",
+                    fontWeight: 600,
+                    padding: "8px 12px",
+                    textAlign: "center"
                   }}
                 >
-                  {dept}
-                </Button>
+                  PERMISSIONS
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { name: "User", permissions: ["Manage", "Create", "Edit", "Delete"] },
+                { name: "Role", permissions: ["Manage", "Create", "Edit", "Delete"] },
+                { name: "Client", permissions: ["Manage", "Create", "Edit", "Delete"] },
+                { name: "Product & service", permissions: ["Manage", "Create", "Edit", "Delete"] },
+                { name: "Constant unit", permissions: ["Manage", "Create", "Edit", "Delete"] },
+                { name: "Constant tax", permissions: ["Manage", "Create", "Edit", "Delete"] },
+                { name: "Constant category", permissions: ["Manage", "Create", "Edit", "Delete"] },
+                { name: "Zoom meeting", permissions: ["Manage", "Create", "Delete", "Show"] },
+                { name: "Company settings", permissions: ["Manage"] },
+                { name: "Language", permissions: [] },
+                { name: "Permission", permissions: ["Manage", "Create", "Edit", "Delete"] }
+              ].map((module, idx) => (
+                <tr key={idx} style={{ borderBottom: "1px solid #f0f0f0" }}>
+                  <td style={{ padding: "8px 12px", border: "none" }}>
+                    <Form.Check />
+                  </td>
+                  <td
+                    style={{
+                      padding: "8px 12px",
+                      border: "none",
+                      fontWeight: 500,
+                      minWidth: 140
+                    }}
+                  >
+                    {module.name}
+                  </td>
+                  <td style={{ padding: "8px 12px", border: "none" }}>
+                    <div className="d-flex flex-wrap gap-2 justify-content-center">
+                      {module.permissions.map((perm) => (
+                        <Form.Check
+                          key={`${module.name}-${perm}`}
+                          type="checkbox"
+                          id={`${module.name}-${perm}`}
+                          label={perm}
+                          style={{
+                            fontSize: 12,
+                            marginRight: 10,
+                            color: "#53b2a5",
+                            minWidth: 80
+                          }}
+                          defaultChecked={["Manage", "Create", "Edit"].includes(perm)}
+                        />
+                      ))}
+                    </div>
+                  </td>
+                </tr>
               ))}
-            </div>
-          </div>
+            </tbody>
+          </Table>
+        </div>
+      </div>
+    </Form>
+  </Modal.Body>
 
-          {/* Permissions Section */}
-          <div className="mb-3">
-            <h6 className="fw-semibold mb-3" style={{ fontSize: 14 }}>
-              Assign General Permission to Roles
-            </h6>
+  <Modal.Footer style={{ borderTop: "1px solid #e9ecef", padding: "15px 20px" }}>
+    <Button
+      variant="secondary"
+      onClick={() => setShowEdit(false)}
+      style={{
+        background: "#6c757d",
+        border: "none",
+        borderRadius: 4,
+        padding: "8px 20px",
+        fontWeight: 500
+      }}
+    >
+      Cancel
+    </Button>
+    <Button
+      onClick={handleEditSave}
+      disabled={!form.name}
+      style={{
+        background: "#53b2a5",
+        border: "none",
+        borderRadius: 4,
+        padding: "8px 20px",
+        fontWeight: 500
+      }}
+    >
+      Update
+    </Button>
+  </Modal.Footer>
+</Modal>
 
-            <div style={{ overflowX: "auto", maxHeight: "300px" }}>
-              <Table responsive="sm" size="sm" style={{ fontSize: 13 }}>
-                <thead>
-                  <tr style={{ background: "#f8f9fa" }}>
-                    <th style={{ width: 30, border: "none", padding: "8px 12px" }}>
-                      <Form.Check />
-                    </th>
-                    <th style={{ border: "none", fontWeight: 600, padding: "8px 12px" }}>
-                      MODULE
-                    </th>
-                    <th
-                      style={{
-                        border: "none",
-                        fontWeight: 600,
-                        padding: "8px 12px",
-                        textAlign: "center"
-                      }}
-                    >
-                      PERMISSIONS
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    { name: "User", permissions: ["Manage", "Create", "Edit", "Delete"] },
-                    { name: "Role", permissions: ["Manage", "Create", "Edit", "Delete"] },
-                    { name: "Client", permissions: ["Manage", "Create", "Edit", "Delete"] },
-                    { name: "Product & service", permissions: ["Manage", "Create", "Edit", "Delete"] },
-                    { name: "Constant unit", permissions: ["Manage", "Create", "Edit", "Delete"] },
-                    { name: "Constant tax", permissions: ["Manage", "Create", "Edit", "Delete"] },
-                    { name: "Constant category", permissions: ["Manage", "Create", "Edit", "Delete"] },
-                    { name: "Zoom meeting", permissions: ["Manage", "Create", "Delete", "Show"] },
-                    { name: "Company settings", permissions: ["Manage"] },
-                    { name: "Language", permissions: [] },
-                    { name: "Permission", permissions: ["Manage", "Create", "Edit", "Delete"] }
-                  ].map((module, idx) => (
-                    <tr key={idx} style={{ borderBottom: "1px solid #f0f0f0" }}>
-                      <td style={{ padding: "8px 12px", border: "none" }}>
-                        <Form.Check  />
-                      </td>
-                      <td
-                        style={{
-                          padding: "8px 12px",
-                          border: "none",
-                          fontWeight: 500,
-                          minWidth: 140
-                        }}
-                      >
-                        {module.name}
-                      </td>
-                      <td style={{ padding: "8px 12px", border: "none" }}>
-                        <div className="d-flex flex-wrap gap-2  justify-content-center">
-                          {module.permissions.map((perm) => (
-                            <Form.Check
-                           
-                              key={`${module.name}-${perm}`}
-                              type="checkbox"
-                              id={`${module.name}-${perm}`}
-                              label={perm}
-                              style={{
-                                fontSize: 12,
-                                marginRight: 10,
-                                color: "#28a745",
-                                minWidth: 80
-                              }}
-                              defaultChecked={["Manage", "Create", "Edit"].includes(perm)}
-                            />
-                          ))}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </div>
-          </div>
-        </Form>
-      </Modal.Body>
-
-      <Modal.Footer style={{ borderTop: "1px solid #e9ecef", padding: "15px 20px" }}>
-        <Button
-          variant="secondary"
-          onClick={() => setShowEdit(false)}
-          style={{
-            background: "#6c757d",
-            border: "none",
-            borderRadius: 4,
-            padding: "8px 20px",
-            fontWeight: 500
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          onClick={handleEditSave}
-          disabled={!form.name}
-          style={{
-            background: "#28a745",
-            border: "none",
-            borderRadius: 4,
-            padding: "8px 20px",
-            fontWeight: 500
-          }}
-        >
-          Update
-        </Button>
-      </Modal.Footer>
-    </Modal>
     </div>
   );
 };
