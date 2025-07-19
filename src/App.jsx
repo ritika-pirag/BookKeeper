@@ -43,6 +43,7 @@ import CustomerList from "./Components/Company-Dashboard/ClientsVendors/Customer
 // import salesreport from "./Components/Company-Dashboard/Reports/Salesreport";
 // import NewOrderPurchase from "./Components/Company-Dashboard/Purchases/NewOrderPurchase";
 import Taxreport from "./Components/Company-Dashboard/Reports/Taxreports";
+import VatReport from "./Components/Company-Dashboard/Reports/VatReport"
 import BalanceSheet from "./Components/Company-Dashboard/Reports/BalanceSheet";
 import CashFlow from "./Components/Company-Dashboard/Reports/CashFlow";
 import ProfitLoss from "./Components/Company-Dashboard/Reports/ProfitLoss";
@@ -227,12 +228,13 @@ function App() {
           <Route path="/company/customers" element={<CustomerList />} />
 
           {/* Reports */}
-          {/* <Route path="/company/Purchasedataa" element={<Purchasedata/>} /> */}
+          {/* <Route path="/company/Purchasedata" element={<Purchasedata/>} /> */}
           <Route path="/company/salesreport" element={<Salesreport />} />
           <Route path="/company/taxreport" element={<Taxreport />} />
           <Route path="/company/balancesheet" element={<BalanceSheet />} />
           <Route path="/company/cashflow" element={<CashFlow />} />
           <Route path="/company/profitloss" element={<ProfitLoss />} />
+          <Route path="/company/vatreport" element={<VatReport />} />
 
           {/* User Management */}
           <Route path="/company/users" element={<Users />} />
