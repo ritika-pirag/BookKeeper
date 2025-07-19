@@ -6,6 +6,8 @@
   border-right: none;
   z-index: 1000 !important;
   scrollbar-width: none;
+
+  height: 100vh;
   
 }
 

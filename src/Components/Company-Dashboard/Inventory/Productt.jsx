@@ -105,7 +105,7 @@ const Productt = () => {
               <FaTrash className="text-white" />
             </Button>
           </Link>
-          <Link to={`/update-product/${params.row._id}`}>
+          <Link to={`/company/update-product/${params.row._id}`}>
             <Button variant="contained" color="primary">
               <FaPen />
             </Button>

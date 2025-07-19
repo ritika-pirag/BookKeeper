@@ -107,9 +107,9 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           items: [
             { to: "/company/warehouse", icon: "fas fa-industry", label: "Warehouse" },
             { to: "/company/stocktranfer", icon: "fas fa-industry", label: "StockTransfer" },
-            { to: "/company/categories", icon: "fas fa-tags", label: "Categories" },
-            { to: "/company/brands", icon: "fas fa-trademark", label: "Brands" },
-            { to: "/company/device", icon: "fas fa-industry", label: "Device" },
+            // { to: "/company/categories", icon: "fas fa-tags", label: "Categories" },
+            // { to: "/company/brands", icon: "fas fa-trademark", label: "Brands" },
+            // { to: "/company/device", icon: "fas fa-industry", label: "Device" },
             { to: "/company/tax", icon: "fas fa-box-open", label: "Tax" },
             { to: "/company/product", icon: "fas fa-box-open", label: "Product" },
             { to: "/company/ponitofsale", icon: "fas fa-file-invoice", label: "POS Screen" },

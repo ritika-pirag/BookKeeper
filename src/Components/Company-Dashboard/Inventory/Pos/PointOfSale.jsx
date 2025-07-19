@@ -14,8 +14,11 @@ import CustomerList from "./CustomerList";
 import Productlistsel from "./Productlistsel";
 import { fetchProducts } from "../../../../redux/slices/productSlice";
 import axiosInstance from "../../../../utils/axiosInstance";
-import { fetchTaxes } from "../../../../redux/slices/taxSlice";
+import { fetchTaxes ,createTax,} from "../../../../redux/slices/taxSlice";
+
+
 import jsPDF from "jspdf";
+// import { message } from "antd"; 
 
 const PointOfSale = () => {
   const dispatch = useDispatch();
@@ -37,7 +40,32 @@ const PointOfSale = () => {
   const [updatedTaxes, setTaxes] = useState(taxes);
 
   const productList = Array.isArray(products?.data) ? products.data : [];
-
+  const [showAddTaxModal, setShowAddTaxModal] = useState(false);
+  const [newTaxClass, setNewTaxClass] = useState("");
+  const [newTaxValue, setNewTaxValue] = useState("");
+  
+  const handleTaxFormSubmit = async (e) => {
+    e.preventDefault();
+    if (!newTaxClass.trim() || !newTaxValue) {
+      Swal.fire("Error", "Please enter both Tax Class and Value.", "error");
+      return;
+    }
+  
+    const taxData = {
+      taxClass: newTaxClass,
+      taxValue: parseFloat(newTaxValue),
+    };
+  
+    dispatch(createTax(taxData)).then(() => {
+      dispatch(fetchTaxes());
+      Swal.fire("Created!", "Tax added successfully.", "success");
+      setShowAddTaxModal(false);
+      setNewTaxClass("");
+      setNewTaxValue("");
+    });
+  };
+  
+  
   useEffect(() => {
     if (taxes?.length > 0) {
       setSelectedTax(taxes[0]);
@@ -149,86 +177,10 @@ const PointOfSale = () => {
     const updatedProducts = selectedProducts.filter((product) => product._id !== productId);
     setSelectedProducts(updatedProducts);
   };
-
-  const handleCreateInvoice = async () => {
-    if (selectedProducts.length === 0) {
-      alert("Please select at least one product.");
-      return;
-    }
-
-    const subTotal = calculateSubTotal();
-    const total = calculateTotal();
-
-    if (subTotal <= 0 || total <= 0) {
-      alert("Subtotal and Total must be greater than zero.");
-      return;
-    }
-
-    // Get shopId from localStorage
-    const shopId = localStorage.getItem("shopId");
-    if (!shopId) {
-      alert("Shop ID not found. Please login again or select a shop.");
-      return;
-    }
-
-    const data = {
-      customerId: selectedCustomer ? selectedCustomer._id : null,
-      productDetails: selectedProducts.map((product) => ({
-        productId: product._id,
-        quantity: quantity[product._id] || 1,
-        price: priceMap[product._id] ?? product.price,
-      })),
-      tax: selectedTax ? selectedTax._id : null,
-      subTotal: subTotal,
-      total: total,
-      status: paymentStatus,
-      shopId: shopId, // <-- Add shopId here
-    };
-
-    try {
-      const response = await axiosInstance.post("invoice/", data);
-      if (response.status === 201) {
-        // Generate PDF invoice using jsPDF
-        const invoiceData = response.data.data;
-        generatePDFInvoice(invoiceData);
-      } else {
-        throw new Error("Failed to create invoice");
-      }
-    } catch (error) {
-      alert(error.response?.data?.message || "Something went wrong.");
-    }
+  const handleCreateInvoice = () => {
+    navigate("/company/invoice-summary");
   };
-
-  // PDF generation function (simple version, you can enhance as needed)
-  function generatePDFInvoice(invoiceData) {
-    const doc = new jsPDF({ unit: "mm", format: "a4" });
-    let y = 10;
-    doc.setFontSize(16).text("Invoice", 10, y);
-    y += 10;
-    doc.setFontSize(10).text(`Invoice ID: ${invoiceData._id || "-"}`, 10, y);
-    y += 6;
-    doc.text(`Customer: ${invoiceData.customerId?.first_name || ""} ${invoiceData.customerId?.last_name || ""}`, 10, y);
-    y += 6;
-    doc.text(`Date: ${new Date(invoiceData.createdAt).toLocaleString()}`, 10, y);
-    y += 10;
-    doc.text("Products:", 10, y);
-    y += 6;
-    invoiceData.productDetails.forEach((item, idx) => {
-      doc.text(
-        `${idx + 1}. ${item.productId?.name || ""} x${item.quantity} @ A$${item.price}`,
-        12,
-        y
-      );
-      y += 6;
-    });
-    y += 4;
-    doc.text(`Subtotal: A$${invoiceData.subTotal}`, 10, y);
-    y += 6;
-    doc.text(`Tax: A$${invoiceData.taxValue || 0}`, 10, y);
-    y += 6;
-    doc.text(`Total: A$${invoiceData.total}`, 10, y);
-    doc.save("invoice.pdf");
-  }
+  
 
   const handleClear = () => {
     setSelectedCustomer(null);
@@ -247,8 +199,12 @@ const PointOfSale = () => {
             </Alert>
           )}
 
-          <Productlistsel products={productList} onProductSelect={handleProductSelection} showModal={showModal} />
-       
+          <Productlistsel
+            products={productList}
+            onProductSelect={handleProductSelection}
+            showModal={showModal}
+          />
+
           <div className="m-4 border-2">
             <h4>Accessories</h4>
             <ul>
@@ -259,7 +215,11 @@ const PointOfSale = () => {
                 return (
                   <li key={product._id} className="mb-3">
                     {product.name} - {qty} x A${unitPrice.toFixed(2)} = A${total.toFixed(2)}
-                    <Button variant="danger" onClick={() => handleRemoveProduct(product._id)} className="ms-2">
+                    <Button
+                      variant="danger"
+                      onClick={() => handleRemoveProduct(product._id)}
+                      className="ms-2"
+                    >
                       Remove
                     </Button>
                   </li>
@@ -270,26 +230,38 @@ const PointOfSale = () => {
         </Col>
 
         <Col md={6} className="p-4 border rounded bg-light">
-          <Row className="mb-3">
-            <Col>
-              <Form.Select value={selectedTax?._id} onChange={handleTaxSelect}>
-                {taxes?.map((tax) => (
-                  <option key={tax._id} value={tax._id}>
-                    {tax.taxClass} - {tax.taxValue}% Tax
-                  </option>
-                ))}
-              </Form.Select>
-            </Col>
-            <Col>
-              <Form.Select
-                value={paymentStatus}
-                onChange={(e) => setPaymentStatus(e.target.value)}
-              >
-                <option value="1">Paid</option>
-                <option value="0">Unpaid</option>
-              </Form.Select>
-            </Col>
-          </Row>
+        <Row className="mb-3">
+  <Col>
+    <Form.Label>Tax</Form.Label>
+    <div className="d-flex">
+      <Form.Select value={selectedTax?._id} onChange={handleTaxSelect}>
+        {taxes?.map((tax) => (
+          <option key={tax._id} value={tax._id}>
+            {tax.taxClass} - {tax.taxValue}%
+          </option>
+        ))}
+      </Form.Select>
+      <Button
+        variant="success"
+        className="ms-2"
+        onClick={() => setShowAddTaxModal(true)}
+      >
+        ➕
+      </Button>
+    </div>
+  </Col>
+  <Col>
+    <Form.Label>Payment Status</Form.Label>
+    <Form.Select
+      value={paymentStatus}
+      onChange={(e) => setPaymentStatus(e.target.value)}
+    >
+      <option value="1">Paid</option>
+      <option value="0">Unpaid</option>
+    </Form.Select>
+  </Col>
+</Row>
+
 
           <div className="border p-3 rounded bg-white">
             <div className="d-flex justify-content-between mb-3">
@@ -313,10 +285,18 @@ const PointOfSale = () => {
         </Col>
 
         <div className="mt-3 d-flex gap-2 flex-column flex-sm-row-reverse">
-          <Button variant="primary" onClick={handleCreateInvoice} disabled={selectedProducts.length === 0}>
+          <Button
+            variant="primary"
+            onClick={handleCreateInvoice}
+            disabled={selectedProducts.length === 0}
+          >
             Generate Invoice 🗋️
           </Button>
-          <Button variant="danger" onClick={handleClear} disabled={selectedProducts.length === 0}>
+          <Button
+            variant="danger"
+            onClick={handleClear}
+            disabled={selectedProducts.length === 0}
+          >
             Clear Selection ❌
           </Button>
         </div>
@@ -334,7 +314,9 @@ const PointOfSale = () => {
               type="number"
               min={1}
               value={quantity[currentProduct?._id] || 1}
-              onChange={(e) => handleQuantityChange(currentProduct._id, parseInt(e.target.value))}
+              onChange={(e) =>
+                handleQuantityChange(currentProduct._id, parseInt(e.target.value))
+              }
             />
           </Form.Group>
           <Form.Group>
@@ -347,19 +329,66 @@ const PointOfSale = () => {
             />
           </Form.Group>
           <p className="mt-3">
-            <strong>Total Price:</strong> A${
-              isNaN(price * (quantity[currentProduct?._id] || 1))
-                ? "0.00"
-                : (price * (quantity[currentProduct?._id] || 1)).toFixed(2)
-            }
+            <strong>Total Price:</strong> A$
+            {isNaN(price * (quantity[currentProduct?._id] || 1))
+              ? "0.00"
+              : (price * (quantity[currentProduct?._id] || 1)).toFixed(2)}
           </p>
           {quantityError && <div className="text-danger">{quantityError}</div>}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCancel}>Cancel</Button>
-          <Button variant="primary" onClick={handleOk}>OK</Button>
+          <Button variant="secondary" onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleOk}>
+            OK
+          </Button>
         </Modal.Footer>
       </Modal>
+
+{/* tax modal */}
+      <Modal show={showAddTaxModal} onHide={() => setShowAddTaxModal(false)}>
+  <Modal.Header closeButton>
+    <Modal.Title>Add New Tax</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <Form onSubmit={handleTaxFormSubmit}>
+      <Form.Group controlId="taxClass">
+        <Form.Label>Tax Class</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter Tax Class"
+          value={newTaxClass}
+          onChange={(e) => setNewTaxClass(e.target.value)}
+          required
+        />
+      </Form.Group>
+
+      <Form.Group controlId="taxValue" className="mt-3">
+        <Form.Label>Tax Value (%)</Form.Label>
+        <Form.Control
+          type="number"
+          placeholder="Enter Tax Value"
+          value={newTaxValue}
+          onChange={(e) => setNewTaxValue(e.target.value)}
+          required
+          min="0"
+          step="0.01"
+        />
+      </Form.Group>
+
+      <div className="d-flex justify-content-end mt-4">
+        <Button variant="secondary" onClick={() => setShowAddTaxModal(false)}>
+          Cancel
+        </Button>
+        <Button variant="primary" type="submit" className="ms-2">
+          Submit
+        </Button>
+      </div>
+    </Form>
+  </Modal.Body>
+</Modal>
+
     </Container>
   );
 };
