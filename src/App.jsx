@@ -24,6 +24,7 @@ import InvoiceForm from "./Components/Company-Dashboard/Sales/InvoiceForm";
 import AccountStatement from "./Components/Company-Dashboard/Payments/AccountStatement";
 import Coupons from "./Components/Company-Dashboard/Payments/Coupons";
 import TaxReport from "./Components/Company-Dashboard/GST/TaxReport ";
+import Customer from "./Components/Company-Dashboard/Sales/Customer";
 // import QRInvoice from "./Components/Company-Dashboard/GST/QRInvoice";
 import GSTReturns from "./Components/Company-Dashboard/GST/GSTReturns";
 import TdsTcs from "./Components/Company-Dashboard/GST/TdsTcs";
@@ -177,6 +178,8 @@ function App() {
           <Route path="/company/manageinvoice" element={<ManageInvoices/>} />
           <Route path="/company/editinvoice" element={<EditInvoice/>} />
           <Route path="/company/viewinvoice" element={<ViewInvoice/>} />
+          <Route path="/company/customer" element={<Customer/>} />
+        
           {/* Sales */}
           <Route path="/company/invoiceform" element={<InvoiceForm />} />
           <Route path="/company/viewinvoicee" element={<ViewInvoicee/>} />
