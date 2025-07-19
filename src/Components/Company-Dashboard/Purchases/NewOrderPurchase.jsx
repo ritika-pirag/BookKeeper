@@ -1,6 +1,21 @@
 import React, { useState } from 'react';
-import { Form, Button, Row, Col, InputGroup, Modal } from 'react-bootstrap';
-import { BsCalendar, BsBookmark, BsPlusCircle } from 'react-icons/bs';
+import {
+  Form,
+  Button,
+  Row,
+  Col,
+  InputGroup,
+  Modal,
+
+
+} from 'react-bootstrap';
+import {
+  BsCalendar,
+  BsBookmark,
+  BsPlusCircle,
+  BsPlus
+} from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 const NewOrder = () => {
   const [showModal, setShowModal] = useState(false);
@@ -15,6 +30,7 @@ const NewOrder = () => {
   const [discountName, setDiscountName] = useState('');
   const [discountValue, setDiscountValue] = useState('');
   const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedVendor, setSelectedVendor] = useState('');
 
   const [items, setItems] = useState([
     { name: '', description: '', quantity: 1, rate: '', tax: '', discount: '', amount: 0 }
@@ -37,26 +53,48 @@ const NewOrder = () => {
     setShowDiscountModal(false);
   };
 
+  const navigate = useNavigate();
+
+  const vendors = [
+    { id: 1, name: "John Vendor" },
+    { id: 2, name: "Emily Vendor" },
+    { id: 3, name: "Rajesh Vendor" }
+  ];
+
   return (
     <div className="p-4 mt-4 mb-5 border">
-      {/* Header */}
-      <div className="d-flex align-items-center justify-content-between mb-3 ">
-        <h5 className="mb-0">Bill From</h5>
-        <Button
-          style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
-          size="sm"
-          onClick={() => setShowModal(true)}
-        >
-          Add Vendors
-        </Button>
-      </div>
+
 
       {/* Vendor Info */}
-      <Row className="mb-3 Ca">
-        <Col md={4}>
-          <Form.Label>Search Vendors</Form.Label>
-          <Form.Control placeholder="Enter Vendor Name or Mobile Number" />
-        </Col>
+      <Row className="mb-3">
+      <Col md={6}>
+  <Form.Group>
+    <Form.Label className="fw-semibold">Vendor*</Form.Label>
+    <InputGroup>
+      <Form.Select
+        value={selectedVendor}
+        onChange={(e) => setSelectedVendor(e.target.value)}
+        className="border-end-0"
+      >
+        <option value="">Select Vendor</option>
+        {vendors.map(v => (
+          <option key={v.id} value={v.name}>{v.name}</option>
+        ))}
+      </Form.Select>
+      <Button
+        variant="outline-secondary"
+        size="sm"
+        className="border-start-0"
+        onClick={() => navigate("/company/vendors")}
+        title="Add Vendor"
+      >
+        <BsPlus size={12} />
+      </Button>
+    </InputGroup>
+  </Form.Group>
+</Col>
+
+
         <Col md={4}>
           <Form.Label>Bill #</Form.Label>
           <InputGroup>
@@ -64,6 +102,7 @@ const NewOrder = () => {
             <Form.Control value="1046" />
           </InputGroup>
         </Col>
+
         <Col md={4} className='mt-2'>
           <Form.Label>Reference</Form.Label>
           <InputGroup>
@@ -71,6 +110,7 @@ const NewOrder = () => {
             <Form.Control placeholder="Reference #" />
           </InputGroup>
         </Col>
+
         <Col md={4}>
           <Form.Label>Order Date</Form.Label>
           <InputGroup>
@@ -78,6 +118,7 @@ const NewOrder = () => {
             <Form.Control type="date" value="2025-07-15" />
           </InputGroup>
         </Col>
+
         <Col md={4}>
           <Form.Label>Due Date</Form.Label>
           <InputGroup>
@@ -87,65 +128,55 @@ const NewOrder = () => {
         </Col>
       </Row>
 
-  {/* Tax & Discount */}
-<Row className="mb-3">
-  <Col md={12} className="mb-2">
-    <div className="d-flex justify-content-between align-items-center">
-      <div className="d-flex align-items-center">
-        <Form.Label className="mb-0 fw-semibold me-3 small">Tax</Form.Label>
-        <div className="d-flex align-items-center gap-3">
-          <Form.Check
-            type="radio"
-            label={<span className="small">On</span>}
-            name="tax"
-            checked={isTaxOn}
-            onChange={() => setIsTaxOn(true)}
-            className="mb-0"
-            style={{ transform: "scale(0.85)" }}
-          />
-          <Form.Check
-            type="radio"
-            label={<span className="small">Off</span>}
-            name="tax"
-            checked={!isTaxOn}
-            onChange={() => setIsTaxOn(false)}
-            className="mb-0"
-            style={{ transform: "scale(0.85)" }}
-          />
-        </div>
-      </div>
-      <Button size="sm" onClick={() => setShowTaxModal(true)}    style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }} >+ Add Tax</Button>
+      {/* Tax & Discount */}
+      <Row className="mb-3">
+      <Col md={12} className="mb-2">
+  <div className="d-flex justify-content-between align-items-center">
+    <div className="d-flex align-items-center gap-3">
+      <Form.Label className="mb-0 fw-semibold small">Tax</Form.Label>
+      <Form.Check
+        type="switch"
+        id="tax-toggle"
+        label={isTaxOn ? "On" : "Off"}
+        checked={isTaxOn}
+        onChange={() => setIsTaxOn(!isTaxOn)}
+        className="mb-0"
+      />
     </div>
-  </Col>
+    <Button
+      size="sm"
+      onClick={() => setShowTaxModal(true)}
+      style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+    >
+      + Add Tax
+    </Button>
+  </div>
+</Col>
 
-  <Col md={12}>
-    <div className="d-flex justify-content-between align-items-center">
-      <div className="d-flex align-items-center gap-3">
-        <Form.Label className="mb-0 fw-semibold small">Discount</Form.Label>
-        <Form.Check
-          inline
-          type="radio"
-          label={<span className="small">On</span>}
-          name="discount"
-          checked={isDiscountOn}
-          onChange={() => setIsDiscountOn(true)}
-          style={{ transform: "scale(0.85)" }}
-        />
-        <Form.Check
-          inline
-          type="radio"
-          label={<span className="small">Off</span>}
-          name="discount"
-          checked={!isDiscountOn}
-          onChange={() => setIsDiscountOn(false)}
-          style={{ transform: "scale(0.85)" }}
-        />
-      </div>
-      <Button  size="sm" onClick={() => setShowDiscountModal(true)}     style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}>+ Add Discount</Button>
+<Col md={12}>
+  <div className="d-flex justify-content-between align-items-center">
+    <div className="d-flex align-items-center gap-3">
+      <Form.Label className="mb-0 fw-semibold small">Discount</Form.Label>
+      <Form.Check
+        type="switch"
+        id="discount-toggle"
+        label={isDiscountOn ? "On" : "Off"}
+        checked={isDiscountOn}
+        onChange={() => setIsDiscountOn(!isDiscountOn)}
+        className="mb-0"
+      />
     </div>
-  </Col>
-</Row>
+    <Button
+      size="sm"
+      onClick={() => setShowDiscountModal(true)}
+      style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+    >
+      + Add Discount
+    </Button>
+  </div>
+</Col>
 
+      </Row>
 
       {/* Items Table */}
       <div className="table-responsive mb-3">

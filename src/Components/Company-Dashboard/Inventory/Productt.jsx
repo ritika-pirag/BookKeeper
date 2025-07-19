@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Modal, Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,6 +12,8 @@ import { FaEye, FaPen, FaTrash } from "react-icons/fa";
 
 const Productt = () => {
   const [search, setSearch] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const dispatch = useDispatch();
   const { products, loading } = useSelector((state) => state.product);
 
@@ -19,15 +21,11 @@ const Productt = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  // Filter products
   const productList = Array.isArray(products?.data) ? products.data : [];
 
-  const filteredProducts =
-    productList && productList.length > 0
-      ? productList.filter((product) => {
-          return product.name.toLowerCase().includes(search.toLowerCase());
-        })
-      : [];
+  const filteredProducts = productList.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   const handleSearchChange = (e) => setSearch(e.target.value);
 
@@ -43,7 +41,7 @@ const Productt = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await dispatch(deleteProduct(productId)).unwrap(); // Unwrap to catch errors
+          const response = await dispatch(deleteProduct(productId)).unwrap();
           if (response) {
             Swal.fire("Deleted!", "Product has been deleted.", "success");
             dispatch(fetchProducts());
@@ -56,6 +54,11 @@ const Productt = () => {
     });
   };
 
+  const handleViewClick = (product) => {
+    setSelectedProduct(product);
+    setShowModal(true);
+  };
+
   const columns = [
     {
       field: "images",
@@ -65,7 +68,6 @@ const Productt = () => {
         const images = params.row.images || [];
         const image1 =
           images.length > 0 ? images[0] : "https://via.placeholder.com/80";
-
         return (
           <img
             src={image1}
@@ -90,27 +92,39 @@ const Productt = () => {
       headerName: "Actions",
       width: 200,
       renderCell: (params) => (
-        <div style={{ display: "flex", gap: "10px" }}>
-          <Link to={`/view-product/${params.row._id}`} title="View Product">
-            <Button variant="contained" color="success">
-              <FaEye />
-            </Button>
-          </Link>
-          <Link to="#" title="Delete Product">
-            <Button
-              variant="contained"
-              color="error"
-              onClick={() => handleDeleteProduct(params.row._id)}
-            >
-              <FaTrash className="text-white" />
-            </Button>
-          </Link>
-          <Link to={`/company/update-product/${params.row._id}`}>
-            <Button variant="contained" color="primary">
-              <FaPen />
-            </Button>
-          </Link>
-        </div>
+        <div style={{ display: "flex", gap: "6px" }}>
+        <Button
+          variant="outlined"
+          color="success"
+          size="small"
+          onClick={() => handleViewClick(params.row)}
+          title="View Product"
+        >
+          <FaEye size={12} />
+        </Button>
+      
+        <Button
+          variant="outlined"
+          color="error"
+          size="small"
+          onClick={() => handleDeleteProduct(params.row._id)}
+          title="Delete Product"
+        >
+          <FaTrash size={12} />
+        </Button>
+      
+        <Link to={`/company/update-product/${params.row._id}`}>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            title="Edit Product"
+          >
+            <FaPen size={14} />
+          </Button>
+        </Link>
+      </div>
+      
       ),
     },
   ];
@@ -146,14 +160,64 @@ const Productt = () => {
               id: product._id,
             }))}
             columns={columns}
-            pageSize={20} // Show 20 rows by default
-            rowsPerPageOptions={[20, 25, 30, 35]} // Options for 20, 25, 30, 35 rows per page
+            pageSize={20}
+            rowsPerPageOptions={[20, 25, 30, 35]}
             loading={loading}
             checkboxSelection
             disableSelectionOnClick
           />
         </div>
       </div>
+
+      {/* View Modal */}
+      <Modal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        aria-labelledby="view-product-title"
+        aria-describedby="view-product-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 500,
+            bgcolor: "background.paper",
+            borderRadius: 2,
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          {selectedProduct && (
+            <>
+              <Typography id="view-product-title" variant="h6" component="h2">
+                {selectedProduct.name}
+              </Typography>
+              <Typography sx={{ mt: 2 }}>
+                <strong>SKU:</strong> {selectedProduct.sku}
+              </Typography>
+              <Typography sx={{ mt: 1 }}>
+                <strong>Category:</strong> {selectedProduct.category}
+              </Typography>
+              <Typography sx={{ mt: 1 }}>
+                <strong>Quantity:</strong> {selectedProduct.quantity}
+              </Typography>
+              <Typography sx={{ mt: 1 }}>
+                <strong>IMEI:</strong> {selectedProduct.IMEI}
+              </Typography>
+              <Typography sx={{ mt: 1 }}>
+                <strong>Description:</strong>{" "}
+                {selectedProduct.description || "N/A"}
+              </Typography>
+              <Typography sx={{ mt: 1 }}>
+                <strong>Created:</strong>{" "}
+                {new Date(selectedProduct.createdAt).toLocaleString()}
+              </Typography>
+            </>
+          )}
+        </Box>
+      </Modal>
     </div>
   );
 };

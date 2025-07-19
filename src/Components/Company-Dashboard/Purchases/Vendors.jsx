@@ -211,24 +211,62 @@ const Vendors = () => {
       </div>
 
       {/* View Modal */}
-      <Modal show={showView} onHide={() => setShowView(false)} centered>
-        <Modal.Header closeButton><Modal.Title>Vendor Details</Modal.Title></Modal.Header>
-        <Modal.Body>
-          {selectedVendor && (
-            <ul className="list-group">
-              {Object.entries(selectedVendor).map(([key, value]) => (
-                <li className="list-group-item d-flex justify-content-between" key={key}>
-                  <span className="text-capitalize text-secondary">{key.replace("_", " ")}</span>
-                  <span className="fw-semibold text-dark">{value?.name || value}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowView(false)}>Close</Button>
-        </Modal.Footer>
-      </Modal>
+      <Modal show={showView} onHide={() => setShowView(false)} centered size="lg">
+  <Modal.Header closeButton>
+    <Modal.Title>Vendor Details</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    {selectedVendor && (
+      <>
+        {/* Basic Information */}
+        <div className="border rounded p-3 mb-4">
+          <h6 className="fw-semibold mb-3">Basic Information</h6>
+          <Row>
+            <Col md={6}><p><strong>Name:</strong> {selectedVendor.name}</p></Col>
+         
+            <Col md={6}><p><strong>Phone:</strong> {selectedVendor.phone}</p></Col>
+            <Col md={6}><p><strong>Email:</strong> {selectedVendor.email}</p></Col>
+      
+            
+        
+          </Row>
+        </div>
+
+        {/* Billing Address */}
+        <div className="border rounded p-3 mb-4">
+          <h6 className="fw-semibold mb-3">Billing Address</h6>
+          <Row>
+            <Col md={6}><p><strong>Name:</strong> {selectedVendor.name}</p></Col>
+            <Col md={6}><p><strong>Phone:</strong> {selectedVendor.phone}</p></Col>
+            <Col md={12}><p><strong>Address:</strong> {selectedVendor.address}</p></Col>
+            <Col md={4}><p><strong>City:</strong> {selectedVendor.city}</p></Col>
+            <Col md={4}><p><strong>State:</strong> {selectedVendor.state}</p></Col>
+            <Col md={4}><p><strong>Zip:</strong> {selectedVendor.zip}</p></Col>
+            <Col md={4}><p><strong>Country:</strong> {selectedVendor.country || "India"}</p></Col>
+          </Row>
+        </div>
+
+        {/* Shipping Address */}
+        <div className="border rounded p-3">
+          <h6 className="fw-semibold mb-3">Shipping Address</h6>
+          <Row>
+            <Col md={6}><p><strong>Name:</strong> {selectedVendor.name}</p></Col>
+            <Col md={6}><p><strong>Phone:</strong> {selectedVendor.phone}</p></Col>
+            <Col md={12}><p><strong>Address:</strong> {selectedVendor.address}</p></Col>
+            <Col md={4}><p><strong>City:</strong> {selectedVendor.city}</p></Col>
+            <Col md={4}><p><strong>State:</strong> {selectedVendor.state}</p></Col>
+            <Col md={4}><p><strong>Zip:</strong> {selectedVendor.zip}</p></Col>
+            <Col md={4}><p><strong>Country:</strong> {selectedVendor.country || "India"}</p></Col>
+          </Row>
+        </div>
+      </>
+    )}
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowView(false)}>Close</Button>
+  </Modal.Footer>
+</Modal>
+
 
       {/* Add/Edit Modal */}
       <Modal show={showAdd || showEdit} onHide={() => { setShowAdd(false); setShowEdit(false); }} size="lg" centered>

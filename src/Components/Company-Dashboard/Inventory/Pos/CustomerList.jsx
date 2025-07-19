@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"; // ✅ Add this line
 import { getCustomers } from "../../../../redux/slices/customerSlice";
 
 const CustomerList = ({ onSelectCustomer, selectedShop }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // ✅ Use navigate
+
   const [searchTerm, setSearchTerm] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,7 +74,7 @@ const CustomerList = ({ onSelectCustomer, selectedShop }) => {
         <span
           className="input-group-text btn bg-[#1d1b31] text-white"
           style={{ backgroundColor: "#1d1b31", cursor: "pointer" }}
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => navigate("/company/customer")} // ✅ Go to page
         >
           <i className="fa fa-plus"></i>
         </span>
@@ -104,7 +107,7 @@ const CustomerList = ({ onSelectCustomer, selectedShop }) => {
         </ul>
       )}
 
-      {/* Customer Add Modal (Inline Form) */}
+      {/* ✅ Your existing modal stays unchanged below */}
       {isModalOpen && (
         <div
           className="modal fade show d-block"
