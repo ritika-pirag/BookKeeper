@@ -15,6 +15,12 @@
   padding-bottom: 20px;
 }
 
+.sidebar-footer {
+  margin-top: auto;
+  background-color: #032D45;
+  width: 100%;
+}
+
 /* Custom scrollbar styling */
 .sidebar-menu-container::-webkit-scrollbar {
   width: 6px;
@@ -37,17 +43,10 @@
   background: transparent;
 }
 
-
-
-
-
 .sidebar::-webkit-scrollbar-thumb {
   background-color: #53b2a5;
   border-radius: 6px;
 }
-
-
-
 
 .sidebar-header {
   background-color: #032D45;
@@ -222,3 +221,25 @@
   transform: rotate(180deg);
   transition: 0.3s ease;
 }
+
+/* Logout button styling */
+.logout-btn {
+  border-color: #53b2a5 !important;
+  color: #53b2a5 !important;
+  padding: 8px 16px !important;
+  font-size: 15px !important;
+}
+
+.logout-btn:hover {
+  background-color: #53b2a5 !important;
+  color: white !important;
+}
+
+/* jfdsjfks */
+
+
+
+
+
+
+
