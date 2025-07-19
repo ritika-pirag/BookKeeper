@@ -1,14 +1,39 @@
 .sidebar {
   background-color: #032D45;
-  /* Dark navy background */
   color: #ffffff;
   width: 250px;
   border-right: none;
   z-index: 1000 !important;
+<<<<<<< HEAD
 
   overflow-y: auto;  /* Add this */
   scrollbar-width: none; /* Optional: make it thinner in Firefox */
   
+=======
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sidebar-menu-container {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+/* Custom scrollbar styling */
+.sidebar-menu-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-menu-container::-webkit-scrollbar-track {
+  background: #032D45;
+}
+
+.sidebar-menu-container::-webkit-scrollbar-thumb {
+  background-color: #53b2a5;
+  border-radius: 6px;
+>>>>>>> b0c7b765d5b261cf7ee548edd0e1ce5ba27133c8
 }
 
 .sidebar::-webkit-scrollbar {
@@ -41,16 +66,33 @@
   transition: background-color 0.2s;
 }
 
-.sidebar-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+/* Only apply hover/active effects to dropdown menu items */
+.list-unstyled .sidebar-link:hover,
+.list-unstyled .active-link {
+  background-color: #53b2a5 !important;
+  color: #ffffff !important;
+  transform: translateX(3px);
 }
 
-.active-link {
-  background-color: #53b2a5!important;
-  /* Yellow highlight */
-  color: #000000 !important;
+.list-unstyled .active-link {
   font-weight: 600;
+  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+}
+
+.section-header {
+  cursor: pointer;
+  color: #fff;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.section-header:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 @media (max-width: 768px) {
@@ -58,21 +100,17 @@
     display: none !important;
     width: 296px;
   }
-
   .content {
     margin-left: 0 !important;
   }
 }
 
-/* Add this in your global CSS */
 .sidebar-container {
   width: 100%;
 }
 
-
 .header {
   background-color: #032D45;
-  /* Dark navy background */
   color: #ffffff;
 }
 
@@ -107,7 +145,6 @@
   border-radius: 50%;
 }
 
-/* Navigation Items Container */
 .sidebar-nav {
   padding: 20px 15px;
   flex-grow: 1;
@@ -115,7 +152,6 @@
   scrollbar-width: none;
 }
 
-/* Menu Sections */
 .menu-section {
   margin-bottom: 25px;
 }
@@ -130,7 +166,6 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Navigation Links */
 .nav-item {
   margin-bottom: 5px;
 }
@@ -152,20 +187,6 @@
   font-size: 16px;
 }
 
-.sidebar-link:hover {
-  background-color: #53b2a5!important;
-  transform: translateX(3px);
-}
-
-.active-link {
-  background-color: #53b2a5!important;
-  /* Yellow highlight */
-  color: #ffffff !important;
-  font-weight: 600;
-  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
-}
-
-/* Close Button */
 .sidebar-close {
   position: absolute;
   top: 15px;
@@ -177,31 +198,25 @@
   padding: 5px !important;
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .sidebar {
     width: 260px;
     display: block !important;
   }
-
   .sidebar-nav {
     padding: 15px 10px;
   }
-
   .sidebar-link {
     padding: 10px 12px !important;
   }
 }
 
-
-
-/* Make top-level items match section header styling */
 .top-level-item {
   padding: -7px;
   font-weight: 600;
   display: flex;
   align-items: center;
-  color: #333; /* Match your section header color */
+  color: #333;
 }
 
 .top-level-item .icon {
@@ -210,10 +225,6 @@
   text-align: center;
 }
 
-/* Optional: Match hover effects */
-.top-level-item:hover {
-  background-color: #f5f5f5; /* Match your section header hover color */
-}
 .rotate-180 {
   transform: rotate(180deg);
   transition: 0.3s ease;
