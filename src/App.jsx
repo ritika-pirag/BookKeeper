@@ -43,6 +43,7 @@ import CustomerList from "./Components/Company-Dashboard/ClientsVendors/Customer
 // import salesreport from "./Components/Company-Dashboard/Reports/Salesreport";
 // import NewOrderPurchase from "./Components/Company-Dashboard/Purchases/NewOrderPurchase";
 import Taxreport from "./Components/Company-Dashboard/Reports/Taxreports";
+import InventorySummary from "./Components/Company-Dashboard/Reports/InventorySummary";
 import VatReport from "./Components/Company-Dashboard/Reports/VatReport"
 import BalanceSheet from "./Components/Company-Dashboard/Reports/BalanceSheet";
 import CashFlow from "./Components/Company-Dashboard/Reports/CashFlow";
@@ -231,6 +232,7 @@ function App() {
           {/* <Route path="/company/Purchasedata" element={<Purchasedata/>} /> */}
           <Route path="/company/salesreport" element={<Salesreport />} />
           <Route path="/company/taxreport" element={<Taxreport />} />
+          <Route path="/company/inventorysummary" element={<InventorySummary/>} />
           <Route path="/company/balancesheet" element={<BalanceSheet />} />
           <Route path="/company/cashflow" element={<CashFlow />} />
           <Route path="/company/profitloss" element={<ProfitLoss />} />
@@ -306,6 +308,7 @@ function App() {
           <Route path="/user/inventoryreport" element={<Inventory />} />
           <Route path="/user/invoicereport" element={<Invoicereport />} />
           <Route path="/user/taxreport" element={<Taxreports />} />
+       
           {/* <Route path="/user/eway" element={<Eway />} /> */}
         </Route>
       </Routes>

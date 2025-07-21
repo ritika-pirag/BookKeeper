@@ -150,7 +150,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           items: [
             { to: "/company/salesreport",  label: "Sales Report" },
             { to: "/company/taxreport",  label: "Tax Report" },
-            { to: "/company/product", label: "Inventory Summary" },
+            { to: "/company/inventorysummary", label: "Inventory Summary" },
             { to: "/company/balancesheet", label: "Balance Sheet" },
             { to: "/company/cashflow",label: "Cash Flow" },
             { to: "/company/profitloss", label: "Profit & Loss" },
