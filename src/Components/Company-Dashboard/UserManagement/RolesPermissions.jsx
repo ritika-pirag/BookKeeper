@@ -152,12 +152,7 @@ const RolesPermissions = () => {
           <p style={{ marginBottom: 0, color: "#666" }}>Manage your roles</p>
         </div>
         <div className="d-flex gap-2 align-items-center">
-          <Button variant="light">
-            <FaFilePdf color="#e74c3c" />
-          </Button>
-          <Button variant="light">
-            <FaFileExcel color="#2ecc71" />
-          </Button>
+        
           <Button
              style={{ whiteSpace: "nowrap", backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
             onClick={handleAdd}
@@ -167,7 +162,7 @@ const RolesPermissions = () => {
         </div>
       </div>
 
-      <Card className="shadow-sm">
+      <Card className="">
         <Card.Body>
           <div className="d-flex justify-content-between mb-3">
             <InputGroup style={{ maxWidth: 300 }}>
@@ -261,22 +256,6 @@ const RolesPermissions = () => {
         </Card.Body>
       </Card>
 
-      <div style={{
-        position: "fixed",
-        right: 20,
-        top: "50%",
-        transform: "translateY(-50%)",
-        background: "#FFA94D",
-        width: 42,
-        height: 42,
-        borderRadius: "50%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 999,
-      }}>
-        <i className="bi bi-gear" style={{ color: "#fff", fontSize: 20 }}></i>
-      </div>
 
       {/* Delete Modal */}
       <Modal show={showDelete} onHide={() => setShowDelete(false)} centered>
@@ -298,75 +277,80 @@ const RolesPermissions = () => {
 
       {/* Add Role Modal */}
       <Modal show={showAdd} onHide={() => setShowAdd(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Role</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-2">
-              <Form.Label>Role Name</Form.Label>
-              <Form.Control
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-              />
-            </Form.Group>
-            <Form.Group className="mb-2">
-              <Form.Label>Role Type</Form.Label>
-              <Form.Select
-                value={form.type}
-                onChange={(e) => setForm({ ...form, type: e.target.value })}
+  <Modal.Header closeButton>
+    <Modal.Title>Add Role</Modal.Title>
+  </Modal.Header>
+
+  <Modal.Body>
+    <Form>
+      {/* Role Name */}
+      <Form.Group className="mb-3">
+        <Form.Label>Role Name</Form.Label>
+        <Form.Control
+          placeholder="Enter role name"
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+        />
+      </Form.Group>
+
+      {/* Role Type */}
+      <Form.Group className="mb-3">
+        <Form.Label>Role Type</Form.Label>
+        <Form.Select
+          value={form.type}
+          onChange={(e) => setForm({ ...form, type: e.target.value })}
+        >
+          <option value="">Select type</option>
+          <option value="superadmin">Superadmin</option>
+          <option value="company">Company</option>
+          <option value="user">User</option>
+        </Form.Select>
+      </Form.Group>
+
+      {/* Permissions */}
+      <Form.Group className="mb-3">
+        <Form.Label>Permissions</Form.Label>
+        <div className="d-flex flex-wrap gap-2">
+          {allPermissions.map((perm) => {
+            const isActive = form.permissions.includes(perm);
+            return (
+              <Button
+                key={perm}
+                variant={isActive ? "warning" : "outline-warning"}
+                style={{
+                  background: isActive ? "#53b2a5" : "#fff",
+                  color: isActive ? "#fff" : "#53b2a5",
+                  borderColor: "#53b2a5",
+                  fontWeight: 500,
+                  borderRadius: 8,
+                  fontSize: 15,
+                  padding: "3px 18px",
+                }}
+                onClick={() => togglePerm(perm)}
               >
-                <option value="superadmin">Superadmin</option>
-                <option value="company">Company</option>
-                <option value="user">User</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group className="mb-2">
-              <Form.Label>Permissions</Form.Label>
-              <div className="d-flex flex-wrap gap-2">
-                {allPermissions.map((perm) => (
-                  <Button
-                    key={perm}
-                    variant={
-                      form.permissions.includes(perm)
-                        ? "warning"
-                        : "outline-warning"
-                    }
-                    style={{
-                      background: form.permissions.includes(perm)
-                        ? "#FFA94D"
-                        : "#fff",
-                      color: form.permissions.includes(perm)
-                        ? "#fff"
-                        : "#FFA94D",
-                      borderColor: "#FFA94D",
-                      fontWeight: 500,
-                      borderRadius: 8,
-                      fontSize: 15,
-                      padding: "3px 18px",
-                    }}
-                    onClick={() => togglePerm(perm)}
-                  >
-                    {perm}
-                  </Button>
-                ))}
-              </div>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowAdd(false)}>
-            Cancel
-          </Button>
-          <Button
-            style={{ background: "#FFA94D", border: "none" }}
-            onClick={handleAddSave}
-            disabled={!form.name || form.permissions.length === 0}
-          >
-            Add Role
-          </Button>
-        </Modal.Footer>
-      </Modal>
+                {perm}
+              </Button>
+            );
+          })}
+        </div>
+      </Form.Group>
+    </Form>
+  </Modal.Body>
+
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowAdd(false)}>
+      Cancel
+    </Button>
+    <Button
+      style={{ background: "#53b2a5", border: "none" }}
+      onClick={handleAddSave}
+      disabled={!form.name || form.permissions.length === 0}
+    >
+      Add Role
+    </Button>
+  </Modal.Footer>
+</Modal>
+
 
       {/* Edit Role Modal - Updated Design */}
 {/* Edit Role Modal - Updated Design */}

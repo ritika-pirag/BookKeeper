@@ -7,7 +7,6 @@ import {
   FaGlobe,
   FaExchangeAlt,
   FaTimes,
-  FaLanguage,
 } from "react-icons/fa";
 import { Button, Row, Col, Table, Badge } from "react-bootstrap";
 
@@ -23,7 +22,6 @@ const PurchaseOrderView = () => {
       preview: "Public Preview",
       status: "Change Status",
       cancel: "Cancel",
-      switch: "Switch to Arabic",
       purchaseOrder: "Purchase Order",
       reference: "Reference",
       grossAmount: "Gross Amount",
@@ -68,7 +66,6 @@ const PurchaseOrderView = () => {
       preview: "معاينة عامة",
       status: "تغيير الحالة",
       cancel: "إلغاء",
-      switch: "التبديل إلى الإنجليزية",
       purchaseOrder: "أمر شراء",
       reference: "المرجع",
       grossAmount: "المبلغ الإجمالي",
@@ -107,81 +104,71 @@ const PurchaseOrderView = () => {
     },
   };
 
-  const current = labels[language];
-  const isArabic = language === "ar";
-
-  const toggleLanguage = () => {
-    setLanguage((prev) => (prev === "en" ? "ar" : "en"));
+  const getLabel = (key) => {
+    if (language === "both") {
+      return (
+        <>
+          <div style={{ fontWeight: "bold" }}>{labels.ar[key]}</div>
+          <div style={{ fontSize: "small", color: "#555" }}>{labels.en[key]}</div>
+        </>
+      );
+    }
+    return labels[language][key];
   };
+
+  const isArabic = language === "ar" || language === "both";
 
   return (
     <div
       className={`mt-2 p-4 ${isArabic ? "text-end" : ""}`}
       dir={isArabic ? "rtl" : "ltr"}
     >
-      {/* Action Bar */}
+      {/* Language Switch Buttons */}
+      <div className="mb-3 d-flex gap-2 flex-wrap">
+        <Button variant="outline-primary" onClick={() => setLanguage("en")}>
+          English
+        </Button>
+        <Button variant="outline-primary" onClick={() => setLanguage("ar")}>
+          العربية
+        </Button>
+        <Button variant="outline-primary" onClick={() => setLanguage("both")}>
+          English + العربية
+        </Button>
+      </div>
+
+      {/* Purchase Header */}
       <Row className="mb-4 align-items-start">
         <Col md={8}>
           <div className="d-flex flex-wrap gap-2">
-            <Button
-              variant="outline-primary"
-              onClick={toggleLanguage}
-              className="d-flex align-items-center gap-1"
-            >
-              <FaLanguage /> <span>{isArabic ? "English" : "العربية"}</span>
+            <Button variant="warning">
+              <FaEdit /> {getLabel("edit")}
             </Button>
-
-            <Button
-              variant="warning"
-              className="d-flex align-items-center gap-1"
-            >
-              <FaEdit /> <span>{current.edit}</span>
+            <Button variant="success">
+              <FaMoneyBill /> {getLabel("payment")}
             </Button>
-            <Button
-              variant="success"
-              className="d-flex align-items-center gap-1"
-            >
-              <FaMoneyBill /> <span>{current.payment}</span>
+            <Button variant="primary">
+              <FaPaperPlane /> {getLabel("send")}
             </Button>
-            <Button
-              variant="primary"
-              className="d-flex align-items-center gap-1"
-            >
-              <FaPaperPlane /> <span>{current.send}</span>
+            <Button variant="success">
+              <FaPrint /> {getLabel("print")}
             </Button>
-            <Button
-              variant="success"
-              className="d-flex align-items-center gap-1"
-            >
-              <FaPrint /> <span>{current.print}</span>
+            <Button variant="info">
+              <FaGlobe /> {getLabel("preview")}
             </Button>
-            <Button variant="info" className="d-flex align-items-center gap-1">
-              <FaGlobe /> <span>{current.preview}</span>
+            <Button variant="secondary">
+              <FaExchangeAlt /> {getLabel("status")}
             </Button>
-            <Button
-              variant="secondary"
-              className="d-flex align-items-center gap-1"
-            >
-              <FaExchangeAlt /> <span>{current.status}</span>
-            </Button>
-            <Button
-              variant="danger"
-              className="d-flex align-items-center gap-1"
-            >
-              <FaTimes /> <span>{current.cancel}</span>
+            <Button variant="danger">
+              <FaTimes /> {getLabel("cancel")}
             </Button>
           </div>
         </Col>
-
-        <Col
-          md={4}
-          className={`mt-3 mt-md-0 ${isArabic ? "text-start" : "text-md-end"}`}
-        >
-          <h5 className="fw-bold mb-1">{current.purchaseOrder}</h5>
+        <Col md={4} className={`mt-3 mt-md-0 ${isArabic ? "text-start" : "text-md-end"}`}>
+          <h5 className="fw-bold mb-1">{getLabel("purchaseOrder")}</h5>
           <div>PO#1045</div>
-          <div>{current.reference}:</div>
+          <div>{getLabel("reference")}:</div>
           <div className="fw-bold mt-2">
-            {current.grossAmount}: <span className="text-success">$ 10.90</span>
+            {getLabel("grossAmount")}: <span className="text-success">$ 10.90</span>
           </div>
         </Col>
       </Row>
@@ -189,49 +176,32 @@ const PurchaseOrderView = () => {
       {/* Supplier and Order Info */}
       <Row className="mb-4">
         <Col md={6}>
-          <strong className="d-block mb-2">{current.billFrom}</strong>
-          <div>
-            <strong className="text-primary">Haroun Spiers</strong>
-          </div>
+          <strong className="d-block mb-2">{getLabel("billFrom")}</strong>
+          <div><strong className="text-primary">Haroun Spiers</strong></div>
           <div>4 Kings Park</div>
           <div>Zouparia do Monte, Portugal</div>
           <div>{isArabic ? "هاتف: 489-737-5435" : "Phone: 489-737-5435"}</div>
-          <div>
-            {isArabic
-              ? "بريد إلكتروني: hspiers2g@redcross.org"
-              : "Email: hspiers2g@redcross.org"}
-          </div>
+          <div>{isArabic ? "بريد إلكتروني: hspiers2g@redcross.org" : "Email: hspiers2g@redcross.org"}</div>
         </Col>
-        <Col
-          md={6}
-          className={
-            isArabic ? "text-start mt-4 mt-md-0" : "text-md-end mt-4 mt-md-0"
-          }
-        >
-          <div>
-            <strong>{current.orderDate}:</strong> 15-07-2025
-          </div>
-          <div>
-            <strong>{current.dueDate}:</strong> 15-07-2025
-          </div>
-          <div>
-            <strong>{current.terms}:</strong> {current.paymentDue}
-          </div>
+        <Col md={6} className={isArabic ? "text-start mt-4 mt-md-0" : "text-md-end mt-4 mt-md-0"}>
+          <div><strong>{getLabel("orderDate")}:</strong> 15-07-2025</div>
+          <div><strong>{getLabel("dueDate")}:</strong> 15-07-2025</div>
+          <div><strong>{getLabel("terms")}:</strong> {getLabel("paymentDue")}</div>
         </Col>
       </Row>
 
-      {/* Order Items Table */}
+      {/* Order Table */}
       <div className="table-responsive mb-4">
         <Table bordered className="align-middle">
           <thead className="table-light">
             <tr>
               <th>#</th>
-              <th>{current.description}</th>
-              <th>{current.rate}</th>
-              <th>{current.qty}</th>
-              <th>{current.tax}</th>
-              <th>{current.discount}</th>
-              <th>{current.amount}</th>
+              <th>{getLabel("description")}</th>
+              <th>{getLabel("rate")}</th>
+              <th>{getLabel("qty")}</th>
+              <th>{getLabel("tax")}</th>
+              <th>{getLabel("discount")}</th>
+              <th>{getLabel("amount")}</th>
             </tr>
           </thead>
           <tbody>
@@ -251,78 +221,49 @@ const PurchaseOrderView = () => {
       {/* Payment Summary */}
       <Row className="mb-4">
         <Col md={6}>
-          <p>
-            <strong>{current.paymentStatus}:</strong>{" "}
-            <Badge bg="success">{current.paid}</Badge>
-          </p>
-          <p>
-            <strong>{current.paymentMethod}:</strong>{" "}
-            <u>{isArabic ? "نقدي" : "Cash"}</u>
-          </p>
-          <p>
-            <strong>{current.note}:</strong>
-          </p>
+          <p><strong>{getLabel("paymentStatus")}:</strong> <Badge bg="success">{getLabel("paid")}</Badge></p>
+          <p><strong>{getLabel("paymentMethod")}:</strong> <u>{isArabic ? "نقدي" : "Cash"}</u></p>
+          <p><strong>{getLabel("note")}:</strong></p>
         </Col>
         <Col md={6}>
           <div className="table-responsive">
             <Table borderless className={isArabic ? "text-start" : "text-end"}>
               <tbody>
-                <tr>
-                  <td>{current.subTotal}</td>
-                  <td>$ 10.00</td>
-                </tr>
-                <tr>
-                  <td>{current.tax}</td>
-                  <td>$ 1.90</td>
-                </tr>
-                <tr>
-                  <td>{current.shipping}</td>
-                  <td>$ 0.00</td>
-                </tr>
-                <tr className="fw-bold border-top">
-                  <td>{current.total}</td>
-                  <td>$ 10.90</td>
-                </tr>
-                <tr className="text-danger">
-                  <td>{current.paymentMade}</td>
-                  <td>(-) $ 10.90</td>
-                </tr>
-                <tr className="fw-bold border-top">
-                  <td>{current.balanceDue}</td>
-                  <td>$ 0.00</td>
-                </tr>
+                <tr><td>{getLabel("subTotal")}</td><td>$ 10.00</td></tr>
+                <tr><td>{getLabel("tax")}</td><td>$ 1.90</td></tr>
+                <tr><td>{getLabel("shipping")}</td><td>$ 0.00</td></tr>
+                <tr className="fw-bold border-top"><td>{getLabel("total")}</td><td>$ 10.90</td></tr>
+                <tr className="text-danger"><td>{getLabel("paymentMade")}</td><td>(-) $ 10.90</td></tr>
+                <tr className="fw-bold border-top"><td>{getLabel("balanceDue")}</td><td>$ 0.00</td></tr>
               </tbody>
             </Table>
           </div>
         </Col>
       </Row>
 
-      {/* Signature Section */}
-      <div
-        className={isArabic ? "text-start" : "text-end"}
-        style={{ marginTop: "3rem", marginBottom: "3rem" }}
-      >
+      {/* Signature */}
+      <div className={isArabic ? "text-start" : "text-end"} style={{ marginTop: "3rem", marginBottom: "3rem" }}>
         <img src="/path-to-signature.png" alt="signature" height="40" />
-        <div>{current.signature}</div>
-        <small>{current.owner}</small>
+        <div>{getLabel("signature")}</div>
+        <small>{getLabel("owner")}</small>
       </div>
 
       {/* Debit Transactions */}
-      <h6 className="mb-3">{current.debit}</h6>
+      <h6 className="mb-3">{getLabel("debit")}</h6>
       <div className="table-responsive mb-5">
         <Table bordered>
           <thead className="table-light">
             <tr>
-              <th>{current.orderDate}</th>
-              <th>{current.paymentMethod}</th>
-              <th>{current.amount}</th>
-              <th>{current.note}</th>
+              <th>{getLabel("orderDate")}</th>
+              <th>{getLabel("paymentMethod")}</th>
+              <th>{getLabel("amount")}</th>
+              <th>{getLabel("note")}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td colSpan={4} className="text-center">
-                {current.noTransactions}
+                {getLabel("noTransactions")}
               </td>
             </tr>
           </tbody>
@@ -330,38 +271,32 @@ const PurchaseOrderView = () => {
       </div>
 
       {/* Terms and Conditions */}
-      <h6>{current.termsHeading}</h6>
-      <p className="mb-1 fw-bold">{current.paymentDue}</p>
+      <h6>{getLabel("termsHeading")}</h6>
+      <p className="mb-1 fw-bold">{getLabel("paymentDue")}</p>
       <p className="mb-3">
-        1. <strong>{current.prices}</strong>
-        <br />
-        {current.termsBody}
+        1. <strong>{getLabel("prices")}</strong><br />
+        {getLabel("termsBody")}
       </p>
 
       {/* Public Access URL */}
       <p className="text-muted small mb-4">
-        {current.publicAccess}
-        <br />
+        {getLabel("publicAccess")}<br />
         https://billing.ultimatekode.com/neo/billing/purchase?id=1045&token=XXXXXXX
       </p>
 
-      {/* File Upload Section */}
+      {/* File Upload */}
       <div style={{ marginTop: "1.5rem", marginBottom: "3rem" }}>
-        <label className="fw-bold d-block mb-2">{current.files}</label>
+        <label className="fw-bold d-block mb-2">{getLabel("files")}</label>
         <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2">
-          <Button
-            style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
-            size="sm"
-          >
-            {current.selectFiles}
+          <Button style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }} size="sm">
+            {getLabel("selectFiles")}
           </Button>
           <input type="file" />
         </div>
-        <small className="text-muted">{current.allowed}</small>
+        <small className="text-muted">{getLabel("allowed")}</small>
       </div>
     </div>
   );
 };
 
 export default PurchaseOrderView;
-

@@ -18,7 +18,7 @@ const getStatusBadge = (status) => {
   return <Badge bg="secondary">{status}</Badge>;
 };
 
-const PurchaseOrders = () => {
+const Bill = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState(initialOrders);
   const [showModal, setShowModal] = useState(false);
@@ -260,4 +260,4 @@ const PurchaseOrders = () => {
   );
 };
 
-export default PurchaseOrders;
+export default Bill;

@@ -143,7 +143,8 @@ const PurchaseReturn = () => {
             date: '',
             amount: '',
             reason: '',
-            description: ''
+            description: '',
+             status: ''
         });
         setShowModal(false);
         setIsEditMode(false);
@@ -458,188 +459,208 @@ const PurchaseReturn = () => {
               
 
                 {/* Add/Edit Modal */}
-                {showModal && (
-                    <div
-                        className="modal fade show d-block"
-                        style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
-                    >
-                        <div className="modal-dialog modal-lg">
-                            <div
-                                className="modal-content"
-                                style={{ border: 'none', borderRadius: '8px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}
-                            >
-                                <div className="modal-header" style={{ borderBottom: 'none', paddingBottom: '0' }}>
-                                    <h5 className="modal-title" style={{ fontWeight: '600', color: '#212529' }}>
-                                        {isEditMode ? 'Edit Purchase Return' : 'Add New Return'}
-                                    </h5>
-                                    <button
-                                        type="button"
-                                        className="btn-close d-flex align-items-center justify-content-center"
-                                        onClick={() => {
-                                            setShowModal(false);
-                                            setIsEditMode(false);
-                                            setFormData({
-                                                invoice: '',
-                                                vendor: '',
-                                                date: '',
-                                                amount: '',
-                                                reason: '',
-                                                description: ''
-                                            });
-                                        }}
-                                        style={{
-                                            width: '32px',
-                                            height: '32px',
-                                            border: 'none',
-                                            backgroundColor: 'transparent'
-                                        }}
-                                    >
-                                        <BiX />
-                                    </button>
-                                </div>
-                                <div className="modal-body" style={{ paddingTop: '20px' }}>
-                                    <div className="row g-3">
-                                        <div className="col-md-6">
-                                            <label className="form-label" style={{ fontWeight: '500', color: '#495057' }}>
-                                                Invoice Number <span className="text-danger">*</span>
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                name="invoice"
-                                                value={formData.invoice}
-                                                onChange={handleInputChange}
-                                                placeholder="Enter invoice number"
-                                                style={{ border: '1px solid #dee2e6', borderRadius: '4px' }}
-                                                required
-                                            />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label className="form-label" style={{ fontWeight: '500', color: '#495057' }}>
-                                                Vendor Name <span className="text-danger">*</span>
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                name="vendor"
-                                                value={formData.vendor}
-                                                onChange={handleInputChange}
-                                                placeholder="Enter vendor name"
-                                                style={{ border: '1px solid #dee2e6', borderRadius: '4px' }}
-                                                required
-                                            />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label className="form-label" style={{ fontWeight: '500', color: '#495057' }}>
-                                                Return Date <span className="text-danger">*</span>
-                                            </label>
-                                            <input
-                                                type="date"
-                                                className="form-control"
-                                                name="date"
-                                                value={formData.date}
-                                                onChange={handleInputChange}
-                                                style={{ border: '1px solid #dee2e6', borderRadius: '4px' }}
-                                                required
-                                            />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label className="form-label" style={{ fontWeight: '500', color: '#495057' }}>
-                                                Amount <span className="text-danger">*</span>
-                                            </label>
-                                            <div className="input-group">
-                                                <span
-                                                    className="input-group-text"
-                                                    style={{ backgroundColor: '#f8f9fa', border: '1px solid #dee2e6' }}
-                                                >
-                                                    ₹
-                                                </span>
-                                                <input
-                                                    type="number"
-                                                    className="form-control"
-                                                    name="amount"
-                                                    value={formData.amount}
-                                                    onChange={handleInputChange}
-                                                    placeholder="0.00"
-                                                    style={{ border: '1px solid #dee2e6', borderLeft: 'none' }}
-                                                    required
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <label className="form-label" style={{ fontWeight: '500', color: '#495057' }}>
-                                                Return Reason
-                                            </label>
-                                            <select
-                                                className="form-select"
-                                                name="reason"
-                                                value={formData.reason}
-                                                onChange={handleInputChange}
-                                                style={{ border: '1px solid #dee2e6', borderRadius: '4px' }}
-                                            >
-                                                <option value="">Select reason</option>
-                                                <option value="Damaged Items">Damaged Items</option>
-                                                <option value="Wrong Items">Wrong Items</option>
-                                                <option value="Quality Issues">Quality Issues</option>
-                                                <option value="Excess Stock">Excess Stock</option>
-                                                <option value="Other">Other</option>
-                                            </select>
-                                        </div>
-                                        <div className="col-12">
-                                            <label className="form-label" style={{ fontWeight: '500', color: '#495057' }}>
-                                                Description
-                                            </label>
-                                            <textarea
-                                                className="form-control"
-                                                name="description"
-                                                value={formData.description}
-                                                onChange={handleInputChange}
-                                                rows="3"
-                                                placeholder="Enter detailed description of the return..."
-                                                style={{ border: '1px solid #dee2e6', borderRadius: '4px' }}
-                                            ></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="modal-footer" style={{ borderTop: 'none', paddingTop: '0' }}>
-                                    <button
-                                        type="button"
-                                        className="btn"
-                                        onClick={() => {
-                                            setShowModal(false);
-                                            setIsEditMode(false);
-                                            setFormData({
-                                                invoice: '',
-                                                vendor: '',
-                                                date: '',
-                                                amount: '',
-                                                reason: '',
-                                                description: ''
-                                            });
-                                        }}
-                                        style={{
-                                            border: '1px solid #6c757d',
-                                            color: '#6c757d',
-                                            backgroundColor: 'white',
-                                            borderRadius: '4px',
-                                            padding: '8px 20px'
-                                        }}
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="btn"
-                                        onClick={handleSubmit}
-                                                 style={{ backgroundColor: '#3daaaa', border: '1px solid #3daaaa', color:"#fff" }}
-                                    >
-                                        {isEditMode ? 'Update Return' : 'Create Return'}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
+          {/* Add/Edit Modal */}
+{showModal && (
+  <div
+    className="modal fade show d-block"
+    style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
+  >
+    <div className="modal-dialog modal-lg">
+      <div
+        className="modal-content"
+        style={{ border: 'none', borderRadius: '8px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}
+      >
+        <div className="modal-header" style={{ borderBottom: 'none', paddingBottom: '0' }}>
+          <h5 className="modal-title" style={{ fontWeight: '600', color: '#212529' }}>
+            {isEditMode ? 'Edit Purchase Return' : 'Add New Return'}
+          </h5>
+          <button
+            type="button"
+            className="btn-close d-flex align-items-center justify-content-center"
+            onClick={() => {
+              setShowModal(false);
+              setIsEditMode(false);
+              setFormData({
+                invoice: '',
+                vendor: '',
+                date: '',
+                amount: '',
+                reason: '',
+                description: '',
+                status: ''
+              });
+            }}
+            style={{
+              width: '32px',
+              height: '32px',
+              border: 'none',
+              backgroundColor: 'transparent'
+            }}
+          >
+            <BiX />
+          </button>
+        </div>
+
+        <div className="modal-body" style={{ paddingTop: '20px' }}>
+          <div className="row g-3">
+            {/* Invoice Number */}
+            <div className="col-md-6">
+              <label className="form-label fw-medium text-dark">
+                Invoice Number <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="invoice"
+                value={formData.invoice}
+                onChange={handleInputChange}
+                placeholder="Enter invoice number"
+                required
+              />
+            </div>
+
+            {/* Vendor Name */}
+            <div className="col-md-6">
+              <label className="form-label fw-medium text-dark">
+                Vendor Name <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="vendor"
+                value={formData.vendor}
+                onChange={handleInputChange}
+                placeholder="Enter vendor name"
+                required
+              />
+            </div>
+
+            {/* Return Date */}
+            <div className="col-md-6">
+              <label className="form-label fw-medium text-dark">
+                Return Date <span className="text-danger">*</span>
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                name="date"
+                value={formData.date}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            {/* Amount */}
+            <div className="col-md-6">
+              <label className="form-label fw-medium text-dark">
+                Amount <span className="text-danger">*</span>
+              </label>
+              <div className="input-group">
+                <span className="input-group-text bg-light">₹</span>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="amount"
+                  value={formData.amount}
+                  onChange={handleInputChange}
+                  placeholder="0.00"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Status Field */}
+            <div className="col-md-6">
+              <label className="form-label fw-medium text-dark">
+                Status <span className="text-danger">*</span>
+              </label>
+              <select
+                className="form-select"
+                name="status"
+                value={formData.status}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Select status</option>
+                <option value="Approved">Approved</option>
+                <option value="Pending">Pending</option>
+              </select>
+            </div>
+
+            {/* Return Reason */}
+            <div className="col-6">
+              <label className="form-label fw-medium text-dark">Return Reason</label>
+              <select
+                className="form-select"
+                name="reason"
+                value={formData.reason}
+                onChange={handleInputChange}
+              >
+                <option value="">Select reason</option>
+                <option value="Damaged Items">Damaged Items</option>
+                <option value="Wrong Items">Wrong Items</option>
+                <option value="Quality Issues">Quality Issues</option>
+                <option value="Excess Stock">Excess Stock</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            {/* Description */}
+            <div className="col-12">
+              <label className="form-label fw-medium text-dark">Description</label>
+              <textarea
+                className="form-control"
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
+                rows="3"
+                placeholder="Enter detailed description of the return..."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        {/* Modal Footer */}
+        <div className="modal-footer" style={{ borderTop: 'none', paddingTop: '0' }}>
+          <button
+            type="button"
+            className="btn"
+            onClick={() => {
+              setShowModal(false);
+              setIsEditMode(false);
+              setFormData({
+                invoice: '',
+                vendor: '',
+                date: '',
+                amount: '',
+                reason: '',
+                description: '',
+                status: ''
+              });
+            }}
+            style={{
+              border: '1px solid #6c757d',
+              color: '#6c757d',
+              backgroundColor: 'white',
+              borderRadius: '4px',
+              padding: '8px 20px'
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="btn"
+            onClick={handleSubmit}
+            style={{ backgroundColor: '#3daaaa', border: '1px solid #3daaaa', color: '#fff' }}
+          >
+            {isEditMode ? 'Update Return' : 'Create Return'}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
 
 
