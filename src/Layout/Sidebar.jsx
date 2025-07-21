@@ -119,7 +119,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         { to: "/company/managestock", icon: "fas fa-table", label: "Inventory" },
         {
           type: "section",
-          title: "GST Filing",
+          title: "GST ",
           key: "gst",
           icon: "fas fa-file-alt",
           items: [

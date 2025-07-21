@@ -199,26 +199,7 @@ const CustomerTable = () => {
               </InputGroup>
             </Col>
             <Col md={6}>
-              <InputGroup>
-                <Dropdown>
-                  <Dropdown.Toggle variant="outline-secondary" id="dropdown-address-filter">
-                    <FaFilter className="me-2" />
-                    {addressFilter === "all" ? "Filter by Address" : addressFilter === "billing" ? "Billing Address" : "Shipping Address"}
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => setAddressFilter("all")}>All Addresses</Dropdown.Item>
-                    <Dropdown.Item onClick={() => setAddressFilter("billing")}>Billing Address</Dropdown.Item>
-                    <Dropdown.Item onClick={() => setAddressFilter("shipping")}>Shipping Address</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter city, state or address"
-                  value={addressFilterValue}
-                  onChange={(e) => setAddressFilterValue(e.target.value)}
-                  disabled={addressFilter === "all"}
-                />
-              </InputGroup>
+         
             </Col>
           </Row>
         </div>
