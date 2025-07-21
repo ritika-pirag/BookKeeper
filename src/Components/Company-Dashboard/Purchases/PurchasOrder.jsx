@@ -153,18 +153,10 @@ const PurchasOrder = () => {
 
   style={{ backgroundColor: "#fd7e14", borderColor: "#fd7e14" }}
   onClick={handleExportAll}>
-    <FaFile size={18} className="me-2 text-dark" /> Export
+    <FaFile size={18} className="me-2" /> Export
   </Button>
 
 
-{/* 
-      <Button
-        className="rounded-pill"
-        style={{ backgroundColor: "#fd7e14", borderColor: "#fd7e14" }}
-        onClick={handleExport}
-      >
-        <i className="fas fa-file-export me-2" /> Export
-      </Button> */}
 
 
   <Button
@@ -172,7 +164,7 @@ const PurchasOrder = () => {
     style={{ backgroundColor: '#ffc107', borderColor: '#ffc107' }}
     onClick={handleDownloadBlankSuppliers}
   >
-    <FaDownload size={18} className="me-2 text-dark" /> Download
+    <FaDownload size={18} className="me-2 " /> Download
   </Button>
 </div>
 
@@ -249,16 +241,7 @@ const PurchasOrder = () => {
         </nav>
       </div>
 
-      {/* New Order Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} fullscreen centered backdrop="static">
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Order</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <NewOrder onSubmit={handleNewOrderSubmit} onCancel={() => setShowModal(false)} />
-        </Modal.Body>
-      </Modal>
-  
+
     </div>
   );
 };
