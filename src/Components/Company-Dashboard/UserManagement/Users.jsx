@@ -37,7 +37,6 @@ const defaultUsers = [
 
 const statusBadge = (status) => (
   <Badge
-    bg=""
     style={{
       background: "#27ae60",
       color: "#fff",
@@ -157,54 +156,46 @@ const Users = () => {
   };
 
   return (
-    <div style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
+    <div className="p-2">
       <Container fluid className="py-4">
-        <div style={{ fontWeight: 700, fontSize: 28 }}>Users</div>
-        <div style={{ color: "#888", fontSize: 17, marginBottom: 24 }}>
-          Manage your users
-        </div>
+        <h3 className="fw-bold">Users</h3>
+        <p className="text-muted mb-4">Manage your users</p>
 
-        <Card className=" mb-4">
+        <Row className="g-2 mb-3 align-items-center">
+  <Col xs={12} md={6}>
+    <Form.Control
+      placeholder="Search"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+    />
+  </Col>
+
+  <Col xs={12} md={6} className="d-flex justify-content-md-end justify-content-start">
+    <Button
+      className="d-flex align-items-center"
+      style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+      onClick={handleAdd}
+    >
+      <FaPlus className="me-2" />
+      Add User
+    </Button>
+  </Col>
+</Row>
+
+
+
+        <Card className="mb-4">
           <Card.Body style={{ padding: 0 }}>
-            <Row className="g-2 align-items-center p-3 pb-0">
-              <Col xs={12} md={6}>
-                <Form.Control
-                  placeholder="Search"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </Col>
-              <Col xs={6} md={3} className="text-end">
-                <Button variant="light" onClick={handlePDF} title="Download PDF">
-                  <FaFilePdf size={24} color="#ff6f61" />
-                </Button>
-              </Col>
-              <Col xs={6} md={3} className="text-end">
-                <Button
-              
-                  style={{ whiteSpace: "nowrap", backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
-                  onClick={handleAdd}
-                >
-                  <FaPlus className="me-2 mb-1" />
-                  Add User
-                </Button>
-              </Col>
-            </Row>
-
             <div style={{ overflowX: "auto" }}>
-              <Table
-                responsive
-                className="align-middle mb-0"
-                style={{ minWidth: 900, background: "#fff", fontSize: 17 }}
-              >
+              <Table responsive className="align-middle mb-0" style={{ background: "#fff", fontSize: 16 }}>
                 <thead className="table-light text-white">
                   <tr>
                     <th className="py-3">#</th>
                     <th className="py-3">User Name</th>
                     <th className="py-3">Phone</th>
                     <th className="py-3">Email</th>
-                    <th className="py-3"> Role</th>
-                    <th className="py-3"> Status</th>
+                    <th className="py-3">Role</th>
+                    <th className="py-3">Status</th>
                     <th className="py-3" style={{ minWidth: 120 }}></th>
                   </tr>
                 </thead>
@@ -267,10 +258,7 @@ const Users = () => {
                   )}
                 </tbody>
               </Table>
-
-              
             </div>
-            
           </Card.Body>
         </Card>
       </Container>
@@ -320,38 +308,29 @@ const Users = () => {
                 <option value="Inactive">Inactive</option>
               </Form.Select>
             </Form.Group>
-
             <Form.Group className="mb-3">
               <Form.Label>Image Preview</Form.Label>
               {previewImg ? (
                 <div className="mb-2">
-                  <img
-                    src={previewImg}
-                    alt="preview"
-                    style={{ height: 60, borderRadius: 6 }}
-                  />
+                  <img src={previewImg} alt="preview" style={{ height: 60, borderRadius: 6 }} />
                 </div>
               ) : (
                 <div className="text-muted small mb-2">No Image</div>
               )}
-              <Form.Control
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-              />
+              <Form.Control type="file" accept="image/*" onChange={handleImageUpload} />
               <Form.Text muted>Upload to replace image</Form.Text>
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
-          <Button variant="primary" onClick={handleSave} disabled={!form.name || !form.email || !form.phone || !form.role}>
+          <Button variant="primary" onClick={handleSave} disabled={!form.name || !form.email || !form.phone || !form.role }       style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}>
             Save
           </Button>
         </Modal.Footer>
       </Modal>
 
-      {/* Delete Confirmation Modal */}
+      {/* Delete Modal */}
       <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Delete</Modal.Title>

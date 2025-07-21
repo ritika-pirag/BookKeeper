@@ -30,7 +30,7 @@ import GSTReturns from "./Components/Company-Dashboard/GST/GSTReturns";
 import TdsTcs from "./Components/Company-Dashboard/GST/TdsTcs";
 import ITCReport from "./Components/Company-Dashboard/GST/ITCReport";
 import EWayBill from "./Components/Company-Dashboard/GST/EWayBill";
-import Purchaseorders from "./Components/Company-Dashboard/Purchases/Purchaseorders";
+
 import Vendors from "./Components/Company-Dashboard/Purchases/Vendors";
 import PurchaseReturn from "./Components/Company-Dashboard/Purchases/PurchaseReturn";
 import DayBook from "./Components/Company-Dashboard/Finance&Accounts/DayBook";
@@ -136,6 +136,7 @@ import ViewInvoicee from "./Components/Company-Dashboard/Sales/ViewInvoicee";
 import Categories from "./Components/Company-Dashboard/Inventory/SiteData/Categories";
 import AddCustomer from "./Components/Company-Dashboard/Inventory/Customer/AddCustomer";
 import PurchasOrder from "./Components/Company-Dashboard/Purchases/PurchasOrder";
+import Bill from "./Components/Company-Dashboard/Purchases/Bill";
 
 
 
@@ -213,7 +214,7 @@ function App() {
           <Route path="/company/vendors" element={<Vendors />} />
           
           {/* <Route path="/company/neworders" element={<NewOrderPurchase />} /> */}
-          <Route path="/company/purchaseorders" element={<Purchaseorders />} />
+          <Route path="/company/bill" element={<Bill/>} />
           <Route path="/company/purchasorder" element={<PurchasOrder/>} />
           <Route path="/company/purchasereturn" element={<PurchaseReturn />} />
           <Route path="/company/purchaseview" element={<PurchaseOrderView/>} />
