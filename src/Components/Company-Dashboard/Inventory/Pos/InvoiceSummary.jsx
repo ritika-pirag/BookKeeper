@@ -1,24 +1,52 @@
 import React, { useState } from 'react';
-import { Row, Col, Table, Button, Badge, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { Row, Col, Table, Button, Badge } from 'react-bootstrap';
 import {
   FaEdit, FaPrint, FaMoneyBill, FaPaperPlane, FaEye,
-  FaGlobe, FaExchangeAlt, FaTimes,  FaCaretUp
+  FaGlobe, FaExchangeAlt, FaTimes, FaCaretUp
 } from 'react-icons/fa';
 
 const InvoiceSummary = () => {
-  const [isArabic, setIsArabic] = useState(false);
-  const t = (en, ar) => isArabic ? ar : en;
+  const [languageMode, setLanguageMode] = useState("en"); // "en" | "ar" | "both"
+
+  const t = (en, ar) => {
+    if (languageMode === "both") {
+      return (
+        <div>
+          <div>{en}</div>
+          <div className="text-muted small">{ar}</div>
+        </div>
+      );
+    }
+    return languageMode === "ar" ? ar : en;
+  };
 
   return (
     <>
-      <div className={`p-4 mt-2 ${isArabic ? 'arabic-mode' : ''}`}>
+      <div className={`p-4 mt-2 ${languageMode === "ar" ? 'arabic-mode' : ''}`}>
         {/* Action Bar */}
         <Row className="mb-4 align-items-start">
           <Col md={8}>
             <div className="d-flex flex-wrap gap-2">
-              <Button variant="dark" onClick={() => setIsArabic(!isArabic)}>
-                {isArabic ? "🌐 English" : "🔁 Arabic"}
+              {/* Language Toggle Buttons */}
+              <Button
+                variant={languageMode === "en" ? "dark" : "outline-dark"}
+                onClick={() => setLanguageMode("en")}
+              >
+                🌐 English
               </Button>
+              <Button
+                variant={languageMode === "ar" ? "dark" : "outline-dark"}
+                onClick={() => setLanguageMode("ar")}
+              >
+                🇴🇲 Arabic
+              </Button>
+              <Button
+                variant={languageMode === "both" ? "dark" : "outline-dark"}
+                onClick={() => setLanguageMode("both")}
+              >
+                🌍 English & Arabic
+              </Button>
+
               <Button variant="warning" className="d-flex align-items-center gap-1">
                 <FaEdit /> <span>{t("Edit Invoice", "تعديل الفاتورة")}</span>
               </Button>
@@ -40,21 +68,15 @@ const InvoiceSummary = () => {
               <Button variant="danger" className="d-flex align-items-center gap-1">
                 <FaTimes /> <span>{t("Cancel", "إلغاء")}</span>
               </Button>
-
-
-
-
-
               <Button variant="success" className="d-flex align-items-center gap-1">
-              <FaEdit /> <span>{t("Delivery Note", "مذكرة التسليم")}</span>
-            </Button>
-            <Button variant="info" className="d-flex align-items-center gap-1">
-              <FaEye/> <span>{t("Proforma Invoice", "الفاتورة الأولية")}</span>
-            </Button>
-            <Button variant="secondary" className="d-flex align-items-center gap-1">
-              <FaCaretUp /> <span>{t("Copy Invoice", "نسخ الفاتورة")}</span>
-            </Button>
-
+                <FaEdit /> <span>{t("Delivery Note", "مذكرة التسليم")}</span>
+              </Button>
+              <Button variant="info" className="d-flex align-items-center gap-1">
+                <FaEye /> <span>{t("Proforma Invoice", "الفاتورة الأولية")}</span>
+              </Button>
+              <Button variant="secondary" className="d-flex align-items-center gap-1">
+                <FaCaretUp /> <span>{t("Copy Invoice", "نسخ الفاتورة")}</span>
+              </Button>
             </div>
           </Col>
 
@@ -68,14 +90,15 @@ const InvoiceSummary = () => {
 
         {/* Customer Info */}
         <Row className="mb-4">
-          <Col md={6}>
-            <strong className="d-block mb-2">{t("Bill To", "إلى الفاتورة")}</strong>
-            <div><strong className="text-primary">Haroun Spiers</strong></div>
-            <div>4 Kings Park</div>
-            <div>Zouparia do Monte, Portugal</div>
-            <div>{t("Phone:", "الهاتف:")} 489-737-5435</div>
-            <div>{t("Email:", "البريد الإلكتروني:")} hspiers2g@redcross.org</div>
-          </Col>
+        <Col md={6}>
+  <strong className="d-block mb-2">{t("Bill To", "إلى الفاتورة")}</strong>
+  <div><strong className="text-primary">{t("Haroun Spiers", "هارون سبيرز")}</strong></div>
+  <div>{t("4 Kings Park", "4 كينجز بارك")}</div>
+  <div>{t("Zouparia do Monte, Portugal", "زوباريا دو مونتي، البرتغال")}</div>
+  <div>{t("Phone:", "الهاتف:")} 489-737-5435</div>
+  <div>{t("Email:", "البريد الإلكتروني:")} hspiers2g@redcross.org</div>
+</Col>
+
           <Col md={6} className="text-md-end mt-4 mt-md-0">
             <div><strong>{t("Invoice Date:", "تاريخ الفاتورة:")}</strong> 15-07-2025</div>
             <div><strong>{t("Due Date:", "تاريخ الاستحقاق:")}</strong> 15-07-2025</div>
