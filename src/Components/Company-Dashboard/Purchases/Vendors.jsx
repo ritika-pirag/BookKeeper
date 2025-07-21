@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import { FaEye, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+
+
+
 
 const Vendors = () => {
   const [vendors, setVendors] = useState([
@@ -114,25 +119,102 @@ const Vendors = () => {
     v.phone.includes(searchTerm)
   );
 
+
+
+
+// 📥 DOWNLOAD TEMPLATE
+const handleDownloadTemplate = () => {
+  const headers = [["name", "company", "email", "phone", "payable", "address"]];
+  const ws = XLSX.utils.aoa_to_sheet(headers);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "VendorsTemplate");
+
+  const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+  saveAs(new Blob([wbout], { type: "application/octet-stream" }), "Vendor_Template.xlsx");
+};
+
+// 📤 EXPORT EXISTING VENDOR DATA
+const handleExport = () => {
+  const ws = XLSX.utils.json_to_sheet(vendors);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Vendors");
+
+  const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+  saveAs(new Blob([wbout], { type: "application/octet-stream" }), "Vendors_Export.xlsx");
+};
+
+// 📥 TRIGGER FILE INPUT
+const handleImportClick = () => {
+  if (window.importFileRef) window.importFileRef.click();
+};
+
+// 📤 IMPORT FROM EXCEL TO STATE
+const handleImport = (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = (evt) => {
+    const bstr = evt.target.result;
+    const workbook = XLSX.read(bstr, { type: "binary" });
+    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+    const data = XLSX.utils.sheet_to_json(firstSheet);
+
+    setVendors((prev) => [...prev, ...data]);
+  };
+
+  reader.readAsBinaryString(file);
+};
+
+
+
+
   return (
     <div className="mt-4 p-2">
       {/* ✅ Title, Search and Add Button */}
-      <Row className="align-items-center mb-3">
-  <Col xs={12} md={4} className="mb-1 mb-md-0">
+{/* Title and Action Buttons */}
+{/* Title and Action Buttons */}
+<Row className="align-items-center mb-3">
+  <Col xs={12} md={4} className="mb-2 mb-md-0">
     <h4 className="fw-bold mb-0">Manage Vendors</h4>
   </Col>
   <Col xs={12} md={8}>
-    <div className="d-flex gap-2 flex-nowrap">
-      <Form.Control
-        type="text"
-        placeholder="Search vendor..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ flex: "1 1 auto" }}
-      />
+    <div className="d-flex flex-wrap gap-2 justify-content-md-end">
+   
+
       <Button
+        className="rounded-pill"
+        style={{ backgroundColor: "#28a745", borderColor: "#28a745" }}
+        onClick={handleImportClick}
+      >
+        <i className="fas fa-file-import me-2" /> Import
+      </Button>
+
+      <Button
+        className="rounded-pill"
+        style={{ backgroundColor: "#fd7e14", borderColor: "#fd7e14" }}
+        onClick={handleExport}
+      >
+        <i className="fas fa-file-export me-2" /> Export
+      </Button>
+
+      <Button
+        className="rounded-pill"
+        style={{ backgroundColor: "#ffc107", borderColor: "#ffc107" }}
+        onClick={handleDownloadTemplate}
+      >
+        <i className="fas fa-download me-2" /> Download
+      </Button>
+
+      <input
+        type="file"
+        accept=".xlsx, .xls"
+        ref={(ref) => (window.importFileRef = ref)}
+        onChange={handleImport}
+        style={{ display: "none" }}
+      />
+         <Button
         variant="success"
-        className="d-flex align-items-center gap-2"
+        className="rounded-pill d-flex align-items-center gap-2"
         onClick={() => {
           setNewVendor({
             name: "",
@@ -150,8 +232,28 @@ const Vendors = () => {
         <FaPlus /> Add Vendor
       </Button>
     </div>
+    
   </Col>
 </Row>
+
+{/* Search bar - smaller and centered above table */}
+<Row className="mb-3 justify-content-start">
+  <Col xs={12} md={6} lg={4}>
+    <Form.Control
+      type="text"
+      placeholder="Search vendor..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="rounded-pill"
+    />
+  </Col>
+</Row>
+
+
+
+
+
+
 
 
       {/* ✅ Card Starts */}

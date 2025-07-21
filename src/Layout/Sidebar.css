@@ -13,6 +13,8 @@
   flex: 1;
   overflow-y: auto;
   padding-bottom: 20px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
 }
 
 .sidebar-footer {
@@ -23,7 +25,10 @@
 
 /* Custom scrollbar styling */
 .sidebar-menu-container::-webkit-scrollbar {
-  width: 6px;
+  /* width: 2px;
+   */
+     display: none;
+
 }
 
 .sidebar-menu-container::-webkit-scrollbar-track {
@@ -31,7 +36,7 @@
 }
 
 .sidebar-menu-container::-webkit-scrollbar-thumb {
-  background-color: #53b2a5;
+  background-color:#032D45 !important;
   border-radius: 6px;
 }
 

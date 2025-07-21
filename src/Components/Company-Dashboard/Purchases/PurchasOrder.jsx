@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Table, Button, Badge, Form, Row, Col, Modal } from 'react-bootstrap';
-import { FaEye, FaDownload, FaTrash } from 'react-icons/fa';
+import { FaEye, FaDownload, FaTrash, FaUpload, FaFile } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import NewOrder from './NewOrderPurchase';
 
@@ -22,11 +22,64 @@ const PurchasOrder = () => {
   const [orders, setOrders] = useState(initialOrders);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const fileInputRef = useRef();
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this order?")) {
       setOrders(orders.filter(order => order.id !== id));
     }
+  };
+
+  const handleDownloadBlankSuppliers = () => {
+    const blankOrders = orders.filter(order => !order.supplier);
+    if (blankOrders.length === 0) {
+      alert("No blank supplier data to download.");
+      return;
+    }
+    let csv = `Order No,Supplier,Date,Amount,Status\n`;
+    blankOrders.forEach(order => {
+      csv += `${order.orderNo},-,${order.date},${order.amount},${order.status}\n`;
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "Blank-Supplier-Orders.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleExportAll = () => {
+    let csv = `Order No,Supplier,Date,Amount,Status\n`;
+    orders.forEach(order => {
+      csv += `${order.orderNo},${order.supplier || '-'},${order.date},${order.amount},${order.status}\n`;
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "All-Orders.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleImportFile = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // TODO: Implement CSV parsing logic here
+    alert(`Imported file: ${file.name}`);
+    e.target.value = null;
   };
 
   const handleDownload = (order) => {
@@ -51,25 +104,57 @@ const PurchasOrder = () => {
   return (
     <div className="p-4 my-4 px-4">
 
-      {/* Header and New Button */}
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5 className="mb-0">Purchase Orders</h5>
-    
-      </div>
+      {/* Search and Buttons */}
+      <div className="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <Form.Control
+          size="sm"
+          type="text"
+          placeholder="Search"
+          className="w-100 w-md-auto"
+          style={{ maxWidth: '250px' }}
+        />
 
-      {/* Filters Row */}
-      <Row className="align-items-center mb-3 g-2">
-        <Col xs={12} md={3}>
-          <Form.Select size="sm" defaultValue="10">
-            <option value="10">Show 10 entries</option>
-            <option value="25">Show 25 entries</option>
-            <option value="50">Show 50 entries</option>
-          </Form.Select>
-        </Col>
-        <Col xs={12} md={{ span: 3, offset: 6 }}>
-          <Form.Control size="sm" type="text" placeholder="Search" />
-        </Col>
-      </Row>
+<div className="d-flex gap-2 flex-wrap">
+  <Button variant="success" className="rounded-pill px-4 d-flex align-items-center" onClick={handleImportClick}>
+    <FaUpload size={18} className="me-2 text-white" /> Import
+  </Button>
+  <input
+    type="file"
+    ref={fileInputRef}
+    accept=".csv"
+    style={{ display: 'none' }}
+    onChange={handleImportFile}
+  />
+
+
+  <Button  className="rounded-pill px-4 d-flex align-items-center"
+
+  style={{ backgroundColor: "#fd7e14", borderColor: "#fd7e14" }}
+  onClick={handleExportAll}>
+    <FaFile size={18} className="me-2 text-dark" /> Export
+  </Button>
+
+
+{/* 
+      <Button
+        className="rounded-pill"
+        style={{ backgroundColor: "#fd7e14", borderColor: "#fd7e14" }}
+        onClick={handleExport}
+      >
+        <i className="fas fa-file-export me-2" /> Export
+      </Button> */}
+
+
+  <Button
+    className="rounded-pill px-4 d-flex align-items-center"
+    style={{ backgroundColor: '#ffc107', borderColor: '#ffc107' }}
+    onClick={handleDownloadBlankSuppliers}
+  >
+    <FaDownload size={18} className="me-2 text-dark" /> Download
+  </Button>
+</div>
+
+      </div>
 
       {/* Table */}
       <div className="table-responsive">
@@ -141,8 +226,7 @@ const PurchasOrder = () => {
           <Modal.Title>Add New Order</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
-            <NewOrder onSubmit={handleNewOrderSubmit} onCancel={() => setShowModal(false)} />
+          <NewOrder onSubmit={handleNewOrderSubmit} onCancel={() => setShowModal(false)} />
         </Modal.Body>
       </Modal>
     </div>

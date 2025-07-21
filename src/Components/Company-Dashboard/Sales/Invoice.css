@@ -16,3 +16,9 @@
     margin: 1.5rem 0;
     border-top: 1px solid #dee2e6;
   }
+  .custom-modal-lg .modal-dialog {
+    max-width: 95vw; /* or 100vw if you want full width */
+    width: 100vw;
+    margin: auto;
+  }
+  

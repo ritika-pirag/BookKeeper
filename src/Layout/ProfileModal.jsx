@@ -34,7 +34,7 @@ const ProfileModal = ({ show, handleClose }) => {
   const removeImage = () => setProfileImage(null);
 
   return (
-    <Modal show={show} onHide={handleClose} size="md" centered>
+    <Modal show={show} onHide={handleClose} size="xl" centered>
       <Modal.Header closeButton>
         <Modal.Title>User Profile</Modal.Title>
       </Modal.Header>
