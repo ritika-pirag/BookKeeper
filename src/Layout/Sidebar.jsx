@@ -84,7 +84,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         renderFlatSection("Inventory", [
           { to: "/company/managestock", icon: "fas fa-table", label: "Inventory" },
         ]),
-        renderFlatSection("GST Filing", [
+        renderFlatSection("GST ", [
           { to: "/company/taxreport", icon: "fas fa-file-alt", label: "Tax Report" },
           { to: "/company/gstreturns", icon: "fas fa-file-invoice", label: "GST Returns" },
           { to: "/company/tdstcs", icon: "fas fa-percent", label: "TDS/TCS" },
@@ -148,7 +148,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           { to: "/user/cashflow", icon: "fas fa-coins", label: "Cash Flow" },
           { to: "/user/accountstatement", icon: "fas fa-file-invoice-dollar", label: "Account Statement" },
         ]),
-        renderFlatSection("GST Filing", [
+        renderFlatSection("GST", [
           { to: "/user/taxdata", icon: "fas fa-file-alt", label: "Tax Report" },
           { to: "/user/gstdata", icon: "fas fa-receipt", label: "GST Returns" },
           { to: "/user/itcdata", icon: "fas fa-piggy-bank", label: "ITC Report" },

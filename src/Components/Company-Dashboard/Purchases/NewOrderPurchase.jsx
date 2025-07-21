@@ -95,7 +95,7 @@ const NewOrder = () => {
 </Col>
 
 
-        <Col md={4}>
+        <Col md={6}>
           <Form.Label>Bill #</Form.Label>
           <InputGroup>
             <InputGroup.Text><BsCalendar /></InputGroup.Text>
@@ -103,7 +103,7 @@ const NewOrder = () => {
           </InputGroup>
         </Col>
 
-        <Col md={4} className='mt-2'>
+        <Col md={6} className='mt-2'>
           <Form.Label>Reference</Form.Label>
           <InputGroup>
             <InputGroup.Text><BsBookmark /></InputGroup.Text>
@@ -111,7 +111,7 @@ const NewOrder = () => {
           </InputGroup>
         </Col>
 
-        <Col md={4}>
+        <Col md={6}>
           <Form.Label>Order Date</Form.Label>
           <InputGroup>
             <InputGroup.Text><BsCalendar /></InputGroup.Text>
@@ -119,7 +119,7 @@ const NewOrder = () => {
           </InputGroup>
         </Col>
 
-        <Col md={4}>
+        <Col md={6} className='mt-2'>
           <Form.Label>Due Date</Form.Label>
           <InputGroup>
             <InputGroup.Text><BsCalendar /></InputGroup.Text>
@@ -179,46 +179,63 @@ const NewOrder = () => {
       </Row>
 
       {/* Items Table */}
-      <div className="table-responsive mb-3">
-        <table className="table table-bordered align-middle">
-          <thead>
-            <tr className="table-light">
-              <th>Item Name</th>
-              <th>Quantity</th>
-              <th>Rate</th>
-              {isTaxOn && <th>Tax(%)</th>}
-              {isTaxOn && <th>Tax</th>}
-              {isDiscountOn && <th>Discount</th>}
-              <th>Amount ($)</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item, index) => (
-              <tr key={index}>
-                <td>
-                  <Form.Control placeholder="Enter Product name or Code" className="mb-1" />
-                  <Form.Control placeholder="Enter Product description" />
-                </td>
-                <td><Form.Control type="number" defaultValue={1} /></td>
-                <td><Form.Control /></td>
-                {isTaxOn && <td><Form.Control /></td>}
-                {isTaxOn && <td>0</td>}
-                {isDiscountOn && <td><Form.Control /></td>}
-                <td>$ 0</td>
-                <td>-</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <Button
-          className="d-flex align-items-center mt-4 mb-2"
-          style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
-          onClick={addRow}
-        >
-          <BsPlusCircle className="me-1" /> Add Row
-        </Button>
-      </div>
+ {/* Items Table */}
+<div className="table-responsive mb-3">
+  <table className="table table-bordered align-middle">
+    <thead>
+      <tr className="table-light">
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        {isTaxOn && <th>Tax(%)</th>}
+        {isTaxOn && <th>Tax</th>}
+        {isDiscountOn && <th>Discount</th>}
+        <th>Amount ($)</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {items.map((item, index) => (
+        <tr key={index}>
+          <td>
+            <Form.Control
+              placeholder="Enter Product name or Code"
+              className="mb-1"
+            />
+            <Form.Control placeholder="Enter Product description" />
+          </td>
+          <td>
+            <Form.Control type="number" defaultValue={1} />
+          </td>
+          <td>
+            <Form.Control placeholder="Enter Price" />
+          </td>
+          {isTaxOn && (
+            <td>
+              <Form.Control placeholder="%" />
+            </td>
+          )}
+          {isTaxOn && <td>0</td>}
+          {isDiscountOn && (
+            <td>
+              <Form.Control placeholder="%" />
+            </td>
+          )}
+          <td>$ 0</td>
+          <td>-</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <Button
+    className="d-flex align-items-center mt-4 mb-2"
+    style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+    onClick={addRow}
+  >
+    <BsPlusCircle className="me-1" /> Add Row
+  </Button>
+</div>
+
 
       {/* Payment Terms */}
       <Row className="mb-4">

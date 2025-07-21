@@ -1,173 +1,121 @@
 import React, { useState } from 'react';
-import { Row, Col, Table, Button, Badge, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { Row, Col, Table, Button, Badge } from 'react-bootstrap';
 import {
   FaEdit, FaPrint, FaEye, FaMoneyBill, FaPaperPlane,
-  FaGlobe, FaExchangeAlt, FaTimes,
-  FaCaretUp, FaLanguage
+  FaGlobe, FaExchangeAlt, FaTimes, FaCaretUp, FaLanguage
 } from 'react-icons/fa';
 
 const ViewInvoicee = () => {
-  const [isArabic, setIsArabic] = useState(false);
+  const [languageMode, setLanguageMode] = useState('en');
 
-  const toggleLanguage = () => {
-    setIsArabic(!isArabic);
-  };
-
-  // English content
   const content = {
-    title: "Invoice",
-    invoiceNo: "Invoice# INV-1045",
-    reference: "Reference:",
-    grossAmount: "Gross Amount:",
-    billTo: "Bill To",
-    invoiceDate: "Invoice Date:",
-    dueDate: "Due Date:",
-    terms: "Terms:",
-    paymentStatus: "Payment Status:",
-    paymentMethod: "Payment Method:",
-    note: "Note:",
-    subTotal: "Sub Total",
-    tax: "TAX",
-    shipping: "Shipping",
-    total: "Total",
-    paymentReceived: "Payment Received",
-    balanceDue: "Balance Due",
-    creditTransactions: "Credit Transactions:",
-    termsConditions: "Terms & Conditions",
-    paymentTerms: "Payment Due On Receipt",
-    pricesPayment: "1. Prices And Payment:",
-    paymentDetails: "Payments are to be made in U.S. funds. Unless otherwise specified, all invoices are due net 30 days from shipment date.",
-    publicAccess: "Public Access URL:",
-    attachments: "Attachments",
-    selectFiles: "Select files...",
-    allowedFiles: "Allowed: gif, jpeg, png, docx, docs, txt, pdf, xls",
-    businessOwner: "Business Owner",
-    noTransactions: "No transactions",
-    tableHeaders: ["#", "Description", "Rate", "Qty", "Tax", "Discount", "Amount"],
-    transactionHeaders: ["Date", "Method", "Amount", "Note"]
+    title: ["Invoice", "فاتورة"],
+    invoiceNo: ["Invoice# INV-1045", "فاتورة رقم INV-1045"],
+    reference: ["Reference: #5478998", "المرجع:"],
+    grossAmount: ["Gross Amount:", "المبلغ الإجمالي:"],
+    billTo: ["Bill To", "فاتورة إلى"],
+    invoiceDate: ["Invoice Date:", "تاريخ الفاتورة:"],
+    dueDate: ["Due Date:", "تاريخ الاستحقاق:"],
+    terms: ["Terms:", "الشروط:"],
+    paymentStatus: ["Payment Status:", "حالة الدفع:"],
+    paymentMethod: ["Payment Method:", "طريقة الدفع:"],
+    note: ["Note:", "ملاحظة:"],
+    subTotal: ["Sub Total", "المجموع الفرعي"],
+    tax: ["TAX", "الضريبة"],
+    shipping: ["Shipping", "الشحن"],
+    total: ["Total", "المجموع"],
+    paymentReceived: ["Payment Received", "المبلغ المستلم"],
+    balanceDue: ["Balance Due", "الرصيد المستحق"],
+    creditTransactions: ["Credit Transactions:", "معاملات الائتمان:"],
+    termsConditions: ["Terms & Conditions", "الشروط والأحكام"],
+    paymentTerms: ["Payment Due On Receipt", "الدفع عند الاستلام"],
+    pricesPayment: ["1. Prices And Payment:", "1. الأسعار والدفع:"],
+    paymentDetails: [
+      "Payments are to be made in U.S. funds. Unless otherwise specified, all invoices are due net 30 days from shipment date.",
+      "يجب أن تتم المدفوعات بالدولار الأمريكي. ما لم يُذكر خلاف ذلك، تكون جميع الفواتير مستحقة الدفع خلال 30 يومًا من تاريخ الشحن."
+    ],
+    publicAccess: ["Public Access URL:", "رابط الوصول العام:"],
+    attachments: ["Attachments", "المرفقات"],
+    selectFiles: ["Select files...", "اختر ملفات..."],
+    allowedFiles: ["Allowed: gif, jpeg, png, docx, docs, txt, pdf, xls", "مسموح: gif, jpeg, png, docx, docs, txt, pdf, xls"],
+    businessOwner: ["Business Owner", "صاحب العمل"],
+    noTransactions: ["No transactions", "لا توجد معاملات"],
+    tableHeaders: [
+      ["#", "Product", "Price", "Qty", "Tax", "Discount", "Amount"],
+      ["#", "الوصف", "السعر", "الكمية", "الضريبة", "الخصم", "المبلغ"]
+    ],
+    transactionHeaders: [
+      ["Date", "Method", "Amount", "Note"],
+      ["التاريخ", "الطريقة", "المبلغ", "ملاحظة"]
+    ],
   };
 
-  // Arabic content
-  const arabicContent = {
-    title: "فاتورة",
-    invoiceNo: "فاتورة رقم INV-1045",
-    reference: "المرجع:",
-    grossAmount: "المبلغ الإجمالي:",
-    billTo: "فاتورة إلى",
-    invoiceDate: "تاريخ الفاتورة:",
-    dueDate: "تاريخ الاستحقاق:",
-    terms: "الشروط:",
-    paymentStatus: "حالة الدفع:",
-    paymentMethod: "طريقة الدفع:",
-    note: "ملاحظة:",
-    subTotal: "المجموع الفرعي",
-    tax: "الضريبة",
-    shipping: "الشحن",
-    total: "المجموع",
-    paymentReceived: "المبلغ المستلم",
-    balanceDue: "الرصيد المستحق",
-    creditTransactions: "معاملات الائتمان:",
-    termsConditions: "الشروط والأحكام",
-    paymentTerms: "الدفع عند الاستلام",
-    pricesPayment: "1. الأسعار والدفع:",
-    paymentDetails: "يجب أن تتم المدفوعات بالدولار الأمريكي. ما لم يُذكر خلاف ذلك، تكون جميع الفواتير مستحقة الدفع خلال 30 يومًا من تاريخ الشحن.",
-    publicAccess: "رابط الوصول العام:",
-    attachments: "المرفقات",
-    selectFiles: "اختر ملفات...",
-    allowedFiles: "مسموح: gif, jpeg, png, docx, docs, txt, pdf, xls",
-    businessOwner: "صاحب العمل",
-    noTransactions: "لا توجد معاملات",
-    tableHeaders: ["#", "الوصف", "السعر", "الكمية", "الضريبة", "الخصم", "المبلغ"],
-    transactionHeaders: ["التاريخ", "الطريقة", "المبلغ", "ملاحظة"]
+  const getText = (key) => {
+    const value = content[key];
+    if (!value) return '';
+    if (typeof value === 'string') return value;
+    if (Array.isArray(value)) {
+      if (languageMode === 'en') return value[0];
+      if (languageMode === 'ar') return value[1];
+      if (languageMode === 'both') return `${value[0]} | ${value[1]}`;
+    }
+    return '';
   };
 
-  const currentContent = isArabic ? arabicContent : content;
+  const currentHeaders = languageMode === 'ar' ? content.tableHeaders[1] : languageMode === 'both' ? content.tableHeaders[0].map((_, i) => `${content.tableHeaders[0][i]} | ${content.tableHeaders[1][i]}`) : content.tableHeaders[0];
+  const currentTxnHeaders = languageMode === 'ar' ? content.transactionHeaders[1] : languageMode === 'both' ? content.transactionHeaders[0].map((_, i) => `${content.transactionHeaders[0][i]} | ${content.transactionHeaders[1][i]}`) : content.transactionHeaders[0];
 
   return (
-    <div className={`mt-4 p-4 ${isArabic ? 'text-right' : 'text-left'}`} dir={isArabic ? 'rtl' : 'ltr'}>
-      {/* Action Bar */}
+    <div className={`mt-4 p-4 ${languageMode === 'ar' ? 'text-end' : 'text-start'}`} dir={languageMode === 'ar' ? 'rtl' : 'ltr'}>
       <Row className="mb-4">
-        <Col md={8}>
-          <div className="d-flex flex-wrap gap-2">
-            <Button variant="outline-primary" onClick={toggleLanguage} className="d-flex align-items-center gap-1">
-              <FaLanguage /> <span>{isArabic ? 'English' : 'العربية'}</span>
-            </Button>
-            <Button variant="warning" className="d-flex align-items-center gap-1">
-              <FaEdit /> <span>{isArabic ? 'تعديل' : 'Edit Invoice'}</span>
-            </Button>
-            <Button variant="success" className="d-flex align-items-center gap-1">
-              <FaMoneyBill /> <span>{isArabic ? 'استلام الدفع' : 'Receive Payment'}</span>
-            </Button>
-            <Button variant="primary" className="d-flex align-items-center gap-1">
-              <FaPaperPlane /> <span>{isArabic ? 'إرسال' : 'Send'}</span>
-            </Button>
-            <Button variant="success" className="d-flex align-items-center gap-1">
-              <FaPrint /> <span>{isArabic ? 'طباعة الفاتورة' : 'Print Invoice'}</span>
-            </Button>
-            <Button variant="info" className="d-flex align-items-center gap-1">
-              <FaGlobe /> <span>{isArabic ? 'معاينة الطباعة' : 'Print Preview'}</span>
-            </Button>
-            <Button variant="secondary" className="d-flex align-items-center gap-1">
-              <FaExchangeAlt /> <span>{isArabic ? 'تغيير الحالة' : 'Change Status'}</span>
-            </Button>
-            <Button variant="success" className="d-flex align-items-center gap-1">
-              <FaEdit /> <span>{isArabic ? 'إذن التوصيل' : 'Delivery Note'}</span>
-            </Button>
-            <Button variant="info" className="d-flex align-items-center gap-1">
-              <FaEye/> <span>{isArabic ? 'فاتورة مؤقتة' : 'Proforma Invoice'}</span>
-            </Button>
-            <Button variant="secondary" className="d-flex align-items-center gap-1">
-              <FaCaretUp /> <span>{isArabic ? 'نسخ الفاتورة' : 'Copy Invoice'}</span>
-            </Button>
-            <Button variant="danger" className="d-flex align-items-center gap-1">
-              <FaTimes /> <span>{isArabic ? 'إلغاء' : 'Cancel'}</span>
-            </Button>
-          </div>
-        </Col>
+        <Col md={12} className="d-flex flex-wrap gap-2">
+          <Button variant={languageMode === 'en' ? 'primary' : 'outline-primary'} onClick={() => setLanguageMode('en')}><FaLanguage /> English</Button>
+          <Button variant={languageMode === 'ar' ? 'primary' : 'outline-primary'} onClick={() => setLanguageMode('ar')}><FaLanguage /> العربية</Button>
+          <Button variant={languageMode === 'both' ? 'primary' : 'outline-primary'} onClick={() => setLanguageMode('both')}><FaLanguage /> EN | AR</Button>
 
-        <Col md={4} className={`text-md-end mt-3 mt-md-0 ${isArabic ? 'text-md-start' : 'text-md-end'}`}>
-          <div className="d-flex justify-content-end mb-2">
-            
-          </div>
-          <h5 className="fw-bold mb-1">{currentContent.title}</h5>
-          <div>{currentContent.invoiceNo}</div>
-          <div>{currentContent.reference}</div>
-          <div className="fw-bold mt-2">{currentContent.grossAmount} <span className="text-success">$ 10.90</span></div>
+          <Button variant="warning"><FaEdit /> {getText('title')}</Button>
+          <Button variant="success"><FaMoneyBill /> {getText('paymentReceived')}</Button>
+          <Button variant="primary"><FaPaperPlane /> Send</Button>
+          <Button variant="success"><FaPrint /> Print</Button>
+          <Button variant="info"><FaGlobe /> Preview</Button>
+          <Button variant="secondary"><FaExchangeAlt /> Status</Button>
+          <Button variant="success"><FaEdit /> Delivery</Button>
+          <Button variant="info"><FaEye /> Proforma</Button>
+          <Button variant="secondary"><FaCaretUp /> Copy</Button>
+          <Button variant="danger"><FaTimes /> Cancel</Button>
         </Col>
       </Row>
 
-      {/* Rest of your component with currentContent used for text */}
-      {/* Customer Info */}
-      <Row className="mb-4">
-        <Col md={6}>
-          <strong className="d-block mb-2">{currentContent.billTo}</strong>
+      <h5 className="fw-bold mb-1">{getText('title')}</h5>
+      <div>{getText('invoiceNo')}</div>
+      <div>{getText('reference')}</div>
+      <div className="fw-bold mt-2">{getText('grossAmount')} <span className="text-success">$ 10.90</span></div>
+
+      <Row className="mb-4 mt-3">
+        <Col md={6} className={languageMode === 'ar' ? 'text-end' : 'text-start'}>
+          <strong className="d-block mb-2">{getText('billTo')}</strong>
           <div><strong className="text-primary">Haroun Spiers</strong></div>
           <div>4 Kings Park</div>
           <div>Zouparia do Monte, Portugal</div>
-          <div>{isArabic ? 'هاتف: 489-737-5435' : 'Phone: 489-737-5435'}</div>
-          <div>{isArabic ? 'بريد إلكتروني: hspiers2g@redcross.org' : 'Email: hspiers2g@redcross.org'}</div>
+          <div>{languageMode === 'ar' ? 'هاتف: 489-737-5435' : 'Phone: 489-737-5435'}</div>
+          <div>{languageMode === 'ar' ? 'بريد إلكتروني: hspiers2g@redcross.org' : 'Email: hspiers2g@redcross.org'}</div>
         </Col>
-        <Col md={6} className={`${isArabic ? 'text-md-start' : 'text-md-end'} mt-4 mt-md-0`}>
-          <div><strong>{currentContent.invoiceDate}</strong> 15-07-2025</div>
-          <div><strong>{currentContent.dueDate}</strong> 15-07-2025</div>
-          <div><strong>{currentContent.terms}</strong> {currentContent.paymentTerms}</div>
+        <Col md={6} className={languageMode === 'ar' ? 'text-end' : 'text-end'}>
+          <div><strong>{getText('invoiceDate')}</strong> 15-07-2025</div>
+          <div><strong>{getText('dueDate')}</strong> 15-07-2025</div>
+          <div><strong>{getText('terms')}</strong> {getText('paymentTerms')}</div>
         </Col>
       </Row>
 
-      {/* Item Table */}
       <div className="table-responsive mb-4">
         <Table bordered className="align-middle">
           <thead className="table-light">
-            <tr>
-              {currentContent.tableHeaders.map((header, index) => (
-                <th key={index}>{header}</th>
-              ))}
-            </tr>
+            <tr>{currentHeaders.map((header, index) => <th key={index}>{header}</th>)}</tr>
           </thead>
           <tbody>
             <tr>
               <td>1</td>
-              <td>{isArabic ? 'منتج عينة' : 'Sample Product'}</td>
+              <td>{languageMode === 'ar' ? 'منتج عينة' : 'Sample Product'}</td>
               <td>$ 10.00</td>
               <td>1</td>
               <td>$ 1.90 (19.00%)</td>
@@ -178,76 +126,58 @@ const ViewInvoicee = () => {
         </Table>
       </div>
 
-      {/* Payment Summary */}
       <Row className="mb-4">
-        <Col md={6}>
-          <p><strong>{currentContent.paymentStatus}</strong> <Badge bg="success">{isArabic ? 'مدفوع' : 'Paid'}</Badge></p>
-          <p><strong>{currentContent.paymentMethod}</strong> <u>{isArabic ? 'نقدي' : 'Cash'}</u></p>
-          <p><strong>{currentContent.note}</strong></p>
+        <Col md={6} className={languageMode === 'ar' ? 'text-end' : 'text-start'}>
+          <p><strong>{getText('paymentStatus')}</strong> <Badge bg="success">{languageMode === 'ar' ? 'مدفوع' : 'Paid'}</Badge></p>
+          <p><strong>{getText('paymentMethod')}</strong> <u>{languageMode === 'ar' ? 'نقدي' : 'Cash'}</u></p>
+          <p><strong>{getText('note')}</strong></p>
         </Col>
         <Col md={6}>
           <div className="table-responsive">
-            <Table borderless className={isArabic ? 'text-start' : 'text-end'}>
+            <Table borderless className={languageMode === 'ar' ? 'text-end' : 'text-end'}>
               <tbody>
-                <tr><td>{currentContent.subTotal}</td><td>$ 10.00</td></tr>
-                <tr><td>{currentContent.tax}</td><td>$ 1.90</td></tr>
-                <tr><td>{currentContent.shipping}</td><td>$ 0.00</td></tr>
-                <tr className="fw-bold border-top"><td>{currentContent.total}</td><td>$ 10.90</td></tr>
-                <tr className="text-danger"><td>{currentContent.paymentReceived}</td><td>(-) $ 10.90</td></tr>
-                <tr className="fw-bold border-top"><td>{currentContent.balanceDue}</td><td>$ 0.00</td></tr>
+                <tr><td>{getText('subTotal')}</td><td>$ 10.00</td></tr>
+                <tr><td>{getText('tax')}</td><td>$ 1.90</td></tr>
+                <tr><td>{getText('shipping')}</td><td>$ 0.00</td></tr>
+                <tr className="fw-bold border-top"><td>{getText('total')}</td><td>$ 10.90</td></tr>
+                <tr className="text-danger"><td>{getText('paymentReceived')}</td><td>(-) $ 10.90</td></tr>
+                <tr className="fw-bold border-top"><td>{getText('balanceDue')}</td><td>$ 0.00</td></tr>
               </tbody>
             </Table>
           </div>
         </Col>
       </Row>
 
-      {/* Signature */}
-      <div className={isArabic ? 'text-start' : 'text-end'} style={{ marginTop: '3rem', marginBottom: '3rem' }}>
+      <div className={languageMode === 'ar' ? 'text-end' : 'text-end'} style={{ marginTop: '3rem', marginBottom: '3rem' }}>
         <div>(John Doe)</div>
-        <small>{currentContent.businessOwner}</small>
+        <small>{getText('businessOwner')}</small>
       </div>
 
-      {/* Credit Transactions */}
-      <h6 className="mb-3">{currentContent.creditTransactions}</h6>
+      <h6 className="mb-3">{getText('creditTransactions')}</h6>
       <div className="table-responsive mb-5">
         <Table bordered>
           <thead className="table-light">
-            <tr>
-              {currentContent.transactionHeaders.map((header, index) => (
-                <th key={index}>{header}</th>
-              ))}
-            </tr>
+            <tr>{currentTxnHeaders.map((header, index) => <th key={index}>{header}</th>)}</tr>
           </thead>
           <tbody>
-            <tr><td colSpan={4} className="text-center">{currentContent.noTransactions}</td></tr>
+            <tr><td colSpan={4} className="text-center">{getText('noTransactions')}</td></tr>
           </tbody>
         </Table>
       </div>
 
-      {/* Terms */}
-      <h6>{currentContent.termsConditions}</h6>
-      <p className="mb-1 fw-bold">{currentContent.paymentTerms}</p>
-      <p className="mb-3">
-        {currentContent.pricesPayment}<br />
-        {currentContent.paymentDetails}
-      </p>
+      <h6>{getText('termsConditions')}</h6>
+      <p className="mb-1 fw-bold">{getText('paymentTerms')}</p>
+      <p className="mb-3">{getText('pricesPayment')}<br />{getText('paymentDetails')}</p>
 
-      {/* Public Access */}
-      <p className="text-muted small mb-4">
-        {currentContent.publicAccess}<br />
-        https://billing.ultimatekode.com/neo/billing/invoice?id=1045&token=XXXXXXX
-      </p>
+      <p className="text-muted small mb-4">{getText('publicAccess')}<br />https://billing.ultimatekode.com/neo/billing/invoice?id=1045&token=XXXXXXX</p>
 
-      {/* File Upload */}
       <div style={{ marginTop: '1.5rem', marginBottom: '3rem' }}>
-        <label className="fw-bold d-block mb-2">{currentContent.attachments}</label>
+        <label className="fw-bold d-block mb-2">{getText('attachments')}</label>
         <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2">
-          <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} size="sm">
-            {currentContent.selectFiles}
-          </Button>
+          <Button style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }} size="sm">{getText('selectFiles')}</Button>
           <input type="file" />
         </div>
-        <small className="text-muted">{currentContent.allowedFiles}</small>
+        <small className="text-muted">{getText('allowedFiles')}</small>
       </div>
     </div>
   );
