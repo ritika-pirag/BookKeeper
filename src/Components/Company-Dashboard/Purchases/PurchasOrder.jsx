@@ -128,13 +128,11 @@ const PurchasOrder = () => {
 
       {/* Search and Buttons */}
       <div className="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-3">
-        <Form.Control
-          size="sm"
-          type="text"
-          placeholder="Search"
-          className="w-100 w-md-auto"
-          style={{ maxWidth: '250px' }}
-        />
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h5 className="mb-0">Purchase Orders</h5>
+     
+      </div>
+        
 
 <div className="d-flex gap-2 flex-wrap">
   <Button variant="success" className="rounded-pill px-4 d-flex align-items-center" onClick={handleImportClick}>
@@ -153,18 +151,10 @@ const PurchasOrder = () => {
 
   style={{ backgroundColor: "#fd7e14", borderColor: "#fd7e14" }}
   onClick={handleExportAll}>
-    <FaFile size={18} className="me-2 text-dark" /> Export
+    <FaFile size={18} className="me-2" /> Export
   </Button>
 
 
-{/* 
-      <Button
-        className="rounded-pill"
-        style={{ backgroundColor: "#fd7e14", borderColor: "#fd7e14" }}
-        onClick={handleExport}
-      >
-        <i className="fas fa-file-export me-2" /> Export
-      </Button> */}
 
 
   <Button
@@ -172,15 +162,12 @@ const PurchasOrder = () => {
     style={{ backgroundColor: '#ffc107', borderColor: '#ffc107' }}
     onClick={handleDownloadBlankSuppliers}
   >
-    <FaDownload size={18} className="me-2 text-dark" /> Download
+    <FaDownload size={18} className="me-2 " /> Download
   </Button>
 </div>
 
       </div>
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5 className="mb-0">Purchase Orders</h5>
      
-      </div>
 
       {/* Filter + Search */}
       <Row className="align-items-center mb-3 g-2">
@@ -249,16 +236,7 @@ const PurchasOrder = () => {
         </nav>
       </div>
 
-      {/* New Order Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} fullscreen centered backdrop="static">
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Order</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <NewOrder onSubmit={handleNewOrderSubmit} onCancel={() => setShowModal(false)} />
-        </Modal.Body>
-      </Modal>
-  
+
     </div>
   );
 };
