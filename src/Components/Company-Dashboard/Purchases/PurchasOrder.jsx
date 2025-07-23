@@ -128,13 +128,11 @@ const PurchasOrder = () => {
 
       {/* Search and Buttons */}
       <div className="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-3">
-        <Form.Control
-          size="sm"
-          type="text"
-          placeholder="Search"
-          className="w-100 w-md-auto"
-          style={{ maxWidth: '250px' }}
-        />
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h5 className="mb-0">Purchase Orders</h5>
+     
+      </div>
+        
 
 <div className="d-flex gap-2 flex-wrap">
   <Button variant="success" className="rounded-pill px-4 d-flex align-items-center" onClick={handleImportClick}>
@@ -169,10 +167,7 @@ const PurchasOrder = () => {
 </div>
 
       </div>
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5 className="mb-0">Purchase Orders</h5>
      
-      </div>
 
       {/* Filter + Search */}
       <Row className="align-items-center mb-3 g-2">
