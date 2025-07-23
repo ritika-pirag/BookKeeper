@@ -16,7 +16,8 @@ import SystemSettings from "./Components/Dashboard/SystemSettings";
 import CompanyDashbaord from "./Components/Company-Dashboard/CompanyDashbaord";
 // import ProductDetails from "./Components/Company-Dashboard/Inventory/ProductDetails";
 import BatchExpiry from "./Components/Company-Dashboard/Inventory/BatchExpiry";
-import ManageStock from "./Components/Company-Dashboard/Inventory/ManageStock";
+import Inventorys from "./Components/Company-Dashboard/Inventory/Inventorys";
+import UnitofMeasure from "./Components/Company-Dashboard/Inventory/UnitofMeasure";
 import LowStock from "./Components/Company-Dashboard/Inventory/LowStock";
 import PrintBarcode from "./Components/Company-Dashboard/Inventory/printBarcode";
 import Invoice from "./Components/Company-Dashboard/Sales/Invoice";
@@ -176,7 +177,8 @@ function App() {
           {/* Inventory */}
           {/* <Route path="/company/productdetails" element={<ProductDetails />} /> */}
           {/* <Route path="/company/batchandexpriry" element={<BatchExpiry />} /> */}
-          <Route path="/company/managestock" element={<ManageStock />} />
+          <Route path="/company/inventorys" element={<Inventorys/>} />
+          <Route path="/company/unitofmeasure" element={<UnitofMeasure/>} />
           {/* <Route path="/company/lowstock" element={<LowStock />} /> */}
           {/* <Route path="/company/printbarcode" element={<PrintBarcode />} /> */}
           <Route path="/company/warehouse" element={<WareHouse />} />

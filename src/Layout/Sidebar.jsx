@@ -71,12 +71,17 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           { to: "/company/vendorscreditors", icon: "fas fa-book", label: "Vendors/Creditors" },
 
         ]),
+
+        renderFlatSection("Inventory", [
+          { to: "/company/inventorys", icon: "fas fa-table", label: "Inventory" },
+          { to: "/company/unitofmeasure", icon: "fas fa-table", label: "Unit of measure" },
+        ]),
         renderFlatSection("Sales", [
-          { to: "/company/Customer", icon: "fas fa-user", label: "Customer" },
+          // { to: "/company/Customer", icon: "fas fa-user", label: "Customer" },
           { to: "/company/Invoice", icon: "fas fa-file-invoice", label: "Invoice" },
         ]),
         renderFlatSection("Purchases", [
-          { to: "/company/vendors", icon: "fas fa-users", label: "Vendors" },
+          // { to: "/company/vendors", icon: "fas fa-users", label: "Vendors" },
           { to: "/company/bill", icon: "fas fa-file", label: "Bill" },
           { to: "/company/purchasorder", icon: "fas fa-shopping-cart", label: "Purchase Order" },
           { to: "/company/purchasereturn", icon: "fas fa-undo", label: "Purchase Return" },
@@ -87,9 +92,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           { to: "/company/product", icon: "fas fa-box", label: "Product" },
           { to: "/company/ponitofsale", icon: "fas fa-desktop", label: "POS Screen" },
         ]),
-        renderFlatSection("Inventory", [
-          { to: "/company/managestock", icon: "fas fa-table", label: "Inventory" },
-        ]),
+     
         renderFlatSection("GST ", [
           { to: "/company/taxreport", icon: "fas fa-file-alt", label: "Tax Report" },
           { to: "/company/gstreturns", icon: "fas fa-file-invoice", label: "GST Returns" },
