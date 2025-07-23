@@ -1,17 +1,13 @@
 import React, { useState } from "react";
-import {
-  FaEye,
-  FaEdit,
-  FaTrash,
-  FaPrint,
-} from "react-icons/fa";
+import { FaEye, FaPrint } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 const Ledger = () => {
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const [editTransaction, setEditTransaction] = useState(null);
-  const [deleteTransaction, setDeleteTransaction] = useState(null);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   const transactions = [
     {
@@ -21,7 +17,7 @@ const Ledger = () => {
       amount: "50,000",
       balance: "50,000",
       dueDate: "2025-07-20",
-      status: "Unpaid"
+      status: "Unpaid",
     },
     {
       date: "2025-06-15",
@@ -30,7 +26,7 @@ const Ledger = () => {
       amount: "75,000",
       balance: "75,000",
       dueDate: "2025-07-15",
-      status: "Unpaid"
+      status: "Unpaid",
     },
     {
       date: "2025-06-10",
@@ -39,7 +35,7 @@ const Ledger = () => {
       amount: "-35,000",
       balance: "-35,000",
       dueDate: "2025-06-10",
-      status: "Completed"
+      status: "Completed",
     },
     {
       date: "2025-06-05",
@@ -48,7 +44,7 @@ const Ledger = () => {
       amount: "45,000",
       balance: "45,000",
       dueDate: "2025-07-05",
-      status: "Partially Paid"
+      status: "Partially Paid",
     },
     {
       date: "2025-06-01",
@@ -57,7 +53,7 @@ const Ledger = () => {
       amount: "-10,000",
       balance: "-10,000",
       dueDate: "2025-06-01",
-      status: "Completed"
+      status: "Completed",
     },
     {
       date: "2025-05-25",
@@ -66,9 +62,27 @@ const Ledger = () => {
       amount: "60,000",
       balance: "0",
       dueDate: "2025-06-25",
-      status: "Paid"
-    }
+      status: "Paid",
+    },
   ];
+
+  const filteredTransactions = transactions.filter((t) => {
+    const tDate = new Date(t.date);
+    const from = fromDate ? new Date(fromDate) : null;
+    const to = toDate ? new Date(toDate) : null;
+
+    const matchesDate = (!from || tDate >= from) && (!to || tDate <= to);
+
+    const s = searchText.toLowerCase();
+    const matchesSearch =
+      t.reference.toLowerCase().includes(s) ||
+      t.type.toLowerCase().includes(s) ||
+      t.amount.toLowerCase().includes(s) ||
+      t.balance.toLowerCase().includes(s) ||
+      t.status.toLowerCase().includes(s);
+
+    return matchesDate && matchesSearch;
+  });
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -105,26 +119,45 @@ const Ledger = () => {
     return balance.startsWith("-") ? "text-danger" : "text-success";
   };
 
-//   const handleEdit = (transaction) => {
-//     setEditTransaction(transaction);
-//   };
-
-  const handleDelete = (transaction) => {
-    setDeleteTransaction(transaction);
-  };
-
-  const confirmDelete = () => {
-    // Delete logic here
-    setDeleteTransaction(null);
-  };
-
   return (
-    <div className="mt-3  p-2">
+    <div className="mt-3 p-2">
       {/* Header */}
-      <div className="d-flex justify-content-between align-items-center flex-wrap gap-4 mb-4">
+      <div className="d-flex justify-content-between align-items-center flex-wrap gap-4 mb-3">
         <div>
           <h5 className="fw-bold mb-1">Ledger Transactions</h5>
           <p className="text-muted mb-0">Manage your ledger transactions</p>
+        </div>
+      </div>
+
+      {/* Filter Bar */}
+      <div className="d-flex flex-wrap gap-3 mb-3 align-items-end">
+        <div>
+          <label className="form-label mb-1">From Date</label>
+          <input
+            type="date"
+            className="form-control"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+          />
+        </div>
+        {/* <div>
+          <label className="form-label mb-1">To Date</label>
+          <input
+            type="date"
+            className="form-control"
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
+          />
+        </div> */}
+        <div className="flex-grow-1">
+          <label className="form-label mb-1">Search</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by reference, type, amount..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
         </div>
       </div>
 
@@ -136,260 +169,157 @@ const Ledger = () => {
               <th className="py-3">Date</th>
               <th className="py-3">Type</th>
               <th className="py-3">Reference</th>
-              <th className="py-3">Amount </th>
-              <th className="py-3">Balance </th>
+              <th className="py-3">Amount</th>
+              <th className="py-3">Balance</th>
               <th className="py-3">Due Date</th>
               <th className="py-3">Status</th>
               <th className="py-3">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {transactions.map((transaction, idx) => (
-              <tr key={idx}>
-                <td>{transaction.date}</td>
-                <td className={getTypeColor(transaction.type)}>
-                  {transaction.type}
-                </td>
-                <td>{transaction.reference}</td>
-                <td className={getAmountColor(transaction.amount)}>
-                  {transaction.amount}
-                </td>
-                <td className={getBalanceColor(transaction.balance)}>
-                  {transaction.balance}
-                </td>
-                <td>{transaction.dueDate}</td>
-                <td>
-                  <span className={getStatusBadge(transaction.status)}>
-                    {transaction.status}
-                  </span>
-                </td>
-                <td className="d-flex justify-content-center gap-1">
-                  <button
-                    className="btn outline-info btn-sm py-1 px-1 text-info"
-                    data-bs-toggle="modal"
-                    data-bs-target="#transactionDetailModal"
-                    onClick={() => setSelectedTransaction(transaction)}
-                  >
-                    <FaEye size={16} />
-                  </button>
-                  <button
-                    className="btn outline-primary btn-sm text-warning py-1 px-1" 
-                    // data-bs-toggle="modal"
-                    // data-bs-target="#editTransactionModal"
-                    // onClick={() => handleEdit(transaction)}
-                  >
-                    <FaPrint size={16}/>
-                  </button>
-                  {/* <button
-                    className="btn btn-danger btn-sm text-white"
-                    data-bs-toggle="modal"
-                    data-bs-target="#deleteTransactionModal"
-                    onClick={() => handleDelete(transaction)}
-                  >
-                    <FaTrash />
-                  </button> */}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-  
-      </div>
-      {/* Pagination */}
-<div className="d-flex justify-content-between align-items-center mt-3 px-3">
-  <span className="small text-muted">
-    Showing 1 to {transactions.length} of {transactions.length} results
-  </span>
-  <nav>
-    <ul className="pagination pagination-sm mb-0">
-      <li className="page-item disabled">
-        <button className="page-link rounded-start">&laquo;</button>
-      </li>
-      <li className="page-item active">
-        <button
-          className="page-link"
-          style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
-        >
-          1
-        </button>
-      </li>
-      <li className="page-item">
-        <button className="page-link">2</button>
-      </li>
-      <li className="page-item">
-        <button className="page-link rounded-end">&raquo;</button>
-      </li>
-    </ul>
-  </nav>
-</div>
-
-
-      {/* Transaction Details Modal */}
-     <div
-  className="modal fade"
-  id="transactionDetailModal"
-  tabIndex="-1"
-  aria-labelledby="transactionDetailModalLabel"
-  aria-hidden="true"
->
-  <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div className="modal-content">
-      <div className="modal-header">
-        <h5 className="modal-title fw-bold" id="transactionDetailModalLabel">
-          Transaction Details
-        </h5>
-        <button 
-          type="button"
-          className="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-          onClick={() => setSelectedTransaction(null)}
-        ></button>
-      </div>
-      <div className="modal-body p-0">
-        {selectedTransaction && (
-          <div className="table-responsive">
-            <table className="table table-bordered mb-0">
-              <tbody>
-                <tr className="d-flex flex-column flex-md-row">
-                  <td className="fw-semibold col-md-4 py-2 py-md-3">Date</td>
-                  <td className="col-md-8 py-2 py-md-3">{selectedTransaction.date}</td>
-                </tr>
-                <tr className="d-flex flex-column flex-md-row">
-                  <td className="fw-semibold col-md-4 py-2 py-md-3">Type</td>
-                  <td className={`col-md-8 py-2 py-md-3 ${getTypeColor(selectedTransaction.type)}`}>
-                    {selectedTransaction.type}
+            {filteredTransactions.length > 0 ? (
+              filteredTransactions.map((transaction, idx) => (
+                <tr key={idx}>
+                  <td>{transaction.date}</td>
+                  <td className={getTypeColor(transaction.type)}>
+                    {transaction.type}
                   </td>
-                </tr>
-                <tr className="d-flex flex-column flex-md-row">
-                  <td className="fw-semibold col-md-4 py-2 py-md-3">Reference</td>
-                  <td className="col-md-8 py-2 py-md-3">{selectedTransaction.reference}</td>
-                </tr>
-                <tr className="d-flex flex-column flex-md-row">
-                  <td className="fw-semibold col-md-4 py-2 py-md-3">Amount</td>
-                  <td className={`col-md-8 py-2 py-md-3 ${getAmountColor(selectedTransaction.amount)}`}>
-                    {selectedTransaction.amount}
+                  <td>{transaction.reference}</td>
+                  <td className={getAmountColor(transaction.amount)}>
+                    {transaction.amount}
                   </td>
-                </tr>
-                <tr className="d-flex flex-column flex-md-row">
-                  <td className="fw-semibold col-md-4 py-2 py-md-3">Balance</td>
-                  <td className={`col-md-8 py-2 py-md-3 ${getBalanceColor(selectedTransaction.balance)}`}>
-                    {selectedTransaction.balance}
+                  <td className={getBalanceColor(transaction.balance)}>
+                    {transaction.balance}
                   </td>
-                </tr>
-                <tr className="d-flex flex-column flex-md-row">
-                  <td className="fw-semibold col-md-4 py-2 py-md-3">Due Date</td>
-                  <td className="col-md-8 py-2 py-md-3">{selectedTransaction.dueDate}</td>
-                </tr>
-                <tr className="d-flex flex-column flex-md-row">
-                  <td className="fw-semibold col-md-4 py-2 py-md-3">Status</td>
-                  <td className="col-md-8 py-2 py-md-3">
-                    <span className={getStatusBadge(selectedTransaction.status)}>
-                      {selectedTransaction.status}
+                  <td>{transaction.dueDate}</td>
+                  <td>
+                    <span className={getStatusBadge(transaction.status)}>
+                      {transaction.status}
                     </span>
                   </td>
+                  <td className="d-flex justify-content-center gap-1">
+                    <button
+                      className="btn outline-info btn-sm py-1 px-1 text-info"
+                      data-bs-toggle="modal"
+                      data-bs-target="#transactionDetailModal"
+                      onClick={() => setSelectedTransaction(transaction)}
+                    >
+                      <FaEye size={16} />
+                    </button>
+                    <button className="btn outline-primary btn-sm text-warning py-1 px-1">
+                      <FaPrint size={16} />
+                    </button>
+                  </td>
                 </tr>
-              </tbody>
-            </table>
-          </div>
-        )}
+              ))
+            ) : (
+              <tr>
+                <td colSpan="8" className="text-center py-3">
+                  No transactions found for selected filters.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
-    </div>
-  </div>
-</div>
 
-      {/* Edit Transaction Modal */}
+      {/* Pagination - static for now */}
+      <div className="d-flex justify-content-between align-items-center mt-3 px-3">
+        <span className="small text-muted">
+          Showing 1 to {filteredTransactions.length} of {filteredTransactions.length} results
+        </span>
+        <nav>
+          <ul className="pagination pagination-sm mb-0">
+            <li className="page-item disabled">
+              <button className="page-link rounded-start">&laquo;</button>
+            </li>
+            <li className="page-item active">
+              <button
+                className="page-link"
+                style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
+              >
+                1
+              </button>
+            </li>
+            <li className="page-item">
+              <button className="page-link">2</button>
+            </li>
+            <li className="page-item">
+              <button className="page-link rounded-end">&raquo;</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      {/* Transaction Detail Modal */}
       <div
         className="modal fade"
-        id="editTransactionModal"
+        id="transactionDetailModal"
         tabIndex="-1"
-        aria-labelledby="editTransactionModalLabel"
+        aria-labelledby="transactionDetailModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div className="modal-content">
-            <div className="modal-header border-0">
-              <h5 className="modal-title fw-bold" id="editTransactionModalLabel">
-                Edit Transaction
+            <div className="modal-header">
+              <h5 className="modal-title fw-bold" id="transactionDetailModalLabel">
+                Transaction Details
               </h5>
               <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={() => setEditTransaction(null)}
+                onClick={() => setSelectedTransaction(null)}
               ></button>
             </div>
-            <div className="modal-body">
-              {editTransaction && (
-                <form>
-                  {/* Edit form fields would go here */}
-                  <div className="d-flex justify-content-end gap-3 mt-4">
-                    <button
-                      type="button"
-                      className="btn btn-outline-secondary px-4"
-                      data-bs-dismiss="modal"
-                    >
-                      Cancel
-                    </button>
-                    <button 
-                      type="submit" 
-                      className="btn btn-warning text-white px-4"
-                      style={{ backgroundColor: "#FFA646" }}
-                    >
-                      Save Changes
-                    </button>
-                  </div>
-                </form>
+            <div className="modal-body p-0">
+              {selectedTransaction && (
+                <div className="table-responsive">
+                  <table className="table table-bordered mb-0">
+                    <tbody>
+                      <tr>
+                        <td className="fw-semibold">Date</td>
+                        <td>{selectedTransaction.date}</td>
+                      </tr>
+                      <tr>
+                        <td className="fw-semibold">Type</td>
+                        <td className={getTypeColor(selectedTransaction.type)}>
+                          {selectedTransaction.type}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="fw-semibold">Reference</td>
+                        <td>{selectedTransaction.reference}</td>
+                      </tr>
+                      <tr>
+                        <td className="fw-semibold">Amount</td>
+                        <td className={getAmountColor(selectedTransaction.amount)}>
+                          {selectedTransaction.amount}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="fw-semibold">Balance</td>
+                        <td className={getBalanceColor(selectedTransaction.balance)}>
+                          {selectedTransaction.balance}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="fw-semibold">Due Date</td>
+                        <td>{selectedTransaction.dueDate}</td>
+                      </tr>
+                      <tr>
+                        <td className="fw-semibold">Status</td>
+                        <td>
+                          <span className={getStatusBadge(selectedTransaction.status)}>
+                            {selectedTransaction.status}
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Delete Transaction Modal */}
-      <div
-        className="modal fade"
-        id="deleteTransactionModal"
-        tabIndex="-1"
-        aria-labelledby="deleteTransactionModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content border-0" style={{ borderRadius: 16 }}>
-            <div className="modal-body text-center py-4">
-              <div
-                className="mx-auto mb-3 d-flex align-items-center justify-content-center"
-                style={{
-                  width: 70,
-                  height: 70,
-                  background: "#FFF5F2",
-                  borderRadius: "50%",
-                }}
-              >
-                <FaTrash size={32} color="#F04438" />
-              </div>
-              <h4 className="fw-bold mb-2">Delete Transaction</h4>
-              <p className="mb-4" style={{ color: "#555", fontSize: "1.08rem" }}>
-                Are you sure you want to delete this transaction?
-              </p>
-              <div className="d-flex justify-content-center gap-3">
-                <button
-                  className="btn btn-dark px-4 py-2"
-                  data-bs-dismiss="modal"
-                  onClick={() => setDeleteTransaction(null)}
-                >
-                  No, Cancel
-                </button>
-                <button
-                  className="btn"
-                  style={{ background: "#FFA646", color: "#fff", fontWeight: 600, padding: "0.5rem 2rem" }}
-                  data-bs-dismiss="modal"
-                  onClick={confirmDelete}
-                >
-                  Yes, Delete
-                </button>
-              </div>
             </div>
           </div>
         </div>
