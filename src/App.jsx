@@ -137,6 +137,9 @@ import Categories from "./Components/Company-Dashboard/Inventory/SiteData/Catego
 import AddCustomer from "./Components/Company-Dashboard/Inventory/Customer/AddCustomer";
 import PurchasOrder from "./Components/Company-Dashboard/Purchases/PurchasOrder";
 import Bill from "./Components/Company-Dashboard/Purchases/Bill";
+import AllAcounts from "./Components/Company-Dashboard/Accounts/AllAcounts";
+import CustomersDebtors from "./Components/Company-Dashboard/Accounts/CustomersDebtors";
+import VendorsCreditors from "./Components/Company-Dashboard/Accounts/VendorsCreditors";
 
 
 
@@ -164,6 +167,11 @@ function App() {
         <Route element={<MainLayout />}>
           {/* Admin Dashboard */}
           <Route path="/company/dashboard" element={<CompanyDashbaord />} />
+{/* Accounts */}
+<Route path="/company/allacounts" element={<AllAcounts/>} />
+<Route path="/company/customersdebtors" element={<CustomersDebtors/>} />
+<Route path="/company/vendorscreditors" element={<VendorsCreditors/>} />
+
 
           {/* Inventory */}
           {/* <Route path="/company/productdetails" element={<ProductDetails />} /> */}

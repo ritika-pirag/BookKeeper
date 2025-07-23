@@ -65,6 +65,12 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         renderFlatSection("Admin Dashboard", [
           { to: "/company/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" }
         ]),
+        renderFlatSection("Accounts", [
+          { to: "/company/allacounts", icon: "fas fa-calendar-day", label: "All Accounts" },
+          { to: "/company/customersdebtors", icon: "fas fa-money-bill", label: "Customers/Debtors" },
+          { to: "/company/vendorscreditors", icon: "fas fa-book", label: "Vendors/Creditors" },
+
+        ]),
         renderFlatSection("Sales", [
           { to: "/company/Customer", icon: "fas fa-user", label: "Customer" },
           { to: "/company/Invoice", icon: "fas fa-file-invoice", label: "Invoice" },
@@ -91,12 +97,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           { to: "/company/itcreport", icon: "fas fa-file-contract", label: "ITC Report" },
           { to: "/company/ewaybill", icon: "fas fa-truck", label: "e-Way Bill" },
         ]),
-        renderFlatSection("Finance & Accounts", [
-          { to: "/company/daybook", icon: "fas fa-calendar-day", label: "DayBook" },
-          { to: "/company/expense", icon: "fas fa-money-bill", label: "Expenses" },
-          { to: "/company/journalentries", icon: "fas fa-book", label: "Journal Entries" },
-          { to: "/company/ledger", icon: "fas fa-layer-group", label: "Ledger" },
-        ]),
+  
         renderFlatSection("Reports", [
           { to: "/company/salesreport", icon: "fas fa-chart-line", label: "Sales Report" },
           { to: "/company/taxreport", icon: "fas fa-file-alt", label: "Tax Report" },
@@ -105,6 +106,11 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           { to: "/company/cashflow", icon: "fas fa-coins", label: "Cash Flow" },
           { to: "/company/profitloss", icon: "fas fa-chart-pie", label: "Profit & Loss" },
           { to: "/company/vatreport", icon: "fas fa-file-invoice-dollar", label: "VaT Report" },
+          { to: "/company/daybook", icon: "fas fa-calendar-day", label: "DayBook" },
+          { to: "/company/expense", icon: "fas fa-money-bill", label: "Expenses" },
+          { to: "/company/journalentries", icon: "fas fa-book", label: "Journal Entries" },
+          { to: "/company/ledger", icon: "fas fa-layer-group", label: "Ledger" },
+
         ]),
         renderFlatSection("User Management", [
           { to: "/company/users", icon: "fas fa-users", label: "Users" },
