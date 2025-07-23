@@ -34,10 +34,15 @@ const DeleteAccountRequest = () => {
     setSelectedUser(null);
   };
 
+  const getInitials = (name) => {
+    const parts = name.split(" ");
+    return parts.map(p => p[0]).join("").toUpperCase().slice(0, 2);
+  };
+
   return (
     <div className="p-3 mt-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5 className="fw-bold">Delete Account Requests</h5>
+        <h5 className="fw-bold">User Request</h5>
         <div className="d-flex gap-2">
           <Button variant="outline-danger" title="Export PDF">
             <FaFilePdf />
@@ -53,76 +58,91 @@ const DeleteAccountRequest = () => {
       </Form.Group>
 
       <div className="table-responsive">
-        <Table bordered hover className="align-middle">
-          <thead className="table-light text-center">
+        <Table bordered hover className="align-middle text-center">
+          <thead className="table-light">
             <tr>
               <th><Form.Check type="checkbox" /></th>
-              <th>User Name</th>
+              <th>User Info</th>
               <th>Requisition Date</th>
               <th>Delete Request Date</th>
-              <th>ACTIONS</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user, index) => (
               <tr key={index}>
                 <td><Form.Check type="checkbox" /></td>
-                <td className="d-flex align-items-center gap-2">
-                  <div
-                    style={{
-                      width: 40,
-                      height: 40,
-                      backgroundColor: "#dee2e6",
-                      borderRadius: 8,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: 10,
-                      fontWeight: 600,
-                      color: "#495057",
-                    }}
-                  >IMG</div>
-                  {user.username}
-                </td>
-                <td>{user.requisitionDate}</td>
-                <td>{user.deleteRequestDate}</td>
-                <td className="text-center">
-                  {user.status === null ? (
-                    <div className="d-flex justify-content-center gap-2">
-                      <Button
-                        variant="outline-success"
-                        size="sm"
-                        onClick={() => handleApprove(index)}
-                        style={{ borderRadius: '20px', padding: '4px 12px' }}
-                      >
-                        Approve
-                      </Button>
-                      <Button
-                        variant="outline-danger"
-                        size="sm"
-                        onClick={() => handleDisapprove(index)}
-                        style={{ borderRadius: '20px', padding: '4px 12px' }}
-                      >
-                        Reject
-                      </Button>
-                    </div>
-                  ) : (
-                    <Button
-                      variant="outline-secondary"
-                      size="sm"
-                      disabled
+
+                <td className="text-start">
+                  <div className="d-flex align-items-center gap-2">
+                    <div
                       style={{
-                        borderRadius: '20px',
-                        padding: '4px 14px',
-                        color: "#6c757d",
-                        backgroundColor: "transparent",
-                        border: "1px solid #ced4da",
-                        cursor: "not-allowed"
+                        width: 40,
+                        height: 40,
+                        backgroundColor: "#0d6efd22",
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 14,
+                        fontWeight: "bold",
+                        color: "#0d6efd"
                       }}
                     >
-                      {user.status === "approved" ? "Approved" : "Rejected"}
-                    </Button>
+                      {getInitials(user.username)}
+                    </div>
+                    <div>{user.username}</div>
+                  </div>
+                </td>
+
+                <td>{user.requisitionDate}</td>
+
+                <td>{user.deleteRequestDate}</td>
+
+                <td>
+                  {user.status === "approved" && (
+                    <span className="badge bg-success px-3 py-2">Approved</span>
                   )}
+                  {user.status === "rejected" && (
+                    <span className="badge bg-danger px-3 py-2">Rejected</span>
+                  )}
+                  {user.status === null && (
+                    <span className="badge bg-secondary px-3 py-2">Pending</span>
+                  )}
+                </td>
+
+                <td>
+                  <div className="d-flex justify-content-center gap-2">
+                    <Button
+                      variant="outline-success"
+                      size="sm"
+                      onClick={() => handleApprove(index)}
+                      disabled={user.status === "approved"}
+                      style={{
+                        borderRadius: '20px',
+                        padding: '4px 12px',
+                        opacity: user.status === "approved" ? 0.5 : 1,
+                        cursor: user.status === "approved" ? "not-allowed" : "pointer"
+                      }}
+                    >
+                      Approve
+                    </Button>
+                    <Button
+                      variant="outline-danger"
+                      size="sm"
+                      onClick={() => handleDisapprove(index)}
+                      disabled={user.status === "rejected"}
+                      style={{
+                        borderRadius: '20px',
+                        padding: '4px 12px',
+                        opacity: user.status === "rejected" ? 0.5 : 1,
+                        cursor: user.status === "rejected" ? "not-allowed" : "pointer"
+                      }}
+                    >
+                      Reject
+                    </Button>
+                  </div>
                 </td>
               </tr>
             ))}

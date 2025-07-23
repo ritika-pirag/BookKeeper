@@ -215,10 +215,18 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         </button>
       </div>
   
-      {/* Scrollable menu */}
-      <div className="flex-grow-1 overflow-auto">
-        <div className="p-2">{getMenuItems()}</div>
-      </div>
+        {/* Scrollable Menu with proper height */}
+  <div
+    className="sidebar-menu-container"
+    style={{
+      overflowY: "auto",
+      flexGrow: 1,
+      paddingBottom: "20px",
+      maxHeight: "calc(100vh - 70px)", // subtract header height
+    }}
+  >
+    <div className="p-2">{getMenuItems()}</div>
+  </div>
   
       {/* Sticky logout button at bottom */}
       {/* <div className="p-3">
