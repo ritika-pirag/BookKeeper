@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal, Button, Form } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
+import * as XLSX from "xlsx";
 const WareHouse = () => {
   const [warehouses, setWarehouses] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -74,6 +74,48 @@ const WareHouse = () => {
     currentPage * itemsPerPage
   );
 
+
+
+
+const handleImport = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    const bstr = evt.target.result;
+    const workbook = XLSX.read(bstr, { type: "binary" });
+    const sheetName = workbook.SheetNames[0];
+    const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    const formatted = data.map((item, index) => ({
+      _id: Date.now().toString() + index,
+      name: item["Warehouse Name"] || "",
+      location: item["Location"] || "",
+    }));
+    setWarehouses(formatted);
+  };
+  reader.readAsBinaryString(file);
+};
+
+const handleExport = () => {
+  const exportData = warehouses.map(({ name, location }) => ({
+    "Warehouse Name": name,
+    Location: location,
+  }));
+  const ws = XLSX.utils.json_to_sheet(exportData);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Warehouses");
+  XLSX.writeFile(wb, "warehouse-data.xlsx");
+};
+
+const handleDownloadTemplate = () => {
+  const template = [{ "Warehouse Name": "", Location: "" }];
+  const ws = XLSX.utils.json_to_sheet(template);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Template");
+  XLSX.writeFile(wb, "warehouse-template.xlsx");
+};
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -83,13 +125,48 @@ const WareHouse = () => {
       <div className="shadow p-4">
         <div className="d-flex justify-content-between flex-wrap gap-2">
           <h4 className="fw-semibold">Manage Warehouses</h4>
-          <Button
+          <div className="d-flex gap-2 flex-wrap">
+  <Button
+    className="rounded-pill text-white"
+    style={{ backgroundColor: "#28a745", borderColor: "#28a745" }}
+    onClick={() => document.getElementById("excelImport").click()}
+  >
+    <i className="fas fa-file-import me-2" /> Import
+  </Button>
+
+  <input
+    type="file"
+    id="excelImport"
+    accept=".xlsx, .xls"
+    style={{ display: "none" }}
+    onChange={handleImport}
+  />
+
+  <Button
+    className="rounded-pill text-white"
+    style={{ backgroundColor: "#fd7e14", borderColor: "#fd7e14" }}
+    onClick={handleExport}
+  >
+    <i className="fas fa-file-export me-2" /> Export
+  </Button>
+
+  <Button
+    className="rounded-pill text-white"
+    style={{ backgroundColor: "#ffc107", borderColor: "#ffc107" }}
+    onClick={handleDownloadTemplate}
+  >
+    <i className="fas fa-download me-2" /> Download
+  </Button>
+  <Button
             className="set_btn text-white fw-semibold"
             style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
             onClick={() => handleModalShow()}
           >
             <i className="fa fa-plus me-2"></i> Create Warehouse
           </Button>
+</div>
+
+  
         </div>
 
         <div className="table-responsive mt-3">

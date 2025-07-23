@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaEdit, FaTrash, FaUndoAlt, FaTimes, FaEye } from "react-icons/fa";
 import { BiEdit, BiSearch, BiX, BiPlus, BiTrash, BiShowAlt } from 'react-icons/bi';
+import { Button } from 'react-bootstrap';
 
 
 
@@ -181,63 +182,48 @@ const PurchaseReturn = () => {
     return (
 
 
-            <div className=" p-4 mt-4 " >
+            <div className="  mt-4 " >
                 {/* Header */}
                 <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap">
                     <h2 className="mb-0" style={{ fontWeight: '600', color: '#212529', fontSize: '28px' }}>
                         Purchase Returns
                     </h2>
 
-                    <Button
-        className="rounded-pill"
-        style={{ backgroundColor: "#28a745", borderColor: "#28a745" }}
-        // onClick={handleImportClick}
-      >
-        <i className="fas fa-file-import me-2" /> Import
-      </Button>
+                    <div className="d-flex align-items-center gap-3 flex-wrap mt-3">
+  <Button
+    className="rounded-pill"
+    style={{ backgroundColor: "#28a745", borderColor: "#28a745" }}
+  >
+    <i className="fas fa-file-import me-2" /> Import
+  </Button>
 
-      <Button
-        className="rounded-pill"
-        style={{ backgroundColor: "#fd7e14", borderColor: "#fd7e14" }}
-        // onClick={handleExport}
-      >
-        <i className="fas fa-file-export me-2" /> Export
-      </Button>
+  <Button
+    className="rounded-pill"
+    style={{ backgroundColor: "#fd7e14", borderColor: "#fd7e14" }}
+  >
+    <i className="fas fa-file-export me-2" /> Export
+  </Button>
 
-      <Button
-        className="rounded-pill"
-        style={{ backgroundColor: "#ffc107", borderColor: "#ffc107" }}
-        // onClick={handleDownloadTemplate}
-      >
-        <i className="fas fa-download me-2" /> Download
-      </Button>
+  <Button
+    className="rounded-pill"
+    style={{ backgroundColor: "#ffc107", borderColor: "#ffc107" }}
+  >
+    <i className="fas fa-download me-2" /> Download
+  </Button>
 
-    
-     
+  <button
+    className="btn text-white d-flex align-items-center rounded-pill px-3"
+    style={{ backgroundColor: '#3daaaa', border: '1px solid #3daaaa' }}
+    onClick={() => {
+      setIsEditMode(false);
+      setShowModal(true);
+    }}
+  >
+    <BiPlus size={18} className="me-2" />
+    New Return
+  </button>
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-                    <button
-                        className="btn text-white d-flex align-items-center gap-2 mt-1 mt-md-0"
-           style={{ backgroundColor: '#3daaaa', border: '1px solid #3daaaa' }}
-                        onClick={() => {
-                            setIsEditMode(false);
-                            setShowModal(true);
-                        }}
-                    >
-                        <BiPlus size={18} />
-                        New Return
-                    </button>
                 </div>
              
 
