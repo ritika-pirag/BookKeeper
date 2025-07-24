@@ -75,6 +75,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         renderFlatSection("Inventory", [
           { to: "/company/inventorys", icon: "fas fa-table", label: "Inventory" },
           { to: "/company/unitofmeasure", icon: "fas fa-table", label: "Unit of measure" },
+          { to: "/company/createvoucher", icon: "fas fa-table", label: "Create Voucher" },
         ]),
         renderFlatSection("Sales", [
           { to: "/company/Customer", icon: "fas fa-user", label: "Customer" },

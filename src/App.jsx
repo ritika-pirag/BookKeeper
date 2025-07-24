@@ -43,6 +43,7 @@ import CustomerList from "./Components/Company-Dashboard/ClientsVendors/Customer
 // import Purchasedataa from "./Components/Company-Dashboard/Reports/Purchasedata";
 // import salesreport from "./Components/Company-Dashboard/Reports/Salesreport";
 // import NewOrderPurchase from "./Components/Company-Dashboard/Purchases/NewOrderPurchase";
+import CreateVoucher from "./Components/Company-Dashboard/Inventory/CreateVoucher";
 import Taxreport from "./Components/Company-Dashboard/Reports/Taxreports";
 import InventorySummary from "./Components/Company-Dashboard/Reports/InventorySummary";
 import VatReport from "./Components/Company-Dashboard/Reports/VatReport"
@@ -101,11 +102,12 @@ import Product from "./Components/User-Dashboard/Inventory/Product";
 import  DevicePages from "./Components/User-Dashboard/Inventory/SiteData/DevicePages";
 // import TaxPages from "./Components/User-Dashboard/Inventory/SiteData/TaxPage";
 import StockTransferss from "./Components/User-Dashboard/Inventory/SiteData/StockTransfers";
+
 // import PointOfSales from "./Components/Company-Dashboard/Inventory/Pos/PointOfSale";
 // import InvoiceSummarys from "./Components/Company-Dashboard/Inventory/Pos/InvoiceSummary";
 // import ManageInvoicess from "./Components/Company-Dashboard/Inventory/Pos/ManageInvoice";
 // import ViewInvoices from "./Components/Company-Dashboard/Inventory/Pos/ViewInvoice";
-// import EditInvoices from "./Components/Company-Dashboard/Inventory/Pos/EditInvoice";
+// import EditInvoices from "./Components/Company-Dashboard/Inventory/Pos/EditInvoice";-
 
 
 
@@ -141,6 +143,7 @@ import Bill from "./Components/Company-Dashboard/Purchases/Bill";
 import AllAcounts from "./Components/Company-Dashboard/Accounts/AllAcounts";
 import CustomersDebtors from "./Components/Company-Dashboard/Accounts/CustomersDebtors";
 import VendorsCreditors from "./Components/Company-Dashboard/Accounts/VendorsCreditors";
+// import CreateVoucher from "./Components/Company-Dashboard/Inventory/CreateVoucher";
 
 
 
@@ -181,6 +184,8 @@ function App() {
           <Route path="/company/unitofmeasure" element={<UnitofMeasure/>} />
           {/* <Route path="/company/lowstock" element={<LowStock />} /> */}
           {/* <Route path="/company/printbarcode" element={<PrintBarcode />} /> */}
+          <Route path="/company/createvoucher" element={<CreateVoucher/>} />
+
           <Route path="/company/warehouse" element={<WareHouse />} />
           <Route path="/company/stocktranfer" element={<StockTransfer />} />
           <Route path="/company/categories" element={<Categories/>} />

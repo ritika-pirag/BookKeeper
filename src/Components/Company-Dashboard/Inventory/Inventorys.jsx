@@ -116,9 +116,35 @@ const InventoryItems = () => {
       category: "default",
       subcategory: "default",
       remarks: "Internal only",
-      image: null
+      image: null,
+      status: "In Stock"
+    },
+    {
+      itemName: "Out of Stock Item",
+      hsn: "5678",
+      barcode: "XYZ567",
+      unit: "Kg",
+      description: "This item is currently out of stock.",
+      quantity: 0,
+      date: "2024-12-01",
+      cost: 200,
+      value: 0,
+      minQty: 10,
+      taxAccount: "12% GST",
+      cess: 0,
+      purchasePriceExclusive: 180,
+      purchasePriceInclusive: 200,
+      salePriceExclusive: 220,
+      salePriceInclusive: 250,
+      discount: 0,
+      category: "Electronics",
+      subcategory: "Accessories",
+      remarks: "Awaiting new shipment",
+      image: null,
+      status: "Out of Stock"
     }
   ]);
+  
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
@@ -148,7 +174,8 @@ const InventoryItems = () => {
     category: "default",
     subcategory: "default",
     remarks: "",
-    image: null
+    image: null,
+    status: "In Stock"
   });
 
   const handleChange = (e) => {
@@ -171,6 +198,14 @@ const InventoryItems = () => {
     setShowEdit(false);
   };
 
+
+
+  const handleStatusChange = (index, value) => {
+    const updatedItems = [...items];
+    updatedItems[index].status = value;
+    setItems(updatedItems);
+  };
+  
   const handleDeleteItem = () => {
     setItems(items.filter((i) => i !== selectedItem));
     setShowDelete(false);
@@ -220,16 +255,68 @@ const InventoryItems = () => {
 
   return (
     <div className="mt-4 p-2">
-      <Row className="align-items-center mb-3">
-        <Col md={4}><h4 className="fw-bold mb-0">Inventory Items</h4></Col>
-        <Col md={8} className="text-md-end d-flex flex-wrap gap-2 justify-content-md-end">
-          <Button style={{ backgroundColor: '#00c78c',  }} onClick={handleImportClick}>Import</Button>
-          <input type="file" accept=".xlsx, .xls" ref={(ref) => (window.importFileRef = ref)} onChange={handleImport} style={{ display: "none" }} />
-          <Button style={{ backgroundColor: '#ff7e00', }} onClick={handleExport}>Export</Button>
-          <Button style={{ backgroundColor: '#f6c100', }} onClick={handleDownloadTemplate}>Download Template</Button>
-          <Button style={{ backgroundColor: '#27b2b6', }} onClick={() => { setNewItem({ ...newItem }); setShowAdd(true); }}><FaPlus className="me-1" />Add Item</Button>
-        </Col>
-      </Row>
+<Row className="align-items-center mb-3">
+  <Col md={4}>
+    <h4 className="fw-bold mb-0">Inventory Items</h4>
+  </Col>
+  <Col md={8} className="text-md-end d-flex flex-wrap gap-2 justify-content-md-end">
+    <Button
+      style={{
+        backgroundColor: '#00c78c',
+        border: 'none',
+        color: '#fff',
+        padding: '6px 16px',
+      }}
+      onClick={handleImportClick}
+    >
+      Import
+    </Button>
+    <input
+      type="file"
+      accept=".xlsx, .xls"
+      ref={(ref) => (window.importFileRef = ref)}
+      onChange={handleImport}
+      style={{ display: 'none' }}
+    />
+    <Button
+      style={{
+        backgroundColor: '#ff7e00',
+        border: 'none',
+        color: '#fff',
+        padding: '6px 16px',
+      }}
+      onClick={handleExport}
+    >
+      Export
+    </Button>
+    <Button
+      style={{
+        backgroundColor: '#f6c100',
+        border: 'none',
+        color: '#000',
+        padding: '6px 16px',
+      }}
+      onClick={handleDownloadTemplate}
+    >
+      Download Template
+    </Button>
+    <Button
+      style={{
+        backgroundColor: '#27b2b6',
+        border: 'none',
+        color: '#fff',
+        padding: '6px 16px',
+      }}
+      onClick={() => {
+        setNewItem({ ...newItem });
+        setShowAdd(true);
+      }}
+    >
+      
+      Add Item
+    </Button>
+  </Col>
+</Row>
 
       <Row className="mb-3 justify-content-start">
         <Col md={4}><Form.Control type="text" placeholder="Search item..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="rounded-pill" /></Col>
@@ -245,31 +332,43 @@ const InventoryItems = () => {
                 <th>Quantity</th>
                 <th>Cost</th>
                 <th>Value</th>
+                <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filteredItems.length > 0 ? (
-                filteredItems.map((item, idx) => (
-                  <tr key={idx}>
-                    <td>{item.itemName}</td>
-                    <td>{item.hsn}</td>
-                    <td>{item.quantity}</td>
-                    <td>{item.cost}</td>
-                    <td>{item.value}</td>
-                    <td>
-                      <div className="d-flex gap-2">
-                        <Button variant="link" className="text-info p-0" onClick={() => { setSelectedItem(item); setShowView(true); }}><FaEye /></Button>
-                        <Button variant="link" className="text-warning p-0" onClick={() => { setSelectedItem(item); setNewItem(item); setShowEdit(true); }}><FaEdit /></Button>
-                        <Button variant="link" className="text-danger p-0" onClick={() => { setSelectedItem(item); setShowDelete(true); }}><FaTrash /></Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr><td colSpan="6" className="text-center">No items found.</td></tr>
-              )}
-            </tbody>
+  {filteredItems.length > 0 ? (
+    filteredItems.map((item, idx) => (
+      <tr key={idx}>
+        <td>{item.itemName}</td>
+        <td>{item.hsn}</td>
+        <td>{item.quantity}</td>
+        <td>{item.cost}</td>
+        <td>{item.value}</td>
+        <td>
+        <span
+  className={`badge px-3 py-1 rounded-pill fw-semibold ${
+    item.status === "In Stock" ? "bg-success text-white" : "bg-danger text-white"
+  }`}
+>
+  {item.status}
+</span>
+
+        </td>
+        <td>
+          <div className="d-flex gap-2">
+            <Button variant="link" className="text-info p-0" onClick={() => { setSelectedItem(item); setShowView(true); }}><FaEye /></Button>
+            <Button variant="link" className="text-warning p-0" onClick={() => { setSelectedItem(item); setNewItem(item); setShowEdit(true); }}><FaEdit /></Button>
+            <Button variant="link" className="text-danger p-0" onClick={() => { setSelectedItem(item); setShowDelete(true); }}><FaTrash /></Button>
+          </div>
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr><td colSpan="7" className="text-center">No items found.</td></tr>
+  )}
+</tbody>
+
           </table>
         </div>
       </div>
