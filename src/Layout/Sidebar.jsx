@@ -77,7 +77,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           { to: "/company/unitofmeasure", icon: "fas fa-table", label: "Unit of measure" },
         ]),
         renderFlatSection("Sales", [
-          // { to: "/company/Customer", icon: "fas fa-user", label: "Customer" },
+          { to: "/company/Customer", icon: "fas fa-user", label: "Customer" },
           { to: "/company/Invoice", icon: "fas fa-file-invoice", label: "Invoice" },
         ]),
         renderFlatSection("Purchases", [
