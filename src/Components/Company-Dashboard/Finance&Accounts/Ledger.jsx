@@ -140,7 +140,7 @@ const Ledger = () => {
             onChange={(e) => setFromDate(e.target.value)}
           />
         </div>
-        {/* <div>
+        <div>
           <label className="form-label mb-1">To Date</label>
           <input
             type="date"
@@ -148,7 +148,7 @@ const Ledger = () => {
             value={toDate}
             onChange={(e) => setToDate(e.target.value)}
           />
-        </div> */}
+        </div>
         <div className="flex-grow-1">
           <label className="form-label mb-1">Search</label>
           <input

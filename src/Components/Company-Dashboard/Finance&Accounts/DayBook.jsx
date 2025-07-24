@@ -173,9 +173,9 @@ const Daybook = () => {
         <div className="d-flex gap-2">
           <button className="btn btn-light border text-danger"><FaFilePdf /></button>
           <button className="btn btn-light border text-success"><FaFileExcel /></button>
-          <button className="btn text-white" style={{ backgroundColor: "#53b2a5" }} data-bs-toggle="modal" data-bs-target="#addEntryModal">
-            <FaPlusCircle /> Add Voucher
-          </button>
+          {/* <button className="btn text-white" style={{ backgroundColor: "#53b2a5" }} data-bs-toggle="modal" data-bs-target="#addEntryModal">
+            Add Voucher
+          </button> */}
         </div>
       </div>
 
