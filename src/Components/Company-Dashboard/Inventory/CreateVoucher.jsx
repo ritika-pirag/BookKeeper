@@ -1,118 +1,248 @@
-import React from "react";
-import { Row, Col, Table, Card, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Tabs, Tab, Button, Row, Col, Form } from "react-bootstrap";
+import { FaEye, FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
-const PurchaseVoucherView = () => {
+const CreateVoucher = () => {
+  const [activeTab, setActiveTab] = useState("sales");
   const navigate = useNavigate();
 
-  // Demo pre-filled data for purchase voucher
-  const voucher = {
-    invoiceNo: "PUR-2001",
-    voucherDate: "2025-07-24",
-    dueDate: "2025-07-30",
-    supplier: "Tech Traders",
-    purchaseAccount: "Purchases - IT Hardware",
-    placeOfSupply: "Indore, MP",
-    referenceNo: "REF-5678",
-  };
-
-  const items = [
+  const voucherData = [
     {
-      name: "Desktop",
-      qty: 3,
-      unit: "pcs",
-      rate: 40000,
-      discount: 10,
-      tax: "18% GST",
-      value: 108000,
-      description: "Intel i7 desktops",
+      itemName: "Voucher Item 1",
+      hsn: "1234",
+      quantity: 10,
+      cost: 100,
+      value: 1000,
+      status: "In Stock",
     },
     {
-      name: "Keyboard",
-      qty: 10,
-      unit: "pcs",
-      rate: 600,
-      discount: 0,
-      tax: "18% GST",
-      value: 6000,
-      description: "Mechanical keyboards",
+      itemName: "Voucher Item 2",
+      hsn: "5678",
+      quantity: 0,
+      cost: 200,
+      value: 0,
+      status: "Out of Stock",
     },
   ];
 
-  const totalAmount = items.reduce((acc, cur) => acc + parseFloat(cur.value), 0).toFixed(2);
+  const [salesSearchTerm, setSalesSearchTerm] = useState("");
+  const [purchaseSearchTerm, setPurchaseSearchTerm] = useState("");
+
+  const filteredSales = voucherData.filter((item) =>
+    item.itemName.toLowerCase().includes(salesSearchTerm.toLowerCase())
+  );
+
+  const filteredPurchase = voucherData.filter((item) =>
+    item.itemName.toLowerCase().includes(purchaseSearchTerm.toLowerCase())
+  );
 
   return (
-    <Card className="p-4 mt-3 shadow-sm">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h4 className="mb-0">Purchase Voucher - View Mode</h4>
-        <Button variant="secondary" onClick={() => navigate(-1)}>
-          ← Back
-        </Button>
-      </div>
-
-      <Row className="mb-3">
-        <Col md={3}><strong>Invoice No:</strong> {voucher.invoiceNo || "--"}</Col>
-        <Col md={3}><strong>Voucher Date:</strong> {voucher.voucherDate || "--"}</Col>
-        <Col md={3}><strong>Due Date:</strong> {voucher.dueDate || "--"}</Col>
-        <Col md={3}><strong>Supplier:</strong> {voucher.supplier || "--"}</Col>
+    <div className="mt-4 p-3">
+      <Row className="align-items-center mb-3">
+        <Col md={12}>
+          <h4 className="fw-bold mb-0">Create Voucher</h4>
+        </Col>
       </Row>
 
-      <Row className="mb-4">
-        <Col md={3}><strong>Purchase Account:</strong> {voucher.purchaseAccount || "--"}</Col>
-        <Col md={3}><strong>Place of Supply:</strong> {voucher.placeOfSupply || "--"}</Col>
-        <Col md={3}><strong>Reference No:</strong> {voucher.referenceNo || "--"}</Col>
+      <Row className="align-items-center mb-3">
+        <Col md={6}>
+          <Tabs
+            id="voucher-tabs"
+            activeKey={activeTab}
+            onSelect={(k) => setActiveTab(k)}
+            className="mb-0"
+          >
+            <Tab eventKey="sales" title="Sales Voucher" />
+            <Tab eventKey="purchase" title="Purchase Voucher" />
+          </Tabs>
+        </Col>
+
+        <Col md={6} className="text-end">
+        {activeTab === "sales" ? (
+  <Button
+    style={{
+      backgroundColor: '#27b2b6',
+      border: 'none',
+      color: '#fff',
+      padding: '6px 16px',
+    }}
+    onClick={() => navigate("/company/salesvoucher")}
+  >
+    Add Sales Voucher
+  </Button>
+) : (
+  <Button
+    style={{
+      backgroundColor: '#27b2b6',
+      border: 'none',
+      color: '#fff',
+      padding: '6px 16px',
+    }}
+    onClick={() => navigate("/company/purchasevoucher")}
+  >
+    Add Purchase Voucher
+  </Button>
+)}
+
+        </Col>
       </Row>
 
-      <Table bordered size="sm">
-        <thead className="table-light">
-          <tr>
-            <th>Item</th>
-            <th>Qty</th>
-            <th>Unit</th>
-            <th>Rate</th>
-            <th>Discount %</th>
-            <th>Tax</th>
-            <th>Value</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.length > 0 ? (
-            items.map((itm, idx) => (
-              <tr key={idx}>
-                <td>{itm.name || "--"}</td>
-                <td>{itm.qty || "0"}</td>
-                <td>{itm.unit || "--"}</td>
-                <td>{itm.rate || "0.00"}</td>
-                <td>{itm.discount || "0"}</td>
-                <td>{itm.tax || "--"}</td>
-                <td>{itm.value || "0.00"}</td>
-                <td>{itm.description || "--"}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="8" className="text-center text-muted">No items added.</td>
-            </tr>
-          )}
-        </tbody>
-        {items.length > 0 && (
-          <tfoot>
-            <tr>
-              <td colSpan="6" className="text-end"><strong>Total</strong></td>
-              <td><strong>₹ {totalAmount}</strong></td>
-              <td></td>
-            </tr>
-          </tfoot>
-        )}
-      </Table>
+      {activeTab === "sales" && (
+        <>
+          <Row className="mb-3">
+            <Col md={4}>
+              <Form.Control
+                type="text"
+                placeholder="Search sales voucher..."
+                className="rounded-pill"
+                value={salesSearchTerm}
+                onChange={(e) => setSalesSearchTerm(e.target.value)}
+              />
+            </Col>
+          </Row>
+          <div className="card bg-white rounded-3 p-3">
+            <div className="table-responsive">
+              <table className="table table-hover align-middle mb-0">
+                <thead className="table-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>HSN</th>
+                    <th>Quantity</th>
+                    <th>Cost</th>
+                    <th>Value</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredSales.length > 0 ? (
+                    filteredSales.map((item, idx) => (
+                      <tr key={idx}>
+                        <td>{item.itemName}</td>
+                        <td>{item.hsn}</td>
+                        <td>{item.quantity}</td>
+                        <td>{item.cost}</td>
+                        <td>{item.value}</td>
+                        <td>
+                          <span
+                            className={`badge px-3 py-1 rounded-pill fw-semibold ${
+                              item.status === "In Stock"
+                                ? "bg-success text-white"
+                                : "bg-danger text-white"
+                            }`}
+                          >
+                            {item.status}
+                          </span>
+                        </td>
+                        <td>
+                                  <div className="d-flex gap-2">
+                                  <Button
+  variant="link"
+  className="text-info p-0"
+  onClick={() => navigate("/company/salesvoucherview")}
+>
+  <FaEye />
+</Button>
 
-      <div className="text-end mt-3">
-        <strong>Total Items:</strong> {items.length} &nbsp;&nbsp;
-        <strong>Total Amount:</strong> ₹ {totalAmount}
-      </div>
-    </Card>
+                                    {/* <Button variant="link" className="text-warning p-0" ><FaEdit /></Button> */}
+                                    <Button variant="link" className="text-danger p-0" ><FaTrash /></Button>
+                                  </div>
+                                </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="7" className="text-center">
+                        No items found.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
+      )}
+
+      {activeTab === "purchase" && (
+        <>
+          <Row className="mb-3">
+            <Col md={4}>
+              <Form.Control
+                type="text"
+                placeholder="Search purchase voucher..."
+                className="rounded-pill"
+                value={purchaseSearchTerm}
+                onChange={(e) => setPurchaseSearchTerm(e.target.value)}
+              />
+            </Col>
+          </Row>
+          <div className="card bg-white rounded-3 p-3">
+            <div className="table-responsive">
+              <table className="table table-hover align-middle mb-0">
+                <thead className="table-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>HSN</th>
+                    <th>Quantity</th>
+                    <th>Cost</th>
+                    <th>Value</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredPurchase.length > 0 ? (
+                    filteredPurchase.map((item, idx) => (
+                      <tr key={idx}>
+                        <td>{item.itemName}</td>
+                        <td>{item.hsn}</td>
+                        <td>{item.quantity}</td>
+                        <td>{item.cost}</td>
+                        <td>{item.value}</td>
+                        <td>
+                          <span
+                            className={`badge px-3 py-1 rounded-pill fw-semibold ${
+                              item.status === "In Stock"
+                                ? "bg-success text-white"
+                                : "bg-danger text-white"
+                            }`}
+                          >
+                            {item.status}
+                          </span>
+                        </td>
+                  
+                        <td>
+                                  <div className="d-flex gap-2">
+                                  <Button
+  variant="link"
+  className="text-info p-0"
+  onClick={() => navigate("/company/purchasevoucherview")}
+>
+  <FaEye />
+</Button>
+
+                                    {/* <Button variant="link" className="text-warning p-0" ><FaEdit /></Button> */}
+                                    <Button variant="link" className="text-danger p-0" ><FaTrash /></Button>
+                                  </div>
+                                </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="7" className="text-center">
+                        No items found.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 
-export default PurchaseVoucherView;
+export default CreateVoucher;

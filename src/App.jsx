@@ -20,8 +20,14 @@ import Inventorys from "./Components/Company-Dashboard/Inventory/Inventorys";
 import UnitofMeasure from "./Components/Company-Dashboard/Inventory/UnitofMeasure";
 import LowStock from "./Components/Company-Dashboard/Inventory/LowStock";
 import PrintBarcode from "./Components/Company-Dashboard/Inventory/printBarcode";
+
 import Invoice from "./Components/Company-Dashboard/Sales/Invoice";
 import InvoiceForm from "./Components/Company-Dashboard/Sales/InvoiceForm";
+
+import SalesOrder  from "./Components/Company-Dashboard/Sales/SalesOrder";
+import SalesDelivery from "./Components/Company-Dashboard/Sales/SalesDelivery";
+import SalesReturn  from "./Components/Company-Dashboard/Sales/SalesReturn";
+
 import AccountStatement from "./Components/Company-Dashboard/Payments/AccountStatement";
 import Coupons from "./Components/Company-Dashboard/Payments/Coupons";
 import TaxReport from "./Components/Company-Dashboard/GST/TaxReport ";
@@ -143,6 +149,10 @@ import Bill from "./Components/Company-Dashboard/Purchases/Bill";
 import AllAcounts from "./Components/Company-Dashboard/Accounts/AllAcounts";
 import CustomersDebtors from "./Components/Company-Dashboard/Accounts/CustomersDebtors";
 import VendorsCreditors from "./Components/Company-Dashboard/Accounts/VendorsCreditors";
+import PurchaseVoucher from "./Components/Company-Dashboard/Inventory/PurchaseVoucher";
+import SalesVoucher from "./Components/Company-Dashboard/Inventory/SalesVoucher";
+import PurchaseVoucherView from "./Components/Company-Dashboard/Inventory/PurchaseVoucherView";
+import SalesVoucherView from "./Components/Company-Dashboard/Inventory/SalesVoucherView";
 // import CreateVoucher from "./Components/Company-Dashboard/Inventory/CreateVoucher";
 
 
@@ -182,6 +192,10 @@ function App() {
           {/* <Route path="/company/batchandexpriry" element={<BatchExpiry />} /> */}
           <Route path="/company/inventorys" element={<Inventorys/>} />
           <Route path="/company/unitofmeasure" element={<UnitofMeasure/>} />
+          <Route path="/company/salesvoucher" element={<SalesVoucher/>} />
+          <Route path="/company/purchasevoucher" element={<PurchaseVoucher/>} />
+          <Route path="/company/purchasevoucherview" element={<PurchaseVoucherView/>} />
+          <Route path="/company/salesvoucherview" element={<SalesVoucherView/>} />
           {/* <Route path="/company/lowstock" element={<LowStock />} /> */}
           {/* <Route path="/company/printbarcode" element={<PrintBarcode />} /> */}
           <Route path="/company/createvoucher" element={<CreateVoucher/>} />
@@ -208,6 +222,10 @@ function App() {
           {/* Sales */}
           <Route path="/company/invoiceform" element={<InvoiceForm />} />
           <Route path="/company/viewinvoicee" element={<ViewInvoicee/>} />
+          <Route path="/company/salesorder" element={<SalesOrder />} />
+          <Route path="/company/salesdelivery" element={<SalesDelivery/>} />
+          <Route path="/company/salesreturn" element={<SalesReturn />} />
+      
          
 
           {/* Payments */}

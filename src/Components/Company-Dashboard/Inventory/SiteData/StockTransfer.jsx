@@ -1,20 +1,18 @@
+
+
+
 import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 
-const productOptions = [
-  "Product A",
-  "Product B",
-  "Product C",
-  "Product D"
-];
+const productOptions = ["Product A", "Product B", "Product C", "Product D"];
 
 const StockTransfer = () => {
   const [formData, setFormData] = useState({
     transferFrom: "NewYork Warehouse",
-    selectedProducts: [],
-    transferTo: "NewYork Warehouse",
-    quantity: ""
+    selectedProducts: {},
+    transferTo: "NewYork Warehouse"
   });
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef();
 
@@ -35,28 +33,39 @@ const StockTransfer = () => {
 
   const handleProductToggle = (product) => {
     setFormData((prev) => {
-      const isSelected = prev.selectedProducts.includes(product);
-      const updated = isSelected
-        ? prev.selectedProducts.filter((p) => p !== product)
-        : [...prev.selectedProducts, product];
-      return { ...prev, selectedProducts: updated };
+      const selected = { ...prev.selectedProducts };
+      if (selected[product]) {
+        delete selected[product];
+      } else {
+        selected[product] = 1;
+      }
+      return { ...prev, selectedProducts: selected };
     });
   };
 
   const handleSelectAll = () => {
-    const allSelected = formData.selectedProducts.length === productOptions.length;
+    setFormData((prev) => {
+      const allSelected = Object.keys(prev.selectedProducts).length === productOptions.length;
+      const selected = allSelected
+        ? {}
+        : Object.fromEntries(productOptions.map((p) => [p, 1]));
+      return { ...prev, selectedProducts: selected };
+    });
+  };
+
+  const handleQuantityChange = (product, qty) => {
     setFormData((prev) => ({
       ...prev,
-      selectedProducts: allSelected ? [] : [...productOptions]
+      selectedProducts: {
+        ...prev.selectedProducts,
+        [product]: Math.max(1, parseInt(qty) || 1)
+      }
     }));
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
@@ -74,11 +83,7 @@ const StockTransfer = () => {
           <Row className="mb-3">
             <Form.Label column sm={2}>Transfer From</Form.Label>
             <Col sm={10}>
-              <Form.Select
-                name="transferFrom"
-                value={formData.transferFrom}
-                onChange={handleChange}
-              >
+              <Form.Select name="transferFrom" value={formData.transferFrom} onChange={handleChange}>
                 <option>NewYork Warehouse</option>
                 <option>Delhi Warehouse</option>
                 <option>Bangalore Warehouse</option>
@@ -86,14 +91,14 @@ const StockTransfer = () => {
             </Col>
           </Row>
 
-          {/* 📦 Product Dropdown with Checkboxes */}
+          {/* 📦 Product Dropdown with Quantity Inputs */}
           <Row className="mb-3">
             <Form.Label column sm={2}>Products</Form.Label>
             <Col sm={10}>
               <div ref={dropdownRef} style={{ position: "relative" }}>
                 <Button variant="outline-secondary" onClick={toggleDropdown}>
-                  {formData.selectedProducts.length > 0
-                    ? `${formData.selectedProducts.length} selected`
+                  {Object.keys(formData.selectedProducts).length > 0
+                    ? `${Object.keys(formData.selectedProducts).length} selected`
                     : "Select Products"}
                 </Button>
 
@@ -115,37 +120,39 @@ const StockTransfer = () => {
                     <Form.Check
                       type="checkbox"
                       label="Select All"
-                      checked={formData.selectedProducts.length === productOptions.length}
+                      checked={Object.keys(formData.selectedProducts).length === productOptions.length}
                       onChange={handleSelectAll}
                     />
-                    {productOptions.map((product, index) => (
-                      <Form.Check
-                        key={index}
-                        type="checkbox"
-                        label={product}
-                        checked={formData.selectedProducts.includes(product)}
-                        onChange={() => handleProductToggle(product)}
-                        style={{ marginLeft: 12 }}
-                      />
-                    ))}
+
+                    {productOptions.map((product, index) => {
+                      const isChecked = product in formData.selectedProducts;
+                      return (
+                        <div key={index} className="d-flex align-items-center gap-3 mt-2 ms-3">
+                          <Form.Check
+                            type="checkbox"
+                            label={product}
+                            checked={isChecked}
+                            onChange={() => handleProductToggle(product)}
+                          />
+                          {isChecked && (
+                            <div className="d-flex align-items-center">
+                              <span style={{ fontSize: "0.9rem", marginRight: 6 }}>Qty:</span>
+                              <Form.Control
+                                type="number"
+                                value={formData.selectedProducts[product]}
+                                min="1"
+                                placeholder="Qty"
+                                style={{ width: "80px" }}
+                                onChange={(e) => handleQuantityChange(product, e.target.value)}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
-            </Col>
-          </Row>
-
-          {/* 🔢 Quantity */}
-          <Row className="mb-3">
-            <Form.Label column sm={2}>Quantity</Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                type="number"
-                name="quantity"
-                value={formData.quantity}
-                onChange={handleChange}
-                placeholder="Enter quantity"
-                min="1"
-              />
             </Col>
           </Row>
 
@@ -153,11 +160,7 @@ const StockTransfer = () => {
           <Row className="mb-4">
             <Form.Label column sm={2}>Transfer To</Form.Label>
             <Col sm={10}>
-              <Form.Select
-                name="transferTo"
-                value={formData.transferTo}
-                onChange={handleChange}
-              >
+              <Form.Select name="transferTo" value={formData.transferTo} onChange={handleChange}>
                 <option>NewYork Warehouse</option>
                 <option>Mumbai Warehouse</option>
                 <option>Chennai Warehouse</option>

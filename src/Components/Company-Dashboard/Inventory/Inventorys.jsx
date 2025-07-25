@@ -255,7 +255,7 @@ const InventoryItems = () => {
 
   return (
     <div className="mt-4 p-2">
-<Row className="align-items-center mb-3">
+<Row className="align-items-center mb-3 ">
   <Col md={4}>
     <h4 className="fw-bold mb-0">Inventory Items</h4>
   </Col>
@@ -318,7 +318,7 @@ const InventoryItems = () => {
   </Col>
 </Row>
 
-      <Row className="mb-3 justify-content-start">
+      <Row className="mb-3 justify-content-start  card">
         <Col md={4}><Form.Control type="text" placeholder="Search item..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="rounded-pill" /></Col>
       </Row>
 

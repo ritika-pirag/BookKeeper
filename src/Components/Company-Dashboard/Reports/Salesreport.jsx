@@ -1,8 +1,5 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
-import { BsGear } from 'react-icons/bs';
-import { BiSolidReport, BiSolidDollarCircle } from 'react-icons/bi';
 
 const Salesreport = () => {
   return (
@@ -20,7 +17,6 @@ const Salesreport = () => {
               <small className="text-muted">Total Amount</small>
               <h5 className="fw-bold">$4,56,000</h5>
             </div>
-            <BiSolidDollarCircle size={28} color="#4CAF50" />
           </div>
         </div>
 
@@ -30,7 +26,6 @@ const Salesreport = () => {
               <small className="text-muted">Total Paid</small>
               <h5 className="fw-bold">$2,56,42</h5>
             </div>
-            <BiSolidDollarCircle size={28} color="#1A73E8" />
           </div>
         </div>
 
@@ -40,17 +35,15 @@ const Salesreport = () => {
               <small className="text-muted">Total Unpaid</small>
               <h5 className="fw-bold">$1,52,45</h5>
             </div>
-            <BiSolidDollarCircle size={28} color="#EF6C00" />
           </div>
         </div>
 
         <div className="col-12 col-md-3">
-          <div className="shadow-sm rounded p-3 bg-white border border-danger d-flex align-items-center justify-content-between w-100">
+          <div className="shadow-sm rounded p-3 bg-white border border-info d-flex align-items-center justify-content-between w-100">
             <div>
-              <small className="text-muted">Overdue</small>
-              <h5 className="fw-bold">$2,56,12</h5>
+              <small className="text-muted">Sales </small>
+              <h5 className="fw-bold">$7,00,87</h5>
             </div>
-            <BiSolidReport size={28} color="#D32F2F" />
           </div>
         </div>
       </div>
@@ -92,15 +85,8 @@ const Salesreport = () => {
         <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
           <h5 className="fw-bold mb-0">Sales Report</h5>
           <div className="d-flex gap-2">
-            <button className="btn btn-light">
-              <FaFilePdf className="text-danger" />
-            </button>
-            <button className="btn btn-light">
-              <FaFileExcel className="text-success" />
-            </button>
-            <button className="btn btn-light">
-              <BsGear />
-            </button>
+            <button className="btn btn-light">PDF</button>
+            <button className="btn btn-light">Excel</button>
           </div>
         </div>
 
@@ -120,7 +106,7 @@ const Salesreport = () => {
             <tbody>
               <tr>
                 <td>PT001</td>
-                <td><img src="https://via.placeholder.com/25" alt="" className="me-2" /> Lenovo IdeaPad 3</td>
+                <td>Lenovo IdeaPad 3</td>
                 <td>Lenovo</td>
                 <td>Computers</td>
                 <td>05</td>
@@ -129,7 +115,7 @@ const Salesreport = () => {
               </tr>
               <tr>
                 <td>PT002</td>
-                <td><img src="https://via.placeholder.com/25" alt="" className="me-2" /> Beats Pro</td>
+                <td>Beats Pro</td>
                 <td>Beats</td>
                 <td>Electronics</td>
                 <td>10</td>
@@ -138,7 +124,7 @@ const Salesreport = () => {
               </tr>
               <tr>
                 <td>PT003</td>
-                <td><img src="https://via.placeholder.com/25" alt="" className="me-2" /> Nike Jordan</td>
+                <td>Nike Jordan</td>
                 <td>Nike</td>
                 <td>Shoe</td>
                 <td>08</td>
@@ -151,21 +137,14 @@ const Salesreport = () => {
 
         {/* Pagination */}
         <div className="d-flex justify-content-between align-items-center mt-3 px-2">
-          <span className="small text-muted">
-            Showing 1 to 3 of 3 results
-          </span>
+          <span className="small text-muted">Showing 1 to 3 of 3 results</span>
           <nav>
             <ul className="pagination pagination-sm mb-0">
               <li className="page-item disabled">
                 <button className="page-link rounded-start">&laquo;</button>
               </li>
               <li className="page-item active">
-                <button
-                  className="page-link"
-                  style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
-                >
-                  1
-                </button>
+                <button className="page-link" style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}>1</button>
               </li>
               <li className="page-item">
                 <button className="page-link">2</button>

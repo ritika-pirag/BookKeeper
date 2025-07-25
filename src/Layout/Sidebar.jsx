@@ -80,6 +80,9 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         renderFlatSection("Sales", [
           { to: "/company/Customer", icon: "fas fa-user", label: "Customer" },
           { to: "/company/Invoice", icon: "fas fa-file-invoice", label: "Invoice" },
+          { to: "/company/salesorder", icon: "fas fa-table", label: "Sales Order" },
+          { to: "/company/salesdelivery", icon: "fas fa-money-bill", label: "Sales Delivery" },
+          { to: "/company/salesreturn", icon: "fas fa-money-bill", label: "Sales Return" },
         ]),
         renderFlatSection("Purchases", [
           // { to: "/company/vendors", icon: "fas fa-users", label: "Vendors" },

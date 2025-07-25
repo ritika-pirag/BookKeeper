@@ -18,10 +18,12 @@ const Expense = () => {
   const [editExpense, setEditExpense] = useState(null);
   const [deleteExpense, setDeleteExpense] = useState(null);
 
+  // Updated expenses data with Direct/Indirect Account
   const expenses = [
     {
       date: "3 Sep 2035",
       expenseAccount: "delectus",
+      accountType: "Direct", // Added account type
       reference: "REF-001",
       vendorName: "Vendor A",
       paidThrough: "Bank Transfer",
@@ -32,6 +34,7 @@ const Expense = () => {
     {
       date: "2 Dec 2031",
       expenseAccount: "accusantium",
+      accountType: "Indirect", // Added account type
       reference: "REF-002",
       vendorName: "Vendor B",
       paidThrough: "Credit Card",
@@ -42,6 +45,7 @@ const Expense = () => {
     {
       date: "10 Nov 2031",
       expenseAccount: "deserunt",
+      accountType: "Direct", // Added account type
       reference: "REF-003",
       vendorName: "Vendor C",
       paidThrough: "PayPal",
@@ -52,6 +56,7 @@ const Expense = () => {
     {
       date: "27 Nov 2031",
       expenseAccount: "aut",
+      accountType: "Indirect", // Added account type
       reference: "REF-004",
       vendorName: "Vendor D",
       paidThrough: "Bank Transfer",
@@ -62,6 +67,7 @@ const Expense = () => {
     {
       date: "15 Jan 2032",
       expenseAccount: "dummy",
+      accountType: "Direct", // Added account type
       reference: "REF-005",
       vendorName: "Vendor E",
       paidThrough: "Cash",
@@ -72,6 +78,7 @@ const Expense = () => {
     {
       date: "22 Feb 2032",
       expenseAccount: "example",
+      accountType: "Indirect", // Added account type
       reference: "REF-006",
       vendorName: "Vendor F",
       paidThrough: "Credit Card",
@@ -82,6 +89,7 @@ const Expense = () => {
     {
       date: "5 Mar 2032",
       expenseAccount: "test",
+      accountType: "Direct", // Added account type
       reference: "REF-007",
       vendorName: "Vendor G",
       paidThrough: "Bank Transfer",
@@ -92,6 +100,7 @@ const Expense = () => {
     {
       date: "18 Apr 2032",
       expenseAccount: "sample",
+      accountType: "Indirect", // Added account type
       reference: "REF-008",
       vendorName: "Vendor H",
       paidThrough: "PayPal",
@@ -138,7 +147,6 @@ const Expense = () => {
           <h5 className="fw-bold mb-1">Expense</h5>
           <p className="text-muted mb-0">Manage your Expense</p>
         </div>
-
         <div className="d-flex align-items-center gap-2 flex-wrap">
           <button className="btn btn-light border text-danger coupon-btn-icon">
             <FaFilePdf />
@@ -170,115 +178,147 @@ const Expense = () => {
         </div>
 
         {/* Dropdowns - Stack vertically on small screens, horizontally on larger ones */}
-     <div className="d-flex flex-column flex-sm-row gap-2 flex-grow-1 flex-md-grow-0 w-100 w-md-auto">
+        <div className="d-flex flex-column flex-sm-row gap-2 flex-grow-1 flex-md-grow-0 w-100 w-md-auto">
+          {/* Expense Account Dropdown */}
+          <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
+            <button
+              className="btn text-white border dropdown-toggle w-100"
+              type="button"
+              id="accountDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              style={{ backgroundColor: "#3daaaa", color: "white" }}
+            >
+              Expense Account
+            </button>
+            <ul className="dropdown-menu w-100" aria-labelledby="accountDropdown">
+              {["All", "delectus", "accusantium", "deserunt", "aut"].map((item, idx) => (
+                <li key={idx}>
+                  <a
+                    className="dropdown-item"
+                    href="#"
+                    style={{ color: "#3daaaa" }}
+                    onMouseOver={(e) => {
+                      e.target.style.backgroundColor = "#3daaaa";
+                      e.target.style.color = "white";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.backgroundColor = "";
+                      e.target.style.color = "#3daaaa";
+                    }}
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-  {/* Expense Account Dropdown */}
-  <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
-    <button
-      className="btn text-white border dropdown-toggle w-100"
-      type="button"
-      id="accountDropdown"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-      style={{ backgroundColor: "#3daaaa", color: "white" }}
-    >
-      Expense Account
-    </button>
-    <ul className="dropdown-menu w-100" aria-labelledby="accountDropdown">
-      {["All", "delectus", "accusantium", "deserunt", "aut"].map((item, idx) => (
-        <li key={idx}>
-          <a
-            className="dropdown-item"
-            href="#"
-            style={{ color: "#3daaaa" }}
-            onMouseOver={(e) => {
-              e.target.style.backgroundColor = "#3daaaa";
-              e.target.style.color = "white";
-            }}
-            onMouseOut={(e) => {
-              e.target.style.backgroundColor = "";
-              e.target.style.color = "#3daaaa";
-            }}
-          >
-            {item}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </div>
+          {/* Account Type Dropdown */}
+          <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
+            <button
+              className="btn text-white border dropdown-toggle w-100"
+              type="button"
+              id="accountTypeDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              style={{ backgroundColor: "#3daaaa", color: "white" }}
+            >
+              Account Type
+            </button>
+            <ul className="dropdown-menu w-100" aria-labelledby="accountTypeDropdown">
+              {["All", "Direct", "Indirect"].map((item, idx) => (
+                <li key={idx}>
+                  <a
+                    className="dropdown-item"
+                    href="#"
+                    style={{ color: "#3daaaa" }}
+                    onMouseOver={(e) => {
+                      e.target.style.backgroundColor = "#3daaaa";
+                      e.target.style.color = "white";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.backgroundColor = "";
+                      e.target.style.color = "#3daaaa";
+                    }}
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-  {/* Status Dropdown */}
-  <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
-    <button
-      className="btn text-white border dropdown-toggle w-100"
-      type="button"
-      id="statusDropdown"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-      style={{ backgroundColor: "#3daaaa", color: "white" }}
-    >
-      Status
-    </button>
-    <ul className="dropdown-menu w-100" aria-labelledby="statusDropdown">
-      {["All", "Paid", "Pending", "Rejected"].map((item, idx) => (
-        <li key={idx}>
-          <a
-            className="dropdown-item"
-            href="#"
-            style={{ color: "#3daaaa" }}
-            onMouseOver={(e) => {
-              e.target.style.backgroundColor = "#3daaaa";
-              e.target.style.color = "white";
-            }}
-            onMouseOut={(e) => {
-              e.target.style.backgroundColor = "";
-              e.target.style.color = "#3daaaa";
-            }}
-          >
-            {item}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </div>
+          {/* Status Dropdown */}
+          <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
+            <button
+              className="btn text-white border dropdown-toggle w-100"
+              type="button"
+              id="statusDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              style={{ backgroundColor: "#3daaaa", color: "white" }}
+            >
+              Status
+            </button>
+            <ul className="dropdown-menu w-100" aria-labelledby="statusDropdown">
+              {["All", "Paid", "Pending", "Rejected"].map((item, idx) => (
+                <li key={idx}>
+                  <a
+                    className="dropdown-item"
+                    href="#"
+                    style={{ color: "#3daaaa" }}
+                    onMouseOver={(e) => {
+                      e.target.style.backgroundColor = "#3daaaa";
+                      e.target.style.color = "white";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.backgroundColor = "";
+                      e.target.style.color = "#3daaaa";
+                    }}
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-  {/* Sort By Dropdown */}
-  <div className="dropdown flex-grow-1">
-    <button
-      className="btn text-white border dropdown-toggle w-100"
-      type="button"
-      id="sortDropdown"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-      style={{ backgroundColor: "#3daaaa", color: "white" }}
-    >
-      Sort By: Date
-    </button>
-    <ul className="dropdown-menu w-120" aria-labelledby="sortDropdown">
-      {["Date", "Amount (High to Low)", "Amount (Low to High)", "Vendor Name"].map((item, idx) => (
-        <li key={idx}>
-          <a
-            className="dropdown-item"
-            href="#"
-            style={{ color: "#3daaaa" }}
-            onMouseOver={(e) => {
-              e.target.style.backgroundColor = "#3daaaa";
-              e.target.style.color = "white";
-            }}
-            onMouseOut={(e) => {
-              e.target.style.backgroundColor = "";
-              e.target.style.color = "#3daaaa";
-            }}
-          >
-            {item}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </div>
-
-</div>
-
+          {/* Sort By Dropdown */}
+          <div className="dropdown flex-grow-1">
+            <button
+              className="btn text-white border dropdown-toggle w-100"
+              type="button"
+              id="sortDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              style={{ backgroundColor: "#3daaaa", color: "white" }}
+            >
+              Sort By: Date
+            </button>
+            <ul className="dropdown-menu w-120" aria-labelledby="sortDropdown">
+              {["Date", "Amount (High to Low)", "Amount (Low to High)", "Vendor Name"].map((item, idx) => (
+                <li key={idx}>
+                  <a
+                    className="dropdown-item"
+                    href="#"
+                    style={{ color: "#3daaaa" }}
+                    onMouseOver={(e) => {
+                      e.target.style.backgroundColor = "#3daaaa";
+                      e.target.style.color = "white";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.backgroundColor = "";
+                      e.target.style.color = "#3daaaa";
+                    }}
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
 
       {/* Table */}
@@ -288,6 +328,7 @@ const Expense = () => {
             <tr>
               <th className="py-3">DATE</th>
               <th className="py-3">EXPENSE ACCOUNT</th>
+              <th className="py-3">ACCOUNT TYPE</th> {/* New Column Header */}
               <th className="py-3">REFERENCE#</th>
               <th className="py-3">VENDOR NAME</th>
               <th className="py-3">PAID THROUGH</th>
@@ -302,6 +343,7 @@ const Expense = () => {
               <tr key={idx}>
                 <td>{expense.date}</td>
                 <td>{expense.expenseAccount}</td>
+                <td>{expense.accountType}</td> {/* New Column Data */}
                 <td>{expense.reference}</td>
                 <td>{expense.vendorName}</td>
                 <td>{expense.paidThrough}</td>
@@ -340,36 +382,36 @@ const Expense = () => {
             ))}
           </tbody>
         </table>
-
-
       </div>
-        {/* Pagination */}
-<div className="d-flex justify-content-between align-items-center mt-3 px-3">
-  <span className="small text-muted">
-    Showing 1 to {expenses.length} of {expenses.length} results
-  </span>
-  <nav>
-    <ul className="pagination pagination-sm mb-0">
-      <li className="page-item disabled">
-        <button className="page-link rounded-start">&laquo;</button>
-      </li>
-      <li className="page-item active">
-        <button
-          className="page-link"
-          style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
-        >
-          1
-        </button>
-      </li>
-      <li className="page-item">
-        <button className="page-link">2</button>
-      </li>
-      <li className="page-item">
-        <button className="page-link rounded-end">&raquo;</button>
-      </li>
-    </ul>
-  </nav>
-</div>
+
+      {/* Pagination */}
+      <div className="d-flex justify-content-between align-items-center mt-3 px-3">
+        <span className="small text-muted">
+          Showing 1 to {expenses.length} of {expenses.length} results
+        </span>
+        <nav>
+          <ul className="pagination pagination-sm mb-0">
+            <li className="page-item disabled">
+              <button className="page-link rounded-start">&laquo;</button>
+            </li>
+            <li className="page-item active">
+              <button
+                className="page-link"
+                style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+              >
+                1
+              </button>
+            </li>
+            <li className="page-item">
+              <button className="page-link">2</button>
+            </li>
+            <li className="page-item">
+              <button className="page-link rounded-end">&raquo;</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
       {/* Add Expense Modal */}
       <div
         className="modal fade"
@@ -392,105 +434,110 @@ const Expense = () => {
               ></button>
             </div>
             <div className="modal-body">
-            <form>
-  <div className="mb-3">
-    <label className="form-label fw-semibold">
-      Date <span className="text-danger">*</span>
-    </label>
-    <input 
-      type="date" 
-      className="form-control" 
-    />
-  </div>
-
-  <div className="mb-3">
-    <label className="form-label fw-semibold">
-      Expense Account <span className="text-danger">*</span>
-    </label>
-    <input 
-      type="text" 
-      className="form-control" 
-      placeholder="Enter expense account" 
-    />
-  </div>
-
-  {/* 🔴 Reference Number field removed */}
-
-  <div className="row mb-3">
-    <div className="col-md-6">
-      <label className="form-label fw-semibold">
-        Vendor Name <span className="text-danger">*</span>
-      </label>
-      <input 
-        type="text" 
-        className="form-control" 
-        placeholder="Enter vendor name" 
-      />
-    </div>
-    <div className="col-md-6">
-      <label className="form-label fw-semibold">
-        Paid Through <span className="text-danger">*</span>
-      </label>
-      <select className="form-select">
-        <option>Select payment method</option>
-        <option>Bank Transfer</option>
-        <option>Credit Card</option>
-        <option>PayPal</option>
-        <option>Cash</option>
-      </select>
-    </div>
-  </div>
-
-  <div className="mb-3">
-    <label className="form-label fw-semibold">
-      Customer Name
-    </label>
-    <input 
-      type="text" 
-      className="form-control" 
-      placeholder="Enter customer name" 
-    />
-  </div>
-
-  <div className="mb-3">
-    <label className="form-label fw-semibold">
-      Amount <span className="text-danger">*</span>
-    </label>
-    <input 
-      type="text" 
-      className="form-control" 
-      placeholder="Enter amount" 
-    />
-  </div>
-
-  {/* ✅ Status field converted to input */}
-  <div className="mb-3">
-    <label className="form-label fw-semibold">Status</label>
-    <input 
-      type="text" 
-      className="form-control" 
-      placeholder="Enter status (e.g. Paid, Pending)" 
-    />
-  </div>
-
-  <div className="d-flex justify-content-end gap-3 mt-4">
-    <button
-      type="button"
-      className="btn btn-outline-secondary px-4"
-      data-bs-dismiss="modal"
-    >
-      Cancel
-    </button>
-    <button 
-      type="submit" 
-      className="btn btn-warning text-white px-4"
-      style={{ backgroundColor: "#3daaaa" }}
-    >
-      Add Expense
-    </button>
-  </div>
-</form>
-
+              <form>
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">
+                    Date <span className="text-danger">*</span>
+                  </label>
+                  <input 
+                    type="date" 
+                    className="form-control" 
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">
+                    Expense Account <span className="text-danger">*</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    placeholder="Enter expense account" 
+                  />
+                </div>
+                
+                {/* ✅ Added Account Type field */}
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">
+                    Account Type <span className="text-danger">*</span>
+                  </label>
+                  <select className="form-select">
+                    <option value="">Select account type</option>
+                    <option value="Direct">Direct</option>
+                    <option value="Indirect">Indirect</option>
+                  </select>
+                </div>
+                
+                {/* 🔴 Reference Number field removed */}
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <label className="form-label fw-semibold">
+                      Vendor Name <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="Enter vendor name" 
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label fw-semibold">
+                      Paid Through <span className="text-danger">*</span>
+                    </label>
+                    <select className="form-select">
+                      <option>Select payment method</option>
+                      <option>Bank Transfer</option>
+                      <option>Credit Card</option>
+                      <option>PayPal</option>
+                      <option>Cash</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">
+                    Customer Name
+                  </label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    placeholder="Enter customer name" 
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">
+                    Amount <span className="text-danger">*</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    placeholder="Enter amount" 
+                  />
+                </div>
+                {/* ✅ Status field converted to input */}
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">Status</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    placeholder="Enter status (e.g. Paid, Pending)" 
+                  />
+                </div>
+                <div className="d-flex justify-content-end gap-3 mt-4">
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary px-4"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    type="submit" 
+                    className="btn btn-warning text-white px-4"
+                    style={{ backgroundColor: "#3daaaa" }}
+                  >
+                    Add Expense
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -531,7 +578,11 @@ const Expense = () => {
                         <td className="fw-semibold">Expense Account</td>
                         <td>{selectedExpense.expenseAccount}</td>
                       </tr>
-              
+                      {/* ✅ Added Account Type to Details Modal */}
+                      <tr>
+                        <td className="fw-semibold">Account Type</td>
+                        <td>{selectedExpense.accountType}</td>
+                      </tr>
                       <tr>
                         <td className="fw-semibold">Vendor Name</td>
                         <td>{selectedExpense.vendorName}</td>
@@ -596,7 +647,6 @@ const Expense = () => {
                       defaultValue={editExpense.date}
                     />
                   </div>
-
                   <div className="mb-3">
                     <label className="form-label fw-semibold">
                       Expense Account <span className="text-danger">*</span>
@@ -607,7 +657,16 @@ const Expense = () => {
                       defaultValue={editExpense.expenseAccount}
                     />
                   </div>
-
+                  {/* ✅ Added Account Type field to Edit Modal */}
+                  <div className="mb-3">
+                    <label className="form-label fw-semibold">
+                      Account Type <span className="text-danger">*</span>
+                    </label>
+                    <select className="form-select" defaultValue={editExpense.accountType}>
+                      <option value="Direct">Direct</option>
+                      <option value="Indirect">Indirect</option>
+                    </select>
+                  </div>
                   <div className="mb-3">
                     <label className="form-label fw-semibold">
                       Reference Number <span className="text-danger">*</span>
@@ -618,7 +677,6 @@ const Expense = () => {
                       defaultValue={editExpense.reference}
                     />
                   </div>
-
                   <div className="row mb-3">
                     <div className="col-md-6">
                       <label className="form-label fw-semibold">
@@ -642,7 +700,6 @@ const Expense = () => {
                       </select>
                     </div>
                   </div>
-
                   <div className="mb-3">
                     <label className="form-label fw-semibold">
                       Customer Name
@@ -653,7 +710,6 @@ const Expense = () => {
                       defaultValue={editExpense.customerName}
                     />
                   </div>
-
                   <div className="mb-3">
                     <label className="form-label fw-semibold">
                       Amount <span className="text-danger">*</span>
@@ -664,7 +720,6 @@ const Expense = () => {
                       defaultValue={editExpense.amount}
                     />
                   </div>
-
                   <div className="mb-3">
                     <label className="form-label fw-semibold">Status</label>
                     <select className="form-select" defaultValue={editExpense.status}>
@@ -673,7 +728,6 @@ const Expense = () => {
                       <option>Rejected</option>
                     </select>
                   </div>
-
                   <div className="d-flex justify-content-end gap-3 mt-4">
                     <button
                       type="button"
@@ -748,4 +802,4 @@ const Expense = () => {
   );
 };
 
-export default Expense; 
+export default Expense;

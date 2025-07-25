@@ -6,19 +6,17 @@ import {
   Card,
   Table,
   Button,
+  Form,
 } from "react-bootstrap";
-import DatePicker from "react-datepicker";
 
 const months = [
-  "Jan 2025",
-  "Feb 2025",
-  "Mar 2025",
-  "Apr 2025",
-  "May 2025",
-  "Jun 2025",
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 
-const defaultData = Array(6).fill({
+const years = [2025, 2024, 2023, 2022, 2021, 2020];
+
+const defaultData = Array(12).fill({
   income: {
     sales: 50000,
     service: 30000,
@@ -35,20 +33,17 @@ const defaultData = Array(6).fill({
 });
 
 const formatUSD = (num) =>
-  "$" +
-  num.toLocaleString("en-US", {
-    maximumFractionDigits: 0,
-  });
+  "$" + num.toLocaleString("en-US", { maximumFractionDigits: 0 });
 
-function toCSV(data) {
+function toCSV(data, headers) {
   const rows = [];
-  rows.push(["", ...months]);
-  rows.push(["Income", ...Array(months.length).fill("")]);
+  rows.push(["", ...headers]);
+  rows.push(["Income", ...Array(headers.length).fill("")]);
   rows.push(["Sales", ...data.map((d) => formatUSD(d.income.sales))]);
   rows.push(["Service", ...data.map((d) => formatUSD(d.income.service))]);
   rows.push(["Purchase Return", ...data.map((d) => formatUSD(d.income.purchaseReturn))]);
   rows.push(["Gross Profit", ...data.map((d) => formatUSD(d.income.grossProfit))]);
-  rows.push(["Daybook", ...Array(months.length).fill("")]);
+  rows.push(["Daybook", ...Array(headers.length).fill("")]);
   rows.push(["Sales", ...data.map((d) => formatUSD(d.daybook.sales))]);
   rows.push(["Purchase", ...data.map((d) => formatUSD(d.daybook.purchase))]);
   rows.push(["Sales Return", ...data.map((d) => formatUSD(d.daybook.salesReturn))]);
@@ -58,124 +53,113 @@ function toCSV(data) {
 }
 
 const ProfitLoss = () => {
-  const [startDate, setStartDate] = useState(new Date("2025-07-02"));
-  const [endDate, setEndDate] = useState(new Date("2025-07-08"));
+  const [mode, setMode] = useState("monthly");
+  const [selectedYear, setSelectedYear] = useState(2025);
   const [tableData] = useState(defaultData);
 
+  const headers =
+    mode === "monthly"
+      ? months.map((m) => `${m} ${selectedYear}`)
+      : years.map((y) => `${y}`);
+
   const handleDownload = () => {
-    const csv = toCSV(tableData);
+    const csv = toCSV(tableData.slice(0, headers.length), headers);
     const blob = new Blob([csv], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "profit_loss_report.csv";
+    a.download = `profit_loss_${mode}_${selectedYear}.csv`;
     a.click();
     window.URL.revokeObjectURL(url);
   };
 
   return (
-    <div style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
+    <div style={{ background: "#f8f9fb", minHeight: "100vh", paddingBottom: 40 }}>
       <Container fluid className="py-4">
-        <div style={{ fontWeight: 700, fontSize: 28 }}>Profit / Loss Report</div>
-        <div style={{ color: "#888", fontSize: 17, marginBottom: 24 }}>
-          View Reports of Profit / Loss Report
-        </div>
+        <h2 className="fw-bold mb-1">Profit / Loss Report</h2>
+        <p className="text-muted mb-4 fs-5">
+          View reports monthly or yearly with income and daybook breakdown
+        </p>
 
-        <Row className="mb-3 justify-content-end">
-          <Col xs="auto" className="mb-2 mb-md-0">
-            <div className="d-flex align-items-center gap-2">
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                selectsStart
-                startDate={startDate}
-                endDate={endDate}
-                dateFormat="MM/dd/yyyy"
-                className="form-control"
-              />
-              <span style={{ fontWeight: 600, color: "#888" }}>-</span>
-              <DatePicker
-                selected={endDate}
-                onChange={(date) => setEndDate(date)}
-                selectsEnd
-                startDate={startDate}
-                endDate={endDate}
-                minDate={startDate}
-                dateFormat="MM/dd/yyyy"
-                className="form-control"
-              />
-            </div>
-          </Col>
-          <Col xs="auto">
-            <Button
-              style={{
-                background: "#3daaaa",
-                border: "none",
-                fontWeight: 500,
-                padding: "7px 24px",
-                fontSize: 16,
-              }}
-              onClick={handleDownload}
-            >
-              Download Report
-            </Button>
-          </Col>
-        </Row>
+        {/* Filter Controls */}
+        <Card className="mb-4">
+          <Card.Body>
+            <Row className="g-3 align-items-end">
+              <Col xs={12} md={4}>
+                <Form.Group>
+                  <Form.Label className="fw-semibold">Report Type</Form.Label>
+                  <Form.Select value={mode} onChange={(e) => setMode(e.target.value)}>
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
 
-        <Card className="">
+              <Col xs={12} md={4}>
+                <Form.Group>
+                  <Form.Label className="fw-semibold">
+                    {mode === "monthly" ? "Select Year" : "Year Range"}
+                  </Form.Label>
+                  <Form.Select
+                    value={selectedYear}
+                    onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+                  >
+                    {years.map((y) => (
+                      <option key={y} value={y}>
+                        {y}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+
+              <Col xs={12} md={4}>
+              <Button
+  onClick={handleDownload}
+  style={{
+    backgroundColor: "#28a745",
+    borderColor: "#28a745",
+    borderRadius: "7px",
+    height: "40px" // You can adjust this value as needed
+  }}
+>
+  Download Report
+</Button>
+
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
+
+        {/* Table Section */}
+        <Card>
           <Card.Body style={{ padding: 0 }}>
             <div style={{ overflowX: "auto" }}>
-              <Table
-                responsive
-                className="align-middle mb-0"
-                style={{
-                  minWidth: 900,
-                  fontSize: 17,
-                  background: "#fff",
-                }}
-              >
-                <thead className="table-light">
+              <Table responsive bordered hover>
+                <thead>
                   <tr>
-                    <th style={{ background: "#f5f6fa", minWidth: 180 }} className="px-4 py-4"></th>
-                    {months.map((m) => (
-                      <th
-                        key={m}
-                        style={{
-                          background: "#f5f6fa",
-                          textAlign: "center",
-                          fontWeight: 600,
-                          fontSize: 18,
-                        }}
-                      >
-                        {m}
-                      </th>
+                    <th></th>
+                    {headers.map((h) => (
+                      <th key={h} className="text-center fw-bold">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {/* Income Section */}
                   <tr>
-                    <td colSpan={months.length + 1} style={{ fontWeight: 700, background: "#f9f9f9" }} className="px-3 py-3">
-                      Income
-                    </td>
+                    <td colSpan={headers.length + 1} className="fw-bold">Income</td>
                   </tr>
                   {["sales", "service", "purchaseReturn", "grossProfit"].map((field) => (
                     <tr key={field}>
-                      <td style={{ fontWeight: field === "grossProfit" ? 700 : 400 }}  className="px-3 py-3">
+                      <td className="fw-semibold">
                         {field === "purchaseReturn"
                           ? "Purchase Return"
                           : field === "grossProfit"
                           ? "Gross Profit"
                           : field.charAt(0).toUpperCase() + field.slice(1)}
                       </td>
-                      {tableData.map((d, idx) => (
-                        <td
-                          key={idx}
-                          style={{
-                            color: "#444",
-                            fontWeight: field === "grossProfit" ? 700 : 400,
-                          }}
-                        >
+                      {tableData.slice(0, headers.length).map((d, idx) => (
+                        <td key={idx} className="text-center">
                           {formatUSD(d.income[field])}
                         </td>
                       ))}
@@ -184,34 +168,28 @@ const ProfitLoss = () => {
 
                   {/* Daybook Section */}
                   <tr>
-                    <td colSpan={months.length + 1} style={{ fontWeight: 700, background: "#f9f9f9" }} className="px-3 py-3">
-                      Daybook
-                    </td>
+                    <td colSpan={headers.length + 1} className="fw-bold">Daybook</td>
                   </tr>
-                  {["sales", "purchase", "salesReturn", "totalDaybook", "netProfit"].map((field) => (
-                    <tr key={field}>
-                      <td style={{ fontWeight: 700 }} className="px-3 py-3">
-                        {field === "salesReturn"
-                          ? "Sales Return"
-                          : field === "totalDaybook"
-                          ? "Total Daybook"
-                          : field === "netProfit"
-                          ? "Net Profit"
-                          : field.charAt(0).toUpperCase() + field.slice(1)}
-                      </td>
-                      {tableData.map((d, idx) => (
-                        <td
-                          key={idx}
-                          style={{
-                            color: "#444",
-                            fontWeight: 700,
-                          }}
-                        >
-                          {formatUSD(d.daybook[field])}
+                  {["sales", "purchase", "salesReturn", "totalDaybook", "netProfit"].map(
+                    (field) => (
+                      <tr key={field}>
+                        <td className="fw-semibold">
+                          {field === "salesReturn"
+                            ? "Sales Return"
+                            : field === "totalDaybook"
+                            ? "Total Daybook"
+                            : field === "netProfit"
+                            ? "Net Profit"
+                            : field.charAt(0).toUpperCase() + field.slice(1)}
                         </td>
-                      ))}
-                    </tr>
-                  ))}
+                        {tableData.slice(0, headers.length).map((d, idx) => (
+                          <td key={idx} className="text-center">
+                            {formatUSD(d.daybook[field])}
+                          </td>
+                        ))}
+                      </tr>
+                    )
+                  )}
                 </tbody>
               </Table>
             </div>
