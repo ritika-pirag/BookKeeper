@@ -187,21 +187,15 @@ const handleDownloadTemplate = () => {
                     <td>{w.name}</td>
                     <td>{w.location}</td>
                     <td>
-                      <Button
-                        variant="warning"
-                        size="sm"
-                        className="me-2"
-                        onClick={() => handleModalShow(w)}
-                      >
-                        <FaEdit />
-                      </Button>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => handleDelete(w._id)}
-                      >
-                        <FaTrash />
-                      </Button>
+                    
+
+
+
+
+
+                      
+                                  <Button variant="link" className="text-warning p-0 me-2"   onClick={() => handleModalShow(w)}   ><FaEdit /></Button>
+                                  <Button variant="link" className="text-danger p-0 me-2"       onClick={() => handleDelete(w._id)}   ><FaTrash /></Button>
                     </td>
                   </tr>
                 ))

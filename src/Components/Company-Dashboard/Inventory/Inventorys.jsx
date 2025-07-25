@@ -117,7 +117,9 @@ const InventoryItems = () => {
       subcategory: "default",
       remarks: "Internal only",
       image: null,
-      status: "In Stock"
+      status: "In Stock",
+      warehouse: "Main Warehouse",
+
     },
     {
       itemName: "Out of Stock Item",
@@ -141,7 +143,8 @@ const InventoryItems = () => {
       subcategory: "Accessories",
       remarks: "Awaiting new shipment",
       image: null,
-      status: "Out of Stock"
+      status: "Out of Stock",
+      warehouse: "Backup Warehouse",
     }
   ]);
   
@@ -330,6 +333,7 @@ const InventoryItems = () => {
                 <th>Name</th>
                 <th>HSN</th>
                 <th>Quantity</th>
+                <th>Warehouse</th>
                 <th>Cost</th>
                 <th>Value</th>
                 <th>Status</th>
@@ -341,8 +345,10 @@ const InventoryItems = () => {
     filteredItems.map((item, idx) => (
       <tr key={idx}>
         <td>{item.itemName}</td>
+        
         <td>{item.hsn}</td>
         <td>{item.quantity}</td>
+        <td>{item.warehouse}</td>
         <td>{item.cost}</td>
         <td>{item.value}</td>
         <td>
@@ -444,6 +450,23 @@ const InventoryItems = () => {
               <Col md={6}><Form.Group><Form.Label>Units of Measure</Form.Label><Form.Select name="unit" value={newItem.unit} onChange={handleChange}><option>Numbers</option><option>Kg</option><option>Litres</option></Form.Select></Form.Group></Col>
             </Row>
             <Row className="mb-3">
+  <Col md={6}>
+  <Form.Group>
+  <Form.Label>Warehouse</Form.Label>
+  <Form.Select name="warehouse" value={newItem.warehouse} onChange={handleChange}>
+    <option value="">Select Warehouse</option>
+    <option value="Main Warehouse">Main Warehouse</option>
+    <option value="Backup Warehouse">Backup Warehouse</option>
+    <option value="East Wing">East Wing</option>
+    <option value="West Wing">West Wing</option>
+  </Form.Select>
+</Form.Group>
+
+  </Col>
+</Row>
+
+            <Row className="mb-3">
+              
               <Col md={12}><Form.Group><Form.Label>Item Description</Form.Label><Form.Control as="textarea" rows={2} name="description" value={newItem.description} onChange={handleChange} /></Form.Group></Col>
             </Row>
             <Row className="mb-3">

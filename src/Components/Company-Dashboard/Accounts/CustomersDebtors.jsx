@@ -420,7 +420,7 @@ const CustomersDebtors = () => {
               <th>Contact</th>
               <th>Email</th>
               <th>Balance</th>
-              <th>Tax</th>
+
               <th>Action</th>
             </tr>
           </thead>
@@ -433,11 +433,7 @@ const CustomersDebtors = () => {
                   <td>{cust.contact}</td>
                   <td>{cust.email}</td>
                   <td>${parseFloat(cust.balance || 0).toFixed(2)}</td>
-                  <td>
-                    <Badge bg={cust.taxEnabled ? "success" : "secondary"}>
-                      {cust.taxEnabled ? "ON" : "OFF"}
-                    </Badge>
-                  </td>
+             
                   <td>
                     <div className="d-flex gap-2 justify-content-center">
                       <Button variant="outline-info" size="sm" onClick={() => handleOpenViewModal(cust)}>
@@ -470,7 +466,7 @@ const CustomersDebtors = () => {
   centered
   backdrop="static">
       <Modal.Header closeButton className="bg-light">
-        <Modal.Title>Create Account</Modal.Title>
+        <Modal.Title>Add Customer</Modal.Title>
       </Modal.Header>
       <Modal.Body>
 
@@ -583,7 +579,7 @@ const CustomersDebtors = () => {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Address</Form.Label>
+          <Form.Label> Shipping Address</Form.Label>
           <Form.Control type="text" />
         </Form.Group>
 
@@ -647,29 +643,7 @@ const CustomersDebtors = () => {
           </Col>
         </Row>
         <Row className="mb-3">
-      <Col xs={12} md={6}>
-        <Form.Group>
-          <div className="d-flex justify-content-between align-items-center">
-            <Form.Label className="mb-0">Tax</Form.Label>
-            <Form.Check
-              type="switch"
-              id="tax-enabled-switch"
-              label={isTaxEnabled ? "ON" : "OFF"}
-              checked={isTaxEnabled}
-              onChange={(e) => setIsTaxEnabled(e.target.checked)}
-            />
-          </div>
-          {isTaxEnabled && (
-            <Form.Control
-              type="number"
-              placeholder="Enter Tax No."
-              value={taxNumber}
-              onChange={(e) => setTaxNumber(e.target.value)}
-              className="mt-2"
-            />
-          )}
-        </Form.Group>
-      </Col>
+  
     </Row>
 
       </Col>

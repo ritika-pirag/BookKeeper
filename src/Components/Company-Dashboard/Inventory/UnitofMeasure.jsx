@@ -182,16 +182,14 @@ const UnitOfMeasure = () => {
                     <td>{u.abbreviation}</td>
                     <td>
                       <Button
-                        variant="warning"
-                        size="sm"
-                        className="me-2"
+                    
                         onClick={() => handleModalShow(u)}
+                        variant="link" className="text-warning p-0 me-2"
                       >
                         <FaEdit />
                       </Button>
                       <Button
-                        variant="danger"
-                        size="sm"
+                 variant="link" className="text-danger p-0 me-2"
                         onClick={() => handleDelete(u._id)}
                       >
                         <FaTrash />

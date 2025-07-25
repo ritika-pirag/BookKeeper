@@ -221,43 +221,75 @@ const VendorsCreditors = () => {
       </Row>
 
       <div className="card bg-white rounded-3 p-4">
-        <div className="table-responsive">
-          <table className="table table-hover align-middle mb-0">
-            <thead className="table-light">
-              <tr>
-                <th>NO.</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Balance</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredVendors.length > 0 ? (
-                filteredVendors.map((vendor, idx) => (
-                  <tr key={idx}>
-                    <td>{idx + 1}</td>
-                    <td>{vendor.name}</td>
-                    <td>{vendor.email}</td>
-                    <td>{vendor.phone}</td>
-                    <td>{vendor.payable}$</td>
-                    <td>
-                      <div className="d-flex flex-wrap gap-2">
-                        <Button variant="link" className="p-0 text-info" size="sm" onClick={() => { setSelectedVendor(vendor); setShowView(true); }}><FaEye /></Button>
-                        <Button variant="link" className="p-0 text-warning" size="sm" onClick={() => handleEditClick(vendor)}><FaEdit /></Button>
-                        <Button variant="link" className="p-0 text-danger" size="sm" onClick={() => { setSelectedVendor(vendor); setShowDelete(true); }}><FaTrash /></Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr><td colSpan="6" className="text-center text-muted">No vendor found.</td></tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+  <div className="table-responsive">
+    <table className="table table-hover table-bordered align-middle mb-0">
+      <thead className="table-light border">
+        <tr>
+          <th>NO.</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Balance</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredVendors.length > 0 ? (
+          filteredVendors.map((vendor, idx) => (
+            <tr key={idx}>
+              <td>{idx + 1}</td>
+              <td>{vendor.name}</td>
+              <td>{vendor.email}</td>
+              <td>{vendor.phone}</td>
+              <td>{vendor.payable}$</td>
+              <td>
+                <div className="d-flex flex-wrap gap-2">
+                  <Button
+                    variant="link"
+                    className="p-0 text-info"
+                    size="sm"
+                    onClick={() => {
+                      setSelectedVendor(vendor);
+                      setShowView(true);
+                    }}
+                  >
+                    <FaEye />
+                  </Button>
+                  <Button
+                    variant="link"
+                    className="p-0 text-warning"
+                    size="sm"
+                    onClick={() => handleEditClick(vendor)}
+                  >
+                    <FaEdit />
+                  </Button>
+                  <Button
+                    variant="link"
+                    className="p-0 text-danger"
+                    size="sm"
+                    onClick={() => {
+                      setSelectedVendor(vendor);
+                      setShowDelete(true);
+                    }}
+                  >
+                    <FaTrash />
+                  </Button>
+                </div>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="6" className="text-center text-muted">
+              No vendor found.
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
       {/* View Modal */}
   {/* View Modal */}
@@ -463,7 +495,7 @@ const VendorsCreditors = () => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Address</Form.Label>
+            <Form.Label> Shipping Address</Form.Label>
             <Form.Control
               type="text"
               value={currentCustomer.address || ""}
@@ -542,26 +574,6 @@ const VendorsCreditors = () => {
             </Col>
           </Row>
 
-          <Form.Group className="mb-3">
-            <div className="d-flex justify-content-between align-items-center">
-              <Form.Label className="mb-0">Tax</Form.Label>
-              <Form.Check
-                type="switch"
-                checked={isTaxEnabled}
-                onChange={(e) => setIsTaxEnabled(e.target.checked)}
-                label={isTaxEnabled ? "ON" : "OFF"}
-              />
-            </div>
-            {isTaxEnabled && (
-              <Form.Control
-                className="mt-2"
-                type="number"
-                placeholder="Enter Tax No."
-                value={taxNumber}
-                onChange={(e) => setTaxNumber(e.target.value)}
-              />
-            )}
-          </Form.Group>
         </Col>
       </Row>
     </Form>

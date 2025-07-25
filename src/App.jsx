@@ -154,6 +154,7 @@ import SalesVoucher from "./Components/Company-Dashboard/Inventory/SalesVoucher"
 import PurchaseVoucherView from "./Components/Company-Dashboard/Inventory/PurchaseVoucherView";
 import SalesVoucherView from "./Components/Company-Dashboard/Inventory/SalesVoucherView";
 import Settings from "./Layout/Settings";
+import InvoiceTemplate from "./Components/Company-Dashboard/Settings/InvoiceTemplate";
 // import CreateVoucher from "./Components/Company-Dashboard/Inventory/CreateVoucher";
 
 
@@ -288,7 +289,9 @@ function App() {
 
           {/* Settings */}
           <Route path="/company/companyinfo" element={<CompanyInfo />} />
+          <Route path="/company/invoicetemplate" element={<InvoiceTemplate/>} />
           <Route path="/company/languages" element={<LanguageSetting />} />
+
         </Route>
 
         {/* User Dashboard routes with MainLayout */}
