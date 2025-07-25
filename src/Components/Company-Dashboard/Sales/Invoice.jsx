@@ -517,7 +517,7 @@ const Invoice = () => {
                 variant="outline-secondary"
                 size="sm"
                 className="border-start-0"
-                onClick={() => navigate("/company/customer")}
+                onClick={() => navigate("/company/vendorscreditors")}
                 title="Add Customer"
               >
                 <FaPlus size={12} />

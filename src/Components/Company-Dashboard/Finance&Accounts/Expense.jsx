@@ -1,5 +1,15 @@
 import React, { useState } from "react";
 import {
+  Tabs,
+  Tab,
+  Button,
+  Row,
+  Col,
+  Form,
+  InputGroup,
+  Badge,
+} from "react-bootstrap";
+import {
   FaFilePdf,
   FaFileExcel,
   FaPlusCircle,
@@ -17,6 +27,7 @@ const Expense = () => {
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [editExpense, setEditExpense] = useState(null);
   const [deleteExpense, setDeleteExpense] = useState(null);
+  const [activeTab, setActiveTab] = useState("direct"); // Track active tab: "direct" or "indirect"
 
   // Updated expenses data with Direct/Indirect Account
   const expenses = [
@@ -29,7 +40,7 @@ const Expense = () => {
       paidThrough: "Bank Transfer",
       customerName: "Customer X",
       status: "Paid",
-      amount: " 222.01"
+      amount: " 222.01",
     },
     {
       date: "2 Dec 2031",
@@ -40,7 +51,7 @@ const Expense = () => {
       paidThrough: "Credit Card",
       customerName: "Customer Y",
       status: "Pending",
-      amount: " 3182.56"
+      amount: " 3182.56",
     },
     {
       date: "10 Nov 2031",
@@ -51,7 +62,7 @@ const Expense = () => {
       paidThrough: "PayPal",
       customerName: "Customer Z",
       status: "Paid",
-      amount: "4814.85"
+      amount: "4814.85",
     },
     {
       date: "27 Nov 2031",
@@ -62,7 +73,7 @@ const Expense = () => {
       paidThrough: "Bank Transfer",
       customerName: "Customer W",
       status: "Rejected",
-      amount: "4557.35"
+      amount: "4557.35",
     },
     {
       date: "15 Jan 2032",
@@ -73,7 +84,7 @@ const Expense = () => {
       paidThrough: "Cash",
       customerName: "Customer V",
       status: "Paid",
-      amount: " 1200.00"
+      amount: " 1200.00",
     },
     {
       date: "22 Feb 2032",
@@ -84,7 +95,7 @@ const Expense = () => {
       paidThrough: "Credit Card",
       customerName: "Customer U",
       status: "Pending",
-      amount: " 750.50"
+      amount: " 750.50",
     },
     {
       date: "5 Mar 2032",
@@ -95,7 +106,7 @@ const Expense = () => {
       paidThrough: "Bank Transfer",
       customerName: "Customer T",
       status: "Paid",
-      amount: " 3200.00"
+      amount: " 3200.00",
     },
     {
       date: "18 Apr 2032",
@@ -106,8 +117,8 @@ const Expense = () => {
       paidThrough: "PayPal",
       customerName: "Customer S",
       status: "Rejected",
-      amount: " 1890.25"
-    }
+      amount: " 1890.25",
+    },
   ];
 
   const getStatusBadge = (status) => {
@@ -139,8 +150,37 @@ const Expense = () => {
     setDeleteExpense(null);
   };
 
+
+
+  const accountTypeOptions = [
+    "Cash-in-hand",
+    "Bank A/Cs",
+    "Sundry Debtors",
+    "Sundry Creditors",
+    "Purchases A/C",
+    "Purchase Return",
+    "Sales A/C",
+    "Sales Return",
+    "Capital A/C",
+    "Direct Expenses",
+    "Indirect Expenses",
+    "Direct Income",
+    "Indirect Income",
+    "Current Assets",
+    "Current Liabilities",
+    "Misc. Expenses",
+    "Loans (Liability)",
+    "Loans & Advance",
+    "Fixed Assets",
+    "Investments",
+    "Bank OD A/C",
+    "Deposits (Assets)",
+    "Provisions",
+  ];
+  
+
   return (
-    <div className=" bg-light p-4 mt-1 product-header">
+    <div className="bg-light p-4 mt-1 product-header">
       {/* Header */}
       <div className="d-flex justify-content-between gap-4 mb-4">
         <div>
@@ -166,223 +206,146 @@ const Expense = () => {
         </div>
       </div>
 
-      {/* Filters - Mobile Responsive */}
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-stretch align-items-md-center gap-3 mb-3">
-        {/* Search Input - Full width on mobile, auto width on larger screens */}
-        <div className="input-group flex-grow-1 flex-md-grow-0" style={{ minWidth: "250px" }}>
-          <input 
-            type="text" 
-            className="form-control border-start-0" 
-            placeholder="Search" 
-          />
-        </div>
-
-        {/* Dropdowns - Stack vertically on small screens, horizontally on larger ones */}
-        <div className="d-flex flex-column flex-sm-row gap-2 flex-grow-1 flex-md-grow-0 w-100 w-md-auto">
-          {/* Expense Account Dropdown */}
-          <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
-            <button
-              className="btn text-white border dropdown-toggle w-100"
-              type="button"
-              id="accountDropdown"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              style={{ backgroundColor: "#3daaaa", color: "white" }}
-            >
-              Expense Account
-            </button>
-            <ul className="dropdown-menu w-100" aria-labelledby="accountDropdown">
-              {["All", "delectus", "accusantium", "deserunt", "aut"].map((item, idx) => (
-                <li key={idx}>
-                  <a
-                    className="dropdown-item"
-                    href="#"
-                    style={{ color: "#3daaaa" }}
-                    onMouseOver={(e) => {
-                      e.target.style.backgroundColor = "#3daaaa";
-                      e.target.style.color = "white";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.backgroundColor = "";
-                      e.target.style.color = "#3daaaa";
-                    }}
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
+      {/* Tabs for Direct and Indirect Expenses */}
+      <Tabs
+        id="expense-tabs"
+        activeKey={activeTab}
+        onSelect={(k) => setActiveTab(k)}
+        className="mb-3"
+      >
+        <Tab eventKey="direct" title="Direct Expense">
+          {/* Direct Expense Content */}
+          <div className="table-responsive">
+            <table className="table table-bordered text-center align-middle product-table mb-0">
+              <thead className="table-light text-white">
+                <tr>
+                  <th className="py-3">DATE</th>
+                  <th className="py-3">EXPENSE ACCOUNT</th>
+                  <th className="py-3">REFERENCE#</th>
+                  <th className="py-3">VENDOR NAME</th>
+                  <th className="py-3">PAID THROUGH</th>
+                  <th className="py-3">CUSTOMER NAME</th>
+                  <th className="py-3">STATUS</th>
+                  <th className="py-3">AMOUNT</th>
+                  <th className="py-3">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                {expenses
+                  .filter((expense) => expense.accountType === "Direct")
+                  .map((expense, idx) => (
+                    <tr key={idx}>
+                      <td>{expense.date}</td>
+                      <td>{expense.expenseAccount}</td>
+                      <td>{expense.reference}</td>
+                      <td>{expense.vendorName}</td>
+                      <td>{expense.paidThrough}</td>
+                      <td>{expense.customerName}</td>
+                      <td>
+                        <span className={getStatusBadge(expense.status)}>
+                          {expense.status}
+                        </span>
+                      </td>
+                      <td>{expense.amount}</td>
+                      <td className="d-flex gap-2 justify-content-center">
+                        <button
+                          className="btn outline-info btn-sm py-1 px-1 text-info"
+                          data-bs-toggle="modal"
+                          data-bs-target="#expenseDetailModal"
+                          onClick={() => setSelectedExpense(expense)}
+                        >
+                          <FaEye size={16} />
+                        </button>
+                        <button
+                          className="btn outline-primary btn-sm text-warning py-1 px-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editExpenseModal"
+                          onClick={() => handleEdit(expense)}
+                        >
+                          <FaEdit size={16} />
+                        </button>
+                        <button
+                          className="btn outline-primary btn-sm text-danger py-2 px-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteExpenseModal"
+                          onClick={() => handleDelete(expense)}
+                        >
+                          <FaTrash size={16} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
           </div>
-
-          {/* Account Type Dropdown */}
-          <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
-            <button
-              className="btn text-white border dropdown-toggle w-100"
-              type="button"
-              id="accountTypeDropdown"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              style={{ backgroundColor: "#3daaaa", color: "white" }}
-            >
-              Account Type
-            </button>
-            <ul className="dropdown-menu w-100" aria-labelledby="accountTypeDropdown">
-              {["All", "Direct", "Indirect"].map((item, idx) => (
-                <li key={idx}>
-                  <a
-                    className="dropdown-item"
-                    href="#"
-                    style={{ color: "#3daaaa" }}
-                    onMouseOver={(e) => {
-                      e.target.style.backgroundColor = "#3daaaa";
-                      e.target.style.color = "white";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.backgroundColor = "";
-                      e.target.style.color = "#3daaaa";
-                    }}
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
+        </Tab>
+        <Tab eventKey="indirect" title="Indirect Expense">
+          {/* Indirect Expense Content */}
+          <div className="table-responsive">
+            <table className="table table-bordered text-center align-middle product-table mb-0">
+              <thead className="table-light text-white">
+                <tr>
+                  <th className="py-3">DATE</th>
+                  <th className="py-3">EXPENSE ACCOUNT</th>
+                  <th className="py-3">REFERENCE#</th>
+                  <th className="py-3">VENDOR NAME</th>
+                  <th className="py-3">PAID THROUGH</th>
+                  <th className="py-3">CUSTOMER NAME</th>
+                  <th className="py-3">STATUS</th>
+                  <th className="py-3">AMOUNT</th>
+                  <th className="py-3">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                {expenses
+                  .filter((expense) => expense.accountType === "Indirect")
+                  .map((expense, idx) => (
+                    <tr key={idx}>
+                      <td>{expense.date}</td>
+                      <td>{expense.expenseAccount}</td>
+                      <td>{expense.reference}</td>
+                      <td>{expense.vendorName}</td>
+                      <td>{expense.paidThrough}</td>
+                      <td>{expense.customerName}</td>
+                      <td>
+                        <span className={getStatusBadge(expense.status)}>
+                          {expense.status}
+                        </span>
+                      </td>
+                      <td>{expense.amount}</td>
+                      <td className="d-flex gap-2 justify-content-center">
+                        <button
+                          className="btn outline-info btn-sm py-1 px-1 text-info"
+                          data-bs-toggle="modal"
+                          data-bs-target="#expenseDetailModal"
+                          onClick={() => setSelectedExpense(expense)}
+                        >
+                          <FaEye size={16} />
+                        </button>
+                        <button
+                          className="btn outline-primary btn-sm text-warning py-1 px-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editExpenseModal"
+                          onClick={() => handleEdit(expense)}
+                        >
+                          <FaEdit size={16} />
+                        </button>
+                        <button
+                          className="btn outline-primary btn-sm text-danger py-2 px-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteExpenseModal"
+                          onClick={() => handleDelete(expense)}
+                        >
+                          <FaTrash size={16} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
           </div>
-
-          {/* Status Dropdown */}
-          <div className="dropdown flex-grow-1 mb-2 mb-sm-0">
-            <button
-              className="btn text-white border dropdown-toggle w-100"
-              type="button"
-              id="statusDropdown"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              style={{ backgroundColor: "#3daaaa", color: "white" }}
-            >
-              Status
-            </button>
-            <ul className="dropdown-menu w-100" aria-labelledby="statusDropdown">
-              {["All", "Paid", "Pending", "Rejected"].map((item, idx) => (
-                <li key={idx}>
-                  <a
-                    className="dropdown-item"
-                    href="#"
-                    style={{ color: "#3daaaa" }}
-                    onMouseOver={(e) => {
-                      e.target.style.backgroundColor = "#3daaaa";
-                      e.target.style.color = "white";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.backgroundColor = "";
-                      e.target.style.color = "#3daaaa";
-                    }}
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Sort By Dropdown */}
-          <div className="dropdown flex-grow-1">
-            <button
-              className="btn text-white border dropdown-toggle w-100"
-              type="button"
-              id="sortDropdown"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              style={{ backgroundColor: "#3daaaa", color: "white" }}
-            >
-              Sort By: Date
-            </button>
-            <ul className="dropdown-menu w-120" aria-labelledby="sortDropdown">
-              {["Date", "Amount (High to Low)", "Amount (Low to High)", "Vendor Name"].map((item, idx) => (
-                <li key={idx}>
-                  <a
-                    className="dropdown-item"
-                    href="#"
-                    style={{ color: "#3daaaa" }}
-                    onMouseOver={(e) => {
-                      e.target.style.backgroundColor = "#3daaaa";
-                      e.target.style.color = "white";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.backgroundColor = "";
-                      e.target.style.color = "#3daaaa";
-                    }}
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Table */}
-      <div className="table-responsive">
-        <table className="table table-bordered text-center align-middle product-table mb-0">
-          <thead className="table-light text-white">
-            <tr>
-              <th className="py-3">DATE</th>
-              <th className="py-3">EXPENSE ACCOUNT</th>
-              <th className="py-3">ACCOUNT TYPE</th> {/* New Column Header */}
-              <th className="py-3">REFERENCE#</th>
-              <th className="py-3">VENDOR NAME</th>
-              <th className="py-3">PAID THROUGH</th>
-              <th className="py-3">CUSTOMER NAME</th>
-              <th className="py-3">STATUS</th>
-              <th className="py-3">AMOUNT</th>
-              <th className="py-3">ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            {expenses.map((expense, idx) => (
-              <tr key={idx}>
-                <td>{expense.date}</td>
-                <td>{expense.expenseAccount}</td>
-                <td>{expense.accountType}</td> {/* New Column Data */}
-                <td>{expense.reference}</td>
-                <td>{expense.vendorName}</td>
-                <td>{expense.paidThrough}</td>
-                <td>{expense.customerName}</td>
-                <td>
-                  <span className={getStatusBadge(expense.status)}>{expense.status}</span>
-                </td>
-                <td>{expense.amount}</td>
-                <td className="d-flex gap-2 justify-content-center">
-                  <button
-                    className="btn outline-info btn-sm py-1 px-1 text-info"
-                    data-bs-toggle="modal"
-                    data-bs-target="#expenseDetailModal"
-                    onClick={() => setSelectedExpense(expense)}
-                  >
-                    <FaEye size={16} />
-                  </button>
-                  <button
-                    className="btn outline-primary btn-sm text-warning py-1 px-1" 
-                    data-bs-toggle="modal"
-                    data-bs-target="#editExpenseModal"
-                    onClick={() => handleEdit(expense)}
-                  >
-                    <FaEdit size={16}/>
-                  </button>
-                  <button
-                    className="btn outline-primary btn-sm text-danger py-2 px-1"
-                    data-bs-toggle="modal"
-                    data-bs-target="#deleteExpenseModal"
-                    onClick={() => handleDelete(expense)}
-                  >
-                    <FaTrash size={16}/>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+        </Tab>
+      </Tabs>
 
       {/* Pagination */}
       <div className="d-flex justify-content-between align-items-center mt-3 px-3">
@@ -439,44 +402,44 @@ const Expense = () => {
                   <label className="form-label fw-semibold">
                     Date <span className="text-danger">*</span>
                   </label>
-                  <input 
-                    type="date" 
-                    className="form-control" 
+                  <input
+                    type="date"
+                    className="form-control"
                   />
                 </div>
                 <div className="mb-3">
                   <label className="form-label fw-semibold">
                     Expense Account <span className="text-danger">*</span>
                   </label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="Enter expense account" 
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter expense account"
                   />
                 </div>
-                
-                {/* ✅ Added Account Type field */}
+            
+            
                 <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    Account Type <span className="text-danger">*</span>
-                  </label>
-                  <select className="form-select">
-                    <option value="">Select account type</option>
-                    <option value="Direct">Direct</option>
-                    <option value="Indirect">Indirect</option>
-                  </select>
-                </div>
-                
+  <label className="form-label fw-semibold">
+    Account Type <span className="text-danger">*</span>
+  </label>
+  <select className="form-select account-type-dropdown">
+    <option value="">Select account type</option>
+    {accountTypeOptions.map((type, index) => (
+      <option key={index} value={type}>{type}</option>
+    ))}
+  </select>
+</div>
                 {/* 🔴 Reference Number field removed */}
                 <div className="row mb-3">
                   <div className="col-md-6">
                     <label className="form-label fw-semibold">
                       Vendor Name <span className="text-danger">*</span>
                     </label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      placeholder="Enter vendor name" 
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter vendor name"
                     />
                   </div>
                   <div className="col-md-6">
@@ -496,29 +459,29 @@ const Expense = () => {
                   <label className="form-label fw-semibold">
                     Customer Name
                   </label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="Enter customer name" 
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter customer name"
                   />
                 </div>
                 <div className="mb-3">
                   <label className="form-label fw-semibold">
                     Amount <span className="text-danger">*</span>
                   </label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="Enter amount" 
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter amount"
                   />
                 </div>
                 {/* ✅ Status field converted to input */}
                 <div className="mb-3">
                   <label className="form-label fw-semibold">Status</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="Enter status (e.g. Paid, Pending)" 
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter status (e.g. Paid, Pending)"
                   />
                 </div>
                 <div className="d-flex justify-content-end gap-3 mt-4">
@@ -529,8 +492,8 @@ const Expense = () => {
                   >
                     Cancel
                   </button>
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="btn btn-warning text-white px-4"
                     style={{ backgroundColor: "#3daaaa" }}
                   >
@@ -641,9 +604,9 @@ const Expense = () => {
                     <label className="form-label fw-semibold">
                       Date <span className="text-danger">*</span>
                     </label>
-                    <input 
-                      type="date" 
-                      className="form-control" 
+                    <input
+                      type="date"
+                      className="form-control"
                       defaultValue={editExpense.date}
                     />
                   </div>
@@ -651,9 +614,9 @@ const Expense = () => {
                     <label className="form-label fw-semibold">
                       Expense Account <span className="text-danger">*</span>
                     </label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
+                    <input
+                      type="text"
+                      className="form-control"
                       defaultValue={editExpense.expenseAccount}
                     />
                   </div>
@@ -671,9 +634,9 @@ const Expense = () => {
                     <label className="form-label fw-semibold">
                       Reference Number <span className="text-danger">*</span>
                     </label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
+                    <input
+                      type="text"
+                      className="form-control"
                       defaultValue={editExpense.reference}
                     />
                   </div>
@@ -682,9 +645,9 @@ const Expense = () => {
                       <label className="form-label fw-semibold">
                         Vendor Name <span className="text-danger">*</span>
                       </label>
-                      <input 
-                        type="text" 
-                        className="form-control" 
+                      <input
+                        type="text"
+                        className="form-control"
                         defaultValue={editExpense.vendorName}
                       />
                     </div>
@@ -704,9 +667,9 @@ const Expense = () => {
                     <label className="form-label fw-semibold">
                       Customer Name
                     </label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
+                    <input
+                      type="text"
+                      className="form-control"
                       defaultValue={editExpense.customerName}
                     />
                   </div>
@@ -714,9 +677,9 @@ const Expense = () => {
                     <label className="form-label fw-semibold">
                       Amount <span className="text-danger">*</span>
                     </label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
+                    <input
+                      type="text"
+                      className="form-control"
                       defaultValue={editExpense.amount}
                     />
                   </div>
@@ -736,10 +699,10 @@ const Expense = () => {
                     >
                       Cancel
                     </button>
-                    <button 
-                      type="submit" 
+                    <button
+                      type="submit"
                       className="btn btn-warning text-white px-4"
-                      style={{ backgroundColor: "#3daaaa", borderColor:"#3daaaa" }}
+                      style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
                     >
                       Save Changes
                     </button>
