@@ -276,7 +276,7 @@ const Bill = () => {
                         <option key={v.id} value={v.name}>{v.name}</option>
                       ))}
                     </Form.Select>
-                    <Button variant="outline-secondary" size="sm" className="border-start-0" onClick={() => navigate("/company/vendors")}>
+                    <Button variant="outline-secondary" size="sm" className="border-start-0" onClick={() => navigate("company/vendorscreditors")}>
                       <BsPlus size={12} />
                     </Button>
                   </InputGroup>
