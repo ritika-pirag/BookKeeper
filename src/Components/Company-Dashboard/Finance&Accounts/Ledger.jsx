@@ -12,124 +12,73 @@ const Ledger = () => {
   const transactions = [
     {
       date: "2025-06-20",
-      type: "Invoice",
-      reference: "INV-2025-001",
-      amount: "50,000",
-      balance: "50,000",
-      dueDate: "2025-07-20",
-      status: "Unpaid",
+      voucherType: "Invoice",
+      voucherNo: "INV-2025-001",
+      particulars: "Sales to ABC Ltd",
+      debit: "",
+      credit: "50000",
+      balance: "50000 Cr",
+      narration: "Invoice raised for sale of goods",
     },
     {
       date: "2025-06-15",
-      type: "Invoice",
-      reference: "INV-2025-002",
-      amount: "75,000",
-      balance: "75,000",
-      dueDate: "2025-07-15",
-      status: "Unpaid",
+      voucherType: "Payment",
+      voucherNo: "PAY-2025-001",
+      particulars: "Payment received from ABC Ltd",
+      debit: "20000",
+      credit: "",
+      balance: "30000 Cr",
+      narration: "Partial payment received",
     },
     {
       date: "2025-06-10",
-      type: "Payment",
-      reference: "PAY-2025-001",
-      amount: "-35,000",
-      balance: "-35,000",
-      dueDate: "2025-06-10",
-      status: "Completed",
-    },
-    {
-      date: "2025-06-05",
-      type: "Invoice",
-      reference: "INV-2025-003",
-      amount: "45,000",
-      balance: "45,000",
-      dueDate: "2025-07-05",
-      status: "Partially Paid",
+      voucherType: "Credit Note",
+      voucherNo: "CN-2025-001",
+      particulars: "Credit note issued for return",
+      debit: "5000",
+      credit: "",
+      balance: "25000 Cr",
+      narration: "Goods returned by customer",
     },
     {
       date: "2025-06-01",
-      type: "Credit Note",
-      reference: "CN-2025-001",
-      amount: "-10,000",
-      balance: "-10,000",
-      dueDate: "2025-06-01",
-      status: "Completed",
-    },
-    {
-      date: "2025-05-25",
-      type: "Invoice",
-      reference: "INV-2025-004",
-      amount: "60,000",
-      balance: "0",
-      dueDate: "2025-06-25",
-      status: "Paid",
+      voucherType: "Invoice",
+      voucherNo: "INV-2025-002",
+      particulars: "Sales to XYZ Pvt Ltd",
+      debit: "",
+      credit: "40000",
+      balance: "65000 Cr",
+      narration: "Invoice for bulk sales",
     },
   ];
 
-  const filteredTransactions = transactions.filter((t) => {
+  const filtered = transactions.filter((t) => {
     const tDate = new Date(t.date);
     const from = fromDate ? new Date(fromDate) : null;
     const to = toDate ? new Date(toDate) : null;
-
-    const matchesDate = (!from || tDate >= from) && (!to || tDate <= to);
+    const matchDate = (!from || tDate >= from) && (!to || tDate <= to);
 
     const s = searchText.toLowerCase();
-    const matchesSearch =
-      t.reference.toLowerCase().includes(s) ||
-      t.type.toLowerCase().includes(s) ||
-      t.amount.toLowerCase().includes(s) ||
-      t.balance.toLowerCase().includes(s) ||
-      t.status.toLowerCase().includes(s);
+    const matchSearch =
+      t.voucherNo.toLowerCase().includes(s) ||
+      t.particulars.toLowerCase().includes(s) ||
+      t.voucherType.toLowerCase().includes(s) ||
+      t.narration.toLowerCase().includes(s);
 
-    return matchesDate && matchesSearch;
+    return matchDate && matchSearch;
   });
-
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case "Unpaid":
-        return "badge bg-danger";
-      case "Completed":
-      case "Paid":
-        return "badge bg-success";
-      case "Partially Paid":
-        return "badge bg-warning text-dark";
-      default:
-        return "badge bg-secondary";
-    }
-  };
-
-  const getTypeColor = (type) => {
-    switch (type) {
-      case "Invoice":
-        return "text-primary";
-      case "Payment":
-        return "text-success";
-      case "Credit Note":
-        return "text-danger";
-      default:
-        return "";
-    }
-  };
-
-  const getAmountColor = (amount) => {
-    return amount.startsWith("-") ? "text-danger" : "text-success";
-  };
-
-  const getBalanceColor = (balance) => {
-    return balance.startsWith("-") ? "text-danger" : "text-success";
-  };
 
   return (
     <div className="mt-3 p-2">
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-4 mb-3">
         <div>
-          <h5 className="fw-bold mb-1">Ledger Transactions</h5>
-          <p className="text-muted mb-0">Manage your ledger transactions</p>
+          <h5 className="fw-bold mb-1">Ledger Summary</h5>
+          <p className="text-muted mb-0">Tally-style Debit/Credit Ledger View</p>
         </div>
       </div>
 
-      {/* Filter Bar */}
+      {/* Filters */}
       <div className="d-flex flex-wrap gap-3 mb-3 align-items-end">
         <div>
           <label className="form-label mb-1">From Date</label>
@@ -154,68 +103,58 @@ const Ledger = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Search by reference, type, amount..."
+            placeholder="Search by voucher no, type, narration..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
       </div>
 
-      {/* Table */}
+      {/* Ledger Table */}
       <div className="table-responsive">
-        <table className="table table-bordered text-center align-middle mb-0">
-          <thead className="table-light text-white">
+        <table className="table table-bordered text-center align-middle">
+          <thead className="table-light">
             <tr>
-              <th className="py-3">Date</th>
-              <th className="py-3">Type</th>
-              <th className="py-3">Reference</th>
-              <th className="py-3">Amount</th>
-              <th className="py-3">Balance</th>
-              <th className="py-3">Due Date</th>
-              <th className="py-3">Status</th>
-              <th className="py-3">Actions</th>
+              <th>Date</th>
+              <th>Voucher Type</th>
+              <th>Voucher No</th>
+              <th>Particulars</th>
+              <th>Debit (₹)</th>
+              <th>Credit (₹)</th>
+              <th>Balance</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {filteredTransactions.length > 0 ? (
-              filteredTransactions.map((transaction, idx) => (
-                <tr key={idx}>
-                  <td>{transaction.date}</td>
-                  <td className={getTypeColor(transaction.type)}>
-                    {transaction.type}
-                  </td>
-                  <td>{transaction.reference}</td>
-                  <td className={getAmountColor(transaction.amount)}>
-                    {transaction.amount}
-                  </td>
-                  <td className={getBalanceColor(transaction.balance)}>
-                    {transaction.balance}
-                  </td>
-                  <td>{transaction.dueDate}</td>
-                  <td>
-                    <span className={getStatusBadge(transaction.status)}>
-                      {transaction.status}
-                    </span>
-                  </td>
+            {filtered.length > 0 ? (
+              filtered.map((t, i) => (
+                <tr key={i}>
+                  <td>{t.date}</td>
+                  <td>{t.voucherType}</td>
+                  <td>{t.voucherNo}</td>
+                  <td className="text-start">{t.particulars}</td>
+                  <td className="text-danger">{t.debit}</td>
+                  <td className="text-success">{t.credit}</td>
+                  <td>{t.balance}</td>
                   <td className="d-flex justify-content-center gap-1">
                     <button
-                      className="btn outline-info btn-sm py-1 px-1 text-info"
+                      className="btn btn-sm btn-outline-info"
                       data-bs-toggle="modal"
-                      data-bs-target="#transactionDetailModal"
-                      onClick={() => setSelectedTransaction(transaction)}
+                      data-bs-target="#ledgerDetailModal"
+                      onClick={() => setSelectedTransaction(t)}
                     >
-                      <FaEye size={16} />
+                      <FaEye />
                     </button>
-                    <button className="btn outline-primary btn-sm text-warning py-1 px-1">
-                      <FaPrint size={16} />
+                    <button className="btn btn-sm btn-outline-warning">
+                      <FaPrint />
                     </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="8" className="text-center py-3">
-                  No transactions found for selected filters.
+                <td colSpan="8" className="text-center text-muted py-3">
+                  No entries found for the selected filter.
                 </td>
               </tr>
             )}
@@ -223,102 +162,84 @@ const Ledger = () => {
         </table>
       </div>
 
-      {/* Pagination - static for now */}
+      {/* Pagination */}
       <div className="d-flex justify-content-between align-items-center mt-3 px-3">
         <span className="small text-muted">
-          Showing 1 to {filteredTransactions.length} of {filteredTransactions.length} results
+          Showing {filtered.length} entries
         </span>
-        <nav>
-          <ul className="pagination pagination-sm mb-0">
-            <li className="page-item disabled">
-              <button className="page-link rounded-start">&laquo;</button>
-            </li>
-            <li className="page-item active">
-              <button
-                className="page-link"
-                style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
-              >
-                1
-              </button>
-            </li>
-            <li className="page-item">
-              <button className="page-link">2</button>
-            </li>
-            <li className="page-item">
-              <button className="page-link rounded-end">&raquo;</button>
-            </li>
-          </ul>
-        </nav>
+        <ul className="pagination pagination-sm mb-0">
+          <li className="page-item disabled">
+            <button className="page-link">&laquo;</button>
+          </li>
+          <li className="page-item active">
+            <button className="page-link">1</button>
+          </li>
+          <li className="page-item">
+            <button className="page-link">2</button>
+          </li>
+          <li className="page-item">
+            <button className="page-link">&raquo;</button>
+          </li>
+        </ul>
       </div>
 
-      {/* Transaction Detail Modal */}
+      {/* Modal: Ledger Detail */}
       <div
         className="modal fade"
-        id="transactionDetailModal"
+        id="ledgerDetailModal"
         tabIndex="-1"
-        aria-labelledby="transactionDetailModalLabel"
+        aria-labelledby="ledgerDetailModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title fw-bold" id="transactionDetailModalLabel">
-                Transaction Details
-              </h5>
+              <h5 className="modal-title fw-bold">Voucher Details</h5>
               <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={() => setSelectedTransaction(null)}
               ></button>
             </div>
-            <div className="modal-body p-0">
+            <div className="modal-body">
               {selectedTransaction && (
-                <div className="table-responsive">
-                  <table className="table table-bordered mb-0">
-                    <tbody>
-                      <tr>
-                        <td className="fw-semibold">Date</td>
-                        <td>{selectedTransaction.date}</td>
-                      </tr>
-                      <tr>
-                        <td className="fw-semibold">Type</td>
-                        <td className={getTypeColor(selectedTransaction.type)}>
-                          {selectedTransaction.type}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="fw-semibold">Reference</td>
-                        <td>{selectedTransaction.reference}</td>
-                      </tr>
-                      <tr>
-                        <td className="fw-semibold">Amount</td>
-                        <td className={getAmountColor(selectedTransaction.amount)}>
-                          {selectedTransaction.amount}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="fw-semibold">Balance</td>
-                        <td className={getBalanceColor(selectedTransaction.balance)}>
-                          {selectedTransaction.balance}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="fw-semibold">Due Date</td>
-                        <td>{selectedTransaction.dueDate}</td>
-                      </tr>
-                      <tr>
-                        <td className="fw-semibold">Status</td>
-                        <td>
-                          <span className={getStatusBadge(selectedTransaction.status)}>
-                            {selectedTransaction.status}
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <table className="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td className="fw-semibold">Date</td>
+                      <td>{selectedTransaction.date}</td>
+                    </tr>
+                    <tr>
+                      <td className="fw-semibold">Voucher Type</td>
+                      <td>{selectedTransaction.voucherType}</td>
+                    </tr>
+                    <tr>
+                      <td className="fw-semibold">Voucher No</td>
+                      <td>{selectedTransaction.voucherNo}</td>
+                    </tr>
+                    <tr>
+                      <td className="fw-semibold">Particulars</td>
+                      <td>{selectedTransaction.particulars}</td>
+                    </tr>
+                    <tr>
+                      <td className="fw-semibold">Narration</td>
+                      <td>{selectedTransaction.narration}</td>
+                    </tr>
+                    <tr>
+                      <td className="fw-semibold">Debit</td>
+                      <td className="text-danger">{selectedTransaction.debit}</td>
+                    </tr>
+                    <tr>
+                      <td className="fw-semibold">Credit</td>
+                      <td className="text-success">{selectedTransaction.credit}</td>
+                    </tr>
+                    <tr>
+                      <td className="fw-semibold">Balance</td>
+                      <td>{selectedTransaction.balance}</td>
+                    </tr>
+                  </tbody>
+                </table>
               )}
             </div>
           </div>

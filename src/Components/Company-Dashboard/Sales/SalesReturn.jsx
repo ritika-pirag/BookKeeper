@@ -1,6 +1,7 @@
+
 import React, { useState, useRef, useMemo } from 'react';
-import { Table, Button, Badge, Form, Row, Col, InputGroup } from 'react-bootstrap';
-import { FaEye, FaDownload, FaTrash, FaUpload, FaFile, FaCalendarAlt, FaSearch, FaRedo } from 'react-icons/fa';
+import { Table, Button, Badge, Form, Row, Col, InputGroup, Modal } from 'react-bootstrap';
+import { FaEye, FaDownload, FaTrash, FaUpload, FaFile, FaCalendarAlt, FaSearch, FaRedo, FaEdit } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 const initialReturns = [
@@ -100,6 +101,28 @@ const SalesReturn = () => {
   
   const navigate = useNavigate();
   const fileInputRef = useRef();
+
+  // View Modal State
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [selectedReturn, setSelectedReturn] = useState(null);
+
+  // Edit Modal State
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editReturn, setEditReturn] = useState(null);
+
+  // Add Modal State
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newReturn, setNewReturn] = useState({
+    returnNo: '',
+    invoiceNo: '',
+    customer: '',
+    date: '',
+    items: 1,
+    status: 'Pending',
+    amount: 0,
+    returnType: 'Sales Return',
+    reason: ''
+  });
 
   // Get unique customers for filter dropdown
   const uniqueCustomers = [...new Set(initialReturns.map(r => r.customer))];
@@ -203,6 +226,36 @@ const SalesReturn = () => {
     setCustomerFilter('');
   };
 
+  // Handle Add Return
+  const handleAddReturn = () => {
+    const returnToAdd = {
+      ...newReturn,
+      id: returns.length + 1
+    };
+    setReturns([...returns, returnToAdd]);
+    setShowAddModal(false);
+    // Reset form
+    setNewReturn({
+      returnNo: '',
+      invoiceNo: '',
+      customer: '',
+      date: '',
+      items: 1,
+      status: 'Pending',
+      amount: 0,
+      returnType: 'Sales Return',
+      reason: ''
+    });
+  };
+
+  // Handle Edit Save
+  const handleEditSave = () => {
+    setReturns(returns.map(r => 
+      r.id === editReturn.id ? editReturn : r
+    ));
+    setShowEditModal(false);
+  };
+
   return (
     <div className="p-4 my-4 px-4">
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
@@ -236,9 +289,8 @@ const SalesReturn = () => {
           <Button 
             className="rounded-pill px-4 d-flex align-items-center"
             style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
-            onClick={() => navigate('/company/create-sales-return')}
+            onClick={() => setShowAddModal(true)}
           >
-            {/* <FaRedo className="me-2" /> */}
              New Return
           </Button>
         </div>
@@ -325,36 +377,7 @@ const SalesReturn = () => {
           </Col>
         </Row>
         
-        {/* Additional Filters */}
-        <Row className="g-3 mt-2">
-          <Col md={2}>
-            <Form.Control 
-              type="number" 
-              placeholder="Min Amount"
-              value={amountMin}
-              onChange={(e) => setAmountMin(e.target.value)}
-            />
-          </Col>
-          <Col md={2}>
-            <Form.Control 
-              type="number" 
-              placeholder="Max Amount"
-              value={amountMax}
-              onChange={(e) => setAmountMax(e.target.value)}
-            />
-          </Col>
-          <Col md={2}>
-            <InputGroup>
-              <InputGroup.Text><FaCalendarAlt /></InputGroup.Text>
-              <Form.Control 
-                type="date" 
-                placeholder="To Date"
-                value={dateTo}
-                onChange={(e) => setDateTo(e.target.value)}
-              />
-            </InputGroup>
-          </Col>
-        </Row>
+
       </div>
 
       {/* Summary Cards */}
@@ -433,22 +456,25 @@ const SalesReturn = () => {
                   <td className="d-flex gap-2 justify-content-center">
                     <button 
                       className="btn btn-sm btn-outline-info" 
-                      onClick={() => navigate('/company/salesreturnview')}
-                      title="View Details"
+                      onClick={() => {
+                        setSelectedReturn(returnItem);
+                        setShowViewModal(true);
+                      }}
                     >
                       <FaEye size={14} />
                     </button>
                     <button 
-                      className="btn btn-sm btn-outline-success" 
-                      onClick={() => handleDownload(returnItem)}
-                      title="Download"
+                      className="btn btn-sm btn-outline-warning" 
+                      onClick={() => {
+                        setEditReturn({...returnItem});
+                        setShowEditModal(true);
+                      }}
                     >
-                      <FaDownload size={14} />
+                      <FaEdit size={14} />
                     </button>
                     <button 
                       className="btn btn-sm btn-outline-danger" 
                       onClick={() => handleDelete(returnItem.id)}
-                      title="Delete"
                     >
                       <FaTrash size={14} />
                     </button>
@@ -477,6 +503,275 @@ const SalesReturn = () => {
           <li className="page-item"><button className="page-link">&raquo;</button></li>
         </ul>
       </div>
+
+      {/* View Modal */}
+      <Modal show={showViewModal} onHide={() => setShowViewModal(false)} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Sales Return Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedReturn && (
+            <div className="table-responsive">
+              <table className="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td className="fw-bold">Return No</td>
+                    <td>{selectedReturn.returnNo}</td>
+                  </tr>
+                  <tr>
+                    <td className="fw-bold">Invoice No</td>
+                    <td>{selectedReturn.invoiceNo}</td>
+                  </tr>
+                  <tr>
+                    <td className="fw-bold">Customer</td>
+                    <td>{selectedReturn.customer}</td>
+                  </tr>
+                  <tr>
+                    <td className="fw-bold">Date</td>
+                    <td>{selectedReturn.date}</td>
+                  </tr>
+                  <tr>
+                    <td className="fw-bold">Items</td>
+                    <td>{selectedReturn.items}</td>
+                  </tr>
+                  <tr>
+                    <td className="fw-bold">Amount</td>
+                    <td>₹{selectedReturn.amount.toLocaleString('en-IN')}</td>
+                  </tr>
+                  <tr>
+                    <td className="fw-bold">Return Type</td>
+                    <td>{selectedReturn.returnType}</td>
+                  </tr>
+                  <tr>
+                    <td className="fw-bold">Reason</td>
+                    <td>{selectedReturn.reason}</td>
+                  </tr>
+                  <tr>
+                    <td className="fw-bold">Status</td>
+                    <td>{getStatusBadge(selectedReturn.status)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowViewModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Sales Return</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {editReturn && (
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Return No</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  value={editReturn.returnNo}
+                  onChange={(e) => setEditReturn({...editReturn, returnNo: e.target.value})}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Invoice No</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  value={editReturn.invoiceNo}
+                  onChange={(e) => setEditReturn({...editReturn, invoiceNo: e.target.value})}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Customer</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  value={editReturn.customer}
+                  onChange={(e) => setEditReturn({...editReturn, customer: e.target.value})}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Date</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  value={editReturn.date}
+                  onChange={(e) => setEditReturn({...editReturn, date: e.target.value})}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Items</Form.Label>
+                <Form.Control 
+                  type="number" 
+                  value={editReturn.items}
+                  onChange={(e) => setEditReturn({...editReturn, items: parseInt(e.target.value)})}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Amount</Form.Label>
+                <Form.Control 
+                  type="number" 
+                  value={editReturn.amount}
+                  onChange={(e) => setEditReturn({...editReturn, amount: parseFloat(e.target.value)})}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Return Type</Form.Label>
+                <Form.Select
+                  value={editReturn.returnType}
+                  onChange={(e) => setEditReturn({...editReturn, returnType: e.target.value})}
+                >
+                  <option value="Sales Return">Sales Return</option>
+                  <option value="Credit Note">Credit Note</option>
+                </Form.Select>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Reason</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  value={editReturn.reason}
+                  onChange={(e) => setEditReturn({...editReturn, reason: e.target.value})}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Status</Form.Label>
+                <Form.Select
+                  value={editReturn.status}
+                  onChange={(e) => setEditReturn({...editReturn, status: e.target.value})}
+                >
+                  <option value="Processed">Processed</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                </Form.Select>
+              </Form.Group>
+            </Form>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowEditModal(false)}>
+            Cancel
+          </Button>
+          <Button 
+            variant="primary" 
+            onClick={handleEditSave}
+            style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+          >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Add Modal */}
+      <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add New Sales Return</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Return No</Form.Label>
+              <Form.Control 
+                type="text" 
+                value={newReturn.returnNo}
+                onChange={(e) => setNewReturn({...newReturn, returnNo: e.target.value})}
+                placeholder="Enter return number"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Invoice No</Form.Label>
+              <Form.Control 
+                type="text" 
+                value={newReturn.invoiceNo}
+                onChange={(e) => setNewReturn({...newReturn, invoiceNo: e.target.value})}
+                placeholder="Enter invoice number"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Customer</Form.Label>
+              <Form.Control 
+                type="text" 
+                value={newReturn.customer}
+                onChange={(e) => setNewReturn({...newReturn, customer: e.target.value})}
+                placeholder="Enter customer name"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Date</Form.Label>
+              <Form.Control 
+                type="text" 
+                value={newReturn.date}
+                onChange={(e) => setNewReturn({...newReturn, date: e.target.value})}
+                placeholder="Enter date"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Items</Form.Label>
+              <Form.Control 
+                type="number" 
+                value={newReturn.items}
+                onChange={(e) => setNewReturn({...newReturn, items: parseInt(e.target.value)})}
+                placeholder="Enter number of items"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Amount</Form.Label>
+              <Form.Control 
+                type="number" 
+                value={newReturn.amount}
+                onChange={(e) => setNewReturn({...newReturn, amount: parseFloat(e.target.value)})}
+                placeholder="Enter amount"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Return Type</Form.Label>
+              <Form.Select
+                value={newReturn.returnType}
+                onChange={(e) => setNewReturn({...newReturn, returnType: e.target.value})}
+              >
+                <option value="Sales Return">Sales Return</option>
+                <option value="Credit Note">Credit Note</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Reason</Form.Label>
+              <Form.Control 
+                type="text" 
+                value={newReturn.reason}
+                onChange={(e) => setNewReturn({...newReturn, reason: e.target.value})}
+                placeholder="Enter reason"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Status</Form.Label>
+              <Form.Select
+                value={newReturn.status}
+                onChange={(e) => setNewReturn({...newReturn, status: e.target.value})}
+              >
+                <option value="Pending">Pending</option>
+                <option value="Processed">Processed</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+              </Form.Select>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowAddModal(false)}>
+            Cancel
+          </Button>
+          <Button 
+            variant="primary" 
+            onClick={handleAddReturn}
+            style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+          >
+            Add Return
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
