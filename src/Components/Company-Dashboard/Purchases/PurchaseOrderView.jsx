@@ -7,12 +7,14 @@ import {
   FaGlobe,
   FaExchangeAlt,
   FaTimes,
+  FaArrowLeft
 } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 import { Button, Row, Col, Table, Badge } from "react-bootstrap";
 
 const PurchaseOrderView = () => {
   const [language, setLanguage] = useState("en");
-
+  const navigate = useNavigate();
   const labels = {
     en: {
       edit: "Edit Order",
@@ -123,6 +125,13 @@ const PurchaseOrderView = () => {
       className={`mt-2 p-4 ${isArabic ? "text-end" : ""}`}
       dir={isArabic ? "rtl" : "ltr"}
     >
+              <Button 
+          variant="outline-secondary" 
+          onClick={() => navigate('/company/bill')}
+          className="mb-3 d-flex align-items-center gap-1"
+        >
+          <FaArrowLeft /> {("Back", "رجوع")}
+        </Button>
       {/* Language Switch Buttons */}
       <div className="mb-3 d-flex gap-2 flex-wrap">
         <Button variant="outline-primary" onClick={() => setLanguage("en")}>

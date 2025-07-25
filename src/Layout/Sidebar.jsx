@@ -78,10 +78,11 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           { to: "/company/unitofmeasure", icon: "fas fa-ruler-combined", label: "Unit of measure" },
           { to: "/company/inventorys", icon: "fas fa-boxes", label: "Inventory" },
           { to: "/company/createvoucher", icon: "fas fa-file-invoice", label: "Create Voucher" },
+          { to: "/company/stocktranfer", icon: "fas fa-exchange-alt", label: "StockTransfer" },
         ]),
         
         renderFlatSection("Sales", [
-          { to: "/company/Customer", icon: "fas fa-user", label: "Customer" },
+          // { to: "/company/Customer", icon: "fas fa-user", label: "Customer" },
           { to: "/company/Invoice", icon: "fas fa-file-invoice", label: "Sales Order" },
           // { to: "/company/salesorder", icon: "fas fa-table", label: "Sales Order" },
           { to: "/company/salesdelivery", icon: "fas fa-money-bill", label: "Sales Delivery" },
@@ -95,7 +96,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         ]),
         renderFlatSection("POS", [
 
-          { to: "/company/stocktranfer", icon: "fas fa-exchange-alt", label: "StockTransfer" },
+
           { to: "/company/product", icon: "fas fa-box", label: "Product" },
           { to: "/company/ponitofsale", icon: "fas fa-desktop", label: "POS Screen" },
         ]),
@@ -129,7 +130,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         ]),
         renderFlatSection("Settings", [
           { to: "/company/companyinfo", icon: "fas fa-cog", label: "Company Info" },
-          { to: "/company/invoicetemplate", icon: "fas fa-cog", label: "Template Setting" },
+          // { to: "/company/invoicetemplate", icon: "fas fa-cog", label: "Template Setting" },
         ]),
       ],
 

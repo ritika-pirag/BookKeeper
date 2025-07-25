@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Row, Col, Table, Button, Badge } from 'react-bootstrap';
 import {
   FaEdit, FaPrint, FaMoneyBill, FaPaperPlane, FaEye,
-  FaGlobe, FaExchangeAlt, FaTimes, FaCaretUp
+  FaGlobe, FaExchangeAlt, FaTimes, FaCaretUp,FaArrowLeft
 } from 'react-icons/fa';
-
+import { useNavigate } from 'react-router-dom';
 const InvoiceSummary = () => {
   const [languageMode, setLanguageMode] = useState("en"); // "en" | "ar" | "both"
-
+  const navigate = useNavigate();
   const t = (en, ar) => {
     if (languageMode === "both") {
       return (
@@ -23,6 +23,13 @@ const InvoiceSummary = () => {
   return (
     <>
       <div className={`p-4 mt-2 ${languageMode === "ar" ? 'arabic-mode' : ''}`}>
+      <Button 
+          variant="outline-secondary" 
+          onClick={() => navigate('/company/ponitofsale')}
+          className="mb-3 d-flex align-items-center gap-1"
+        >
+          <FaArrowLeft /> {t("Back", "رجوع")}
+        </Button>
         {/* Action Bar */}
         <Row className="mb-4 align-items-start">
           <Col md={8}>

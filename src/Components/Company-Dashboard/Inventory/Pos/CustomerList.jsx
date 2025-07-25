@@ -74,7 +74,7 @@ const CustomerList = ({ onSelectCustomer, selectedShop }) => {
         <span
           className="input-group-text btn bg-[#1d1b31] text-white"
           style={{ backgroundColor: "#1d1b31", cursor: "pointer" }}
-          onClick={() => navigate("/company/customer")} // ✅ Go to page
+          onClick={() => navigate("/company/customersdebtors")} // ✅ Go to page
         >
           <i className="fa fa-plus"></i>
         </span>

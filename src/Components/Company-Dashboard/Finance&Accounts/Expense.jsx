@@ -161,21 +161,13 @@ const Expense = () => {
     "Purchase Return",
     "Sales A/C",
     "Sales Return",
-    "Capital A/C",
+    // "Capital A/C",
     "Direct Expenses",
     "Indirect Expenses",
     "Direct Income",
     "Indirect Income",
-    "Current Assets",
-    "Current Liabilities",
-    "Misc. Expenses",
-    "Loans (Liability)",
-    "Loans & Advance",
-    "Fixed Assets",
-    "Investments",
-    "Bank OD A/C",
-    "Deposits (Assets)",
-    "Provisions",
+    // "Current Assets",
+
   ];
   
 
@@ -418,8 +410,7 @@ const Expense = () => {
                   />
                 </div>
             
-            
-                <div className="mb-3">
+                <div className="mb-3 position-relative">
   <label className="form-label fw-semibold">
     Account Type <span className="text-danger">*</span>
   </label>
@@ -430,7 +421,7 @@ const Expense = () => {
     ))}
   </select>
 </div>
-                {/* 🔴 Reference Number field removed */}
+        {/* 🔴 Reference Number field removed */}
                 <div className="row mb-3">
                   <div className="col-md-6">
                     <label className="form-label fw-semibold">
