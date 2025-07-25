@@ -153,6 +153,7 @@ import PurchaseVoucher from "./Components/Company-Dashboard/Inventory/PurchaseVo
 import SalesVoucher from "./Components/Company-Dashboard/Inventory/SalesVoucher";
 import PurchaseVoucherView from "./Components/Company-Dashboard/Inventory/PurchaseVoucherView";
 import SalesVoucherView from "./Components/Company-Dashboard/Inventory/SalesVoucherView";
+import Settings from "./Layout/Settings";
 // import CreateVoucher from "./Components/Company-Dashboard/Inventory/CreateVoucher";
 
 
@@ -165,6 +166,8 @@ function App() {
         {/* Public routes without sidebar */}
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/settings" element={<Settings/>} />
+
    
         {/* Admin Dashboard routes with MainLayout */}
         <Route element={<MainLayout />}>

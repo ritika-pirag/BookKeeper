@@ -156,7 +156,32 @@ const VendorsCreditors = () => {
     };
     reader.readAsBinaryString(file);
   };
-
+  const accountTypeOptions = [
+    "Cash-in-hand",
+    "Bank A/Cs",
+    "Sundry Debtors",
+    "Sundry Creditors",
+    "Purchases A/C",
+    "Purchase Return",
+    "Sales A/C",
+    "Sales Return",
+    "Capital A/C",
+    "Direct Expenses",
+    "Indirect Expenses",
+    "Direct Income",
+    "Indirect Income",
+    "Current Assets",
+    "Current Liabilities",
+    "Misc. Expenses",
+    "Loans (Liability)",
+    "Loans & Advance",
+    "Fixed Assets",
+    "Investments",
+    "Bank OD A/C",
+    "Deposits (Assets)",
+    "Provisions",
+  ];
+  
   return (
     <div className="mt-4 p-2">
       <Row className="align-items-center mb-3">
@@ -325,23 +350,22 @@ const VendorsCreditors = () => {
             />
           </Form.Group>
 
+      
           <Form.Group className="mb-3">
-            <Form.Label>Account Type</Form.Label>
-            <Form.Control
-              type="text"
-              value={accountType}
-              onChange={(e) => setAccountType(e.target.value)}
-            />
-          </Form.Group>
+  <Form.Label>Account Type</Form.Label>
+  <Form.Select
+    value={currentCustomer.accountType || ""}
+    onChange={(e) => updateField("accountType", e.target.value)}
+  >
+    <option value="">-- Select Account Type --</option>
+    {accountTypeOptions.map((type, idx) => (
+      <option key={idx} value={type}>
+        {type}
+      </option>
+    ))}
+  </Form.Select>
+</Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Opening Balance</Form.Label>
-            <Form.Control
-              type="number"
-              value={currentCustomer.payable}
-              onChange={(e) => updateField("payable", e.target.value)}
-            />
-          </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Account Creation Date</Form.Label>

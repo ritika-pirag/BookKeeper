@@ -59,6 +59,8 @@ const AllAccounts = () => {
   const [showVendorModal, setShowVendorModal] = useState(false);
   const [showCustomerModal, setShowCustomerModal] = useState(false);
 
+
+  
 const [customerFormData, setCustomerFormData] = useState({
   name: "",
   accountType: "Sundry Debtors",
@@ -121,8 +123,43 @@ const handleSaveCustomer = () => {
   const [accountType, setAccountType] = useState("Sundry Creditors");
   const [isTaxEnabled, setIsTaxEnabled] = useState(true);
   const [taxNumber, setTaxNumber] = useState("TAX123456");
-  const [showBankDetails, setShowBankDetails] = useState(true);
-
+  const [showNewAccountModal, setShowNewAccountModal] = useState(false);
+  const [showBankDetails, setShowBankDetails] = useState(false);
+  
+  const [newAccountData, setNewAccountData] = useState({
+    type: "",
+    name: "",
+    bankAccountNumber: "",
+    bankIFSC: "",
+    bankNameBranch: ""
+  });
+  const accountTypeOptions = [
+    "Cash-in-hand",
+    "Bank A/Cs",
+    "Sundry Debtors",
+    "Sundry Creditors",
+    "Purchases A/C",
+    "Purchase Return",
+    "Sales A/C",
+    "Sales Return",
+    "Capital A/C",
+    "Direct Expenses",
+    "Indirect Expenses",
+    "Direct Income",
+    "Indirect Income",
+    "Current Assets",
+    "Current Liabilities",
+    "Misc. Expenses",
+    "Loans (Liability)",
+    "Loans & Advance",
+    "Fixed Assets",
+    "Investments",
+    "Bank OD A/C",
+    "Deposits (Assets)",
+    "Provisions",
+  ];
+  
+  
   return (
     <Container fluid className="py-4">
       {/* Header Row */}
@@ -131,6 +168,14 @@ const handleSaveCustomer = () => {
           <h4 className="fw-bold text-start mb-2 mb-md-0">All Accounts</h4>
         </Col>
         <Col xs={12} md="auto" className="d-flex gap-2">
+        <Button
+  style={{ backgroundColor: "#53b2a5", border: "none", padding: "8px 16px" }}
+  className="d-flex align-items-center gap-2 text-white fw-semibold"
+  onClick={() => setShowNewAccountModal(true)}
+>
+  + Add New Account
+</Button>
+
           <Button
             style={{ backgroundColor: "#53b2a5", border: "none", padding: "8px 16px" }}
             className="d-flex align-items-center gap-2 text-white fw-semibold"
@@ -213,14 +258,24 @@ const handleSaveCustomer = () => {
           </Form.Group>
         </Col>
         <Col md={6}>
-          <Form.Group>
-            <Form.Label>Account Type</Form.Label>
-            <Form.Control
-              type="text"
-              value={vendorFormData.accountType}
-              onChange={(e) => setVendorFormData({ ...vendorFormData, accountType: e.target.value })}
-            />
-          </Form.Group>
+        <Form.Group>
+  <Form.Label>Account Type</Form.Label>
+  <Form.Control
+    as="select"
+    value={vendorFormData.accountType}
+    onChange={(e) =>
+      setVendorFormData({ ...vendorFormData, accountType: e.target.value })
+    }
+  >
+    <option value="">-- Select Account Type --</option>
+    {accountTypeOptions.map((type, index) => (
+      <option key={index} value={type}>
+        {type}
+      </option>
+    ))}
+  </Form.Control>
+</Form.Group>
+
         </Col>
       </Row>
 
@@ -448,7 +503,7 @@ const handleSaveCustomer = () => {
     </Button>
   </Modal.Footer>
 </Modal>
-{/* add customer   */}
+
 {/* Customer Modal */}
 <Modal
   show={showCustomerModal}
@@ -474,14 +529,21 @@ const handleSaveCustomer = () => {
           </Form.Group>
         </Col>
         <Col md={6}>
-          <Form.Group>
-            <Form.Label>Account Type</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.accountType}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, accountType: e.target.value })}
-            />
-          </Form.Group>
+        <Form.Control
+  as="select"
+  value={customerFormData.accountType}
+  onChange={(e) =>
+    setCustomerFormData({ ...customerFormData, accountType: e.target.value })
+  }
+>
+  <option value="">-- Select Account Type --</option>
+  {accountTypeOptions.map((type, index) => (
+    <option key={index} value={type}>
+      {type}
+    </option>
+  ))}
+</Form.Control>
+
         </Col>
       </Row>
 
@@ -709,6 +771,120 @@ const handleSaveCustomer = () => {
     </Button>
   </Modal.Footer>
 </Modal>
+
+{/* add new acccount */}
+<Modal
+  show={showNewAccountModal}
+  onHide={() => setShowNewAccountModal(false)}
+  centered
+  backdrop="static"
+>
+  <Modal.Header closeButton className="bg-light">
+    <Modal.Title>Add New Account</Modal.Title>
+  </Modal.Header>
+
+  <Modal.Body>
+    <Form>
+      {/* Account Type */}
+      <Form.Group className="mb-3">
+        <Form.Label>Account Type</Form.Label>
+        <Form.Control
+          type="text"
+          value={newAccountData.type}
+          onChange={(e) =>
+            setNewAccountData({ ...newAccountData, type: e.target.value })
+          }
+        />
+      </Form.Group>
+
+      {/* Account Name */}
+      <Form.Group className="mb-3">
+        <Form.Label>Account Name</Form.Label>
+        <Form.Control
+          type="text"
+          value={newAccountData.name}
+          onChange={(e) =>
+            setNewAccountData({ ...newAccountData, name: e.target.value })
+          }
+        />
+      </Form.Group>
+
+      {/* Always Visible Toggle */}
+      <Form.Group className="mb-3">
+        <Form.Check
+          type="switch"
+          id="bank-details-toggle"
+          label="Add Bank Details"
+          checked={showBankDetails}
+          onChange={() => setShowBankDetails(!showBankDetails)}
+        />
+      </Form.Group>
+
+      {/* Conditionally Show Bank Fields */}
+      {showBankDetails && (
+        <>
+          <Form.Group className="mb-3">
+            <Form.Label>Account Number</Form.Label>
+            <Form.Control
+              type="text"
+              value={newAccountData.bankAccountNumber}
+              onChange={(e) =>
+                setNewAccountData({
+                  ...newAccountData,
+                  bankAccountNumber: e.target.value
+                })
+              }
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>IFSC Code</Form.Label>
+            <Form.Control
+              type="text"
+              value={newAccountData.bankIFSC}
+              onChange={(e) =>
+                setNewAccountData({
+                  ...newAccountData,
+                  bankIFSC: e.target.value
+                })
+              }
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Bank Name & Branch</Form.Label>
+            <Form.Control
+              type="text"
+              value={newAccountData.bankNameBranch}
+              onChange={(e) =>
+                setNewAccountData({
+                  ...newAccountData,
+                  bankNameBranch: e.target.value
+                })
+              }
+            />
+          </Form.Group>
+        </>
+      )}
+    </Form>
+  </Modal.Body>
+
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowNewAccountModal(false)}>
+      Cancel
+    </Button>
+    <Button
+    style={{ backgroundColor: "#53b2a5", border: "none", padding: "8px 16px" }}
+      onClick={() => {
+        console.log("New Account Data:", newAccountData);
+        setShowNewAccountModal(false);
+      }}
+    >
+      Save
+    </Button>
+  </Modal.Footer>
+</Modal>
+
 
 
     </Container>

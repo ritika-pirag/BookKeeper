@@ -102,8 +102,36 @@ const CustomersDebtors = () => {
   const [isTaxEnabled, setIsTaxEnabled] = useState(false);
   const [taxNumber, setTaxNumber] = useState("");
 
-
-
+  const accountTypeOptions = [
+    "Cash-in-hand",
+    "Bank A/Cs",
+    "Sundry Debtors",
+    "Sundry Creditors",
+    "Purchases A/C",
+    "Purchase Return",
+    "Sales A/C",
+    "Sales Return",
+    "Capital A/C",
+    "Direct Expenses",
+    "Indirect Expenses",
+    "Direct Income",
+    "Indirect Income",
+    "Current Assets",
+    "Current Liabilities",
+    "Misc. Expenses",
+    "Loans (Liability)",
+    "Loans & Advance",
+    "Fixed Assets",
+    "Investments",
+    "Bank OD A/C",
+    "Deposits (Assets)",
+    "Provisions",
+  ];
+  
+  const [customerFormData, setCustomerFormData] = useState({
+    accountType: "",
+  });
+  
 
   const [showAddEditModal, setShowAddEditModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
@@ -460,15 +488,26 @@ const CustomersDebtors = () => {
 />
         </Form.Group>
 
-        <Form.Group className="mb-3">
+<Form.Group className="mb-3" controlId="formAccountType">
   <Form.Label>Account Type</Form.Label>
-  <Form.Control
-    type="text"
-    placeholder="Enter account type"
-    value={accountType}
-    onChange={(e) => setAccountType(e.target.value)}
-  />
+  <Form.Select
+    value={customerFormData.accountType}
+    onChange={(e) =>
+      setCustomerFormData({
+        ...customerFormData,
+        accountType: e.target.value,
+      })
+    }
+  >
+    <option value="">Select</option>
+    {accountTypeOptions.map((option, index) => (
+      <option key={index} value={option}>
+        {option}
+      </option>
+    ))}
+  </Form.Select>
 </Form.Group>
+
 <p>Selected Account Type: {accountType}</p>
 
         <Form.Group className="mb-3">
