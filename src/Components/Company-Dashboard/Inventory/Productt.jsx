@@ -2,11 +2,6 @@ import { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button, TextField, Modal, Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteProduct,
-  fetchProducts,
-} from "../../../redux/slices/productSlice";
 import Swal from "sweetalert2";
 import { FaEye, FaPen, FaTrash } from "react-icons/fa";
 
@@ -14,42 +9,69 @@ const Productt = () => {
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const dispatch = useDispatch();
-  const { products, loading } = useSelector((state) => state.product);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const dummyProducts = [
+    {
+      _id: "1",
+      sku: "SKU001",
+      name: "Washing Machine",
+      category: "Appliances",
+      quantity: 5,
+      IMEI: "N/A",
+      description: "Fully automatic washing machine",
+      createdAt: new Date().toISOString(),
+
+    },
+    {
+      _id: "2",
+      sku: "SKU002",
+      name: "Smartphone X",
+      category: "Electronics",
+      quantity: 12,
+      IMEI: "356789123456789",
+      description: "Latest 5G smartphone",
+      createdAt: new Date().toISOString(),
+
+    },
+    {
+      _id: "3",
+      sku: "SKU003",
+      name: "Microwave Oven",
+      category: "Kitchen",
+      quantity: 3,
+      IMEI: "N/A",
+      description: "20L grill microwave oven",
+      createdAt: new Date().toISOString(),
+
+    },
+  ];
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
-
-  const productList = Array.isArray(products?.data) ? products.data : [];
-
-  const filteredProducts = productList.filter((product) =>
-    product.name.toLowerCase().includes(search.toLowerCase())
-  );
+    setLoading(true);
+    // Simulate API delay
+    setTimeout(() => {
+      setProducts(dummyProducts);
+      setLoading(false);
+    }, 500);
+  }, []);
 
   const handleSearchChange = (e) => setSearch(e.target.value);
 
   const handleDeleteProduct = (productId) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "This product will be deleted!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
-        try {
-          const response = await dispatch(deleteProduct(productId)).unwrap();
-          if (response) {
-            Swal.fire("Deleted!", "Product has been deleted.", "success");
-            dispatch(fetchProducts());
-          }
-        } catch (error) {
-          console.error("Delete Error:", error);
-          Swal.fire("Error!", error || "Failed to delete product.", "error");
-        }
+        setProducts((prev) => prev.filter((p) => p._id !== productId));
+        Swal.fire("Deleted!", "Product has been removed.", "success");
       }
     });
   };
@@ -58,6 +80,13 @@ const Productt = () => {
     setSelectedProduct(product);
     setShowModal(true);
   };
+  const handleEditClick = (product) => {
+    setSelectedProduct(product);
+    setShowModal("edit"); // string value se modal type differentiate kare
+  };
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   const columns = [
     {
@@ -67,7 +96,7 @@ const Productt = () => {
       renderCell: (params) => {
         const images = params.row.images || [];
         const image1 =
-          images.length > 0 ? images[0] : "https://via.placeholder.com/80";
+          images.length > 0 ? images[0] : "";
         return (
           <img
             src={image1}
@@ -93,40 +122,37 @@ const Productt = () => {
       width: 200,
       renderCell: (params) => (
         <div style={{ display: "flex", gap: "6px" }}>
-        <Button
-          variant="outlined"
-          color="success"
-          size="small"
-          onClick={() => handleViewClick(params.row)}
-          title="View Product"
-        >
-          <FaEye size={12} />
-        </Button>
-      
-        <Button
-          variant="outlined"
-          color="error"
-          size="small"
-          onClick={() => handleDeleteProduct(params.row._id)}
-          title="Delete Product"
-        >
-          <FaTrash size={12} />
-        </Button>
-      
-        <Link to={`/company/update-product/${params.row._id}`}>
+          <Button
+            variant="outlined"
+            color="success"
+            size="small"
+            onClick={() => handleViewClick(params.row)}
+            title="View Product"
+          >
+            <FaEye size={12} />
+          </Button>
           <Button
             variant="outlined"
             color="primary"
             size="small"
+            onClick={() => handleEditClick(params.row)}
             title="Edit Product"
           >
-            <FaPen size={14} />
+            <FaPen size={12} />
           </Button>
-        </Link>
-      </div>
-      
+          <Button
+            variant="outlined"
+            color="error"
+            size="small"
+            onClick={() => handleDeleteProduct(params.row._id)}
+            title="Delete Product"
+          >
+            <FaTrash size={12} />
+          </Button>
+        </div>
       ),
     },
+    
   ];
 
   return (
@@ -160,11 +186,12 @@ const Productt = () => {
               id: product._id,
             }))}
             columns={columns}
-            pageSize={20}
-            rowsPerPageOptions={[20, 25, 30, 35]}
+            pageSize={10}
+            rowsPerPageOptions={[10, 25, 50]}
             loading={loading}
             checkboxSelection
             disableSelectionOnClick
+            autoHeight
           />
         </div>
       </div>
@@ -218,6 +245,106 @@ const Productt = () => {
           )}
         </Box>
       </Modal>
+      
+{/* Edit Modal */}
+<Modal
+  open={showModal === "edit"}
+  onClose={() => setShowModal(false)}
+  aria-labelledby="edit-product-title"
+>
+  <Box
+    sx={{
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: 500,
+      bgcolor: "background.paper",
+      borderRadius: 2,
+      boxShadow: 24,
+      p: 4,
+    }}
+  >
+    {selectedProduct && (
+      <>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Edit Product: {selectedProduct.name}
+        </Typography>
+
+        <TextField
+          label="Name"
+          fullWidth
+          margin="dense"
+          value={selectedProduct.name}
+          onChange={(e) =>
+            setSelectedProduct({ ...selectedProduct, name: e.target.value })
+          }
+        />
+        <TextField
+          label="Category"
+          fullWidth
+          margin="dense"
+          value={selectedProduct.category}
+          onChange={(e) =>
+            setSelectedProduct({ ...selectedProduct, category: e.target.value })
+          }
+        />
+        <TextField
+          label="Quantity"
+          fullWidth
+          margin="dense"
+          type="number"
+          value={selectedProduct.quantity}
+          onChange={(e) =>
+            setSelectedProduct({
+              ...selectedProduct,
+              quantity: Number(e.target.value),
+            })
+          }
+        />
+        <TextField
+          label="IMEI"
+          fullWidth
+          margin="dense"
+          value={selectedProduct.IMEI}
+          onChange={(e) =>
+            setSelectedProduct({ ...selectedProduct, IMEI: e.target.value })
+          }
+        />
+        <TextField
+          label="Description"
+          fullWidth
+          margin="dense"
+          multiline
+          value={selectedProduct.description}
+          onChange={(e) =>
+            setSelectedProduct({
+              ...selectedProduct,
+              description: e.target.value,
+            })
+          }
+        />
+        <Button
+          variant="contained"
+          sx={{ mt: 2 }}
+          onClick={() => {
+            // Dummy update logic
+            setProducts((prev) =>
+              prev.map((p) =>
+                p._id === selectedProduct._id ? selectedProduct : p
+              )
+            );
+            setShowModal(false);
+            Swal.fire("Updated!", "Product has been updated.", "success");
+          }}
+        >
+          Save Changes
+        </Button>
+      </>
+    )}
+  </Box>
+</Modal>
+
     </div>
   );
 };

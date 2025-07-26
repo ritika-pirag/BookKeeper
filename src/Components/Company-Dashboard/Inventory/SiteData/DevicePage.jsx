@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCategories } from "../../../../redux/slices/createCategory";
-import { fetchBrands } from "../../../../redux/slices/createBrand";
-import { createDevice, updateDevice, fetchDevices } from "../../../../redux/slices/deviceSlice";
-import Swal from "sweetalert2";
 
-const DevicePage = ({ show, handleClose }) => {
-  const dispatch = useDispatch();
-  const { brands } = useSelector((state) => state.brands);
-  const { categories } = useSelector((state) => state.categories);
-
+const DevicePage = ({
+  show,
+  handleClose,
+  onSubmit,
+  categories = [],
+  brands = [],
+  initialData = null,
+}) => {
   const [categoryId, setCategoryId] = useState("");
   const [brandId, setBrandId] = useState("");
   const [deviceName, setDeviceName] = useState("");
@@ -18,15 +16,16 @@ const DevicePage = ({ show, handleClose }) => {
   const [deviceId, setDeviceId] = useState(null);
 
   useEffect(() => {
-    dispatch(fetchBrands());
-    dispatch(fetchCategories());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (!show) {
+    if (initialData) {
+      setCategoryId(initialData.categoryId || "");
+      setBrandId(initialData.brandId || "");
+      setDeviceName(initialData.device_name || "");
+      setEditMode(true);
+      setDeviceId(initialData._id || null);
+    } else {
       resetForm();
     }
-  }, [show]);
+  }, [initialData, show]);
 
   const resetForm = () => {
     setCategoryId("");
@@ -36,11 +35,11 @@ const DevicePage = ({ show, handleClose }) => {
     setDeviceId(null);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!categoryId || !brandId || !deviceName) {
-      Swal.fire("Error", "All fields are required!", "error");
+      alert("All fields are required!");
       return;
     }
 
@@ -48,22 +47,12 @@ const DevicePage = ({ show, handleClose }) => {
       categoryId,
       brandId,
       device_name: deviceName,
+      ...(editMode && { _id: deviceId }),
     };
 
-    try {
-      if (editMode && deviceId) {
-        await dispatch(updateDevice({ deviceId, updatedData: deviceData })).unwrap();
-        Swal.fire("Success", "Device updated successfully!", "success");
-      } else {
-        await dispatch(createDevice(deviceData)).unwrap();
-        Swal.fire("Success", "Device created successfully!", "success");
-      }
-
-      dispatch(fetchDevices());
-      handleClose();
-    } catch (error) {
-      Swal.fire("Error", error?.message || "Something went wrong", "error");
-    }
+    onSubmit(deviceData);
+    handleClose();
+    resetForm();
   };
 
   return (
@@ -81,7 +70,7 @@ const DevicePage = ({ show, handleClose }) => {
               required
             >
               <option value="">Select Category</option>
-              {categories?.map((cat) => (
+              {categories.map((cat) => (
                 <option key={cat._id} value={cat._id}>
                   {cat.category_name}
                 </option>

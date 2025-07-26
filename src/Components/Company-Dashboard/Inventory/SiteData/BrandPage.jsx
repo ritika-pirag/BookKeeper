@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCategories } from "../../../../redux/slices/createCategory";
-import { createBrand, fetchBrands, updateBrand } from "../../../../redux/slices/createBrand";
 
 const BrandPage = ({ show, handleClose }) => {
-  const dispatch = useDispatch();
-  const { categories } = useSelector((state) => state.categories);
-  const { brands } = useSelector((state) => state.brands);
-
   const [brandName, setBrandName] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [editBrandId, setEditBrandId] = useState(null);
 
-  useEffect(() => {
-    dispatch(fetchBrands());
-    dispatch(fetchCategories());
-  }, [dispatch]);
+  // Dummy categories data (static dropdown)
+  const categories = [
+    { _id: "1", category_name: "Electronics" },
+    { _id: "2", category_name: "Clothing" },
+    { _id: "3", category_name: "Home Appliances" },
+  ];
 
   useEffect(() => {
     if (!show) {
-      // Reset form when modal closes
       setBrandName("");
       setCategoryId("");
       setEditBrandId(null);
@@ -37,11 +31,8 @@ const BrandPage = ({ show, handleClose }) => {
       categoryId,
     };
 
-    if (editBrandId) {
-      dispatch(updateBrand({ id: editBrandId, data: brandData }));
-    } else {
-      dispatch(createBrand(brandData));
-    }
+    // You can log or use this data as needed
+    console.log(editBrandId ? "Updating Brand:" : "Creating Brand:", brandData);
 
     handleClose();
   };
@@ -72,7 +63,7 @@ const BrandPage = ({ show, handleClose }) => {
               required
             >
               <option value="">Select Category</option>
-              {categories?.map((category) => (
+              {categories.map((category) => (
                 <option key={category._id} value={category._id}>
                   {category.category_name}
                 </option>

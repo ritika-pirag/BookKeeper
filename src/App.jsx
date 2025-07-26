@@ -8,18 +8,18 @@ import Signup from "./Components/Auth/Signup";
 
 import Dashboardd from "./Components/Dashboard/Dashboardd";
 import Company from "./Components/Dashboard/Company";
-// import CompanyDetails from './Components/Dashboard/CompanyDetails';
+
 import PlansPricing from "./Components/Dashboard/PlansPricing";
 import RequestPlan from "./Components/Dashboard/RequestPlan";
 import Payments from "./Components/Dashboard/Payments";
-import SystemSettings from "./Components/Dashboard/SystemSettings";
+
 import CompanyDashbaord from "./Components/Company-Dashboard/CompanyDashbaord";
-// import ProductDetails from "./Components/Company-Dashboard/Inventory/ProductDetails";
-import BatchExpiry from "./Components/Company-Dashboard/Inventory/BatchExpiry";
+
+
 import Inventorys from "./Components/Company-Dashboard/Inventory/Inventorys";
 import UnitofMeasure from "./Components/Company-Dashboard/Inventory/UnitofMeasure";
-import LowStock from "./Components/Company-Dashboard/Inventory/LowStock";
-import PrintBarcode from "./Components/Company-Dashboard/Inventory/printBarcode";
+
+
 
 import Invoice from "./Components/Company-Dashboard/Sales/Invoice";
 import InvoiceForm from "./Components/Company-Dashboard/Sales/InvoiceForm";
@@ -32,7 +32,7 @@ import AccountStatement from "./Components/Company-Dashboard/Payments/AccountSta
 import Coupons from "./Components/Company-Dashboard/Payments/Coupons";
 import TaxReport from "./Components/Company-Dashboard/GST/TaxReport ";
 import Customer from "./Components/Company-Dashboard/Sales/Customer";
-// import QRInvoice from "./Components/Company-Dashboard/GST/QRInvoice";
+
 import GSTReturns from "./Components/Company-Dashboard/GST/GSTReturns";
 import TdsTcs from "./Components/Company-Dashboard/GST/TdsTcs";
 import ITCReport from "./Components/Company-Dashboard/GST/ITCReport";
@@ -46,9 +46,7 @@ import JournalEntries from "./Components/Company-Dashboard/Finance&Accounts/Jour
 import Ledger from "./Components/Company-Dashboard/Finance&Accounts/Ledger";
 import TrialBalance from "./Components/Company-Dashboard/Finance&Accounts/TrialBalance";
 import CustomerList from "./Components/Company-Dashboard/ClientsVendors/CustomerList";
-// import Purchasedataa from "./Components/Company-Dashboard/Reports/Purchasedata";
-// import salesreport from "./Components/Company-Dashboard/Reports/Salesreport";
-// import NewOrderPurchase from "./Components/Company-Dashboard/Purchases/NewOrderPurchase";
+
 import CreateVoucher from "./Components/Company-Dashboard/Inventory/CreateVoucher";
 import Taxreport from "./Components/Company-Dashboard/Reports/Taxreports";
 import InventorySummary from "./Components/Company-Dashboard/Reports/InventorySummary";
@@ -91,11 +89,11 @@ import Balancesheet from "./Components/User-Dashboard/Account&Finance/BalanceShe
 import DeliveryChallans from "./Components/User-Dashboard/Sales/DeliveryChallans";
 import Estimates from "./Components/User-Dashboard/Sales/Estimates";
 import OnlineOrder from "./Components/User-Dashboard/Sales/OnlineOrder";
-// import PosOrder from "./Components/User-Dashboard/Sales/PosOrder";
+
 import PaymentMode from "./Components/User-Dashboard/Purchases/PaymentMode";
 import Invoicee from "./Components/User-Dashboard/Purchases/Invoicee";
 import Expenses from "./Components/User-Dashboard/Purchases/Expenses";
-// import PurchaseData from "./Components/User-Dashboard/Reports/Purchasereport";
+
 
 
 import WareHouses from "./Components/User-Dashboard/Inventory/SiteData/WareHouses";
@@ -104,16 +102,11 @@ import BrandPages from "./Components/User-Dashboard/Inventory/SiteData/BrandPage
 
 
 import Product from "./Components/User-Dashboard/Inventory/Product";
-// import AddProducts from "./Components/User-Dashboard/Inventory/Product/AddProduct";
+
 import  DevicePages from "./Components/User-Dashboard/Inventory/SiteData/DevicePages";
-// import TaxPages from "./Components/User-Dashboard/Inventory/SiteData/TaxPage";
+
 import StockTransferss from "./Components/User-Dashboard/Inventory/SiteData/StockTransfers";
 
-// import PointOfSales from "./Components/Company-Dashboard/Inventory/Pos/PointOfSale";
-// import InvoiceSummarys from "./Components/Company-Dashboard/Inventory/Pos/InvoiceSummary";
-// import ManageInvoicess from "./Components/Company-Dashboard/Inventory/Pos/ManageInvoice";
-// import ViewInvoices from "./Components/Company-Dashboard/Inventory/Pos/ViewInvoice";
-// import EditInvoices from "./Components/Company-Dashboard/Inventory/Pos/EditInvoice";-
 
 
 
@@ -124,14 +117,14 @@ import StockTransferss from "./Components/User-Dashboard/Inventory/SiteData/Stoc
 
 
 import WareHouse from "./Components/Company-Dashboard/Inventory/SiteData/WareHouse";
-// import Categories from "./Components/Company-Dashboard/Inventory/SiteData/Categories";
+
 
 import BrandPage from "./Components/Company-Dashboard/Inventory/SiteData/BrandPage";
 
 import Productt from "./Components/Company-Dashboard/Inventory/Productt";
 import AddProduct from "./Components/Company-Dashboard/Inventory/Product/AddProduct";
 import DevicePage from "./Components/Company-Dashboard/Inventory/SiteData/DevicePage";
-import TaxPage from "./Components/Company-Dashboard/Inventory/SiteData/TaxPage";
+
 import StockTransfer from "./Components/Company-Dashboard/Inventory/SiteData/StockTransfer";
 import PointOfSale from "./Components/Company-Dashboard/Inventory/Pos/PointOfSale";
 import InvoiceSummary from "./Components/Company-Dashboard/Inventory/Pos/InvoiceSummary";
@@ -143,7 +136,7 @@ import PurchaseOrderView from "./Components/Company-Dashboard/Purchases/Purchase
 import ViewInvoicee from "./Components/Company-Dashboard/Sales/ViewInvoicee";
 
 import Categories from "./Components/Company-Dashboard/Inventory/SiteData/Categories";
-import AddCustomer from "./Components/Company-Dashboard/Inventory/Customer/AddCustomer";
+
 import PurchasOrder from "./Components/Company-Dashboard/Purchases/PurchasOrder";
 import Bill from "./Components/Company-Dashboard/Purchases/Bill";
 import AllAcounts from "./Components/Company-Dashboard/Accounts/AllAcounts";
@@ -153,9 +146,9 @@ import PurchaseVoucher from "./Components/Company-Dashboard/Inventory/PurchaseVo
 import SalesVoucher from "./Components/Company-Dashboard/Inventory/SalesVoucher";
 import PurchaseVoucherView from "./Components/Company-Dashboard/Inventory/PurchaseVoucherView";
 import SalesVoucherView from "./Components/Company-Dashboard/Inventory/SalesVoucherView";
-import Settings from "./Layout/Settings";
+
 import InvoiceTemplate from "./Components/Company-Dashboard/Settings/InvoiceTemplate";
-// import CreateVoucher from "./Components/Company-Dashboard/Inventory/CreateVoucher";
+
 
 
 
@@ -167,67 +160,69 @@ function App() {
         {/* Public routes without sidebar */}
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/settings" element={<Settings/>} />
+
 
    
         {/* Admin Dashboard routes with MainLayout */}
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<Dashboardd />} />
           <Route path="/superadmin/company" element={<Company />} />
-          {/* <Route path="/superadmin/companydetails" element={<CompanyDetails />} /> */}
           <Route path="/superadmin/planpricing" element={<PlansPricing />} />
           <Route path="/superadmin/requestplan" element={<RequestPlan />} />
           <Route path="/superadmin/payments" element={<Payments />} />
-          <Route path="/superadmin/setting" element={<SystemSettings />} />
+
         </Route>
 
         {/* Company Dashboard routes with MainLayout */}
         <Route element={<MainLayout />}>
           {/* Admin Dashboard */}
           <Route path="/company/dashboard" element={<CompanyDashbaord />} />
-{/* Accounts */}
-<Route path="/company/allacounts" element={<AllAcounts/>} />
-<Route path="/company/customersdebtors" element={<CustomersDebtors/>} />
-<Route path="/company/vendorscreditors" element={<VendorsCreditors/>} />
+          {/* Accounts */}
+          <Route path="/company/allacounts" element={<AllAcounts/>} />
+           <Route path="/company/customersdebtors" element={<CustomersDebtors/>} />
+          <Route path="/company/vendorscreditors" element={<VendorsCreditors/>} />
 
 
           {/* Inventory */}
-          {/* <Route path="/company/productdetails" element={<ProductDetails />} /> */}
-          {/* <Route path="/company/batchandexpriry" element={<BatchExpiry />} /> */}
-          <Route path="/company/inventorys" element={<Inventorys/>} />
+          <Route path="/company/warehouse" element={<WareHouse />} />
           <Route path="/company/unitofmeasure" element={<UnitofMeasure/>} />
+          <Route path="/company/inventorys" element={<Inventorys/>} />
+          <Route path="/company/createvoucher" element={<CreateVoucher/>} />
+          <Route path="/company/stocktranfer" element={<StockTransfer />} />
           <Route path="/company/salesvoucher" element={<SalesVoucher/>} />
           <Route path="/company/purchasevoucher" element={<PurchaseVoucher/>} />
           <Route path="/company/purchasevoucherview" element={<PurchaseVoucherView/>} />
           <Route path="/company/salesvoucherview" element={<SalesVoucherView/>} />
-          {/* <Route path="/company/lowstock" element={<LowStock />} /> */}
-          {/* <Route path="/company/printbarcode" element={<PrintBarcode />} /> */}
-          <Route path="/company/createvoucher" element={<CreateVoucher/>} />
+     
+           {/* Sales */}
 
-          <Route path="/company/warehouse" element={<WareHouse />} />
-          <Route path="/company/stocktranfer" element={<StockTransfer />} />
+      
+           {/* POS */}
           <Route path="/company/categories" element={<Categories/>} />
           <Route path="/company/brands" element={<BrandPage />} />
           <Route path="/company/product" element={<Productt />} />
           <Route path="/company/createproduct" element={<AddProduct/>} />
           <Route path="/company/update-product/:id" element={<AddProduct/>} />
           <Route path="/company/device" element={<DevicePage />} />
-          <Route path="/company/tax" element={<TaxPage/>} />
+ 
           <Route path="/company/ponitofsale" element={<PointOfSale />} />
           <Route path="/company/invoice-summary" element={<InvoiceSummary/>} />
-          <Route path="/company/addcustomer" element={<AddCustomer/>} />
+  
+
           {/* Sales */}
-          <Route path="/company/invoice" element={<Invoice />} />
+      
+
           <Route path="/company/manageinvoice" element={<ManageInvoices/>} />
           <Route path="/company/editinvoice" element={<EditInvoice/>} />
           <Route path="/company/viewinvoice" element={<ViewInvoice/>} />
           <Route path="/company/customer" element={<Customer/>} />
         
           {/* Sales */}
+          <Route path="/company/invoice" element={<Invoice />} />
           <Route path="/company/invoiceform" element={<InvoiceForm />} />
           <Route path="/company/viewinvoicee" element={<ViewInvoicee/>} />
-          <Route path="/company/salesorder" element={<SalesOrder />} />
           <Route path="/company/salesdelivery" element={<SalesDelivery/>} />
+          <Route path="/company/salesorder" element={<SalesOrder />} />
           <Route path="/company/salesreturn" element={<SalesReturn />} />
       
          
@@ -240,8 +235,7 @@ function App() {
           />
 
           {/* GST Filing */}
-          <Route path="/company/taxreport" element={<TaxReport />} />
-          {/* <Route path="/company/qrinvoice" element={<QRInvoice />} /> */}
+ 
           <Route path="/company/gstreturns" element={<GSTReturns />} />
           <Route path="/company/tdstcs" element={<TdsTcs />} />
           <Route path="/company/itcreport" element={<ITCReport />} />
@@ -250,7 +244,7 @@ function App() {
           {/* Purchases */}
           <Route path="/company/vendors" element={<Vendors />} />
           
-          {/* <Route path="/company/neworders" element={<NewOrderPurchase />} /> */}
+
           <Route path="/company/bill" element={<Bill/>} />
           <Route path="/company/purchasorder" element={<PurchasOrder/>} />
           <Route path="/company/purchasereturn" element={<PurchaseReturn />} />
@@ -267,7 +261,7 @@ function App() {
           <Route path="/company/customers" element={<CustomerList />} />
 
           {/* Reports */}
-          {/* <Route path="/company/Purchasedata" element={<Purchasedata/>} /> */}
+  
           <Route path="/company/salesreport" element={<Salesreport />} />
           <Route path="/company/taxreport" element={<Taxreport />} />
           <Route path="/company/inventorysummary" element={<InventorySummary/>} />
@@ -313,7 +307,7 @@ function App() {
           <Route path="/user/invoiceforms" element={<InvoiceForms />} />
           <Route path="/user/pos" element={<Pos />} />
           <Route path="/user/onlineorders" element={<OnlineOrder />} />
-          {/* <Route path="/user/posorders" element={<PosOrder/>} /> */}
+
           <Route path="/user/estimates" element={<Estimates />} />
           <Route path="/user/deliverychallans" element={<DeliveryChallans />} />
 
@@ -349,7 +343,7 @@ function App() {
           <Route path="/user/invoicereport" element={<Invoicereport />} />
           <Route path="/user/taxreport" element={<Taxreports />} />
        
-          {/* <Route path="/user/eway" element={<Eway />} /> */}
+
         </Route>
       </Routes>
     </Router>

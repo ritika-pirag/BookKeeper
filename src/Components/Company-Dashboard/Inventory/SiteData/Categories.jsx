@@ -1,56 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { createCategory, fetchCategories, updateCategory } from "../../../../redux/slices/createCategory";
 
-const Categories = ({ show, handleClose }) => {
-  const dispatch = useDispatch();
-  const { categories } = useSelector((state) => state.categories);
-
+const Categories = ({ show, handleClose, onSave, initialData }) => {
   const [categoryName, setCategoryName] = useState("");
   const [image, setImage] = useState(null);
   const [editCategoryId, setEditCategoryId] = useState(null);
 
   useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
-
-  useEffect(() => {
-    // Reset fields when modal opens
-    if (!show) {
+    if (show && initialData) {
+      setCategoryName(initialData.category_name || "");
+      setImage(initialData.p_image || null);
+      setEditCategoryId(initialData.id || null);
+    } else if (!show) {
+      // Reset on close
       setCategoryName("");
       setImage(null);
       setEditCategoryId(null);
     }
-  }, [show]);
+  }, [show, initialData]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
+      reader.onloadend = () => setImage(reader.result);
       reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!categoryName) return;
-
     const categoryData = {
+      id: editCategoryId || Date.now().toString(),
       category_name: categoryName,
-      p_image: image || categories.find(cat => cat._id === editCategoryId)?.p_image,
+      p_image: image,
     };
-
-    if (editCategoryId) {
-      dispatch(updateCategory({ categoryId: editCategoryId, updatedData: categoryData }));
-    } else {
-      dispatch(createCategory(categoryData));
-    }
-
-    handleClose(); // Close after submit
+    onSave(categoryData); // Call parent handler
+    handleClose();
   };
 
   return (
@@ -77,7 +63,11 @@ const Categories = ({ show, handleClose }) => {
 
           {image && (
             <div className="mt-3 text-center">
-              <img src={image} alt="Preview" style={{ maxWidth: "100%", maxHeight: "150px", objectFit: "cover" }} />
+              <img
+                src={image}
+                alt="Preview"
+                style={{ maxWidth: "100%", maxHeight: "150px", objectFit: "cover" }}
+              />
             </div>
           )}
 

@@ -15,10 +15,7 @@ const Productlistsel = ({ products = [], onProductSelect, showModal }) => {
     if (searchQuery) {
       updatedList = updatedList.filter(
         (product) =>
-          product.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.brand?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.device?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.sku?.toLowerCase().includes(searchQuery.toLowerCase())
+          product.name?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
@@ -33,15 +30,6 @@ const Productlistsel = ({ products = [], onProductSelect, showModal }) => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handleSelectProduct = (product) => {
-    onProductSelect((prev) => {
-      const exists = prev.some((p) => p.sku === product.sku);
-      return exists
-        ? prev.filter((p) => p.sku !== product.sku)
-        : [...prev, { ...product, quantity: 1 }];
-    });
-  };
-
   const getStockStatus = (quantity) => {
     if (quantity < 5) return { color: "red", label: "Low Stock" };
     if (quantity <= 10) return { color: "orange", label: "Medium Stock" };
@@ -49,13 +37,13 @@ const Productlistsel = ({ products = [], onProductSelect, showModal }) => {
   };
 
   return (
-    <div className=" p-3 ml-2">
+    <div className="p-3 ml-2">
       <h5 className="my-3">📦 Product List</h5>
 
       <div className="d-flex justify-content-between align-items-center mb-3">
         <input
           type="text"
-          placeholder="Search by Name, Brand, Device, or SKU..."
+          placeholder="Search by Name..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="form-control w-50"
@@ -70,45 +58,48 @@ const Productlistsel = ({ products = [], onProductSelect, showModal }) => {
 
       <div className="table-responsive">
         <table className="table table-bordered table-hover">
-          <thead className="table-light">
-            <tr>
-              <th>Image</th>
-              <th>Product</th>
-              <th>Brand</th>
-              <th>Device</th>
-              <th>Price</th>
-              <th>Qty</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentProducts.map((product) => {
-              const { color } = getStockStatus(product.quantity);
-              return (
-                <tr
-                  key={product.sku}
-                  onClick={() => showModal(product)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <td>
-                    <img
-                      src={product.images?.[0] || "https://via.placeholder.com/80"}
-                      alt="Product"
-                      style={{ width: 50, height: 50 }}
-                    />
-                  </td>
-                  <td>
-                    <small>{product.sku}</small>
-                    <br />
-                    <small>{product.name}</small>
-                  </td>
-                  <td>{product.brand}</td>
-                  <td>{product.device}</td>
-                  <td>A${product.price}</td>
-                  <td style={{ color }}>{product.quantity}</td>
-                </tr>
-              );
-            })}
-          </tbody>
+        <thead className="table-light">
+  <tr>
+    <th>Image</th>
+    <th>Product</th>
+    <th>Brand</th>
+    <th>Device</th>
+    <th>Price</th>
+    <th>Quantity</th>
+
+  </tr>
+</thead>
+
+<tbody>
+  {currentProducts.map((product) => {
+    const { color, label } = getStockStatus(product.quantity || 10);
+    return (
+      <tr
+        key={product._id}
+        onClick={() => showModal(product)}
+        style={{ cursor: "pointer" }}
+      >
+        <td>
+          <img
+            src={product.image || "https://via.placeholder.com/50"}
+            alt={product.name}
+            width="50"
+            height="50"
+            className="rounded"
+          />
+        </td>
+        <td>{product.name}</td>
+        <td>{product.brand || "-"}</td>
+        <td>{product.device || "-"}</td>
+        <td>₹{product.price}</td>
+        <td style={{ color }}>{product.quantity ?? 0} <small>({label})</small></td>
+
+      </tr>
+    );
+  })}
+</tbody>
+
+
         </table>
       </div>
 

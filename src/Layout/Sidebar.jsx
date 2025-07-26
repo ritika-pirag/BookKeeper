@@ -240,28 +240,13 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
       overflowY: "auto",
       flexGrow: 1,
       paddingBottom: "20px",
-      maxHeight: "calc(100vh - 70px)", // subtract header height
+      maxHeight: "calc(100vh - 70px)", 
     }}
   >
     <div className="p-2">{getMenuItems()}</div>
   </div>
   
-      {/* Sticky logout button at bottom */}
-      {/* <div className="p-3">
-        <Link to="/" className="text-decoration-none">
-          <button
-            className="btn btn-outline w-100"
-            style={{
-              borderColor: "#53b2a5",
-              color: "#53b2a5",
-              padding: "8px 16px",
-              fontSize: "15px",
-            }}
-          >
-            <i className="fas fa-sign-out-alt me-2"></i> Logout
-          </button>
-        </Link>
-      </div> */}
+  
     </div>
   );
   

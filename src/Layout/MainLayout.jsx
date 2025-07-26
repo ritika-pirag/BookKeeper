@@ -3,15 +3,13 @@ import { Outlet } from "react-router-dom";
 import Header from "../Layout/Header";
 import Sidebar from "../Layout/Sidebar";
 import './Sidebar.css';
-// import { Button } from "react-bootstrap";
-// import { FaCog } from "react-icons/fa"; 
-// import Settings from "./Settings";
+
 
 const MainLayout = () => {
   const [screenSize, setScreenSize] = useState(getScreenCategory());
   const [sidebarVisible, setSidebarVisible] = useState(screenSize === 'desktop');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
+
 
   function getScreenCategory() {
     const width = window.innerWidth;
@@ -101,40 +99,7 @@ const MainLayout = () => {
           <Outlet />
         </main>
       </div>
-{/* Floating settings button */}
-{/* <div
-  style={{
-    position: "fixed",
-    right: 16,
-    top: "55%",
-    zIndex: 1000,
-  }}
->
-  <Button
-    onClick={() => setShowSettings(true)}
-    style={{
-      backgroundColor: "#53b2a5",
-      border: "none",
-      borderRadius: "50%",
-      width: 48,
-      height: 48,
-      boxShadow: "0 2px 8px #53b2a5",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontSize: 22,
-      padding: 0,
-    }}
-  >
-    <FaCog color="#fff" />
-  </Button>
-</div> */}
 
-{/* Settings Panel */}
-{/* {showSettings && (
-
-  <Settings onClose={() => setShowSettings(false)} />
-)} */}
 
       {/* Offcanvas Sidebar - for mobile and tablet */}
       {(screenSize === 'mobile' || screenSize === 'tablet') && (
