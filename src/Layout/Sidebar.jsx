@@ -102,7 +102,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         ]),
      
         renderFlatSection("GST ", [
-          { to: "/company/taxreport", icon: "fas fa-file-alt", label: "Tax Report" },
+          // { to: "/company/taxreport", icon: "fas fa-file-alt", label: "Tax Report" },
           { to: "/company/gstreturns", icon: "fas fa-file-invoice", label: "GST Returns" },
           { to: "/company/tdstcs", icon: "fas fa-percent", label: "TDS/TCS" },
           { to: "/company/itcreport", icon: "fas fa-file-contract", label: "ITC Report" },

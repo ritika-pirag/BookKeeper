@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import Header from "../Layout/Header";
 import Sidebar from "../Layout/Sidebar";
 import { Button } from "react-bootstrap";
 import { FaCog } from "react-icons/fa";
 import './Sidebar.css';
 import SettingModal from "../Components/SettingModal";
 
-
-const MainLayout = () => {
+const WithoutHeader = () => {
   const [screenSize, setScreenSize] = useState(getScreenCategory());
   const [sidebarVisible, setSidebarVisible] = useState(screenSize === 'desktop');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-
 
   function getScreenCategory() {
     const width = window.innerWidth;
@@ -65,13 +62,8 @@ const MainLayout = () => {
 
   return (
     <div className="main-layout d-flex flex-column min-vh-100">
-      {/* Header */}
-      <header className="fixed-top w-100 z-3">
-        <Header onToggleSidebar={handleToggleSidebar} />
-      </header>
-
       {/* Main Body */}
-      <div className="d-flex" style={{ paddingTop: "65px", flexGrow: 1 }}>
+      <div className="d-flex" style={{ flexGrow: 1 }}>
         {/* Sidebar - visible on desktop */}
         {screenSize === 'desktop' && sidebarVisible && (
           <div
@@ -80,7 +72,7 @@ const MainLayout = () => {
               width: '240px',
               minHeight: '100vh',
               position: 'fixed',
-              top: '65px',
+              top: 0,
               left: 0,
               zIndex: 1
             }}
@@ -93,7 +85,7 @@ const MainLayout = () => {
         <main
           className="flex-grow-1 bg-light"
           style={{
-            minHeight: "calc(100vh - 65px)",
+            minHeight: "100vh",
             overflowX: "hidden",
             padding: "1rem",
             marginLeft: screenSize === 'desktop' && sidebarVisible ? "240px" : "0",
@@ -105,35 +97,34 @@ const MainLayout = () => {
       </div>
 
       <div
-  style={{
-    position: "fixed",
-    right: 16,
-    top: "55%",
-    zIndex: 1000,
-  }}
->
-  <Button
-    onClick={() => setShowSettings(true)}
-    style={{
-      backgroundColor: "#53b2a5",
-      border: "none",
-      borderRadius: "50%",
-      width: 48,
-      height: 48,
-      boxShadow: "0 2px 8px #0001",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontSize: 22,
-      padding: 0,
-    }}
-  >
-    <FaCog color="#fff" />
-  </Button>
-</div>
+        style={{
+          position: "fixed",
+          right: 16,
+          top: "55%",
+          zIndex: 1000,
+        }}
+      >
+        <Button
+          onClick={() => setShowSettings(true)}
+          style={{
+            backgroundColor: "#53b2a5",
+            border: "none",
+            borderRadius: "50%",
+            width: 48,
+            height: 48,
+            boxShadow: "0 2px 8px #0001",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 22,
+            padding: 0,
+          }}
+        >
+          <FaCog color="#fff" />
+        </Button>
+      </div>
 
-
-<SettingModal show={showSettings} handleClose={() => setShowSettings(false)}/>
+      <SettingModal show={showSettings} handleClose={() => setShowSettings(false)}/>
 
       {/* Offcanvas Sidebar - for mobile and tablet */}
       {(screenSize === 'mobile' || screenSize === 'tablet') && (
@@ -155,4 +146,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+export default WithoutHeader;
