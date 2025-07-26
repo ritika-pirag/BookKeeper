@@ -1,66 +1,36 @@
-
-
-
-import React, { useState, useRef, useEffect } from "react";
-import { Form, Button, Row, Col, Card } from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button, Row, Col, Card, Table } from "react-bootstrap";
 
 const productOptions = ["Product A", "Product B", "Product C", "Product D"];
 
 const StockTransfer = () => {
   const [formData, setFormData] = useState({
     transferFrom: "NewYork Warehouse",
-    selectedProducts: {},
-    transferTo: "NewYork Warehouse"
+    transferTo: "Mumbai Warehouse"
   });
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef();
+  const [searchInput, setSearchInput] = useState("");
+  const [transferItems, setTransferItems] = useState([]);
 
-  // 🔒 Close dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const toggleDropdown = () => {
-    setDropdownOpen((prev) => !prev);
+  const handleAddProduct = () => {
+    const name = searchInput.trim();
+    if (!name) return;
+    const exists = transferItems.some((item) => item.name === name);
+    if (exists) return;
+    setTransferItems((prev) => [...prev, { id: Date.now(), name, qty: "" }]);
+    setSearchInput("");
   };
 
-  const handleProductToggle = (product) => {
-    setFormData((prev) => {
-      const selected = { ...prev.selectedProducts };
-      if (selected[product]) {
-        delete selected[product];
-      } else {
-        selected[product] = 1;
-      }
-      return { ...prev, selectedProducts: selected };
-    });
+  const updateQty = (id, qty) => {
+    setTransferItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, qty: qty === "" ? "" : Math.max(1, parseInt(qty) || "") } : item
+      )
+    );
   };
 
-  const handleSelectAll = () => {
-    setFormData((prev) => {
-      const allSelected = Object.keys(prev.selectedProducts).length === productOptions.length;
-      const selected = allSelected
-        ? {}
-        : Object.fromEntries(productOptions.map((p) => [p, 1]));
-      return { ...prev, selectedProducts: selected };
-    });
-  };
-
-  const handleQuantityChange = (product, qty) => {
-    setFormData((prev) => ({
-      ...prev,
-      selectedProducts: {
-        ...prev.selectedProducts,
-        [product]: Math.max(1, parseInt(qty) || 1)
-      }
-    }));
+  const removeItem = (id) => {
+    setTransferItems((prev) => prev.filter((item) => item.id !== id));
   };
 
   const handleChange = (e) => {
@@ -70,7 +40,17 @@ const StockTransfer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Stock Transfer Submitted:", formData);
+    if (transferItems.some((item) => item.qty === "")) {
+      alert("Please enter quantity for all products.");
+      return;
+    }
+
+    const payload = {
+      ...formData,
+      products: transferItems.map(({ id, name, qty }) => ({ name, quantity: qty }))
+    };
+    console.log("Final Payload:", payload);
+    // Submit to backend here
   };
 
   return (
@@ -78,8 +58,7 @@ const StockTransfer = () => {
       <Card className="p-4 w-100" style={{ backgroundColor: "#fff", borderRadius: 8 }}>
         <h5 style={{ color: "#002d4d", marginBottom: 24 }}>Stock Transfer</h5>
         <Form onSubmit={handleSubmit}>
-
-          {/* 🔁 Transfer From */}
+          {/* 🚚 Transfer From */}
           <Row className="mb-3">
             <Form.Label column sm={2}>Transfer From</Form.Label>
             <Col sm={10}>
@@ -91,72 +70,63 @@ const StockTransfer = () => {
             </Col>
           </Row>
 
-          {/* 📦 Product Dropdown with Quantity Inputs */}
-          <Row className="mb-3">
-            <Form.Label column sm={2}>Products</Form.Label>
-            <Col sm={10}>
-              <div ref={dropdownRef} style={{ position: "relative" }}>
-                <Button variant="outline-secondary" onClick={toggleDropdown}>
-                  {Object.keys(formData.selectedProducts).length > 0
-                    ? `${Object.keys(formData.selectedProducts).length} selected`
-                    : "Select Products"}
-                </Button>
-
-                {dropdownOpen && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "100%",
-                      left: 0,
-                      zIndex: 999,
-                      backgroundColor: "#fff",
-                      border: "1px solid #ccc",
-                      borderRadius: 4,
-                      padding: 10,
-                      width: "100%",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.15)"
-                    }}
-                  >
-                    <Form.Check
-                      type="checkbox"
-                      label="Select All"
-                      checked={Object.keys(formData.selectedProducts).length === productOptions.length}
-                      onChange={handleSelectAll}
-                    />
-
-                    {productOptions.map((product, index) => {
-                      const isChecked = product in formData.selectedProducts;
-                      return (
-                        <div key={index} className="d-flex align-items-center gap-3 mt-2 ms-3">
-                          <Form.Check
-                            type="checkbox"
-                            label={product}
-                            checked={isChecked}
-                            onChange={() => handleProductToggle(product)}
-                          />
-                          {isChecked && (
-                            <div className="d-flex align-items-center">
-                              <span style={{ fontSize: "0.9rem", marginRight: 6 }}>Qty:</span>
-                              <Form.Control
-                                type="number"
-                                value={formData.selectedProducts[product]}
-                                min="1"
-                                placeholder="Qty"
-                                style={{ width: "80px" }}
-                                onChange={(e) => handleQuantityChange(product, e.target.value)}
-                              />
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
+          {/* 🔍 Product Search + Add */}
+          <Row className="mb-3 align-items-center">
+            <Form.Label column sm={2}>Search Product</Form.Label>
+            <Col sm={7}>
+              <Form.Control
+                type="text"
+                placeholder="Type product name"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+            </Col>
+            <Col sm={3}>
+              <Button variant="secondary" onClick={handleAddProduct}>Add Product</Button>
             </Col>
           </Row>
 
-          {/* 🎯 Transfer To */}
+          {/* 🧾 Product Table */}
+          {transferItems.length > 0 && (
+            <Row className="mb-3">
+              <Col>
+                <Table bordered striped hover>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {transferItems.map((item, index) => (
+                      <tr key={item.id}>
+                        <td>{index + 1}</td>
+                        <td>{item.name}</td>
+                        <td className="d-flex align-items-center gap-2">
+                          <Form.Control
+                            type="number"
+                            value={item.qty}
+                            min="1"
+                            placeholder="Qty"
+                            style={{ width: "80px" }}
+                            onChange={(e) => updateQty(item.id, e.target.value)}
+                          />
+                          <span style={{ fontSize: "0.9rem", color: "#666" }}>pcs</span>
+                        </td>
+                        <td>
+                          <Button variant="danger" size="sm" onClick={() => removeItem(item.id)}>X</Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Col>
+            </Row>
+          )}
+
+          {/* 📦 Transfer To */}
           <Row className="mb-4">
             <Form.Label column sm={2}>Transfer To</Form.Label>
             <Col sm={10}>
@@ -168,18 +138,10 @@ const StockTransfer = () => {
             </Col>
           </Row>
 
-          {/* 🚀 Submit */}
+          {/* 📤 Submit */}
           <div className="text-end">
-            <Button
-              type="submit"
-              style={{
-                backgroundColor: "#002d4d",
-                border: "none",
-                padding: "8px 24px",
-                fontWeight: 600,
-              }}
-            >
-              Save
+            <Button type="submit" style={{ backgroundColor: "#002d4d", border: "none", padding: "8px 24px", fontWeight: 600 }}>
+              Save Transfer
             </Button>
           </div>
         </Form>
