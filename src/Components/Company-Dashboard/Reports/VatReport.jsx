@@ -57,12 +57,12 @@ const VatReport = () => {
     <div className="p-4 mt-4">
       <h4 className="fw-bold">GCC VAT Return Report</h4>
       <p className="text-muted mb-4">
-        Auto-generated VAT summary .
+        Auto-generated VAT summary.
       </p>
 
       {/* 🔍 Filter Section */}
       <div className="shadow-sm rounded-4 p-4 mb-4 bg-light">
-        <Row className="g-3">
+        <Row className="g-3 align-items-end">
           <Col md={4}>
             <Form.Label className="fw-semibold">Choose Date</Form.Label>
             <DatePicker
@@ -83,8 +83,17 @@ const VatReport = () => {
               ))}
             </Form.Select>
           </Col>
-          <Col md={4} className="d-flex align-items-end">
-            <Button variant="warning" className="w-100">
+          <Col md={4}>
+            <Button
+              variant="" // remove default variant
+              style={{
+                backgroundColor: "#27b2b6",
+                borderColor: "#27b2b6",
+                color: "white",
+                width: "100%",
+              }}
+              className="py-2"
+            >
               Generate Report
             </Button>
           </Col>
