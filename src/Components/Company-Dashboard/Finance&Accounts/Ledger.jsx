@@ -250,3 +250,151 @@ const Ledger = () => {
 };
 
 export default Ledger;
+
+
+
+
+// import React, { useState, useEffect } from "react";
+// import { Form, Button, Row, Col, Card, Table } from "react-bootstrap";
+
+// const parties = [
+//   { id: "cust123", name: "ABC Ltd", type: "Customer" },
+//   { id: "supp456", name: "Supply One", type: "Supplier" },
+//   { id: "cust789", name: "XYZ Pvt Ltd", type: "Customer" }
+// ];
+
+// const Ledger = () => {
+//   const [selectedParty, setSelectedParty] = useState(null);
+//   const [ledgerData, setLedgerData] = useState([]);
+//   const [dateRange, setDateRange] = useState({
+//     from: "",
+//     to: ""
+//   });
+
+//   const handlePartyChange = (e) => {
+//     const id = e.target.value;
+//     const party = parties.find((p) => p.id === id);
+//     setSelectedParty(party || null);
+//   };
+
+//   const fetchLedger = () => {
+//     if (!selectedParty || !dateRange.from || !dateRange.to) return;
+
+//     // 🔁 Replace with API call
+//     const dummyLedger = [
+//       { date: "2024-01-01", voucher: "Sale #1001", debit: 500, credit: 0 },
+//       { date: "2024-01-05", voucher: "Payment", debit: 0, credit: 300 },
+//       { date: "2024-01-10", voucher: "Sale #1002", debit: 400, credit: 0 }
+//     ];
+//     setLedgerData(dummyLedger);
+//   };
+
+//   const getBalance = () => {
+//     let totalDr = 0, totalCr = 0;
+//     ledgerData.forEach((entry) => {
+//       totalDr += entry.debit;
+//       totalCr += entry.credit;
+//     });
+//     const closing = totalDr - totalCr;
+//     return {
+//       totalDr,
+//       totalCr,
+//       closing
+//     };
+//   };
+
+//   const { totalDr, totalCr, closing } = getBalance();
+
+//   return (
+//     <div className="py-4 px-4" style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+//       <Card className="p-4 w-100" style={{ backgroundColor: "#fff", borderRadius: 8 }}>
+//         <h5 style={{ color: "#002d4d", marginBottom: 24 }}>Ledger Report</h5>
+
+//         {/* 🔎 Filter Section */}
+//         <Row className="mb-3">
+//           <Form.Label column sm={2}>Party</Form.Label>
+//           <Col sm={4}>
+//             <Form.Select onChange={handlePartyChange}>
+//               <option value="">Select Customer/Supplier</option>
+//               {parties.map((p) => (
+//                 <option key={p.id} value={p.id}>
+//                   {p.name} ({p.type})
+//                 </option>
+//               ))}
+//             </Form.Select>
+//           </Col>
+
+//           <Form.Label column sm={1}>From</Form.Label>
+//           <Col sm={2}>
+//             <Form.Control
+//               type="date"
+//               value={dateRange.from}
+//               onChange={(e) => setDateRange({ ...dateRange, from: e.target.value })}
+//             />
+//           </Col>
+
+//           <Form.Label column sm={1}>To</Form.Label>
+//           <Col sm={2}>
+//             <Form.Control
+//               type="date"
+//               value={dateRange.to}
+//               onChange={(e) => setDateRange({ ...dateRange, to: e.target.value })}
+//             />
+//           </Col>
+//         </Row>
+
+//         {/* 🔘 Load Report */}
+//         <div className="text-end mb-3">
+//           <Button variant="primary" onClick={fetchLedger}>
+//             Load Ledger
+//           </Button>
+//         </div>
+
+//         {/* 📊 Table */}
+//         {selectedParty && ledgerData.length > 0 && (
+//           <>
+//             <h6 style={{ marginBottom: 12, color: "#444" }}>
+//               Ledger Report for: <strong>{selectedParty.name}</strong> ({selectedParty.type})
+//             </h6>
+
+//             <Table bordered striped hover responsive>
+//               <thead>
+//                 <tr>
+//                   <th>Date</th>
+//                   <th>Voucher</th>
+//                   <th>Debit</th>
+//                   <th>Credit</th>
+//                   <th>Balance</th>
+//                 </tr>
+//               </thead>
+//               <tbody>
+//                 {ledgerData.map((entry, index) => {
+//                   const balance = ledgerData
+//                     .slice(0, index + 1)
+//                     .reduce((acc, val) => acc + val.debit - val.credit, 0);
+//                   return (
+//                     <tr key={index}>
+//                       <td>{entry.date}</td>
+//                       <td>{entry.voucher}</td>
+//                       <td>{entry.debit || "-"}</td>
+//                       <td>{entry.credit || "-"}</td>
+//                       <td>{balance}</td>
+//                     </tr>
+//                   );
+//                 })}
+//                 <tr style={{ backgroundColor: "#eef" }}>
+//                   <td colSpan={2}><strong>Total</strong></td>
+//                   <td><strong>{totalDr}</strong></td>
+//                   <td><strong>{totalCr}</strong></td>
+//                   <td><strong>{closing}</strong></td>
+//                 </tr>
+//               </tbody>
+//             </Table>
+//           </>
+//         )}
+//       </Card>
+//     </div>
+//   );
+// };
+
+// export default Ledger;
