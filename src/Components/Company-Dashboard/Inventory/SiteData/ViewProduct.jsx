@@ -1,25 +1,34 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { fetchProducts } from "../../../../redux/slices/productSlice";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Loader from "../../../LayOut/Loader";
+import axios from "axios"; // Assuming you fetch from API
 
 const ViewProduct = () => {
-  const dispatch = useDispatch();
   const { id } = useParams();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const { products, loading } = useSelector((state) => state.product || {});
-
+  // Fetch products from API
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("/api/products"); // replace with actual API URL
+        setProducts(res.data);
+      } catch (error) {
+        console.error("Failed to fetch products", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const product = products?.data?.find((item) => item._id === id);
-  console.log(product);
+    fetchData();
+  }, []);
+
+  const product = products?.find((item) => item._id === id);
 
   if (loading) return <Loader />;
-  if (!products || !products.data?.length)
+  if (!products || products.length === 0)
     return <p className="text-danger text-center">No products available</p>;
   if (!product)
     return <p className="text-warning text-center">Product not found</p>;
@@ -68,14 +77,11 @@ const ViewProduct = () => {
                     <th>SKU</th>
                     <td>{product.sku || "N/A"}</td>
                   </tr>
-
                   <tr>
                     <th>Warranty</th>
                     <td>
                       {product.warranty
-                        ? `${product.warranty} (${
-                            product.warrantyPeriod || 0
-                          } months)`
+                        ? `${product.warranty} (${product.warrantyPeriod || 0} months)`
                         : "N/A"}
                     </td>
                   </tr>
