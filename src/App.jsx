@@ -147,6 +147,8 @@ import PurchaseVoucherView from "./Components/Company-Dashboard/Inventory/Purcha
 import SalesVoucherView from "./Components/Company-Dashboard/Inventory/SalesVoucherView";
 import AddProduct from "./Components/Company-Dashboard/Inventory/Product/AddProduct";
 import SettingModal from "./Components/SettingModal";
+import PaymentEntry from "./Components/Company-Dashboard/Accounts/PaymentEntry";
+import ReceiptEntry from "./Components/Company-Dashboard/Accounts/ReceiptEntry";
 
 
 
@@ -181,6 +183,8 @@ function App() {
           <Route path="/company/allacounts" element={<AllAcounts/>} />
            <Route path="/company/customersdebtors" element={<CustomersDebtors/>} />
           <Route path="/company/vendorscreditors" element={<VendorsCreditors/>} />
+          <Route path="/company/receiptentry" element={<ReceiptEntry/>} />
+          <Route path="/company/paymententry" element={<PaymentEntry/>} />
 
 
           {/* Inventory */}
