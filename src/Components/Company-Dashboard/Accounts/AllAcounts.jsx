@@ -1727,19 +1727,32 @@ const AllAccounts = () => {
                   }
                   disabled={loadingParentAccounts} // Optional: Disable while loading
                 >
-                  <option value="">-- Select Parent Account --</option>
+                  <option value="">Select Parent Account</option>
                   {/* ✅ FIXED: parentAccounts.map now works */}
                   {parentAccounts.map((acc) => (
                     <option key={acc._id} value={acc._id}>{acc.name}</option>
                   ))}
                 </Form.Select>
                 <Button
-                  variant="outline-primary"
-                  size="sm"
-                  onClick={() => setShowMainAccountModal(true)}
-                >
-                  + Add Main Account
-                </Button>
+  size="sm"
+  onClick={() => setShowMainAccountModal(true)}
+  style={{
+    color: "#53b2a5",
+    border: "1px solid #53b2a5",
+    backgroundColor: "transparent",
+  }}
+  onMouseOver={(e) => {
+    e.target.style.backgroundColor = "#53b2a5";
+    e.target.style.color = "white";
+  }}
+  onMouseOut={(e) => {
+    e.target.style.backgroundColor = "transparent";
+    e.target.style.color = "#53b2a5";
+  }}
+>
+  Add Main Account
+</Button>
+
               </div>
               <Form.Text className="text-muted">
                 Leave parent blank if creating top-level account.

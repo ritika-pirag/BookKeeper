@@ -52,13 +52,14 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
       SuperAdmin: [
         renderFlatSection("Admin Dashboard", [
           { to: "/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" },
-        ]),
-        renderFlatSection("Plans", [
           { to: "/superadmin/company", icon: "fas fa-building", label: "Company" },
           { to: "/superadmin/planpricing", icon: "fas fa-tags", label: "Plans & Pricing" },
           { to: "/superadmin/requestplan", icon: "fas fa-envelope-open", label: "Request Plan" },
           { to: "/superadmin/payments", icon: "fas fa-credit-card", label: "Payments" },
-        ])
+        ]),
+
+     
+     
       ],
 
       Company: [
@@ -67,10 +68,12 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         ]),
         renderFlatSection("Accounts", [
           { to: "/company/allacounts", icon: "fas fa-calendar-day", label: "All Accounts" },
-          { to: "/company/customersdebtors", icon: "fas fa-money-bill", label: "Customers/Debtors" },
-          { to: "/company/vendorscreditors", icon: "fas fa-book", label: "Vendors/Creditors" },
-
+          { to: "/company/customersdebtors", icon: "fas fa-hand-holding-usd", label: "Customers/Debtors" },
+          { to: "/company/vendorscreditors", icon: "fas fa-user-tie", label: "Vendors/Creditors" },
+          { to: "/company/receiptentry", icon: "fas fa-receipt", label: "Receipt Entry" },
+          { to: "/company/paymententry", icon: "fas fa-money-check-alt", label: "Payment Entry" },
         ]),
+        
 
         renderFlatSection("Inventory", [
  
@@ -102,7 +105,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         ]),
      
         renderFlatSection("GST ", [
-          { to: "/company/taxreport", icon: "fas fa-file-alt", label: "Tax Report" },
+          // { to: "/company/taxreport", icon: "fas fa-file-alt", label: "Tax Report" },
           { to: "/company/gstreturns", icon: "fas fa-file-invoice", label: "GST Returns" },
           { to: "/company/tdstcs", icon: "fas fa-percent", label: "TDS/TCS" },
           { to: "/company/itcreport", icon: "fas fa-file-contract", label: "ITC Report" },
@@ -246,7 +249,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
   >
     <div className="p-2">{getMenuItems()}</div>
   </div>
-  
+   
   
     </div>
   );

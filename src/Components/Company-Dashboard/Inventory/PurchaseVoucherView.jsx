@@ -1,20 +1,29 @@
-import React from "react";
-import { Row, Col, Table, Card, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Row, Col, Table, Card, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const PurchaseVoucherView = () => {
   const navigate = useNavigate();
 
+  // 🧾 Vendor List (demo)
+  const vendorList = [
+    "Tech Traders",
+    "Om Electronics",
+    "Global Suppliers",
+    "Dev Hardware Store",
+    "Mahadev Equipments",
+  ];
+
   // Demo pre-filled data for purchase voucher
-  const voucher = {
+  const [voucher, setVoucher] = useState({
     invoiceNo: "PUR-2001",
     voucherDate: "2025-07-24",
     dueDate: "2025-07-30",
-    supplier: "Tech Traders",
+    supplier: "Tech Traders", // now treated as vendor
     purchaseAccount: "Purchases - IT Hardware",
     placeOfSupply: "Indore, MP",
     referenceNo: "REF-5678",
-  };
+  });
 
   const items = [
     {
@@ -44,7 +53,7 @@ const PurchaseVoucherView = () => {
   return (
     <Card className="p-4 mt-3">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h4 className="mb-0">Purchase Voucher </h4>
+        <h4 className="mb-0">Purchase Voucher</h4>
         <Button variant="secondary" onClick={() => navigate(-1)}>
           ← Back
         </Button>
@@ -54,7 +63,20 @@ const PurchaseVoucherView = () => {
         <Col md={3}><strong>Invoice No:</strong> {voucher.invoiceNo || "--"}</Col>
         <Col md={3}><strong>Voucher Date:</strong> {voucher.voucherDate || "--"}</Col>
         <Col md={3}><strong>Due Date:</strong> {voucher.dueDate || "--"}</Col>
-        <Col md={3}><strong>Supplier:</strong> {voucher.supplier || "--"}</Col>
+        <Col md={3}>
+          <strong>Vendor:</strong>{" "}
+          <Form.Select
+            size="sm"
+            value={voucher.supplier}
+            disabled
+          >
+            {vendorList.map((v, idx) => (
+              <option key={idx} value={v}>
+                {v}
+              </option>
+            ))}
+          </Form.Select>
+        </Col>
       </Row>
 
       <Row className="mb-4">

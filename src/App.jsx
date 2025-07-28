@@ -28,24 +28,23 @@ import SalesOrder  from "./Components/Company-Dashboard/Sales/SalesOrder";
 import SalesDelivery from "./Components/Company-Dashboard/Sales/SalesDelivery";
 import SalesReturn  from "./Components/Company-Dashboard/Sales/SalesReturn";
 
-import AccountStatement from "./Components/Company-Dashboard/Payments/AccountStatement";
-import Coupons from "./Components/Company-Dashboard/Payments/Coupons";
-import TaxReport from "./Components/Company-Dashboard/GST/TaxReport ";
-import Customer from "./Components/Company-Dashboard/Sales/Customer";
+
+
+
 
 import GSTReturns from "./Components/Company-Dashboard/GST/GSTReturns";
 import TdsTcs from "./Components/Company-Dashboard/GST/TdsTcs";
 import ITCReport from "./Components/Company-Dashboard/GST/ITCReport";
 import EWayBill from "./Components/Company-Dashboard/GST/EWayBill";
 
-import Vendors from "./Components/Company-Dashboard/Purchases/Vendors";
+
 import PurchaseReturn from "./Components/Company-Dashboard/Purchases/PurchaseReturn";
-import DayBook from "./Components/Company-Dashboard/Finance&Accounts/DayBook";
-import Expense from "./Components/Company-Dashboard/Finance&Accounts/Expense";
-import JournalEntries from "./Components/Company-Dashboard/Finance&Accounts/JournalEntries";
-import Ledger from "./Components/Company-Dashboard/Finance&Accounts/Ledger";
-import TrialBalance from "./Components/Company-Dashboard/Finance&Accounts/TrialBalance";
-import CustomerList from "./Components/Company-Dashboard/ClientsVendors/CustomerList";
+import DayBook from "./Components/Company-Dashboard/Reports/DayBook";
+import Expense from "./Components/Company-Dashboard/Reports/Expense";
+import JournalEntries from "./Components/Company-Dashboard/Reports/JournalEntries";
+import Ledger from "./Components/Company-Dashboard/Reports/Ledger";
+import TrialBalance from "./Components/Company-Dashboard/Reports/TrialBalance";
+
 
 import CreateVoucher from "./Components/Company-Dashboard/Inventory/CreateVoucher";
 import Taxreport from "./Components/Company-Dashboard/Reports/Taxreports";
@@ -58,7 +57,7 @@ import Users from "./Components/Company-Dashboard/UserManagement/Users";
 import RolesPermissions from "./Components/Company-Dashboard/UserManagement/RolesPermissions";
 import DeleteAccountRequest from "./Components/Company-Dashboard/UserManagement/DeleteAccountRequest";
 import CompanyInfo from "./Components/Company-Dashboard/Settings/CompanyInfo";
-import LanguageSetting from "./Components/Company-Dashboard/Settings/LanguageSetting";
+
 import UserDashboard from "./Components/User-Dashboard/UserDashboard";
 import Productts from "./Components/User-Dashboard/Inventory/Product";
 import ManageProduct from "./Components/User-Dashboard/Inventory/MangeProduct";
@@ -122,7 +121,7 @@ import WareHouse from "./Components/Company-Dashboard/Inventory/SiteData/WareHou
 import BrandPage from "./Components/Company-Dashboard/Inventory/SiteData/BrandPage";
 
 import Productt from "./Components/Company-Dashboard/Inventory/Productt";
-import AddProduct from "./Components/Company-Dashboard/Inventory/Product/AddProduct";
+
 import DevicePage from "./Components/Company-Dashboard/Inventory/SiteData/DevicePage";
 
 import StockTransfer from "./Components/Company-Dashboard/Inventory/SiteData/StockTransfer";
@@ -146,8 +145,11 @@ import PurchaseVoucher from "./Components/Company-Dashboard/Inventory/PurchaseVo
 import SalesVoucher from "./Components/Company-Dashboard/Inventory/SalesVoucher";
 import PurchaseVoucherView from "./Components/Company-Dashboard/Inventory/PurchaseVoucherView";
 import SalesVoucherView from "./Components/Company-Dashboard/Inventory/SalesVoucherView";
+import AddProduct from "./Components/Company-Dashboard/Inventory/Product/AddProduct";
+import SettingModal from "./Components/SettingModal";
+import PaymentEntry from "./Components/Company-Dashboard/Accounts/PaymentEntry";
+import ReceiptEntry from "./Components/Company-Dashboard/Accounts/ReceiptEntry";
 
-import InvoiceTemplate from "./Components/Company-Dashboard/Settings/InvoiceTemplate";
 
 
 
@@ -160,7 +162,7 @@ function App() {
         {/* Public routes without sidebar */}
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-
+        <Route path="/settingmodal" element={<SettingModal/>} />
 
    
         {/* Admin Dashboard routes with MainLayout */}
@@ -181,6 +183,8 @@ function App() {
           <Route path="/company/allacounts" element={<AllAcounts/>} />
            <Route path="/company/customersdebtors" element={<CustomersDebtors/>} />
           <Route path="/company/vendorscreditors" element={<VendorsCreditors/>} />
+          <Route path="/company/receiptentry" element={<ReceiptEntry/>} />
+          <Route path="/company/paymententry" element={<PaymentEntry/>} />
 
 
           {/* Inventory */}
@@ -215,7 +219,7 @@ function App() {
           <Route path="/company/manageinvoice" element={<ManageInvoices/>} />
           <Route path="/company/editinvoice" element={<EditInvoice/>} />
           <Route path="/company/viewinvoice" element={<ViewInvoice/>} />
-          <Route path="/company/customer" element={<Customer/>} />
+
         
           {/* Sales */}
           <Route path="/company/invoice" element={<Invoice />} />
@@ -227,13 +231,7 @@ function App() {
       
          
 
-          {/* Payments */}
-          <Route path="/company/coupons" element={<Coupons />} />
-          <Route
-            path="/company/accountstatement"
-            element={<AccountStatement />}
-          />
-
+        
           {/* GST Filing */}
  
           <Route path="/company/gstreturns" element={<GSTReturns />} />
@@ -242,7 +240,7 @@ function App() {
           <Route path="/company/ewaybill" element={<EWayBill />} />
 
           {/* Purchases */}
-          <Route path="/company/vendors" element={<Vendors />} />
+
           
 
           <Route path="/company/bill" element={<Bill/>} />
@@ -258,7 +256,7 @@ function App() {
           <Route path="/company/trialbalance" element={<TrialBalance />} />
 
           {/* Clients / Vendors */}
-          <Route path="/company/customers" element={<CustomerList />} />
+  
 
           {/* Reports */}
   
@@ -283,9 +281,8 @@ function App() {
 
           {/* Settings */}
           <Route path="/company/companyinfo" element={<CompanyInfo />} />
-          <Route path="/company/invoicetemplate" element={<InvoiceTemplate/>} />
-          <Route path="/company/languages" element={<LanguageSetting />} />
 
+  
         </Route>
 
         {/* User Dashboard routes with MainLayout */}

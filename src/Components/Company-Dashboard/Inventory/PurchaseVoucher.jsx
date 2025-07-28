@@ -3,13 +3,13 @@ import { Row, Col, Form, Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const PurchaseVoucher = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [voucher, setVoucher] = useState({
     invoiceNo: "",
     voucherDate: "",
     dueDate: "",
-    supplier: "",
+    supplier: "", // Now used as Vendor
     purchaseAccount: "",
     placeOfSupply: "",
     referenceNo: "",
@@ -29,6 +29,8 @@ const PurchaseVoucher = () => {
   const [totalAmount, setTotalAmount] = useState(0);
 
   const availableItems = ["Maggi", "Aata Noodles", "Rice", "Oil", "Tea"];
+
+  const vendorList = ["Global Traders", "Sunrise Suppliers", "Shree Enterprises", "TechZone", "Om Bhandar"];
 
   const handleVoucherChange = (e) => {
     setVoucher({ ...voucher, [e.target.name]: e.target.value });
@@ -103,20 +105,15 @@ const PurchaseVoucher = () => {
     };
     console.log("Saving Purchase Voucher:", payload);
     alert("Voucher saved (check console for data).");
-    // API integration can be added here
   };
 
   return (
-    
     <div className="p-4 card">
-
-
-<div className="d-flex justify-content-between align-items-center mb-3">
-  <Button variant="light" onClick={() => navigate(-1)}>
-    ← Back
-  </Button>
-
-</div>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <Button variant="light" onClick={() => navigate(-1)}>
+          ← Back
+        </Button>
+      </div>
 
       <h4>Purchase Voucher</h4>
 
@@ -156,12 +153,19 @@ const PurchaseVoucher = () => {
           </Col>
           <Col md={3}>
             <Form.Group>
-              <Form.Label>Supplier</Form.Label>
-              <Form.Control
+              <Form.Label>Vendor</Form.Label>
+              <Form.Select
                 name="supplier"
                 value={voucher.supplier}
                 onChange={handleVoucherChange}
-              />
+              >
+                <option value="">-- Select Vendor --</option>
+                {vendorList.map((v, idx) => (
+                  <option key={idx} value={v}>
+                    {v}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>

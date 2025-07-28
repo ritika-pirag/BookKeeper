@@ -36,7 +36,7 @@ const ProfileModal = ({ show, handleClose }) => {
   return (
     <Modal show={show} onHide={handleClose} size="xl" centered>
       <Modal.Header closeButton>
-        <Modal.Title>User Profile</Modal.Title>
+        <Modal.Title>Profile</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="p-3">
