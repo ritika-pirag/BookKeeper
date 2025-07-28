@@ -124,6 +124,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           { to: "/company/expense", icon: "fas fa-money-bill", label: "Expenses" },
           { to: "/company/journalentries", icon: "fas fa-book", label: "Journal Entries" },
           { to: "/company/ledger", icon: "fas fa-layer-group", label: "Ledger" },
+          { to: "/company/trialbalance", icon: "fas fa-layer-group", label: "Trial Balance" },
 
         ]),
         renderFlatSection("User Management", [
