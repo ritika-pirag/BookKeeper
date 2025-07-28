@@ -247,9 +247,10 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
     }}
   >
     <div className="p-2">{getMenuItems()}</div>
+
   </div>
    
-  
+
     </div>
   );
   

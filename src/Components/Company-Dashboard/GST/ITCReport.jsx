@@ -68,7 +68,7 @@ const ITCReport = () => (
       </h3>
       <Row className="g-3 mb-4">
         <Col xs={12} sm={6} md={3}>
-          <Card className="shadow-sm text-center" style={{ padding: 0, height: "auto" }}>
+          <Card className="text-center" style={{ padding: 0, height: "auto" }}>
             <Card.Body style={{ padding: 16 }}>
               <div
                 style={{
@@ -171,22 +171,27 @@ const ITCReport = () => (
         </Col>
       </Row>
 
-      <Card className="shadow-sm mt-4">
+      <Card className=" mt-4">
         <Card.Body>
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
             <div style={{ fontWeight: 600, fontSize: 20 }}>
               Input Tax Credit Report
             </div>
-            <div>
-              <Button
-                
-                size="sm"
-                style={{ backgroundColor:"#3daaaa",borderColor:"#3daaaa",fontWeight: 500 }}
-              >
-                <FaArrowDown style={{ marginRight: 4 }} />
-                Export
-              </Button>
-            </div>
+            <div className="d-flex justify-content-end mb-3">
+  <Button
+    size="sm"
+    className="d-flex align-items-center"
+    style={{
+      backgroundColor: "#3daaaa",
+      borderColor: "#3daaaa",
+      fontWeight: 500,
+    }}
+  >
+    <FaArrowDown className="me-2" />
+    Export
+  </Button>
+</div>
+
           </div>
           <div style={{ overflowX: "auto" }}>
             <Table responsive hover className="align-middle mb-0">

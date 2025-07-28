@@ -73,7 +73,12 @@ const Categories = ({ show, handleClose, onSave, initialData }) => {
 
           <div className="d-flex justify-content-end mt-3">
             <Button variant="secondary" onClick={handleClose}>Close</Button>
-            <Button variant="primary" type="submit" className="ms-2">
+            <Button variant="primary" type="submit" className="ms-2"                style={{
+            backgroundColor: "#53b2a5",
+            border: "none",
+            display: "flex",
+            alignItems: "center",
+          }}>
               {editCategoryId ? "Update" : "Create"}
             </Button>
           </div>
