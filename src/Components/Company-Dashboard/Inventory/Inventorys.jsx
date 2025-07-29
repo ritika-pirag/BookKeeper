@@ -114,12 +114,13 @@ const InventoryItems = () => {
       salePriceInclusive: 115,
       discount: 5,
       category: "default",
+      itemCategory: "Furniture",
+      itemType: 'Good',
       subcategory: "default",
       remarks: "Internal only",
       image: null,
       status: "In Stock",
       warehouse: "Main Warehouse",
-
     },
     {
       itemName: "Out of Stock Item",
@@ -145,9 +146,11 @@ const InventoryItems = () => {
       image: null,
       status: "Out of Stock",
       warehouse: "Backup Warehouse",
+      itemCategory: "Electronics",
+      itemType: 'Service',
     }
   ]);
-  
+
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
@@ -155,6 +158,30 @@ const InventoryItems = () => {
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
+  const [newCategory, setNewCategory] = useState("");
+  const [categories, setCategories] = useState([
+    "Electronics",
+    "Furniture",
+    "Apparel",
+    "Food",
+    "Books",
+    "Automotive",
+    "Medical",
+    "Software",
+    "Stationery",
+    "Other",
+  ]);
+
+  const handleAddCategory = () => {
+    const trimmed = newCategory.trim();
+    if (trimmed && !categories.includes(trimmed)) {
+      setCategories((prev) => [...prev, trimmed]);
+      setNewItem((prev) => ({ ...prev, itemCategory: trimmed }));
+    }
+    setNewCategory("");
+    setShowAddCategoryModal(false);
+  };
 
   const [newItem, setNewItem] = useState({
     itemName: "",
@@ -178,7 +205,9 @@ const InventoryItems = () => {
     subcategory: "default",
     remarks: "",
     image: null,
-    status: "In Stock"
+    status: "In Stock",
+    itemType: "Good", // New field for item type
+    itemCategory: "" // New field for item category
   });
 
   const handleChange = (e) => {
@@ -208,7 +237,7 @@ const InventoryItems = () => {
     updatedItems[index].status = value;
     setItems(updatedItems);
   };
-  
+
   const handleDeleteItem = () => {
     setItems(items.filter((i) => i !== selectedItem));
     setShowDelete(false);
@@ -258,68 +287,68 @@ const InventoryItems = () => {
 
   return (
     <div className="mt-4 p-2">
-<Row className="align-items-center mb-3 ">
-  <Col md={4}>
-    <h4 className="fw-bold mb-0">Inventory Items</h4>
-  </Col>
-  <Col md={8} className="text-md-end d-flex flex-wrap gap-2 justify-content-md-end">
-    <Button
-      style={{
-        backgroundColor: '#00c78c',
-        border: 'none',
-        color: '#fff',
-        padding: '6px 16px',
-      }}
-      onClick={handleImportClick}
-    >
-      Import
-    </Button>
-    <input
-      type="file"
-      accept=".xlsx, .xls"
-      ref={(ref) => (window.importFileRef = ref)}
-      onChange={handleImport}
-      style={{ display: 'none' }}
-    />
-    <Button
-      style={{
-        backgroundColor: '#ff7e00',
-        border: 'none',
-        color: '#fff',
-        padding: '6px 16px',
-      }}
-      onClick={handleExport}
-    >
-      Export
-    </Button>
-    <Button
-      style={{
-        backgroundColor: '#f6c100',
-        border: 'none',
-        color: '#000',
-        padding: '6px 16px',
-      }}
-      onClick={handleDownloadTemplate}
-    >
-      Download Template
-    </Button>
-    <Button
-      style={{
-        backgroundColor: '#27b2b6',
-        border: 'none',
-        color: '#fff',
-        padding: '6px 16px',
-      }}
-      onClick={() => {
-        setNewItem({ ...newItem });
-        setShowAdd(true);
-      }}
-    >
-      
-      Add Item
-    </Button>
-  </Col>
-</Row>
+      <Row className="align-items-center mb-3 ">
+        <Col md={4}>
+          <h4 className="fw-bold mb-0">Inventory Items</h4>
+        </Col>
+        <Col md={8} className="text-md-end d-flex flex-wrap gap-2 justify-content-md-end">
+          <Button
+            style={{
+              backgroundColor: '#00c78c',
+              border: 'none',
+              color: '#fff',
+              padding: '6px 16px',
+            }}
+            onClick={handleImportClick}
+          >
+            Import
+          </Button>
+          <input
+            type="file"
+            accept=".xlsx, .xls"
+            ref={(ref) => (window.importFileRef = ref)}
+            onChange={handleImport}
+            style={{ display: 'none' }}
+          />
+          <Button
+            style={{
+              backgroundColor: '#ff7e00',
+              border: 'none',
+              color: '#fff',
+              padding: '6px 16px',
+            }}
+            onClick={handleExport}
+          >
+            Export
+          </Button>
+          <Button
+            style={{
+              backgroundColor: '#f6c100',
+              border: 'none',
+              color: '#000',
+              padding: '6px 16px',
+            }}
+            onClick={handleDownloadTemplate}
+          >
+            Download Template
+          </Button>
+          <Button
+            style={{
+              backgroundColor: '#27b2b6',
+              border: 'none',
+              color: '#fff',
+              padding: '6px 16px',
+            }}
+            onClick={() => {
+              setNewItem({ ...newItem });
+              setShowAdd(true);
+            }}
+          >
+
+            Add Item
+          </Button>
+        </Col>
+      </Row>
 
       <Row className="mb-3 justify-content-start  card">
         <Col md={4}><Form.Control type="text" placeholder="Search item..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="rounded-pill" /></Col>
@@ -331,6 +360,8 @@ const InventoryItems = () => {
             <thead className="table-light">
               <tr>
                 <th>Name</th>
+                <th>Category</th>
+                {/* <th>Type</th> */}
                 <th>HSN</th>
                 <th>Quantity</th>
                 <th>Warehouse</th>
@@ -341,39 +372,40 @@ const InventoryItems = () => {
               </tr>
             </thead>
             <tbody>
-  {filteredItems.length > 0 ? (
-    filteredItems.map((item, idx) => (
-      <tr key={idx}>
-        <td>{item.itemName}</td>
-        
-        <td>{item.hsn}</td>
-        <td>{item.quantity}</td>
-        <td>{item.warehouse}</td>
-        <td>{item.cost}</td>
-        <td>{item.value}</td>
-        <td>
-        <span
-  className={`badge px-3 py-1 rounded-pill fw-semibold ${
-    item.status === "In Stock" ? "bg-success text-white" : "bg-danger text-white"
-  }`}
->
-  {item.status}
-</span>
+              {filteredItems.length > 0 ? (
+                filteredItems.map((item, idx) => (
+                  <tr key={idx}>
+                    <td>{item.itemName}</td>
+                    <td>{item.itemCategory}</td>
+                    {/* <td>{item.itemType}</td> */}
 
-        </td>
-        <td>
-          <div className="d-flex gap-2">
-            <Button variant="link" className="text-info p-0" onClick={() => { setSelectedItem(item); setShowView(true); }}><FaEye /></Button>
-            <Button variant="link" className="text-warning p-0" onClick={() => { setSelectedItem(item); setNewItem(item); setShowEdit(true); }}><FaEdit /></Button>
-            <Button variant="link" className="text-danger p-0" onClick={() => { setSelectedItem(item); setShowDelete(true); }}><FaTrash /></Button>
-          </div>
-        </td>
-      </tr>
-    ))
-  ) : (
-    <tr><td colSpan="7" className="text-center">No items found.</td></tr>
-  )}
-</tbody>
+                    <td>{item.hsn}</td>
+                    <td>{item.quantity}</td>
+                    <td>{item.warehouse}</td>
+                    <td>{item.cost}</td>
+                    <td>{item.value}</td>
+                    <td>
+                      <span
+                        className={`badge px-3 py-1 rounded-pill fw-semibold ${item.status === "In Stock" ? "bg-success text-white" : "bg-danger text-white"
+                          }`}
+                      >
+                        {item.status}
+                      </span>
+
+                    </td>
+                    <td>
+                      <div className="d-flex gap-2">
+                        <Button variant="link" className="text-info p-0" onClick={() => { setSelectedItem(item); setShowView(true); }}><FaEye /></Button>
+                        <Button variant="link" className="text-warning p-0" onClick={() => { setSelectedItem(item); setNewItem(item); setShowEdit(true); }}><FaEdit /></Button>
+                        <Button variant="link" className="text-danger p-0" onClick={() => { setSelectedItem(item); setShowDelete(true); }}><FaTrash /></Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr><td colSpan="7" className="text-center">No items found.</td></tr>
+              )}
+            </tbody>
 
           </table>
         </div>
@@ -441,6 +473,23 @@ const InventoryItems = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
+            {/* <Row className="mb-3"> */}
+            {/* <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Item Type</Form.Label>
+                  <Form.Select name="itemType" value={newItem.itemType} onChange={handleChange}>
+                    <option value="Good">Good</option>
+                    <option value="Service">Service</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col> */}
+            {/* <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Item Category</Form.Label>
+                  <Form.Control name="itemCategory" value={newItem.itemCategory} onChange={handleChange} />
+                </Form.Group>
+              </Col> */}
+            {/* </Row> */}
             <Row className="mb-3">
               <Col md={6}><Form.Group><Form.Label>Item Name</Form.Label><Form.Control name="itemName" value={newItem.itemName} onChange={handleChange} /></Form.Group></Col>
               <Col md={6}><Form.Group><Form.Label>HSN</Form.Label><Form.Control name="hsn" value={newItem.hsn} onChange={handleChange} /></Form.Group></Col>
@@ -450,23 +499,51 @@ const InventoryItems = () => {
               <Col md={6}><Form.Group><Form.Label>Units of Measure</Form.Label><Form.Select name="unit" value={newItem.unit} onChange={handleChange}><option>Numbers</option><option>Kg</option><option>Litres</option></Form.Select></Form.Group></Col>
             </Row>
             <Row className="mb-3">
-  <Col md={6}>
-  <Form.Group>
-  <Form.Label>Warehouse</Form.Label>
-  <Form.Select name="warehouse" value={newItem.warehouse} onChange={handleChange}>
-    <option value="">Select Warehouse</option>
-    <option value="Main Warehouse">Main Warehouse</option>
-    <option value="Backup Warehouse">Backup Warehouse</option>
-    <option value="East Wing">East Wing</option>
-    <option value="West Wing">West Wing</option>
-  </Form.Select>
-</Form.Group>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Warehouse</Form.Label>
+                  <Form.Select name="warehouse" value={newItem.warehouse} onChange={handleChange}>
+                    <option value="">Select Warehouse</option>
+                    <option value="Main Warehouse">Main Warehouse</option>
+                    <option value="Backup Warehouse">Backup Warehouse</option>
+                    <option value="East Wing">East Wing</option>
+                    <option value="West Wing">West Wing</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
 
-  </Col>
-</Row>
+              <Col md={6}>
+                <Form.Group>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <Form.Label className="mb-0">Item Category</Form.Label>
+                    <Button
+                      variant="outline-primary"
+                      size="sm"
+                      onClick={() => setShowAddCategoryModal(true)}
+                    >
+                      + Add New
+                    </Button>
+                  </div>
+                  <Form.Select
+                    name="itemCategory"
+                    value={newItem.itemCategory}
+                    onChange={handleChange}
+                    className="mt-2"
+                  >
+                    <option value="">Select Category</option>
+                    {categories.map((cat, idx) => (
+                      <option key={idx} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
+
 
             <Row className="mb-3">
-              
+
               <Col md={12}><Form.Group><Form.Label>Item Description</Form.Label><Form.Control as="textarea" rows={2} name="description" value={newItem.description} onChange={handleChange} /></Form.Group></Col>
             </Row>
             <Row className="mb-3">
@@ -506,6 +583,31 @@ const InventoryItems = () => {
         <Modal.Footer>
           <Button variant="secondary" onClick={() => { setShowAdd(false); setShowEdit(false); }}>Cancel</Button>
           <Button style={{ backgroundColor: '#27b2b6', borderColor: '#27b2b6' }} onClick={showAdd ? handleAddItem : handleUpdateItem}>{showAdd ? "Add" : "Update"}</Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showAddCategoryModal} onHide={() => setShowAddCategoryModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add New Category</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group>
+            <Form.Label>Category Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter new category"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowAddCategoryModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleAddCategory}>
+            Add
+          </Button>
         </Modal.Footer>
       </Modal>
 

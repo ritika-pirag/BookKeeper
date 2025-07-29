@@ -2,26 +2,30 @@ import React, { useEffect, useState } from "react";
 import { Table, Modal, Button, Form } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import * as XLSX from "xlsx";
+import { useNavigate } from "react-router-dom";
+
 const WareHouse = () => {
   const [warehouses, setWarehouses] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [warehouseName, setWarehouseName] = useState("");
   const [location, setLocation] = useState("");
   const [editId, setEditId] = useState(null);
+  const navigate = useNavigate();
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
   useEffect(() => {
     const dummyData = [
-      { _id: "1", name: "Central Warehouse", location: "Delhi" },
-      { _id: "2", name: "North Zone", location: "Noida" },
-      { _id: "3", name: "South Depot", location: "Bangalore" },
-      { _id: "4", name: "East Godown", location: "Kolkata" },
-      { _id: "5", name: "West Hub", location: "Mumbai" },
-      { _id: "6", name: "Spare Store", location: "Hyderabad" },
-      { _id: "7", name: "Test Depot", location: "Pune" },
-      { _id: "8", name: "Central Hub", location: "Lucknow" },
+      { _id: "1", name: "Central Warehouse", location: "Delhi", totalStocks: 125 },
+      { _id: "2", name: "North Zone", location: "Noida", totalStocks: 200 },
+      { _id: "3", name: "South Depot", location: "Bangalore", totalStocks: 100 },
+      { _id: "4", name: "East Godown", location: "Kolkata", totalStocks: 350 },
+      { _id: "5", name: "West Hub", location: "Mumbai", totalStocks: 105 },
+      { _id: "6", name: "Spare Store", location: "Hyderabad", totalStocks: 10 },
+      { _id: "7", name: "Test Depot", location: "Pune", totalStocks: 600 },
+      { _id: "8", name: "Central Hub", location: "Lucknow", totalStocks: 90 },
     ];
     setWarehouses(dummyData);
   }, []);
@@ -77,44 +81,44 @@ const WareHouse = () => {
 
 
 
-const handleImport = (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
+  const handleImport = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const reader = new FileReader();
-  reader.onload = (evt) => {
-    const bstr = evt.target.result;
-    const workbook = XLSX.read(bstr, { type: "binary" });
-    const sheetName = workbook.SheetNames[0];
-    const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-    const formatted = data.map((item, index) => ({
-      _id: Date.now().toString() + index,
-      name: item["Warehouse Name"] || "",
-      location: item["Location"] || "",
-    }));
-    setWarehouses(formatted);
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const bstr = evt.target.result;
+      const workbook = XLSX.read(bstr, { type: "binary" });
+      const sheetName = workbook.SheetNames[0];
+      const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+      const formatted = data.map((item, index) => ({
+        _id: Date.now().toString() + index,
+        name: item["Warehouse Name"] || "",
+        location: item["Location"] || "",
+      }));
+      setWarehouses(formatted);
+    };
+    reader.readAsBinaryString(file);
   };
-  reader.readAsBinaryString(file);
-};
 
-const handleExport = () => {
-  const exportData = warehouses.map(({ name, location }) => ({
-    "Warehouse Name": name,
-    Location: location,
-  }));
-  const ws = XLSX.utils.json_to_sheet(exportData);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Warehouses");
-  XLSX.writeFile(wb, "warehouse-data.xlsx");
-};
+  const handleExport = () => {
+    const exportData = warehouses.map(({ name, location }) => ({
+      "Warehouse Name": name,
+      Location: location,
+    }));
+    const ws = XLSX.utils.json_to_sheet(exportData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Warehouses");
+    XLSX.writeFile(wb, "warehouse-data.xlsx");
+  };
 
-const handleDownloadTemplate = () => {
-  const template = [{ "Warehouse Name": "", Location: "" }];
-  const ws = XLSX.utils.json_to_sheet(template);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Template");
-  XLSX.writeFile(wb, "warehouse-template.xlsx");
-};
+  const handleDownloadTemplate = () => {
+    const template = [{ "Warehouse Name": "", Location: "" }];
+    const ws = XLSX.utils.json_to_sheet(template);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Template");
+    XLSX.writeFile(wb, "warehouse-template.xlsx");
+  };
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -126,47 +130,47 @@ const handleDownloadTemplate = () => {
         <div className="d-flex justify-content-between flex-wrap gap-2">
           <h4 className="fw-semibold">Manage Warehouses</h4>
           <div className="d-flex gap-2 flex-wrap">
-  <Button
-    className="rounded-pill text-white"
-    style={{ backgroundColor: "#28a745", borderColor: "#28a745" }}
-    onClick={() => document.getElementById("excelImport").click()}
-  >
-    <i className="fas fa-file-import me-2" /> Import
-  </Button>
+            <Button
+              className="rounded-pill text-white"
+              style={{ backgroundColor: "#28a745", borderColor: "#28a745" }}
+              onClick={() => document.getElementById("excelImport").click()}
+            >
+              <i className="fas fa-file-import me-2" /> Import
+            </Button>
 
-  <input
-    type="file"
-    id="excelImport"
-    accept=".xlsx, .xls"
-    style={{ display: "none" }}
-    onChange={handleImport}
-  />
+            <input
+              type="file"
+              id="excelImport"
+              accept=".xlsx, .xls"
+              style={{ display: "none" }}
+              onChange={handleImport}
+            />
 
-  <Button
-    className="rounded-pill text-white"
-    style={{ backgroundColor: "#fd7e14", borderColor: "#fd7e14" }}
-    onClick={handleExport}
-  >
-    <i className="fas fa-file-export me-2" /> Export
-  </Button>
+            <Button
+              className="rounded-pill text-white"
+              style={{ backgroundColor: "#fd7e14", borderColor: "#fd7e14" }}
+              onClick={handleExport}
+            >
+              <i className="fas fa-file-export me-2" /> Export
+            </Button>
 
-  <Button
-    className="rounded-pill text-white"
-    style={{ backgroundColor: "#ffc107", borderColor: "#ffc107" }}
-    onClick={handleDownloadTemplate}
-  >
-    <i className="fas fa-download me-2" /> Download
-  </Button>
-  <Button
-            className="set_btn text-white fw-semibold"
-            style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
-            onClick={() => handleModalShow()}
-          >
-            <i className="fa fa-plus me-2"></i> Create Warehouse
-          </Button>
-</div>
+            <Button
+              className="rounded-pill text-white"
+              style={{ backgroundColor: "#ffc107", borderColor: "#ffc107" }}
+              onClick={handleDownloadTemplate}
+            >
+              <i className="fas fa-download me-2" /> Download
+            </Button>
+            <Button
+              className="set_btn text-white fw-semibold"
+              style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+              onClick={() => handleModalShow()}
+            >
+              <i className="fa fa-plus me-2"></i> Create Warehouse
+            </Button>
+          </div>
 
-  
+
         </div>
 
         <div className="table-responsive mt-3">
@@ -182,20 +186,20 @@ const handleDownloadTemplate = () => {
             <tbody>
               {currentItems.length > 0 ? (
                 currentItems.map((w, index) => (
-                  <tr key={w._id}>
+                  <tr key={w._id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/company/warehouse/${w._id}`)}>
                     <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                     <td>{w.name}</td>
                     <td>{w.location}</td>
                     <td>
-                    
 
 
 
 
 
-                      
-                                  <Button variant="link" className="text-warning p-0 me-2"   onClick={() => handleModalShow(w)}   ><FaEdit /></Button>
-                                  <Button variant="link" className="text-danger p-0 me-2"       onClick={() => handleDelete(w._id)}   ><FaTrash /></Button>
+
+
+                      <Button variant="link" className="text-warning p-0 me-2" onClick={() => handleModalShow(w)}   ><FaEdit /></Button>
+                      <Button variant="link" className="text-danger p-0 me-2" onClick={() => handleDelete(w._id)}   ><FaTrash /></Button>
                     </td>
                   </tr>
                 ))
@@ -278,7 +282,7 @@ const handleDownloadTemplate = () => {
 
             <div className="d-flex justify-content-end mt-3">
               <Button variant="secondary" onClick={handleModalClose}>Close</Button>
-              <Button variant="primary" type="submit" className="ms-2"    style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}>
+              <Button variant="primary" type="submit" className="ms-2" style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}>
                 {editId ? "Update" : "Create"}
               </Button>
             </div>
