@@ -507,7 +507,7 @@ const CustomersDebtors = () => {
 <p>Selected Account Type: {accountType}</p>
 
         <Form.Group className="mb-3">
-          <Form.Label>Opening Balance</Form.Label>
+          <Form.Label> Balance</Form.Label>
           <Form.Control type="number" defaultValue={0} />
         </Form.Group>
 

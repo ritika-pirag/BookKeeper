@@ -308,10 +308,10 @@ const VendorsCreditors = () => {
             <Col md={6}><p><strong>Phone:</strong> {selectedVendor.phone}</p></Col>
             <Col md={6}><p><strong>Email:</strong> {selectedVendor.email}</p></Col>
             <Col md={6}><p><strong>Account Type:</strong> {selectedVendor.accountType || "N/A"}</p></Col>
-            <Col md={6}><p><strong>Opening Balance:</strong> {selectedVendor.payable}</p></Col>
+<Col md={6}><p><strong> Balance:</strong> {selectedVendor.payable}</p></Col>
             <Col md={6}><p><strong>Credit Period:</strong> {selectedVendor.creditPeriod || "N/A"}</p></Col>
             <Col md={6}><p><strong>Account Creation Date:</strong> {selectedVendor.creationDate || "N/A"}</p></Col>
-          </Row>
+          </Row>            
         </div>
 
         {/* Billing Info */}
@@ -397,7 +397,10 @@ const VendorsCreditors = () => {
     ))}
   </Form.Select>
 </Form.Group>
-
+     <Form.Group className="mb-3">
+          <Form.Label> Balance</Form.Label>
+          <Form.Control type="number" defaultValue={0} />
+        </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Account Creation Date</Form.Label>
