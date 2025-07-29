@@ -14,7 +14,7 @@ import {
   Form,
 } from "react-bootstrap";
 import { FaUserPlus, FaUserFriends } from "react-icons/fa";
-
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 // Mock API object for demonstration. Replace with your actual API client.
 const api = {
   get: async (url) => {
@@ -244,7 +244,25 @@ const AllAccounts = () => {
       "Security Expenses", "Packing Expenses", "License Fees", "GST Paid", "Miscellaneous Expenses"
     ],
   };
-  
+  const [selectedAccount, setSelectedAccount] = useState(null);
+const [showView, setShowView] = useState(false);
+const [showEdit, setShowEdit] = useState(false);
+const [showDelete, setShowDelete] = useState(false);
+
+const handleViewAccount = (type, name) => {
+  setSelectedAccount({ type, name });
+  setShowView(true);
+};
+
+const handleEditAccount = (type, name) => {
+  setSelectedAccount({ type, name });
+  setShowEdit(true);
+};
+
+const handleDeleteAccount = (type, name) => {
+  setSelectedAccount({ type, name });
+  setShowDelete(true);
+};
   return (
     <Container fluid className="py-4">
       {/* Header Row */}
@@ -281,7 +299,6 @@ const AllAccounts = () => {
 
       {/* Table */}
 {/* Table */}
-{/* Table */}
 <Card>
   <Card.Body>
     <div className="table-responsive">
@@ -292,13 +309,14 @@ const AllAccounts = () => {
             <th>Account Name</th>
             <th>Balance</th>
             <th>Total Balance</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {accountTypes.map((type) => (
             <React.Fragment key={type}>
               <tr className="bg-light">
-                <td colSpan="4" className="text-start fw-bold">
+                <td colSpan="5" className="text-start fw-bold">
                   {type}
                 </td>
               </tr>
@@ -308,6 +326,42 @@ const AllAccounts = () => {
                   <td className="text-start">{accountName}</td>
                   <td>0.00</td>
                   <td>0.00</td>
+                  <td>
+                    <div className="d-flex flex-wrap gap-2 justify-content-center">
+                      {/* View Button */}
+                      <Button
+                        variant="link"
+                        className="p-0 text-info"
+                        size="sm"
+                        onClick={() => handleViewAccount(type, accountName)}
+                        title="View"
+                      >
+                        <FaEye  size={16}/>
+                      </Button>
+                      
+                      {/* Edit Button */}
+                      <Button
+                        variant="link"
+                        className="p-0 text-warning"
+                        size="sm"
+                        onClick={() => handleEditAccount(type, accountName)}
+                        title="Edit"
+                      >
+                        <FaEdit size={16} />
+                      </Button>
+                      
+                      {/* Delete Button */}
+                      <Button
+                        variant="link"
+                        className="p-0 text-danger"
+                        size="sm"
+                        onClick={() => handleDeleteAccount(type, accountName)}
+                        title="Delete"
+                      >
+                        <FaTrash size={16} />
+                      </Button>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </React.Fragment>
@@ -850,11 +904,8 @@ const AllAccounts = () => {
           dialogClassName="w-100"
       >
 
-<div     style={{
-      maxWidth: "800px",
-      width: "90%",
-      margin: "auto",
-    }}>
+<div     
+    >
         <Modal.Header closeButton className="bg-light"   >
           <Modal.Title>Add New Account</Modal.Title>
         </Modal.Header>
@@ -1163,7 +1214,118 @@ const AllAccounts = () => {
 
 
 
+{/* View Account Modal */}
+<Modal show={showView} onHide={() => setShowView(false)} centered>
+  <Modal.Header closeButton>
+    <Modal.Title>Account Details</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    {selectedAccount && (
+      <div>
+        <p><strong>Account Type:</strong> {selectedAccount.type}</p>
+        <p><strong>Account Name:</strong> {selectedAccount.name}</p>
+        <p><strong>Balance:</strong> 0.00</p>
+        <p><strong>Total Balance:</strong> 0.00</p>
+      </div>
+    )}
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowView(false)}>
+      Close
+    </Button>
+  </Modal.Footer>
+</Modal>
 
+{/* Edit Account Modal */}
+<Modal show={showEdit} onHide={() => setShowEdit(false)} centered>
+  <Modal.Header closeButton>
+    <Modal.Title>Edit Account</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    {selectedAccount && (
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label>Account Type</Form.Label>
+          <Form.Control
+            as="select"
+            value={selectedAccount.type || ''}
+            onChange={(e) => setSelectedAccount(prev => ({
+              ...prev,
+              type: e.target.value
+            }))}
+          >
+            <option value="" disabled>Select account type</option>
+            {accountTypes.map((type) => (
+              <option key={type} value={type}>{type}</option>
+            ))}
+          </Form.Control>
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Account Name</Form.Label>
+          <Form.Control
+            type="text"
+            value={selectedAccount.name || ''}
+            onChange={(e) => setSelectedAccount(prev => ({
+              ...prev,
+              name: e.target.value
+            }))}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Balance</Form.Label>
+          <Form.Control
+            type="number"
+            value={selectedAccount.balance || "0.00"}
+            onChange={(e) => setSelectedAccount(prev => ({
+              ...prev,
+              balance: parseFloat(e.target.value) || 0
+            }))}
+          />
+        </Form.Group>
+      </Form>
+    )}
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowEdit(false)}>
+      Cancel
+    </Button>
+    <Button 
+      style={{ backgroundColor: "#53b2a5", border: "none" }}
+      onClick={() => {
+        console.log("Account updated:", selectedAccount);
+        setShowEdit(false);
+        // Add your save logic here (e.g., API call to update account)
+      }}
+    >
+      Save Changes
+    </Button>
+  </Modal.Footer>
+</Modal>
+{/* Delete Confirmation Modal */}
+<Modal show={showDelete} onHide={() => setShowDelete(false)} centered>
+  <Modal.Header closeButton>
+    <Modal.Title>Confirm Deletion</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    {selectedAccount && (
+      <p>Are you sure you want to delete the account "{selectedAccount.name}" ({selectedAccount.type})? This action cannot be undone.</p>
+    )}
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowDelete(false)}>
+      Cancel
+    </Button>
+    <Button 
+      variant="danger"
+      onClick={() => {
+        console.log("Account deleted:", selectedAccount);
+        setShowDelete(false);
+      }}
+    >
+      Delete Account
+    </Button>
+  </Modal.Footer>
+</Modal>
 
 
     </Container>
