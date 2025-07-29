@@ -457,12 +457,23 @@ const handleDeleteAccount = (type, name) => {
 
             </Row>
 
-
-            <Row className="mb-3">
-
-
-          
-              <Col md={6}>
+<Row className="mb-3">
+<Col md={6}>
+    <Form.Group>
+      <Form.Label>Balance Type</Form.Label>
+      <Form.Control
+        as="select"
+        value={vendorFormData.balanceType}
+        onChange={(e) => setVendorFormData({ ...vendorFormData, balanceType: e.target.value })}
+      >
+        <option value="">Select Type</option>
+        <option value="Debit">Debit</option>
+        <option value="Credit">Credit</option>
+      </Form.Control>
+    </Form.Group>
+  </Col>
+    
+  <Col md={6}>
                 <Form.Group>
                   <Form.Label>Creation Date</Form.Label>
                   <Form.Control
@@ -472,6 +483,12 @@ const handleDeleteAccount = (type, name) => {
                   />
                 </Form.Group>
               </Col>
+
+</Row>
+            <Row className="mb-3">
+
+
+      
 
               <Col md={6}>
                 <Form.Group>
@@ -483,11 +500,7 @@ const handleDeleteAccount = (type, name) => {
                   />
                 </Form.Group>
               </Col>
-
-
-            </Row>
-            <Row className="mb-3">
-          
+                 
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Bank IFSC</Form.Label>
@@ -498,6 +511,10 @@ const handleDeleteAccount = (type, name) => {
                   />
                 </Form.Group>
               </Col>
+
+            </Row>
+            <Row className="mb-3">
+         
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Bank Name & Branch</Form.Label>
@@ -750,7 +767,27 @@ const handleDeleteAccount = (type, name) => {
             />
           </Form.Group>
         </Col>
+
+
+  
       </Row>
+      <Row className="mb-3" >
+<Col md={6}>
+    <Form.Group>
+      <Form.Label>Balance Type</Form.Label>
+      <Form.Control
+        as="select"
+        value={vendorFormData.balanceType}
+        onChange={(e) => setVendorFormData({ ...vendorFormData, balanceType: e.target.value })}
+      >
+        <option value="">Select Type</option>
+        <option value="Debit">Debit</option>
+        <option value="Credit">Credit</option>
+      </Form.Control>
+    </Form.Group>
+  </Col>
+
+</Row>
       <Row className="mb-3">
         <Col md={6}>
           <Form.Group>
@@ -955,6 +992,9 @@ const handleDeleteAccount = (type, name) => {
     </Button>
   </Modal.Footer>
 </Modal>
+
+
+
       {/* Add New Account Modal */}
       <Modal
         show={showNewAccountModal}
@@ -1362,6 +1402,9 @@ const handleDeleteAccount = (type, name) => {
     </Button>
   </Modal.Footer>
 </Modal>
+
+
+
 {/* Delete Confirmation Modal */}
 <Modal show={showDelete} onHide={() => setShowDelete(false)} centered>
   <Modal.Header closeButton>

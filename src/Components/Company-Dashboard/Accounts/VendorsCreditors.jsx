@@ -66,7 +66,12 @@ const VendorsCreditors = () => {
   const [isTaxEnabled, setIsTaxEnabled] = useState(false);
   const [taxNumber, setTaxNumber] = useState("");
   const [showBankDetails, setShowBankDetails] = useState(false);
+  const [vendorFormData, setVendorFormData] = useState({
+    balanceType: "",
+    accountType: "",
 
+  });
+  
   const updateField = (field, value) => {
     setCurrentCustomer(prev => ({ ...prev, [field]: value }));
   };
@@ -181,7 +186,42 @@ const VendorsCreditors = () => {
     "Deposits (Assets)",
     "Provisions",
   ];
-  
+  const accountTypes = ["Assets", "Liabilities", "Income", "Expenses"];
+
+  const predefinedAccounts = {
+    Assets: [
+      "Cash in Hand", "Bank Account", "Petty Cash", "Accounts Receivable", "Inventory",
+      "Fixed Assets", "Prepaid Expenses", "Investments", "Advance to Suppliers", "Deposits",
+      "Furniture & Fixtures", "Land", "Building", "Vehicles", "Machinery",
+      "Tools", "Computer Equipment", "Office Equipment", "Intangible Assets", "Goodwill",
+      "Loan to Employees", "Security Deposits", "Advance Tax", "Deferred Tax Asset", "Accrued Income",
+      "Work in Progress", "Raw Materials", "Spare Parts", "Prepaid Insurance", "Other Current Assets"
+    ],
+    Liabilities: [
+      "Accounts Payable", "Loans Payable", "Accrued Expenses", "Credit Card", "Deferred Revenue",
+      "GST Payable", "TDS Payable", "Provident Fund Payable", "ESIC Payable", "Salary Payable",
+      "Advance from Customers", "Interest Payable", "Bills Payable", "Mortgage Payable", "Unearned Income",
+      "Long-term Loans", "Short-term Loans", "Duties & Taxes Payable", "Contingent Liability", "Bonus Payable",
+      "Gratuity Payable", "Audit Fees Payable", "Professional Tax Payable", "Rent Payable", "Outstanding Expenses",
+      "Security Deposit Received", "Bank Overdraft", "Statutory Dues", "Tax Provision", "Other Current Liabilities"
+    ],
+    Income: [
+      "Sales", "Service Income", "Commission Received", "Interest Income", "Rental Income",
+      "Discount Received", "Dividend Income", "Profit on Sale of Assets", "Foreign Exchange Gain", "Consultancy Income",
+      "Freight Collected", "Other Operating Revenue", "Non-Operating Income", "Sponsorship Income", "Incentive Received",
+      "Miscellaneous Income", "Royalty Income", "Grant Received", "Reimbursement Received", "Insurance Claim Received",
+      "Admission Fee", "Training Fee", "Tuition Fee", "Subscription Income", "Workshop Income",
+      "Software Sales", "Digital Products", "Hosting Services", "Consulting Projects", "Other Income"
+    ],
+    Expenses: [
+      "Rent", "Salaries", "Wages", "Electricity", "Internet Charges",
+      "Office Supplies", "Postage & Courier", "Travel Expenses", "Fuel Expenses", "Telephone",
+      "Legal Fees", "Audit Fees", "Bank Charges", "Insurance", "Repairs & Maintenance",
+      "Advertising", "Marketing", "Printing & Stationery", "Software Subscription", "Freight Outward",
+      "Training Expenses", "Staff Welfare", "Interest Paid", "Depreciation", "Consulting Charges",
+      "Security Expenses", "Packing Expenses", "License Fees", "GST Paid", "Miscellaneous Expenses"
+    ],
+  };
   return (
     <div className="mt-4 p-2">
       <Row className="align-items-center mb-3">
@@ -369,217 +409,299 @@ const VendorsCreditors = () => {
     <Modal.Title>{selectedVendor ? "Edit Vendor" : "Add Vendor"}</Modal.Title>
   </Modal.Header>
   <Modal.Body>
-    <Form>
-      <Row className="mb-3">
-        {/* LEFT COLUMN */}
-        <Col md={6} style={{ borderRight: "1px solid #dee2e6" }}>
-          <Form.Group className="mb-3">
-            <Form.Label>Name</Form.Label>
+      <Form>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={vendorFormData.name}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, name: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+          <Form.Group>
+            <Form.Label>Account Type</Form.Label>
             <Form.Control
-              type="text"
-              value={currentCustomer.name}
-              onChange={(e) => updateField("name", e.target.value)}
-            />
+              as="select"
+              value={vendorFormData.accountType}
+              onChange={(e) => {
+                setVendorFormData({ 
+                  ...vendorFormData, 
+                  accountType: e.target.value,
+                  accountName: "" // Reset account name when type changes
+                });
+              }}
+            >
+              <option value="">Select Account Type</option>
+              {["Assets", "Liabilities", "Income", "Expenses"].map((type, index) => (
+                <option key={index} value={type}>
+                  {type}
+                </option>
+              ))}
+            </Form.Control>
           </Form.Group>
+        </Col>
+            </Row>
+            <Row className="mb-3">
+
+
+            <Col md={6}>
+            <Form.Group>
+  <Form.Label>Account Name</Form.Label>
+  <Form.Control
+    as="select"
+    value={vendorFormData.accountName}
+    onChange={(e) => setVendorFormData({ ...vendorFormData, accountName: e.target.value })}
+    disabled={!vendorFormData.accountType}
+  >
+    <option value="">Select Account Name</option>
+    {vendorFormData.accountType && 
+      (predefinedAccounts[vendorFormData.accountType] || []).map((name, index) => (
+        <option key={index} value={name}>
+          {name}
+        </option>
+      ))
+    }
+  </Form.Control>
+</Form.Group>
+        </Col>
+
+        <Col md={6}>
+                <Form.Group>
+                  <Form.Label> Balance</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={vendorFormData.payable}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, payable: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+
+            </Row>
+
+<Row className="mb-3">
+<Col md={6}>
+    <Form.Group>
+      <Form.Label>Balance Type</Form.Label>
+      <Form.Control
+  as="select"
+  value={vendorFormData.balanceType}
+  onChange={(e) =>
+    setVendorFormData({ ...vendorFormData, balanceType: e.target.value })
+  }
+>
+  <option value="">Select Balance Type</option>
+  <option value="debit">Debit (Receivable)</option>
+  <option value="credit">Credit (Payable)</option>
+</Form.Control>
+
+    </Form.Group>
+  </Col>
+    
+  <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Creation Date</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={vendorFormData.creationDate}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, creationDate: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+
+</Row>
+            <Row className="mb-3">
+
 
       
-          <Form.Group className="mb-3">
-  <Form.Label>Account Type</Form.Label>
-  <Form.Select
-    value={currentCustomer.accountType || ""}
-    onChange={(e) => updateField("accountType", e.target.value)}
-  >
-    <option value="">-- Select Account Type --</option>
-    {accountTypeOptions.map((type, idx) => (
-      <option key={idx} value={type}>
-        {type}
-      </option>
-    ))}
-  </Form.Select>
-</Form.Group>
-     <Form.Group className="mb-3">
-          <Form.Label> Balance</Form.Label>
-          <Form.Control type="number" defaultValue={0} />
-        </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Account Creation Date</Form.Label>
-            <Form.Control
-              type="date"
-              value={currentCustomer.creationDate}
-              onChange={(e) => updateField("creationDate", e.target.value)}
-            />
-          </Form.Group>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Bank Account Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={vendorFormData.bankAccountNumber}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, bankAccountNumber: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+                 
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Bank IFSC</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={vendorFormData.bankIFSC}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, bankIFSC: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
 
-          <Form.Check
-            label="Bank Details"
-            className="mb-3"
-            checked={showBankDetails}
-            onChange={(e) => setShowBankDetails(e.target.checked)}
-          />
-
-          {showBankDetails && (
-            <>
-              <Form.Group className="mb-3">
-                <Form.Label>Account Number</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={currentCustomer.bankDetails?.accountNumber || ""}
-                  onChange={(e) =>
-                    updateField("bankDetails.accountNumber", e.target.value)
-                  }
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>IFSC Code</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={currentCustomer.bankDetails?.ifsc || ""}
-                  onChange={(e) =>
-                    updateField("bankDetails.ifsc", e.target.value)
-                  }
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Bank Name & Branch</Form.Label>
-                <Form.Select
-                  value={currentCustomer.bankDetails?.bankName || ""}
-                  onChange={(e) =>
-                    updateField("bankDetails.bankName", e.target.value)
-                  }
-                >
-                  <option>-- Select Bank --</option>
-                  <option>SBI - MG Road</option>
-                  <option>HDFC - Indore</option>
-                </Form.Select>
-              </Form.Group>
-            </>
-          )}
-        </Col>
-
-        {/* RIGHT COLUMN */}
-        <Col md={6}>
-          <Row className="mb-3">
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label>Country</Form.Label>
-                <Form.Select
-                  value={currentCustomer.country || "India"}
-                  onChange={(e) => updateField("country", e.target.value)}
-                >
-                  <option>India</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label>State</Form.Label>
-                <Form.Select
-                  value={currentCustomer.state || ""}
-                  onChange={(e) => updateField("state", e.target.value)}
-                >
-                  <option>-- Select State --</option>
-                  <option>Madhya Pradesh</option>
-                  <option>Uttar Pradesh</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-          </Row>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Pincode</Form.Label>
-            <Form.Control
-              type="text"
-              value={currentCustomer.pincode || ""}
-              onChange={(e) => updateField("pincode", e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label> Shipping Address</Form.Label>
-            <Form.Control
-              type="text"
-              value={currentCustomer.address || ""}
-              onChange={(e) => updateField("address", e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>State Code</Form.Label>
-            <Form.Control
-              type="text"
-              value={currentCustomer.stateCode || ""}
-              onChange={(e) => updateField("stateCode", e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Shipping Address</Form.Label>
-            <Form.Control
-              type="text"
-              value={currentCustomer.shippingAddress || ""}
-              onChange={(e) => updateField("shippingAddress", e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Phone</Form.Label>
-            <Form.Control
-              type="text"
-              value={currentCustomer.phone || ""}
-              onChange={(e) => updateField("phone", e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Credit Period</Form.Label>
-            <Form.Control
-              type="number"
-              value={currentCustomer.creditPeriod || 0}
-              onChange={(e) => updateField("creditPeriod", e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              value={currentCustomer.email || ""}
-              onChange={(e) => updateField("email", e.target.value)}
-            />
-          </Form.Group>
-
-          <Row className="mb-3">
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label>GSTIN</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={currentCustomer.gstin || ""}
-                  onChange={(e) => updateField("gstin", e.target.value)}
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label>GST Registration Type</Form.Label>
-                <Form.Select
-                  value={currentCustomer.gstType || "Unknown"}
-                  onChange={(e) => updateField("gstType", e.target.value)}
-                >
-                  <option>Unknown</option>
-                  <option>Registered</option>
-                  <option>Unregistered</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-          </Row>
-
-        </Col>
-      </Row>
-    </Form>
+            </Row>
+            <Row className="mb-3">
+         
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Bank Name & Branch</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={vendorFormData.bankName}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, bankName: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+         
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Country</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={vendorFormData.country}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, country: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>State</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={vendorFormData.state}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, state: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Pincode</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={vendorFormData.pincode}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, pincode: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Address</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={vendorFormData.address}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, address: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>State Code</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={vendorFormData.stateCode}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, stateCode: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Shipping Address</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={vendorFormData.shippingAddress}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, shippingAddress: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Phone</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={vendorFormData.phone}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, phone: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    value={vendorFormData.email}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, email: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Credit Period (days)</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={vendorFormData.creditPeriod}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, creditPeriod: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>GSTIN</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={vendorFormData.gstin}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, gstin: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>GST Type</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={vendorFormData.gstType}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, gstType: e.target.value })}
+                  >
+                    <option>Registered</option>
+                    <option>Unregistered</option>
+                    <option>Composition</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Tax Enabled</Form.Label>
+                  <Form.Check
+                    type="switch"
+                    checked={vendorFormData.taxEnabled}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, taxEnabled: e.target.checked })}
+                    label={vendorFormData.taxEnabled ? "Yes" : "No"}
+                  />
+                  {vendorFormData.taxEnabled && (
+                    <Form.Control
+                      type="text"
+                      placeholder="Tax Number"
+                      className="mt-2"
+                      value={vendorFormData.taxNumber}
+                      onChange={(e) => setVendorFormData({ ...vendorFormData, taxNumber: e.target.value })}
+                    />
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
   </Modal.Body>
   <Modal.Footer>
     <Button variant="secondary" onClick={() => setShowAddEditModal(false)}>Close</Button>
