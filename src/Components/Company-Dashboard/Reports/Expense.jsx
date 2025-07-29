@@ -369,11 +369,14 @@ const Expense = () => {
 
       {/* Add Expense Modal */}
       <div
+       size="lg"
+       width="100%"
         className="modal fade"
         id="addExpenseModal"
         tabIndex="-1"
         aria-labelledby="addExpenseModalLabel"
         aria-hidden="true"
+       
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -571,6 +574,7 @@ const Expense = () => {
         className="modal fade"
         id="editExpenseModal"
         tabIndex="-1"
+        size="lg"
         aria-labelledby="editExpenseModalLabel"
         aria-hidden="true"
       >

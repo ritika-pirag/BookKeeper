@@ -192,7 +192,7 @@ const GSTData = () => {
       </Modal>
 
       {/* Edit Modal */}
-      <Modal show={showEdit} onHide={() => setShowEdit(false)} centered>
+      <Modal show={showEdit} onHide={() => setShowEdit(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Edit Return</Modal.Title>
         </Modal.Header>

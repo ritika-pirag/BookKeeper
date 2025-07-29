@@ -85,7 +85,7 @@ import Invoicereport from "./Components/User-Dashboard/Reports/Invoicereport";
 import Taxreports from "./Components/User-Dashboard/Reports/Taxreports";
 import Balancesheet from "./Components/User-Dashboard/Account&Finance/BalanceSheet";
 
-import DeliveryChallans from "./Components/User-Dashboard/Sales/DeliveryChallans";
+import Delivery from "./Components/User-Dashboard/Sales/DeliveryChallans";
 import Estimates from "./Components/User-Dashboard/Sales/Estimates";
 import OnlineOrder from "./Components/User-Dashboard/Sales/OnlineOrder";
 
@@ -152,6 +152,7 @@ import PaymentEntry from "./Components/Company-Dashboard/Accounts/PaymentEntry";
 import ReceiptEntry from "./Components/Company-Dashboard/Accounts/ReceiptEntry";
 import WareHouseDetail from "./Components/Company-Dashboard/Inventory/SiteData/WareHouseDetail";
 
+import DeliveryChallans from "./Components/Company-Dashboard/Sales/DeliveryChallans";
 
 
 
@@ -203,9 +204,6 @@ function App() {
           <Route path="/company/purchasevoucherview" element={<PurchaseVoucherView />} />
           <Route path="/company/salesvoucherview" element={<SalesVoucherView />} />
 
-          {/* Sales */}
-
-
           {/* POS */}
           <Route path="/company/categories" element={<Categories />} />
           <Route path="/company/brands" element={<BrandPage />} />
@@ -224,6 +222,7 @@ function App() {
           <Route path="/company/manageinvoice" element={<ManageInvoices />} />
           <Route path="/company/editinvoice" element={<EditInvoice />} />
           <Route path="/company/viewinvoice" element={<ViewInvoice />} />
+          <Route path="/company/deliverychallans" element={<DeliveryChallans />} />
 
 
           {/* Sales */}
