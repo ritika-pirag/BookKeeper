@@ -67,11 +67,12 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           { to: "/company/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" }
         ]),
         renderFlatSection("Accounts", [
-          { to: "/company/allacounts", icon: "fas fa-calendar-day", label: "All Accounts" },
+          { to: "/company/allacounts", icon: "fas fa-calendar-day", label: "Charts of Accounts" },
           { to: "/company/customersdebtors", icon: "fas fa-hand-holding-usd", label: "Customers/Debtors" },
           { to: "/company/vendorscreditors", icon: "fas fa-user-tie", label: "Vendors/Creditors" },
           { to: "/company/receiptentry", icon: "fas fa-receipt", label: "Receipt Entry" },
           { to: "/company/paymententry", icon: "fas fa-money-check-alt", label: "Payment Entry" },
+          { to: "/company/transaction", icon: "fas fa-money-check-alt", label: "Transaction" },
         ]),
         
 

@@ -142,6 +142,7 @@ import AllAcounts from "./Components/Company-Dashboard/Accounts/AllAcounts";
 import CustomersDebtors from "./Components/Company-Dashboard/Accounts/CustomersDebtors";
 import VendorsCreditors from "./Components/Company-Dashboard/Accounts/VendorsCreditors";
 import PurchaseVoucher from "./Components/Company-Dashboard/Inventory/PurchaseVoucher";
+import Transaction from "./Components/Company-Dashboard/Accounts/Transaction";
 import SalesVoucher from "./Components/Company-Dashboard/Inventory/SalesVoucher";
 import PurchaseVoucherView from "./Components/Company-Dashboard/Inventory/PurchaseVoucherView";
 import SalesVoucherView from "./Components/Company-Dashboard/Inventory/SalesVoucherView";
@@ -185,6 +186,8 @@ function App() {
           <Route path="/company/vendorscreditors" element={<VendorsCreditors/>} />
           <Route path="/company/receiptentry" element={<ReceiptEntry/>} />
           <Route path="/company/paymententry" element={<PaymentEntry/>} />
+          
+          <Route path="/company/transaction" element={<Transaction/>} />
 
 
           {/* Inventory */}
