@@ -1734,24 +1734,24 @@ const AllAccounts = () => {
                   ))}
                 </Form.Select>
                 <Button
-  size="sm"
-  onClick={() => setShowMainAccountModal(true)}
-  style={{
-    color: "#53b2a5",
-    border: "1px solid #53b2a5",
-    backgroundColor: "transparent",
-  }}
-  onMouseOver={(e) => {
-    e.target.style.backgroundColor = "#53b2a5";
-    e.target.style.color = "white";
-  }}
-  onMouseOut={(e) => {
-    e.target.style.backgroundColor = "transparent";
-    e.target.style.color = "#53b2a5";
-  }}
->
-  Add Main Account
-</Button>
+                  size="sm"
+                  onClick={() => setShowMainAccountModal(true)}
+                  style={{
+                    color: "#53b2a5",
+                    border: "1px solid #53b2a5",
+                    backgroundColor: "transparent",
+                  }}
+                  onMouseOver={(e) => {
+                    e.target.style.backgroundColor = "#53b2a5";
+                    e.target.style.color = "white";
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.backgroundColor = "transparent";
+                    e.target.style.color = "#53b2a5";
+                  }}
+                >
+                  Add Main Account
+                </Button>
 
               </div>
               <Form.Text className="text-muted">
