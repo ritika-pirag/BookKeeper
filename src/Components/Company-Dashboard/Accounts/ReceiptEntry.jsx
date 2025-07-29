@@ -201,7 +201,9 @@ const ReceiptEntry = () => {
 
       {/* Add Receipt Modal */}
 {/* Add Receipt Modal */}
-<Modal show={show} onHide={() => setShow(false)}>
+<Modal show={show} onHide={() => setShow(false)} 
+  
+  size="lg">
   <Modal.Header closeButton>
     <Modal.Title>Add Receipt</Modal.Title>
   </Modal.Header>
