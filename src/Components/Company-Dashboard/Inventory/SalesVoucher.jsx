@@ -96,7 +96,7 @@ return (
     <Row>
       <Col md={3}>
         <Form.Group>
-          <Form.Label>Invoice No</Form.Label>
+          <Form.Label>Voucher No</Form.Label>
           <Form.Control
             name="invoiceNo"
             value={voucher.invoiceNo}
