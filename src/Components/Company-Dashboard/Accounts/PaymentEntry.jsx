@@ -194,7 +194,7 @@ const PaymentEntry = () => {
       </div>
 
       {/* Add Payment Modal */}
-      <Modal show={show} onHide={() => setShow(false)}>
+      <Modal show={show} onHide={() => setShow(false)}size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Add Payment</Modal.Title>
         </Modal.Header>

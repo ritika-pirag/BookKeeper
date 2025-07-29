@@ -339,7 +339,7 @@ const EWay = () => {
       </Modal>
 
       {/* Generate Bill Modal */}
-      <Modal show={showAdd} onHide={() => setShowAdd(false)} centered>
+      <Modal show={showAdd} onHide={() => setShowAdd(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Generate e-Way Bill</Modal.Title>
         </Modal.Header>

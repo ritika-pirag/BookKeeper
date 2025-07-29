@@ -316,7 +316,7 @@ const InventoryItems = () => {
       }}
     >
       
-      Add Item
+      Add Product
     </Button>
   </Col>
 </Row>
@@ -437,7 +437,7 @@ const InventoryItems = () => {
       {/* Add/Edit Modal */}
       <Modal show={showAdd || showEdit} onHide={() => { setShowAdd(false); setShowEdit(false); }} centered size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>{showAdd ? "Add Item" : "Edit Item"}</Modal.Title>
+          <Modal.Title>{showAdd ? "Add Product" : "Edit Product"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>

@@ -102,7 +102,7 @@ const SalesDelivery = () => {
   };
 
   const handleExportAll = () => {
-    let csv = `Challan No,Order No,Customer,Date,Items,Amount,Status\n`;
+    let csv = `Order No,Customer,Date,Items,Amount,Status\n`;
     deliveries.forEach(d => {
       csv += `${d.challanNo},${d.orderNo},${d.customer},${d.date},${d.items},${d.amount},${d.status}\n`;
     });
@@ -118,7 +118,7 @@ const SalesDelivery = () => {
   };
 
   const handleDownload = (delivery) => {
-    const csv = `Challan No,Order No,Customer,Date,Items,Amount,Status\n${delivery.challanNo},${delivery.orderNo},${delivery.customer},${delivery.date},${delivery.items},${delivery.amount},${delivery.status}`;
+    const csv = `Order No,Customer,Date,Items,Amount,Status\n${delivery.challanNo},${delivery.orderNo},${delivery.customer},${delivery.date},${delivery.items},${delivery.amount},${delivery.status}`;
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -300,7 +300,7 @@ const SalesDelivery = () => {
           <thead className="table-light">
             <tr>
               <th>#</th>
-              <th>Challan No</th>
+              <th> challan No</th>
               <th>Order No</th>
               <th>Customer</th>
               <th>Date</th>

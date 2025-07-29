@@ -36,7 +36,7 @@ const getStatusVariant = (status) => {
 
 const invoiceTableColumns = [
   { label: "No", key: "no" },
-  { label: "#", key: "id" },
+  { label: "voucher no", key: "id" },
   { label: "Customer", key: "customer" },
   { label: "Date", key: "date" },
   { label: "Amount", key: "amount" },
@@ -283,7 +283,7 @@ const Invoice = () => {
   return (
     <div className="p-4 mt-2">
       <div className="d-flex justify-content-between align-items-center mb-1">
-        <h6 className="fw-semibold mb-0">Invoices</h6>
+        <h5 className="fw-semibold mb-0">Sales Order</h5>
         <div className="d-flex gap-2 align-items-center mb-1">
           {/* Import Button */}
           <input
@@ -375,7 +375,7 @@ const Invoice = () => {
                 <thead className="table-light">
                   <tr>
                     <th>No</th>
-                    <th>#</th>
+                    <th>Invoice no</th>
                     <th>Customer</th>
                     <th>Date</th>
                     <th>Amount</th>
@@ -488,7 +488,8 @@ const Invoice = () => {
       <Modal
   show={showCreateModal}
   onHide={handleCloseCreateModal}
-  centered
+size="lg"
+width="100%"
   dialogClassName="custom-modal-lg"
 >
   <Modal.Header closeButton>
@@ -738,10 +739,11 @@ const Invoice = () => {
       Cancel
     </Button>
     <Button
-      variant="primary"
+ 
+ style={{ backgroundColor: "#53b2a5", borderColor: "#53b2a5", color: "white" }}
       onClick={() => {
         alert(editMode ? 'Invoice updated successfully!' : 'Invoice created successfully!');
-        handleCloseCreateModal();
+        handleCloseCreateModal(); 
       }}
     >
       {editMode ? "Update Invoice" : "Create Invoice"}
