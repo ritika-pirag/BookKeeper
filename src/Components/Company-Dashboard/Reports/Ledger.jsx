@@ -345,7 +345,12 @@ const Ledger = () => {
 
         {/* 🔘 Load Report */}
         <div className="text-end mb-3">
-          <Button variant="primary" onClick={fetchLedger}>
+          <Button variant="primary" onClick={fetchLedger}                 style={{
+            backgroundColor: "#53b2a5",
+            border: "none",
+
+   
+          }}>
             Load Ledger
           </Button>
         </div>

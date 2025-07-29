@@ -117,11 +117,12 @@ const ProfitLoss = () => {
               <Button
   onClick={handleDownload}
   style={{
-    backgroundColor: "#28a745",
+    backgroundColor: "#53b2a5",
     borderColor: "#28a745",
     borderRadius: "7px",
-    height: "40px" // You can adjust this value as needed
+    height: "40px" 
   }}
+
 >
   Download Report
 </Button>

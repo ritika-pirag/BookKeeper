@@ -141,6 +141,13 @@ const AddProduct = () => {
 
   return (
     <div className="mx-5 mt-3">
+      <button
+  className="btn mb-3"
+  onClick={() => navigate("/company/product")}
+>
+  <i className="fas fa-arrow-left me-2"></i> Back
+</button>
+
       <div className="container-fluid shadow p-4">
         <h3 className="mb-2 fw-semibold">{id ? "Edit Product" : "Add Product"}</h3>
         <form className="row g-3 mt-1 p-4" onSubmit={handleSubmit}>
@@ -155,7 +162,14 @@ const AddProduct = () => {
           <div className="col-md-6">
             <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
               Category
-              <button type="button" className="btn btn-sm btn-outline-primary" onClick={() => setShowCategoryModal(true)}>+ Add</button>
+              <button type="button" className="btn btn-sm text-white " onClick={() => setShowCategoryModal(true)}   
+                style={{
+            backgroundColor: "#53b2a5",
+            border: "none",
+            display: "flex",
+            alignItems: "center",
+          }}
+          >+ Add</button>
             </label>
             <select className="form-control" value={selectedCategory} onChange={handleCategoryChange} required>
               <option value="">Select Category</option>
@@ -169,7 +183,12 @@ const AddProduct = () => {
           <div className="col-md-6">
             <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
               Brand
-              <button type="button" className="btn btn-sm btn-outline-primary" onClick={() => setShowBrandModal(true)}>+ Add</button>
+              <button type="button" className="btn btn-sm text-white " onClick={() => setShowBrandModal(true)}     style={{
+            backgroundColor: "#53b2a5",
+            border: "none",
+            display: "flex",
+            alignItems: "center",
+          }}>+ Add</button>
             </label>
             <select className="form-control" value={selectedBrand} onChange={handleBrandChange} disabled={!selectedCategory}>
               <option value="">Select Brand</option>
@@ -185,7 +204,12 @@ const AddProduct = () => {
           <div className="col-md-6">
             <label className="form-label fw-semibold d-flex justify-content-between align-items-center">
               Device
-              <button type="button" className="btn btn-sm btn-outline-primary" onClick={() => setShowDeviceModal(true)}>+ Add</button>
+              <button type="button" className="btn btn-sm text-white" onClick={() => setShowDeviceModal(true)}     style={{
+            backgroundColor: "#53b2a5",
+            border: "none",
+            display: "flex",
+            alignItems: "center",
+          }}>+ Add</button>
             </label>
             <select className="form-control" onChange={handleDeviceChange} disabled={!selectedBrand}>
               <option value="">Select Device</option>
@@ -238,7 +262,12 @@ const AddProduct = () => {
           </div>
 
           <div>
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary"    style={{
+            backgroundColor: "#53b2a5",
+            border: "none",
+            display: "flex",
+            alignItems: "center",
+          }} >Submit</button>
           </div>
         </form>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
-// import newlogo from "../assets/newlogozirakbookk.png";
+//  import logo from "../assets/kiaanlogo-.png";
 import newlogo from "../assets/newlogozirakbookk.png"
 import  "./header.css";
 import ProfileModal from './ProfileModal'; // Correct path lagayein
@@ -128,7 +128,7 @@ const Header = ({ onToggleSidebar }) => {
 
           </Link>
 
-          
+
         </div>
       </div>
     </header>

@@ -112,7 +112,12 @@ const DevicePage = ({
             <Button variant="secondary" onClick={handleClose}>
               Cancel
             </Button>
-            <Button type="submit" variant="primary" className="ms-2">
+            <Button type="submit" variant="primary" className="ms-2"                 style={{
+            backgroundColor: "#53b2a5",
+            border: "none",
+            display: "flex",
+            alignItems: "center",
+          }}>
               {editMode ? "Update" : "Create"}
             </Button>
           </div>

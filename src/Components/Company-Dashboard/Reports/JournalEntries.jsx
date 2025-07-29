@@ -131,7 +131,12 @@ const JournalEntries = () => {
           <p className="text-muted">Manage your journal entries here.</p>
         </div>
         <div className="d-flex gap-2">
-          <button className="btn btn-success d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#addEntryModal">
+          <button className="btn btn-success d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#addEntryModal"                 style={{
+            backgroundColor: "#53b2a5",
+            border: "none",
+            display: "flex",
+            alignItems: "center",
+          }}>
             <FaPlusCircle />
             Add Entry
           </button>
@@ -270,7 +275,12 @@ const JournalEntries = () => {
                 </div>
                 <div className="d-flex justify-content-end gap-2">
                   <button className="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <button type="submit" className="btn btn-success">Add Entry</button>
+                  <button type="submit" className="btn btn-success"                 style={{
+            backgroundColor: "#53b2a5",
+            border: "none",
+            display: "flex",
+            alignItems: "center",
+          }}>Add Entry</button>
                 </div>
               </form>
             </div>
