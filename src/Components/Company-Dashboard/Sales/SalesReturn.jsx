@@ -563,7 +563,7 @@ const SalesReturn = () => {
       </Modal>
 
       {/* Edit Modal */}
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Edit Sales Return</Modal.Title>
         </Modal.Header>
@@ -666,7 +666,7 @@ const SalesReturn = () => {
       </Modal>
 
       {/* Add Modal */}
-      <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
+      <Modal show={showAddModal} onHide={() => setShowAddModal(false)}size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Add New Sales Return</Modal.Title>
         </Modal.Header>

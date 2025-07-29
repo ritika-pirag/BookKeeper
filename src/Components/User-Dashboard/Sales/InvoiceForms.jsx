@@ -158,7 +158,7 @@ const InvoiceForms = () => {
       </Row>
 
       {/* Add Client Modal */}
-      <Modal show={showClientModal} onHide={handleClientModalClose} size="lg" centered>
+      <Modal show={showClientModal} onHide={handleClientModalClose} size="lg" >
         <Modal.Header closeButton>
           <Modal.Title>Add Customer</Modal.Title>
         </Modal.Header>

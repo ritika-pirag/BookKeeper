@@ -264,7 +264,7 @@ const Users = () => {
       </Container>
 
       {/* Add/Edit Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>{modalType === "add" ? "Add User" : "Edit User"}</Modal.Title>
         </Modal.Header>
