@@ -259,7 +259,7 @@ import { Form, Button, Row, Col, Card, Table } from "react-bootstrap";
 
 const parties = [
   { id: "cust123", name: "ABC Ltd", type: "Customer" },
-  { id: "supp456", name: "Supply One", type: "Supplier" },
+  { id: "supp456", name: "Supply One", type: "Vendor" },
   { id: "cust789", name: "XYZ Pvt Ltd", type: "Customer" }
 ];
 
