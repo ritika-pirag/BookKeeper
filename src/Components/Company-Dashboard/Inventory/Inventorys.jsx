@@ -345,7 +345,7 @@ const InventoryItems = () => {
             }}
           >
 
-            Add Item
+            Add Product
           </Button>
         </Col>
       </Row>
@@ -436,9 +436,9 @@ const InventoryItems = () => {
               <Row className="mb-3">
                 <Col md={6}><strong>Tax Account:</strong> {selectedItem.taxAccount}</Col>
                 <Col md={6}><strong>Cess:</strong> {selectedItem.cess}</Col>
-                <Col md={6}><strong>Purchase Price (Excl):</strong> {selectedItem.purchasePriceExclusive}</Col>
+                {/* <Col md={6}><strong>Purchase Price (Excl):</strong> {selectedItem.purchasePriceExclusive}</Col> */}
                 <Col md={6}><strong>Purchase Price (Incl):</strong> {selectedItem.purchasePriceInclusive}</Col>
-                <Col md={6}><strong>Sale Price (Excl):</strong> {selectedItem.salePriceExclusive}</Col>
+                {/* <Col md={6}><strong>Sale Price (Excl):</strong> {selectedItem.salePriceExclusive}</Col> */}
                 <Col md={6}><strong>Sale Price (Incl):</strong> {selectedItem.salePriceInclusive}</Col>
                 <Col md={6}><strong>Discount %:</strong> {selectedItem.discount}</Col>
               </Row>
@@ -548,36 +548,31 @@ const InventoryItems = () => {
             </Row>
             <Row className="mb-3">
               <Col md={6}><Form.Group><Form.Label>Initial Quantity On Hand</Form.Label><Form.Control name="quantity" value={newItem.quantity} onChange={handleChange} /></Form.Group></Col>
+              <Col md={6}><Form.Group><Form.Label>Item Image</Form.Label><Form.Control type="file" name="image" onChange={handleChange} /></Form.Group></Col>
+            
+            </Row>
+        
+            <Row className="mb-3">
+              <Col md={6}><Form.Group><Form.Label>Minimum Order Quantity</Form.Label><Form.Control name="minQty" value={newItem.minQty} onChange={handleChange} /></Form.Group></Col>
               <Col md={6}><Form.Group><Form.Label>As Of Date</Form.Label><Form.Control type="date" name="date" value={newItem.date} onChange={handleChange} /></Form.Group></Col>
             </Row>
             <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Initial Cost/Unit</Form.Label><Form.Control name="cost" value={newItem.cost} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Value</Form.Label><Form.Control name="value" value={newItem.value} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Minimum Order Quantity</Form.Label><Form.Control name="minQty" value={newItem.minQty} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Item Image</Form.Label><Form.Control type="file" name="image" onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
               <Col md={6}><Form.Group><Form.Label>Default Tax Account</Form.Label><Form.Control name="taxAccount" value={newItem.taxAccount} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Additional Cess</Form.Label><Form.Control name="cess" value={newItem.cess} onChange={handleChange} /></Form.Group></Col>
+              <Col md={6}><Form.Group><Form.Label>Initial Cost/Unit</Form.Label><Form.Control name="cost" value={newItem.cost} onChange={handleChange} /></Form.Group></Col>
+
+              {/* <Col md={6}><Form.Group><Form.Label>Additional Cess</Form.Label><Form.Control name="cess" value={newItem.cess} onChange={handleChange} /></Form.Group></Col> */}
             </Row>
+          
             <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Purchase Price (Exclusive)</Form.Label><Form.Control name="purchasePriceExclusive" value={newItem.purchasePriceExclusive} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Default Purchase Price (Inclusive)</Form.Label><Form.Control name="purchasePriceInclusive" value={newItem.purchasePriceInclusive} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Sale Price (Exclusive)</Form.Label><Form.Control name="salePriceExclusive" value={newItem.salePriceExclusive} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Default Sale Price (Inclusive)</Form.Label><Form.Control name="salePriceInclusive" value={newItem.salePriceInclusive} onChange={handleChange} /></Form.Group></Col>
+              <Col md={6}><Form.Group><Form.Label>Default Sale Price </Form.Label><Form.Control name="salePriceExclusive" value={newItem.salePriceExclusive} onChange={handleChange} /></Form.Group></Col>
+              <Col md={6}><Form.Group><Form.Label>Default Purchase Price </Form.Label><Form.Control name="salePriceInclusive" value={newItem.salePriceInclusive} onChange={handleChange} /></Form.Group></Col>
             </Row>
             <Row className="mb-3">
               <Col md={6}><Form.Group><Form.Label>Default Discount %</Form.Label><Form.Control name="discount" value={newItem.discount} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Item Category</Form.Label><Form.Control name="category" value={newItem.category} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Item Subcategory</Form.Label><Form.Control name="subcategory" value={newItem.subcategory} onChange={handleChange} /></Form.Group></Col>
               <Col md={6}><Form.Group><Form.Label>Remarks</Form.Label><Form.Control name="remarks" value={newItem.remarks} onChange={handleChange} /></Form.Group></Col>
+
             </Row>
+        
           </Form>
         </Modal.Body>
         <Modal.Footer>
