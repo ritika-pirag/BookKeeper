@@ -69,7 +69,8 @@ const VendorsCreditors = () => {
   const [vendorFormData, setVendorFormData] = useState({
     balanceType: "",
     accountType: "",
-
+    payable: "", // Opening Balance
+    currentBalance: "", // Current Balance
   });
   
   const updateField = (field, value) => {
@@ -460,22 +461,7 @@ const VendorsCreditors = () => {
   </Form.Control>
 </Form.Group>
         </Col>
-
         <Col md={6}>
-                <Form.Group>
-                  <Form.Label> Balance</Form.Label>
-                  <Form.Control
-                    type="number"
-                    value={vendorFormData.payable}
-                    onChange={(e) => setVendorFormData({ ...vendorFormData, payable: e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-
-            </Row>
-
-<Row className="mb-3">
-<Col md={6}>
     <Form.Group>
       <Form.Label>Balance Type</Form.Label>
       <Form.Control
@@ -492,8 +478,50 @@ const VendorsCreditors = () => {
 
     </Form.Group>
   </Col>
-    
+      
+
+            </Row>
+
+            <Row className="mb-3">
   <Col md={6}>
+    <Form.Group>
+      <Form.Label>Opening Balance</Form.Label>
+      <Form.Control
+        type="number"
+        value={vendorFormData.payable}
+        onChange={(e) =>
+          setVendorFormData({
+            ...vendorFormData,
+            payable: e.target.value,
+            currentBalance: e.target.value // opening balance ke sath hi update
+          })
+        }
+      />
+    </Form.Group>
+  </Col>
+
+  <Col md={6}>
+    <Form.Group>
+      <Form.Label>Current Balance</Form.Label>
+      <Form.Control
+        type="number"
+        value={vendorFormData.currentBalance}
+        onChange={(e) =>
+          setVendorFormData({
+            ...vendorFormData,
+            currentBalance: e.target.value
+          })
+        }
+      />
+    </Form.Group>
+  </Col>
+</Row>
+
+
+            <Row className="mb-3">
+
+
+            <Col md={6}>
                 <Form.Group>
                   <Form.Label>Creation Date</Form.Label>
                   <Form.Control
@@ -504,11 +532,6 @@ const VendorsCreditors = () => {
                 </Form.Group>
               </Col>
 
-</Row>
-            <Row className="mb-3">
-
-
-      
 
               <Col md={6}>
                 <Form.Group>
@@ -520,8 +543,11 @@ const VendorsCreditors = () => {
                   />
                 </Form.Group>
               </Col>
-                 
-              <Col md={6}>
+            
+            </Row>
+            <Row className="mb-3">
+              
+            <Col md={6}>
                 <Form.Group>
                   <Form.Label>Bank IFSC</Form.Label>
                   <Form.Control
@@ -532,9 +558,6 @@ const VendorsCreditors = () => {
                 </Form.Group>
               </Col>
 
-            </Row>
-            <Row className="mb-3">
-         
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Bank Name & Branch</Form.Label>

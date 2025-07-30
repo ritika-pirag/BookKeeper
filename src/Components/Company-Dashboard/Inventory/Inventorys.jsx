@@ -151,7 +151,7 @@ const InventoryItems = () => {
     }
   ]);
 
-
+  const [showUOMModal, setShowUOMModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
   const [showView, setShowView] = useState(false);
@@ -207,7 +207,9 @@ const InventoryItems = () => {
     image: null,
     status: "In Stock",
     itemType: "Good", // New field for item type
-    itemCategory: "" // New field for item category
+    itemCategory: "", // New field for item category
+    unit: "",
+    weightPerUnit: "",
   });
 
   const handleChange = (e) => {
@@ -285,6 +287,7 @@ const InventoryItems = () => {
     item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  
   return (
     <div className="mt-4 p-2">
       <Row className="align-items-center mb-3 ">
@@ -520,6 +523,12 @@ const InventoryItems = () => {
                       variant="outline-primary"
                       size="sm"
                       onClick={() => setShowAddCategoryModal(true)}
+                      style={{
+                        backgroundColor: '#27b2b6',
+                        border: 'none',
+                        color: '#fff',
+                        padding: '6px 16px',
+                      }}
                     >
                       + Add New
                     </Button>
@@ -572,7 +581,19 @@ const InventoryItems = () => {
               <Col md={6}><Form.Group><Form.Label>Remarks</Form.Label><Form.Control name="remarks" value={newItem.remarks} onChange={handleChange} /></Form.Group></Col>
 
             </Row>
-        
+            <Row className="mb-3">
+  <Col md={12} className="text-end">
+    <Button variant="outline-info" onClick={() => setShowUOMModal(true)}      style={{
+              backgroundColor: '#27b2b6',
+              border: 'none',
+              color: '#fff',
+              padding: '6px 16px',
+            }}>
+      View More Details
+    </Button>
+  </Col>
+</Row>
+
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -580,6 +601,50 @@ const InventoryItems = () => {
           <Button style={{ backgroundColor: '#27b2b6', borderColor: '#27b2b6' }} onClick={showAdd ? handleAddItem : handleUpdateItem}>{showAdd ? "Add" : "Update"}</Button>
         </Modal.Footer>
       </Modal>
+
+
+
+
+      <Modal show={showUOMModal} onHide={() => setShowUOMModal(false)} centered>
+  <Modal.Header closeButton>
+    <Modal.Title>Unit Details</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <Form>
+      <Form.Group className="mb-3">
+        <Form.Label>Unit of Measurement (UOM)</Form.Label>
+        <Form.Select name="unit" value={newItem.unit} onChange={handleChange}>
+          <option value="">Select Unit</option>
+          <option value="Piece">Piece</option>
+          <option value="Box">Box</option>
+          <option value="KG">KG</option>
+          <option value="Meter">Meter</option>
+          <option value="Litre">Litre</option>
+        </Form.Select>
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Weight per Unit</Form.Label>
+        <Form.Control
+          name="weightPerUnit"
+          value={newItem.weightPerUnit}
+          onChange={handleChange}
+          placeholder="e.g. 0.5 KG"
+          
+        />
+      </Form.Group>
+    </Form>
+
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowUOMModal(false)}      style={{
+              backgroundColor: '#27b2b6',
+              border: 'none',
+              color: '#fff',
+              padding: '6px 16px',
+            }}>Close</Button>
+  </Modal.Footer>
+</Modal>
 
       <Modal show={showAddCategoryModal} onHide={() => setShowAddCategoryModal(false)}>
         <Modal.Header closeButton>
@@ -601,7 +666,12 @@ const InventoryItems = () => {
             Cancel
           </Button>
           <Button class="btn"
-          style={{ backgroundColor: "#53b2a5", border: "none" }}
+          style={{
+            backgroundColor: '#27b2b6',
+            border: 'none',
+            color: '#fff',
+            padding: '6px 16px',
+          }}
           onClick={handleAddCategory}>
             Add
           </Button>

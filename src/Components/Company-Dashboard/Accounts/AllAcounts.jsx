@@ -87,33 +87,13 @@ const AllAccounts = () => {
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [showMainAccountModal, setShowMainAccountModal] = useState(false);
   const [mainAccountName, setMainAccountName] = useState("");
-  const [customerFormData, setCustomerFormData] = useState({
-    name: "",
-    accountType: "Sundry Debtors",
-    payable: "",
-    creationDate: "",
-    bankAccountNumber: "",
-    bankIFSC: "",
-    bankName: "",
-    country: "",
-    state: "",
-    pincode: "",
-    address: "",
-    stateCode: "",
-    shippingAddress: "",
-    phone: "",
-    email: "",
-    creditPeriod: "",
-    gstin: "",
-    gstType: "Registered",
-    taxEnabled: true,
-    taxNumber: "",
-  });
+
 
   const [vendorFormData, setVendorFormData] = useState({
     name: "",
     accountType: "Sundry Creditors",
-    payable: "",
+    payable: "",//opening balance
+    currentBalance: "",
     creationDate: "",
     bankAccountNumber: "",
     bankIFSC: "",
@@ -132,7 +112,30 @@ const AllAccounts = () => {
     taxEnabled: true,
     taxNumber: "",
   });
-
+  const [customerFormData, setCustomerFormData] = useState({
+    name: "",
+    accountType: "Sundry Debtors", // 👈 Customer specific
+    payable: "", // Opening Balance
+    currentBalance: "", // Current Balance
+    creationDate: "",
+    bankAccountNumber: "",
+    bankIFSC: "",
+    bankName: "",
+    country: "",
+    state: "",
+    pincode: "",
+    address: "",
+    stateCode: "",
+    shippingAddress: "",
+    phone: "",
+    email: "",
+    creditPeriod: "",
+    gstin: "",
+    gstType: "Registered",
+    taxEnabled: true,
+    taxNumber: "",
+  });
+  
   const [accountType, setAccountType] = useState("Sundry Creditors");
   const [isTaxEnabled, setIsTaxEnabled] = useState(true);
   const [taxNumber, setTaxNumber] = useState("TAX123456");
@@ -307,8 +310,8 @@ const handleDeleteAccount = (type, name) => {
           <tr>
             <th>Account Type</th>
             <th>Account Name</th>
-            <th>Balance</th>
-            <th>Total Balance</th>
+            <th> Opening Balance</th>
+            <th>Cureent Balance</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -376,7 +379,7 @@ const handleDeleteAccount = (type, name) => {
       <Modal
         show={showVendorModal}
         onHide={() => setShowVendorModal(false)}
-        size="lg"
+   size="xl"
         centered
         backdrop="static"
       >
@@ -444,21 +447,7 @@ const handleDeleteAccount = (type, name) => {
 </Form.Group>
         </Col>
 
-        <Col md={6}>
-                <Form.Group>
-                  <Form.Label> Balance</Form.Label>
-                  <Form.Control
-                    type="number"
-                    value={vendorFormData.payable}
-                    onChange={(e) => setVendorFormData({ ...vendorFormData, payable: e.target.value })}
-                  />
-                </Form.Group>
-              </Col>
-
-            </Row>
-
-<Row className="mb-3">
-<Col md={6}>
+              <Col md={6}>
     <Form.Group>
       <Form.Label>Balance Type</Form.Label>
       <Form.Control
@@ -472,8 +461,49 @@ const handleDeleteAccount = (type, name) => {
       </Form.Control>
     </Form.Group>
   </Col>
-    
+            </Row>
+            <Row className="mb-3">
+  {/* Opening Balance (independent) */}
   <Col md={6}>
+    <Form.Group>
+      <Form.Label>Opening Balance</Form.Label>
+      <Form.Control
+        type="number"
+        value={vendorFormData.payable}
+        onChange={(e) => {
+          const value = e.target.value;
+          setVendorFormData({
+            ...vendorFormData,
+            payable: value, // only update payable
+          });
+        }}
+      />
+    </Form.Group>
+  </Col>
+
+  {/* Current Balance (independent) */}
+  <Col md={6}>
+    <Form.Group>
+      <Form.Label>Current Balance</Form.Label>
+      <Form.Control
+        type="number"
+        value={vendorFormData.currentBalance}
+        onChange={(e) => {
+          const value = e.target.value;
+          setVendorFormData({
+            ...vendorFormData,
+            currentBalance: value, // only update currentBalance
+          });
+        }}
+      />
+    </Form.Group>
+  </Col>
+</Row>
+
+            <Row className="mb-3">
+
+
+            <Col md={6}>
                 <Form.Group>
                   <Form.Label>Creation Date</Form.Label>
                   <Form.Control
@@ -483,12 +513,6 @@ const handleDeleteAccount = (type, name) => {
                   />
                 </Form.Group>
               </Col>
-
-</Row>
-            <Row className="mb-3">
-
-
-      
 
               <Col md={6}>
                 <Form.Group>
@@ -500,7 +524,10 @@ const handleDeleteAccount = (type, name) => {
                   />
                 </Form.Group>
               </Col>
-                 
+          
+            </Row>
+            <Row className="mb-3">
+                         
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Bank IFSC</Form.Label>
@@ -512,9 +539,6 @@ const handleDeleteAccount = (type, name) => {
                 </Form.Group>
               </Col>
 
-            </Row>
-            <Row className="mb-3">
-         
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Bank Name & Branch</Form.Label>
@@ -525,6 +549,7 @@ const handleDeleteAccount = (type, name) => {
                   />
                 </Form.Group>
               </Col>
+
             </Row>
          
             <Row className="mb-3">
@@ -692,7 +717,7 @@ const handleDeleteAccount = (type, name) => {
 <Modal
   show={showCustomerModal}
   onHide={() => setShowCustomerModal(false)}
-  size="lg"
+  size="xl"
   centered
   backdrop="static"
 >
@@ -757,22 +782,8 @@ const handleDeleteAccount = (type, name) => {
             </Form.Control>
           </Form.Group>
         </Col>
+    
         <Col md={6}>
-          <Form.Group>
-            <Form.Label>Balance</Form.Label>
-            <Form.Control
-              type="number"
-              value={customerFormData.payable}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, payable: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-
-
-  
-      </Row>
-      <Row className="mb-3" >
-<Col md={6}>
     <Form.Group>
       <Form.Label>Balance Type</Form.Label>
       <Form.Control
@@ -787,7 +798,47 @@ const handleDeleteAccount = (type, name) => {
     </Form.Group>
   </Col>
 
+  
+      </Row>
+      <Row className="mb-3">
+  {/* Opening Balance (independent) */}
+  <Col md={6}>
+    <Form.Group>
+      <Form.Label>Opening Balance</Form.Label>
+      <Form.Control
+        type="number"
+        value={customerFormData.payable}
+        onChange={(e) => {
+          const value = e.target.value;
+          setCustomerFormData({
+            ...customerFormData,
+            payable: value, // only update payable
+          });
+        }}
+      />
+    </Form.Group>
+  </Col>
+
+  {/* Current Balance (independent) */}
+  <Col md={6}>
+    <Form.Group>
+      <Form.Label>Current Balance</Form.Label>
+      <Form.Control
+        type="number"
+        value={customerFormData.currentBalance}
+        onChange={(e) => {
+          const value = e.target.value;
+          setCustomerFormData({
+            ...customerFormData,
+            currentBalance: value, // only update currentBalance
+          });
+        }}
+      />
+    </Form.Group>
+  </Col>
 </Row>
+
+
       <Row className="mb-3">
         <Col md={6}>
           <Form.Group>
@@ -942,42 +993,7 @@ const handleDeleteAccount = (type, name) => {
           </Form.Group>
         </Col>
       </Row>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>GST Type</Form.Label>
-            <Form.Control
-              as="select"
-              value={customerFormData.gstType}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, gstType: e.target.value })}
-            >
-              <option>Registered</option>
-              <option>Unregistered</option>
-              <option>Composition</option>
-            </Form.Control>
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Tax Enabled</Form.Label>
-            <Form.Check
-              type="switch"
-              checked={customerFormData.taxEnabled}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, taxEnabled: e.target.checked })}
-              label={customerFormData.taxEnabled ? "Yes" : "No"}
-            />
-            {customerFormData.taxEnabled && (
-              <Form.Control
-                type="text"
-                placeholder="Tax Number"
-                className="mt-2"
-                value={customerFormData.taxNumber}
-                onChange={(e) => setCustomerFormData({ ...customerFormData, taxNumber: e.target.value })}
-              />
-            )}
-          </Form.Group>
-        </Col>
-      </Row>
+ 
     </Form>
   </Modal.Body>
   <Modal.Footer>
@@ -1001,7 +1017,7 @@ const handleDeleteAccount = (type, name) => {
         onHide={() => setShowNewAccountModal(false)}
         centered
         backdrop="static"
-        size="lg"
+  size="lg"
           dialogClassName="w-100"
       >
 

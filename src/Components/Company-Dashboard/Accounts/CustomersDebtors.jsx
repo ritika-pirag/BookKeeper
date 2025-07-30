@@ -75,6 +75,7 @@ const CustomersDebtors = () => {
       taxNumber: "GSTIN123",
       altMobile: "0987654321",
       balance: "5000",
+      
       taxEnabled: true,
       billing: {
         name: "Lalit Singh",
@@ -498,7 +499,7 @@ const CustomersDebtors = () => {
       {/* Add/Edit Modal */}
       <Modal   show={showAddEditModal}
   onHide={() => setShowAddEditModal(false)}
-  size="lg"
+  size="xl"
   centered
   backdrop="static">
       <Modal.Header closeButton className="bg-light">
@@ -563,21 +564,6 @@ const CustomersDebtors = () => {
           </Form.Group>
         </Col>
         <Col md={6}>
-          <Form.Group>
-            <Form.Label>Balance</Form.Label>
-            <Form.Control
-              type="number"
-              value={customerFormData.payable}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, payable: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-
-
-  
-      </Row>
-      <Row className="mb-3" >
-<Col md={6}>
     <Form.Group>
       <Form.Label>Balance Type</Form.Label>
       <Form.Control
@@ -591,6 +577,46 @@ const CustomersDebtors = () => {
       </Form.Control>
     </Form.Group>
   </Col>
+
+
+  
+      </Row>
+      <Row className="mb-3" >
+      <Row className="mb-3">
+  <Col md={6}>
+    <Form.Group>
+      <Form.Label>Opening Balance</Form.Label>
+      <Form.Control
+        type="number"
+        value={customerFormData.payable}
+        onChange={(e) => {
+          const value = e.target.value;
+          setCustomerFormData({
+            ...customerFormData,
+            payable: value,
+          });
+        }}
+      />
+    </Form.Group>
+  </Col>
+
+  <Col md={6}>
+    <Form.Group>
+      <Form.Label>Current Balance</Form.Label>
+      <Form.Control
+        type="number"
+        value={customerFormData.currentBalance}
+        onChange={(e) => {
+          const value = e.target.value;
+          setCustomerFormData({
+            ...customerFormData,
+            currentBalance: value,
+          });
+        }}
+      />
+    </Form.Group>
+  </Col>
+</Row>
 
 </Row>
       <Row className="mb-3">
@@ -836,7 +862,7 @@ const CustomersDebtors = () => {
 
 
 
-      
+
       {/* Delete Confirmation Modal */}
       <Modal show={showConfirmDelete} onHide={() => setShowConfirmDelete(false)} centered>
         <Modal.Header closeButton>
