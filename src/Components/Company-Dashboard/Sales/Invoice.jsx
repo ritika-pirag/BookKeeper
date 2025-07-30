@@ -552,7 +552,7 @@ width="100%"
             />
           </Form.Group>
         </Col>
-        <Col md={6}>
+        {/* <Col md={6}>
           <Form.Group>
             <Form.Label className="fw-semibold">Due Date*</Form.Label>
             <Form.Control
@@ -563,7 +563,7 @@ width="100%"
             />
           </Form.Group>
         </Col>
-     
+      */}
       </Row>
 
       <Row className=" mt-4 mb-3">
