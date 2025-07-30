@@ -107,7 +107,7 @@ const InventoryItems = () => {
       value: 1000,
       minQty: 5,
       taxAccount: "5% GST",
-      cess: 0,
+ 
       purchasePriceExclusive: 90,
       purchasePriceInclusive: 95,
       salePriceExclusive: 110,
@@ -289,7 +289,7 @@ const InventoryItems = () => {
     <div className="mt-4 p-2">
       <Row className="align-items-center mb-3 ">
         <Col md={4}>
-          <h4 className="fw-bold mb-0">Inventory Items</h4>
+          <h4 className="fw-bold mb-0">Inventory Product</h4>
         </Col>
         <Col md={8} className="text-md-end d-flex flex-wrap gap-2 justify-content-md-end">
           <Button
@@ -365,7 +365,7 @@ const InventoryItems = () => {
                 <th>HSN</th>
                 <th>Quantity</th>
                 <th>Warehouse</th>
-                <th>Cost</th>
+                <th>Amount</th>
                 <th>Value</th>
                 <th>Status</th>
                 <th>Actions</th>
