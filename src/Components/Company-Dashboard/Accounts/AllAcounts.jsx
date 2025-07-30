@@ -316,9 +316,7 @@ const handleDeleteAccount = (type, name) => {
           {accountTypes.map((type) => (
             <React.Fragment key={type}>
               <tr className="bg-light">
-                <td colSpan="5" className="text-start fw-bold">
-                  {type}
-                </td>
+                <td colSpan="5" className="text-start fw-bold">{type}</td>
               </tr>
               {predefinedAccounts[type].map((accountName, index) => (
                 <tr key={`${type}-${index}`}>
@@ -328,36 +326,13 @@ const handleDeleteAccount = (type, name) => {
                   <td>0.00</td>
                   <td>
                     <div className="d-flex flex-wrap gap-2 justify-content-center">
-                      {/* View Button */}
-                      <Button
-                        variant="link"
-                        className="p-0 text-info"
-                        size="sm"
-                        onClick={() => handleViewAccount(type, accountName)}
-                        title="View"
-                      >
-                        <FaEye  size={16}/>
+                      <Button variant="link" className="p-0 text-info" size="sm" onClick={() => handleViewAccount(type, accountName)} title="View">
+                        <FaEye size={16} />
                       </Button>
-                      
-                      {/* Edit Button */}
-                      <Button
-                        variant="link"
-                        className="p-0 text-warning"
-                        size="sm"
-                        onClick={() => handleEditAccount(type, accountName)}
-                        title="Edit"
-                      >
+                      <Button variant="link" className="p-0 text-warning" size="sm" onClick={() => handleEditAccount(type, accountName)} title="Edit">
                         <FaEdit size={16} />
                       </Button>
-                      
-                      {/* Delete Button */}
-                      <Button
-                        variant="link"
-                        className="p-0 text-danger"
-                        size="sm"
-                        onClick={() => handleDeleteAccount(type, accountName)}
-                        title="Delete"
-                      >
+                      <Button variant="link" className="p-0 text-danger" size="sm" onClick={() => handleDeleteAccount(type, accountName)} title="Delete">
                         <FaTrash size={16} />
                       </Button>
                     </div>
@@ -369,8 +344,30 @@ const handleDeleteAccount = (type, name) => {
         </tbody>
       </Table>
     </div>
+
+    {/* Pagination */}
+    <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+      <small className="text-muted ms-2">Showing 1 to 3 of 3 results</small>
+      <nav>
+        <ul className="pagination mb-0">
+          <li className="page-item disabled">
+            <button className="page-link">&laquo;</button>
+          </li>
+          <li className="page-item active">
+            <button className="page-link">1</button>
+          </li>
+          <li className="page-item">
+            <button className="page-link">2</button>
+          </li>
+          <li className="page-item">
+            <button className="page-link">&raquo;</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </Card.Body>
 </Card>
+
 
       {/* Vendor Modal */}
       <Modal

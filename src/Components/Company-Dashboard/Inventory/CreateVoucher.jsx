@@ -11,16 +11,16 @@ const CreateVoucher = () => {
       itemName: "Voucher Item 1",
       hsn: "1234",
       quantity: 10,
-    amount: 100,
-
+      cost: 100,
+      value: 1000,
       status: "In Stock",
     },
     {
       itemName: "Voucher Item 2",
       hsn: "5678",
       quantity: 0,
-    amount: 200,
-
+      cost: 200,
+      value: 0,
       status: "Out of Stock",
     },
   ];
@@ -101,65 +101,89 @@ const CreateVoucher = () => {
             </Col>
           </Row>
           <div className="card bg-white rounded-3 p-3">
-            <div className="table-responsive">
-              <table className="table table-hover align-middle mb-0">
-                <thead className="table-light">
-                  <tr>
-                    <th> Product Name</th>
-                    <th>HSN</th>
-                    <th>Quantity</th>
-                    <th>Amount</th>
-  
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredSales.length > 0 ? (
-                    filteredSales.map((item, idx) => (
-                      <tr key={idx}>
-                        <td>{item.itemName}</td>
-                        <td>{item.hsn}</td>
-                        <td>{item.quantity}</td>
-                        <td>{item.amount}</td>
-       
-                        <td>
-                          <span
-                            className={`badge px-3 py-1 rounded-pill fw-semibold ${
-                              item.status === "In Stock"
-                                ? "bg-success text-white"
-                                : "bg-danger text-white"
-                            }`}
-                          >
-                            {item.status}
-                          </span>
-                        </td>
-                        <td>
-                                  <div className="d-flex gap-2">
-                                  <Button
-  variant="link"
-  className="text-info p-0"
-  onClick={() => navigate("/company/salesvoucherview")}
->
-  <FaEye />
-</Button>
+         <div className="table-responsive">
+  <table className="table table-hover align-middle mb-0">
+    <thead className="table-light">
+      <tr>
+        <th>Name</th>
+        <th>HSN</th>
+        <th>Quantity</th>
+        <th>Cost</th>
+        <th>Value</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {filteredSales.length > 0 ? (
+        filteredSales.map((item, idx) => (
+          <tr key={idx}>
+            <td>{item.itemName}</td>
+            <td>{item.hsn}</td>
+            <td>{item.quantity}</td>
+            <td>{item.cost}</td>
+            <td>{item.value}</td>
+            <td>
+              <span
+                className={`badge px-3 py-1 rounded-pill fw-semibold ${
+                  item.status === "In Stock"
+                    ? "bg-success text-white"
+                    : "bg-danger text-white"
+                }`}
+              >
+                {item.status}
+              </span>
+            </td>
+            <td>
+              <div className="d-flex gap-2">
+                <Button
+                  variant="link"
+                  className="text-info p-0"
+                  onClick={() => navigate("/company/salesvoucherview")}
+                >
+                  <FaEye />
+                </Button>
+                {/* <Button variant="link" className="text-warning p-0"><FaEdit /></Button> */}
+                <Button variant="link" className="text-danger p-0"><FaTrash /></Button>
+              </div>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="7" className="text-center">
+            No items found.
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
 
-                                    {/* <Button variant="link" className="text-warning p-0" ><FaEdit /></Button> */}
-                                    <Button variant="link" className="text-danger p-0" ><FaTrash /></Button>
-                                  </div>
-                                </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="7" className="text-center">
-                        No items found.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+{/* Static Pagination UI */}
+<div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+  <small className="text-muted ms-2">
+    Showing 1 to {filteredSales.length} of {filteredSales.length} results
+  </small>
+  <nav>
+    <ul className="pagination mb-0">
+      <li className="page-item disabled">
+        <button className="page-link">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button className="page-link">1</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+            
           </div>
         </>
       )}
@@ -182,11 +206,11 @@ const CreateVoucher = () => {
               <table className="table table-hover align-middle mb-0">
                 <thead className="table-light">
                   <tr>
-                    <th>Product Name</th>
+                    <th>Name</th>
                     <th>HSN</th>
                     <th>Quantity</th>
-                    <th>Amount</th>
-       
+                    <th>Cost</th>
+                    <th>Value</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -198,8 +222,8 @@ const CreateVoucher = () => {
                         <td>{item.itemName}</td>
                         <td>{item.hsn}</td>
                         <td>{item.quantity}</td>
-                        <td>{item.amount}</td>
-            
+                        <td>{item.cost}</td>
+                        <td>{item.value}</td>
                         <td>
                           <span
                             className={`badge px-3 py-1 rounded-pill fw-semibold ${

@@ -138,16 +138,19 @@ const Ledger = () => {
                   <td>{t.balance}</td>
                   <td className="d-flex justify-content-center gap-1">
                     <button
-                      className="btn btn-sm btn-outline-info"
+                      className="btn outline-info btn-sm py-1 px-1 text-info" 
                       data-bs-toggle="modal"
                       data-bs-target="#ledgerDetailModal"
                       onClick={() => setSelectedTransaction(t)}
                     >
-                      <FaEye />
+                      <FaEye size={16}/>
                     </button>
-                    <button className="btn btn-sm btn-outline-warning">
-                      <FaPrint />
-                    </button>
+                 <button
+  className="btn btn-sm text-warning bg-transparent border-0"
+  style={{ outline: "none", boxShadow: "none" }}
+>
+  <FaPrint size={16}/>
+</button>
                   </td>
                 </tr>
               ))
