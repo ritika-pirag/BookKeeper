@@ -94,7 +94,7 @@ const PurchaseVoucherView = () => {
             <th>Rate</th>
             <th>Discount %</th>
             <th>Tax</th>
-            <th>Value</th>
+ 
             <th>Description</th>
           </tr>
         </thead>
@@ -108,7 +108,7 @@ const PurchaseVoucherView = () => {
                 <td>{itm.rate || "0.00"}</td>
                 <td>{itm.discount || "0"}</td>
                 <td>{itm.tax || "--"}</td>
-                <td>{itm.value || "0.00"}</td>
+     
                 <td>{itm.description || "--"}</td>
               </tr>
             ))

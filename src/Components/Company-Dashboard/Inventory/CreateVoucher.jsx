@@ -105,7 +105,7 @@ const CreateVoucher = () => {
               <table className="table table-hover align-middle mb-0">
                 <thead className="table-light">
                   <tr>
-                    <th>Name</th>
+                    <th> Product Name</th>
                     <th>HSN</th>
                     <th>Quantity</th>
                     <th>Amount</th>
@@ -182,7 +182,7 @@ const CreateVoucher = () => {
               <table className="table table-hover align-middle mb-0">
                 <thead className="table-light">
                   <tr>
-                    <th>Name</th>
+                    <th>Product Name</th>
                     <th>HSN</th>
                     <th>Quantity</th>
                     <th>Amount</th>

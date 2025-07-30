@@ -215,7 +215,7 @@ const PurchaseVoucher = () => {
             <th>Tax</th>
             <th>Value</th>
             <th>Description</th>
-            <th></th>
+            <th></th> 
           </tr>
         </thead>
         <tbody>

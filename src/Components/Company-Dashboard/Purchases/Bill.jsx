@@ -258,7 +258,7 @@ const Bill = () => {
       </div>
 
       {/* FULL INLINE MODAL WITH FORM */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} fullscreen centered backdrop="static">
+      <Modal show={showModal} onHide={() => setShowModal(false)} size='lg' centered backdrop="static">
         <Modal.Header closeButton>
           <Modal.Title>Create Bill</Modal.Title>
         </Modal.Header>
