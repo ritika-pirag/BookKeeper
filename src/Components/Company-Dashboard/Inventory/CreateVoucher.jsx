@@ -11,16 +11,16 @@ const CreateVoucher = () => {
       itemName: "Voucher Item 1",
       hsn: "1234",
       quantity: 10,
-      cost: 100,
-      value: 1000,
+    amount: 100,
+
       status: "In Stock",
     },
     {
       itemName: "Voucher Item 2",
       hsn: "5678",
       quantity: 0,
-      cost: 200,
-      value: 0,
+    amount: 200,
+
       status: "Out of Stock",
     },
   ];
@@ -108,8 +108,8 @@ const CreateVoucher = () => {
                     <th>Name</th>
                     <th>HSN</th>
                     <th>Quantity</th>
-                    <th>Cost</th>
-                    <th>Value</th>
+                    <th>Amount</th>
+  
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -121,8 +121,8 @@ const CreateVoucher = () => {
                         <td>{item.itemName}</td>
                         <td>{item.hsn}</td>
                         <td>{item.quantity}</td>
-                        <td>{item.cost}</td>
-                        <td>{item.value}</td>
+                        <td>{item.amount}</td>
+       
                         <td>
                           <span
                             className={`badge px-3 py-1 rounded-pill fw-semibold ${
@@ -185,8 +185,8 @@ const CreateVoucher = () => {
                     <th>Name</th>
                     <th>HSN</th>
                     <th>Quantity</th>
-                    <th>Cost</th>
-                    <th>Value</th>
+                    <th>Amount</th>
+       
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -198,8 +198,8 @@ const CreateVoucher = () => {
                         <td>{item.itemName}</td>
                         <td>{item.hsn}</td>
                         <td>{item.quantity}</td>
-                        <td>{item.cost}</td>
-                        <td>{item.value}</td>
+                        <td>{item.amount}</td>
+            
                         <td>
                           <span
                             className={`badge px-3 py-1 rounded-pill fw-semibold ${
