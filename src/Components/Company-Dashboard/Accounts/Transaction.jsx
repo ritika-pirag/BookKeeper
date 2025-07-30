@@ -19,7 +19,7 @@ const Transaction = () => {
       amount: 1200,
       fromTo: 'Customer A',
       accountType: 'Assets',
-      account: 'Cash in Hand',
+      accountname: 'Cash in Hand',
       voucherNo: 'VCH001',
       note: 'Advance Payment'
     },
@@ -29,7 +29,7 @@ const Transaction = () => {
       amount: 800,
       fromTo: 'Vendor X',
       accountType: 'Liabilities',
-      account: 'Bank Account',
+      accountname: 'Bank Account',
       voucherNo: 'VCH002',
       note: 'Material Purchase'
     }
@@ -54,7 +54,7 @@ const Transaction = () => {
     amount: '',
     fromTo: '',
     accountType: '',
-    account: '',
+    accountname: '',
     voucherNo: '',
     note: ''
   };
@@ -228,7 +228,7 @@ const Transaction = () => {
             <th>Amount</th>
             <th>From/To</th>
             <th>Account Type</th>
-            <th>Account</th>
+            <th>Account Name </th>
             <th>Note</th>
             <th>Action</th>
           </tr>
@@ -243,7 +243,7 @@ const Transaction = () => {
                 <td>{txn.amount}</td>
                 <td>{txn.fromTo}</td>
                 <td>{txn.accountType}</td>
-                <td>{txn.account}</td>
+                <td>{txn.accountname}</td>
                 <td>{txn.note}</td>
                 <td>
                   <Button variant="link" onClick={() => handleView(idx)}><FaEye /></Button>

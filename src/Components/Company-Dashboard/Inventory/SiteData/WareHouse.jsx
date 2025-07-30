@@ -66,7 +66,9 @@ const WareHouse = () => {
   const handleDelete = (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this warehouse?");
     if (confirmDelete) {
-      setWarehouses(warehouses.filter((w) => w._id !== id));
+      const updated = warehouses.filter((w) => w._id !== id);
+      console.log("Deleted ID:", id, "Updated List:", updated); // Debug
+      setWarehouses(updated);
       alert("Warehouse deleted successfully.");
     }
   };
@@ -187,9 +189,9 @@ const WareHouse = () => {
             <tbody>
               {currentItems.length > 0 ? (
                 currentItems.map((w, index) => (
-                  <tr key={w._id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/company/warehouse/${w._id}`)}>
+                  <tr key={w._id}>
                     <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                    <td>{w.name}</td>
+                    <td className="text-primary" style={{ cursor: 'pointer' }} onClick={() => navigate(`/company/warehouse/${w._id}`)}><u>{w.name}</u></td>
                     <td>{w.totalStocks}</td>
                     <td>{w.location}</td>
                     <td>
