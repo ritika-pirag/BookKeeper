@@ -386,15 +386,7 @@ const VendorsCreditors = () => {
           </div>
         )}
 
-        {/* Tax Info */}
-        <div className="border rounded p-3 mb-2">
-          <h6 className="fw-semibold mb-3">Tax Information</h6>
-          <Row>
-            <Col md={6}><p><strong>Tax Number:</strong> {selectedVendor.taxNumber || "N/A"}</p></Col>
-            <Col md={6}><p><strong>GSTIN:</strong> {selectedVendor.gstin || "N/A"}</p></Col>
-            <Col md={6}><p><strong>GST Type:</strong> {selectedVendor.gstType || "Unknown"}</p></Col>
-          </Row>
-        </div>
+   
       </>
     )}
   </Modal.Body>
@@ -665,42 +657,7 @@ const VendorsCreditors = () => {
                 </Form.Group>
               </Col>
             </Row>
-            <Row className="mb-3">
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>GST Type</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={vendorFormData.gstType}
-                    onChange={(e) => setVendorFormData({ ...vendorFormData, gstType: e.target.value })}
-                  >
-                    <option>Registered</option>
-                    <option>Unregistered</option>
-                    <option>Composition</option>
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Tax Enabled</Form.Label>
-                  <Form.Check
-                    type="switch"
-                    checked={vendorFormData.taxEnabled}
-                    onChange={(e) => setVendorFormData({ ...vendorFormData, taxEnabled: e.target.checked })}
-                    label={vendorFormData.taxEnabled ? "Yes" : "No"}
-                  />
-                  {vendorFormData.taxEnabled && (
-                    <Form.Control
-                      type="text"
-                      placeholder="Tax Number"
-                      className="mt-2"
-                      value={vendorFormData.taxNumber}
-                      onChange={(e) => setVendorFormData({ ...vendorFormData, taxNumber: e.target.value })}
-                    />
-                  )}
-                </Form.Group>
-              </Col>
-            </Row>
+      
           </Form>
   </Modal.Body>
   <Modal.Footer>

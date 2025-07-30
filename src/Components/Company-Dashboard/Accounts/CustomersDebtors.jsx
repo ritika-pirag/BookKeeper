@@ -451,7 +451,7 @@ const CustomersDebtors = () => {
           <thead className="table-light">
             <tr>
               <th>No</th>
-              <th>Voucher No</th> 
+
               <th>Name</th>
               <th>Contact</th>
               <th>Email</th>
@@ -747,42 +747,7 @@ const CustomersDebtors = () => {
           </Form.Group>
         </Col>
       </Row>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>GST Type</Form.Label>
-            <Form.Control
-              as="select"
-              value={customerFormData.gstType}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, gstType: e.target.value })}
-            >
-              <option>Registered</option>
-              <option>Unregistered</option>
-              <option>Composition</option>
-            </Form.Control>
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Tax Enabled</Form.Label>
-            <Form.Check
-              type="switch"
-              checked={customerFormData.taxEnabled}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, taxEnabled: e.target.checked })}
-              label={customerFormData.taxEnabled ? "Yes" : "No"}
-            />
-            {customerFormData.taxEnabled && (
-              <Form.Control
-                type="text"
-                placeholder="Tax Number"
-                className="mt-2"
-                value={customerFormData.taxNumber}
-                onChange={(e) => setCustomerFormData({ ...customerFormData, taxNumber: e.target.value })}
-              />
-            )}
-          </Form.Group>
-        </Col>
-      </Row>
+   
     </Form>
 </Modal.Body>
 
@@ -867,6 +832,11 @@ const CustomersDebtors = () => {
           <Button variant="secondary" onClick={() => setShowViewModal(false)}>Close</Button>
         </Modal.Footer>
       </Modal>
+
+
+
+
+      
       {/* Delete Confirmation Modal */}
       <Modal show={showConfirmDelete} onHide={() => setShowConfirmDelete(false)} centered>
         <Modal.Header closeButton>

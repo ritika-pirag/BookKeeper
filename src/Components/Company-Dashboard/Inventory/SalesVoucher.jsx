@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Row, Col, Form, Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 
 const SalesVoucher = () => {
 const navigate = useNavigate();
@@ -49,13 +50,13 @@ setItem({ ...item, [e.target.name]: e.target.value });
 
 const addItem = () => {
 const qty = parseFloat(item.qty || 0);
-const rate = parseFloat(item.rate || 0);
+constamount = parseFloat(item.rate || 0);
 const discount = parseFloat(item.discount || 0);
 
 php
 Copy
 Edit
-const itemTotal = qty * rate * (1 - discount / 100);
+const itemTotal = qty *amount * (1 - discount / 100);
 
 const newItem = {
   ...item,
@@ -69,7 +70,7 @@ setItem({
   name: "",
   qty: "",
   unit: "",
-  rate: "",
+ amount: "",
   discount: "",
   tax: "",
   description: "",
@@ -81,6 +82,13 @@ const removedItem = items[index];
 setTotalAmount((prev) => prev - parseFloat(removedItem.value));
 setItems(items.filter((_, idx) => idx !== index));
 };
+const products = [
+  { label: "Tata Steel Rod", value: "Tata Steel Rod" },
+  { label: "Ambuja Cement", value: "Ambuja Cement" },
+  { label: "Asian Paints", value: "Asian Paints" },
+  { label: "UltraTech Cement", value: "UltraTech Cement" },
+  { label: "JSW TMT Bar", value: "JSW TMT Bar" },
+];
 
 return (
 <div className="p-4 card">
@@ -182,10 +190,10 @@ return (
   <Table bordered size="sm">
     <thead>
       <tr>
-        <th>Item</th>
+        <th>Product Name</th>
         <th>Qty</th>
         <th>Unit</th>
-        <th>Rate</th>
+        <th>Amount</th>
         <th>Discount %</th>
         <th>Tax</th>
         <th>Value</th>

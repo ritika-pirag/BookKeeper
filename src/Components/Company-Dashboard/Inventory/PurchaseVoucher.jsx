@@ -19,7 +19,7 @@ const PurchaseVoucher = () => {
     name: "",
     qty: "",
     unit: "",
-    rate: "",
+    amount: "",
     discount: "",
     tax: "",
     description: "",
@@ -207,15 +207,15 @@ const PurchaseVoucher = () => {
       <Table bordered size="sm">
         <thead>
           <tr>
-            <th>Item</th>
+            <th> Product Name</th>
             <th>Qty</th>
             <th>Unit</th>
-            <th>Rate</th>
+            <th>Amount</th>
             <th>Discount %</th>
             <th>Tax</th>
             <th>Value</th>
             <th>Description</th>
-            <th></th>
+            <th></th> 
           </tr>
         </thead>
         <tbody>
@@ -224,7 +224,7 @@ const PurchaseVoucher = () => {
               <td>{itm.name}</td>
               <td>{itm.qty}</td>
               <td>{itm.unit}</td>
-              <td>{itm.rate}</td>
+              <td>{itm.amount}</td>
               <td>{itm.discount}</td>
               <td>{itm.tax}</td>
               <td>{itm.value}</td>
