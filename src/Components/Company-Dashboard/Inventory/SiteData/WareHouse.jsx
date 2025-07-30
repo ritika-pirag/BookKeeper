@@ -179,6 +179,7 @@ const WareHouse = () => {
               <tr>
                 <th>#</th>
                 <th>Warehouse Name</th>
+                <th>Total Stocks</th>
                 <th>Location</th>
                 <th>Actions</th>
               </tr>
@@ -189,6 +190,7 @@ const WareHouse = () => {
                   <tr key={w._id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/company/warehouse/${w._id}`)}>
                     <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                     <td>{w.name}</td>
+                    <td>{w.totalStocks}</td>
                     <td>{w.location}</td>
                     <td>
 

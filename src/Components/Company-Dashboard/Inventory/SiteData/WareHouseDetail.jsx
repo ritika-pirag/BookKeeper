@@ -37,6 +37,102 @@ const warehouseProductsMap = {
             ],
         },
     ],
+    "3": [
+        {
+            category: "Hardware",
+            products: [
+                { name: "Nuts & Bolts", stock: 70 },
+                { name: "Screws", stock: 90 },
+            ],
+        },
+        {
+            category: "Tools",
+            products: [
+                { name: "Hammer", stock: 20 },
+                { name: "Wrench", stock: 15 },
+            ],
+        },
+    ],
+    "4": [
+        {
+            category: "Stationery",
+            products: [
+                { name: "Pens", stock: 200 },
+                { name: "Notebooks", stock: 100 },
+            ],
+        },
+        {
+            category: "Cleaning",
+            products: [
+                { name: "Mop", stock: 20 },
+                { name: "Detergent", stock: 30 },
+            ],
+        },
+    ],
+    "5": [
+        {
+            category: "Packaging",
+            products: [
+                { name: "Boxes", stock: 40 },
+                { name: "Tapes", stock: 30 },
+            ],
+        },
+        {
+            category: "Safety",
+            products: [
+                { name: "Gloves", stock: 20 },
+                { name: "Helmets", stock: 15 },
+            ],
+        },
+    ],
+    "6": [
+        {
+            category: "Spare Parts",
+            products: [
+                { name: "Belts", stock: 5 },
+                { name: "Bearings", stock: 3 },
+            ],
+        },
+        {
+            category: "Lubricants",
+            products: [
+                { name: "Oil", stock: 2 },
+                { name: "Grease", stock: 1 },
+            ],
+        },
+    ],
+    "7": [
+        {
+            category: "Testing Equipment",
+            products: [
+                { name: "Multimeter", stock: 100 },
+                { name: "Thermometer", stock: 120 },
+            ],
+        },
+        {
+            category: "Cables",
+            products: [
+                { name: "HDMI", stock: 180 },
+                { name: "Ethernet", stock: 200 },
+            ],
+        },
+    ],
+    "8": [
+        {
+            category: "Medical Supplies",
+            products: [
+                { name: "Bandages", stock: 40 },
+                { name: "Disinfectant", stock: 30 },
+            ],
+        },
+        {
+            category: "Utilities",
+            products: [
+                { name: "Battery", stock: 20 },
+                { name: "Bulb", stock: 25 },
+            ],
+        },
+    ],
 };
 
 const WareHouseDetail = () => {
@@ -51,6 +147,11 @@ const WareHouseDetail = () => {
             { _id: "1", name: "Central Warehouse", location: "Delhi" },
             { _id: "2", name: "North Zone", location: "Noida" },
             { _id: "3", name: "South Depot", location: "Bangalore" },
+            { _id: "4", name: "East Godown", location: "Kolkata" },
+            { _id: "5", name: "West Hub", location: "Mumbai" },
+            { _id: "6", name: "Spare Store", location: "Hyderabad" },
+            { _id: "7", name: "Test Depot", location: "Pune" },
+            { _id: "8", name: "Central Hub", location: "Lucknow" },
         ];
         const wh = dummyData.find((w) => w._id === id);
         setWarehouse(wh || null);
@@ -109,6 +210,79 @@ const WareHouseDetail = () => {
                             </p>
                         </Card.Body>
                     </Card>
+
+                    <div className="row row-cols-1 row-cols-md-3 g-4 mb-4">
+                        <div className="col">
+                            <Card className="shadow-sm border-0">
+                                <Card.Body>
+                                    <h6 className="text-muted mb-1">Total Categories</h6>
+                                    <h4 className="fw-bold text-primary">
+                                        {productData.length}
+                                    </h4>
+                                </Card.Body>
+                            </Card>
+                        </div>
+
+                        <div className="col">
+                            <Card className="shadow-sm border-0">
+                                <Card.Body>
+                                    <h6 className="text-muted mb-1">Total Products</h6>
+                                    <h4 className="fw-bold text-success">
+                                        {productData.reduce((sum, cat) => sum + cat.products.length, 0)}
+                                    </h4>
+                                </Card.Body>
+                            </Card>
+                        </div>
+
+                        <div className="col">
+                            <Card className="shadow-sm border-0">
+                                <Card.Body>
+                                    <h6 className="text-muted mb-1">Total Stock Units</h6>
+                                    <h4 className="fw-bold text-dark">
+                                        {productData.reduce(
+                                            (sum, cat) => sum + cat.products.reduce((s, p) => s + p.stock, 0),
+                                            0
+                                        )}
+                                    </h4>
+                                </Card.Body>
+                            </Card>
+                        </div>
+
+                        <div className="col">
+                            <Card className="shadow-sm border-0">
+                                <Card.Body>
+                                    <h6 className="text-muted mb-1">Lowest Stock Product</h6>
+                                    <h5 className="fw-bold text-danger">
+                                        {(() => {
+                                            const all = productData.flatMap((c) =>
+                                                c.products.map((p) => ({ name: p.name, stock: p.stock }))
+                                            );
+                                            const lowest = all.reduce((min, p) => (p.stock < min.stock ? p : min), { name: "-", stock: Infinity });
+                                            return `${lowest.name} (${lowest.stock})`;
+                                        })()}
+                                    </h5>
+                                </Card.Body>
+                            </Card>
+                        </div>
+
+                        <div className="col">
+                            <Card className="shadow-sm border-0">
+                                <Card.Body>
+                                    <h6 className="text-muted mb-1">Highest Stock Product</h6>
+                                    <h5 className="fw-bold text-info">
+                                        {(() => {
+                                            const all = productData.flatMap((c) =>
+                                                c.products.map((p) => ({ name: p.name, stock: p.stock }))
+                                            );
+                                            const highest = all.reduce((max, p) => (p.stock > max.stock ? p : max), { name: "-", stock: -1 });
+                                            return `${highest.name} (${highest.stock})`;
+                                        })()}
+                                    </h5>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    </div>
+
 
                     <div className="d-flex justify-content-between align-items-center mb-3 mt-4">
                         <h5 className="fw-bold text-secondary">

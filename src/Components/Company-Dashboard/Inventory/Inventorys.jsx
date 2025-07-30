@@ -600,7 +600,9 @@ const InventoryItems = () => {
           <Button variant="secondary" onClick={() => setShowAddCategoryModal(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleAddCategory}>
+          <Button class="btn"
+          style={{ backgroundColor: "#53b2a5", border: "none" }}
+          onClick={handleAddCategory}>
             Add
           </Button>
         </Modal.Footer>

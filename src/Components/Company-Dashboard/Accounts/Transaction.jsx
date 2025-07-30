@@ -25,7 +25,7 @@ const Transaction = () => {
     },
     {
       date: '2025-07-03',
-      balanceType: 'Payment',
+      balanceType: 'Make Payment',
       amount: 800,
       fromTo: 'Vendor X',
       accountType: 'Liabilities',
@@ -281,7 +281,7 @@ const Transaction = () => {
                 onChange={(e) => setForm({ ...form, balanceType: e.target.value })}
               >
                 <option value="Receive">Receive</option>
-                <option value="Payment">Payment</option>
+                <option value="Payment">Make Payment</option>
               </Form.Select>
             </Form.Group>
 
