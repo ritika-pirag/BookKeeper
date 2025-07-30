@@ -176,62 +176,87 @@ const JournalEntries = () => {
       </div>
 
       {/* Table */}
-      <div className="table-responsive">
-        <table className="table table-bordered align-middle">
-          <thead className="table-light text-white bg-secondary">
-            <tr>
-              <th>Date</th>
-              <th>Reference</th>
-              <th>Description</th>
-              <th>Debit Account</th>
-              <th>Credit Account</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Use filteredEntries instead of entries */}
-            {filteredEntries.length > 0 ? (
-              filteredEntries.map((entry) => (
-                <tr key={entry.id}>
-                  <td>{formatDate(entry.date)}</td>
-                  <td>{entry.reference}</td>
-                  <td>{entry.description}</td>
-                  <td>{entry.debitAccount}</td>
-                  <td>{entry.creditAccount}</td>
-                  <td>{entry.amount}</td>
-                  <td><span className={getStatusBadge(entry.status)}>{entry.status}</span></td>
-                  <td className="d-flex justify-content-center gap-1">
-                    <button
-                      className="btn btn-sm text-warning"
-                      data-bs-toggle="modal"
-                      data-bs-target="#editEntryModal"
-                      onClick={() => handleEdit(entry)}
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      className="btn btn-sm text-danger"
-                      data-bs-toggle="modal"
-                      data-bs-target="#deleteEntryModal"
-                      onClick={() => handleDelete(entry)}
-                    >
-                      <FaTrash />
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="8" className="text-center">
-                  No journal entries found matching the filters.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+     <div className="table-responsive">
+  <table className="table table-bordered align-middle">
+    <thead className="table-light text-white bg-secondary">
+      <tr>
+        <th>Date</th>
+        <th>Reference</th>
+        <th>Description</th>
+        <th>Debit Account</th>
+        <th>Credit Account</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {filteredEntries.length > 0 ? (
+        filteredEntries.map((entry) => (
+          <tr key={entry.id}>
+            <td>{formatDate(entry.date)}</td>
+            <td>{entry.reference}</td>
+            <td>{entry.description}</td>
+            <td>{entry.debitAccount}</td>
+            <td>{entry.creditAccount}</td>
+            <td>{entry.amount}</td>
+            <td>
+              <span className={getStatusBadge(entry.status)}>{entry.status}</span>
+            </td>
+            <td className="d-flex justify-content-center gap-1">
+              <button
+                className="btn btn-sm text-warning"
+                data-bs-toggle="modal"
+                data-bs-target="#editEntryModal"
+                onClick={() => handleEdit(entry)}
+              >
+                <FaEdit size={16} />
+              </button>
+              <button
+                className="btn btn-sm text-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteEntryModal"
+                onClick={() => handleDelete(entry)}
+              >
+                <FaTrash size={16} />
+              </button>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="8" className="text-center">
+            No journal entries found matching the filters.
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
+
+{/* Static Pagination UI */}
+<div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+  <small className="text-muted ms-2">
+    Showing 1 to {filteredEntries.length} of {filteredEntries.length} entries
+  </small>
+  <nav>
+    <ul className="pagination mb-0">
+      <li className="page-item disabled">
+        <button className="page-link">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button className="page-link">1</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
 
       {/* Modals remain the same */}
       {/* Add Entry Modal */}

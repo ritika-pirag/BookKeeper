@@ -8,14 +8,18 @@ import {
   Col,
   Table,
 } from 'react-bootstrap';
-import { FaPlus, FaEdit, FaTrash, FaEye, FaFileImport, FaFileExport, FaDownload } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaEye, FaFileImport, FaFileExport, FaDownload, FaBook } from 'react-icons/fa';
 import * as XLSX from "xlsx";
+import { useNavigate } from "react-router-dom";
 
 const Transaction = () => {
+  const navigate = useNavigate();
+
   const [transactions, setTransactions] = useState([
     {
       date: '2025-07-01',
       balanceType: 'Receive',
+      voucherType: 'Sales',
       amount: 1200,
       fromTo: 'Customer A',
       accountType: 'Assets',
@@ -26,12 +30,35 @@ const Transaction = () => {
     {
       date: '2025-07-03',
       balanceType: 'Make Payment',
+      voucherType: 'Purchase',
       amount: 800,
       fromTo: 'Vendor X',
       accountType: 'Liabilities',
       accountname: 'Bank Account',
       voucherNo: 'VCH002',
       note: 'Material Purchase'
+    },
+    {
+      date: '2025-07-05',
+      balanceType: 'Receive',
+      voucherType: 'Receipt',
+      amount: 500,
+      fromTo: 'Customer B',
+      accountType: 'Income',
+      accountname: 'Sales',
+      voucherNo: 'VCH003',
+      note: 'Product Sale'
+    },
+    {
+      date: '2025-07-06',
+      balanceType: 'Make Payment',
+      voucherType: 'Expense',
+      amount: 200,
+      fromTo: 'Vendor Y',
+      accountType: 'Expenses',
+      accountname: 'Rent',
+      voucherNo: 'VCH004',
+      note: 'Office Rent'
     }
   ]);
 
@@ -48,9 +75,25 @@ const Transaction = () => {
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
+  // Voucher types as per Book Keeper style
+  const voucherTypes = [
+    "Sales",
+    "Purchase",
+    "Receipt",
+    "Payment",
+    "Expense",
+    "Contra",
+    "Journal",
+    "Credit Note",
+    "Debit Note",
+    "Stock/Inventory Adjustment",
+    "Opening Balance"
+  ];
+
   const emptyForm = {
     date: '',
     balanceType: 'Receive',
+    voucherType: '',
     amount: '',
     fromTo: '',
     accountType: '',
@@ -89,10 +132,11 @@ const Transaction = () => {
       const imported = data.map((row) => ({
         date: row["Date"] || "",
         balanceType: row["Balance Type"] || "",
+        voucherType: row["Voucher Type"] || "",
         amount: row["Amount"] || "",
         fromTo: row["From/To"] || "",
         accountType: row["Account Type"] || "",
-        account: row["Account"] || "",
+        accountname: row["Account Name"] || "",
         voucherNo: row["Voucher No"] || "",
         note: row["Note"] || ""
       }));
@@ -105,10 +149,11 @@ const Transaction = () => {
     const data = transactions.map((txn) => ({
       Date: txn.date,
       "Balance Type": txn.balanceType,
+      "Voucher Type": txn.voucherType,
       Amount: txn.amount,
       "From/To": txn.fromTo,
       "Account Type": txn.accountType,
-      Account: txn.account,
+      "Account Name": txn.accountname,
       "Voucher No": txn.voucherNo,
       Note: txn.note
     }));
@@ -122,10 +167,11 @@ const Transaction = () => {
     const blankRow = {
       Date: "",
       "Balance Type": "",
+      "Voucher Type": "",
       Amount: "",
       "From/To": "",
       "Account Type": "",
-      Account: "",
+      "Account Name": "",
       "Voucher No": "",
       Note: ""
     };
@@ -180,7 +226,7 @@ const Transaction = () => {
           <Button
             variant="success"
             className="rounded-pill d-flex align-items-center"
-            style={{ fontWeight: 600 }}
+            // style={{ fontWeight: 600 }}
             onClick={() => fileInputRef.current.click()}
             title="Import Excel"
           >
@@ -189,7 +235,7 @@ const Transaction = () => {
           <Button
             variant="primary"
             className="rounded-pill d-flex align-items-center"
-            style={{ fontWeight: 600 }}
+            // style={{ fontWeight: 600 }}
             onClick={handleExport}
             title="Export Excel"
           >
@@ -198,7 +244,7 @@ const Transaction = () => {
           <Button
             variant="warning"
             className="rounded-pill d-flex align-items-center"
-            style={{ fontWeight: 600, color: "#fff" }}
+            // style={{ fontWeight: 600, color: "#fff" }}
             onClick={handleDownloadBlank}
             title="Download Blank Excel"
           >
@@ -213,8 +259,16 @@ const Transaction = () => {
               setShowModal(true);
             }}
           >
-            
             Add Transaction
+          </Button>
+          <Button
+            variant="info"
+            className="rounded-pill d-flex align-items-center"
+            // style={{ fontWeight: 600, color: "#fff" }}
+            onClick={() => navigate("/company/ledger")}
+            title="Go to Ledger"
+          >
+         Go to Ledger
           </Button>
         </Col>
       </Row>
@@ -224,11 +278,12 @@ const Transaction = () => {
           <tr>
             <th>Date</th>
             <th>Balance Type</th>
+            <th>Voucher Type</th>
             <th>Voucher No</th>
             <th>Amount</th>
             <th>From/To</th>
             <th>Account Type</th>
-            <th>Account Name </th>
+            <th>Account Name</th>
             <th>Note</th>
             <th>Action</th>
           </tr>
@@ -239,6 +294,7 @@ const Transaction = () => {
               <tr key={idx}>
                 <td>{txn.date}</td>
                 <td>{txn.balanceType}</td>
+                <td>{txn.voucherType}</td>
                 <td>{txn.voucherNo}</td>
                 <td>{txn.amount}</td>
                 <td>{txn.fromTo}</td>
@@ -253,13 +309,13 @@ const Transaction = () => {
               </tr>
             ))
           ) : (
-            <tr><td colSpan="9" className="text-center">No transactions found</td></tr>
+            <tr><td colSpan="10" className="text-center">No transactions found</td></tr>
           )}
         </tbody>
       </Table>
 
       {/* Add/Edit Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}  size="lg">
+      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>{selectedTransaction !== null ? 'Edit' : 'Add'} Transaction</Modal.Title>
         </Modal.Header>
@@ -281,7 +337,20 @@ const Transaction = () => {
                 onChange={(e) => setForm({ ...form, balanceType: e.target.value })}
               >
                 <option value="Receive">Receive</option>
-                <option value="Payment">Make Payment</option>
+                <option value="Make Payment">Make Payment</option>
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-2">
+              <Form.Label>Voucher Type</Form.Label>
+              <Form.Select
+                value={form.voucherType}
+                onChange={(e) => setForm({ ...form, voucherType: e.target.value })}
+              >
+                <option value="">Select Voucher Type</option>
+                {voucherTypes.map((type, i) => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
               </Form.Select>
             </Form.Group>
 
@@ -339,7 +408,7 @@ const Transaction = () => {
               <Form.Select
                 value={form.accountType}
                 onChange={(e) =>
-                  setForm({ ...form, accountType: e.target.value, account: '' })
+                  setForm({ ...form, accountType: e.target.value, accountname: '' })
                 }
               >
                 <option value="">Select Account Type</option>
@@ -353,8 +422,8 @@ const Transaction = () => {
               <Form.Group className="mb-3">
                 <Form.Label>Account Name</Form.Label>
                 <Form.Select
-                  value={form.account}
-                  onChange={(e) => setForm({ ...form, account: e.target.value })}
+                  value={form.accountname}
+                  onChange={(e) => setForm({ ...form, accountname: e.target.value })}
                 >
                   <option value="">Select Account Name</option>
                   {predefinedAccounts[form.accountType]?.map((acc, i) => (
@@ -392,11 +461,12 @@ const Transaction = () => {
             <>
               <p><strong>Date:</strong> {transactions[selectedTransaction].date}</p>
               <p><strong>Balance Type:</strong> {transactions[selectedTransaction].balanceType}</p>
+              <p><strong>Voucher Type:</strong> {transactions[selectedTransaction].voucherType}</p>
               <p><strong>Voucher No:</strong> {transactions[selectedTransaction].voucherNo}</p>
               <p><strong>Amount:</strong> {transactions[selectedTransaction].amount}</p>
               <p><strong>From/To:</strong> {transactions[selectedTransaction].fromTo}</p>
               <p><strong>Account Type:</strong> {transactions[selectedTransaction].accountType}</p>
-              <p><strong>Account:</strong> {transactions[selectedTransaction].account}</p>
+              <p><strong>Account Name:</strong> {transactions[selectedTransaction].accountname}</p>
               <p><strong>Note:</strong> {transactions[selectedTransaction].note}</p>
             </>
           )}

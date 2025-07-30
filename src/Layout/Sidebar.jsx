@@ -79,7 +79,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         renderFlatSection("Inventory", [
 
           { to: "/company/warehouse", icon: "fas fa-warehouse", label: "Warehouse" },
-          { to: "/company/unitofmeasure", icon: "fas fa-ruler-combined", label: "Unit of measure" },
+          // { to: "/company/unitofmeasure", icon: "fas fa-ruler-combined", label: "Unit of measure" },
           { to: "/company/inventorys", icon: "fas fa-boxes", label: "Product & Inventory" },
           { to: "/company/createvoucher", icon: "fas fa-file-invoice", label: "Create Voucher" },
           { to: "/company/stocktranfer", icon: "fas fa-exchange-alt", label: "StockTransfer" },

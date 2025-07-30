@@ -242,3 +242,139 @@ const PurchasOrder = () => {
 };
 
 export default PurchasOrder;
+
+
+
+// import React, { useState, useRef } from 'react';
+// import { Table, Button, Badge, Form, Row, Col, Modal } from 'react-bootstrap';
+// import { FaEye, FaDownload, FaTrash, FaUpload, FaFile, FaPlus } from 'react-icons/fa';
+// import { useNavigate } from 'react-router-dom';
+
+// const initialOrders = [
+//   { id: 1, orderNo: 1045, vendor: "Haroun Spiers", date: "15-07-2025", amount: "$ 10.90", status: "Paid" },
+//   { id: 2, orderNo: 1044, vendor: "Crauk", date: "15-07-2025", amount: "$ 325.00", status: "Paid" },
+//   { id: 3, orderNo: 1043, vendor: "Maureen Dotson", date: "12-07-2025", amount: "$ 75.00", status: "Paid" },
+//   { id: 4, orderNo: 1042, vendor: "Zaruke", date: "11-07-2025", amount: "$ 247.00", status: "Partial" },
+//   { id: 5, orderNo: 1041, vendor: "Farhan", date: "09-07-2025", amount: "$ 100.00", status: "Partial" },
+// ];
+
+// const getStatusBadge = (status) => {
+//   if (status === 'Paid') return <Badge bg="success">Paid</Badge>;
+//   if (status === 'Partial') return <Badge bg="info">Partial</Badge>;
+//   return <Badge bg="secondary">{status}</Badge>;
+// };
+
+// const PurchaseOrder = () => {
+//   const [orders, setOrders] = useState(initialOrders);
+//   const [showModal, setShowModal] = useState(false);
+//   const [newOrder, setNewOrder] = useState({ vendor: '', date: '', amount: '', status: 'Pending' });
+//   const fileInputRef = useRef();
+//   const navigate = useNavigate();
+
+//   const handleAddOrder = () => {
+//     const nextId = orders.length ? Math.max(...orders.map(o => o.id)) + 1 : 1;
+//     const nextOrderNo = orders.length ? Math.max(...orders.map(o => o.orderNo)) + 1 : 1001;
+//     const order = { id: nextId, orderNo: nextOrderNo, ...newOrder };
+//     setOrders([order, ...orders]);
+//     setNewOrder({ vendor: '', date: '', amount: '', status: 'Pending' });
+//     setShowModal(false);
+//   };
+
+//   const handleDelete = (id) => {
+//     if (window.confirm("Are you sure you want to delete this order?")) {
+//       setOrders(orders.filter(order => order.id !== id));
+//     }
+//   };
+
+//   const handleDownload = (order) => {
+//     const csvContent = `Order No,Vendor,Date,Amount,Status\n${order.orderNo},${order.vendor},${order.date},${order.amount},${order.status}`;
+//     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+//     const url = URL.createObjectURL(blob);
+//     const a = document.createElement('a');
+//     a.href = url;
+//     a.download = `Order-${order.orderNo}.csv`;
+//     document.body.appendChild(a);
+//     a.click();
+//     document.body.removeChild(a);
+//     URL.revokeObjectURL(url);
+//   };
+
+//   return (
+//     <div className="p-4 my-4 px-4">
+//       <div className="d-flex justify-content-between align-items-center mb-3">
+//         <h5 className="mb-0">Purchase Orders</h5>
+//         <Button variant="primary" onClick={() => setShowModal(true)}>
+//           <FaPlus className="me-2" /> Add Order
+//         </Button>
+//       </div>
+
+//       <Table bordered hover className="align-middle text-center">
+//         <thead className="table-light">
+//           <tr>
+//             <th>No</th>
+//             <th>Bill No</th>
+//             <th>Vendor</th>
+//             <th>Date</th>
+//             <th>Amount</th>
+//             <th>Status</th>
+//             <th>Action</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {orders.map((order, index) => (
+//             <tr key={order.id}>
+//               <td>{index + 1}</td>
+//               <td>{order.orderNo}</td>
+//               <td>{order.vendor}</td>
+//               <td>{order.date}</td>
+//               <td>{order.amount}</td>
+//               <td>{getStatusBadge(order.status)}</td>
+//               <td className="d-flex gap-2 justify-content-center">
+//                 <Button size="sm" variant="outline-info" onClick={() => navigate('/company/purchaseview')}><FaEye /></Button>
+//                 <Button size="sm" variant="outline-warning" onClick={() => handleDownload(order)}><FaDownload /></Button>
+//                 <Button size="sm" variant="outline-danger" onClick={() => handleDelete(order.id)}><FaTrash /></Button>
+//               </td>
+//             </tr>
+//           ))}
+//         </tbody>
+//       </Table>
+
+//       {/* Add Order Modal */}
+//       <Modal show={showModal} onHide={() => setShowModal(false)}>
+//         <Modal.Header closeButton>
+//           <Modal.Title>Add Purchase Order</Modal.Title>
+//         </Modal.Header>
+//         <Modal.Body>
+//           <Form>
+//             <Form.Group className="mb-3">
+//               <Form.Label>Vendor</Form.Label>
+//               <Form.Control type="text" value={newOrder.vendor} onChange={(e) => setNewOrder({ ...newOrder, vendor: e.target.value })} />
+//             </Form.Group>
+//             <Form.Group className="mb-3">
+//               <Form.Label>Date</Form.Label>
+//               <Form.Control type="date" value={newOrder.date} onChange={(e) => setNewOrder({ ...newOrder, date: e.target.value })} />
+//             </Form.Group>
+//             <Form.Group className="mb-3">
+//               <Form.Label>Amount</Form.Label>
+//               <Form.Control type="text" value={newOrder.amount} onChange={(e) => setNewOrder({ ...newOrder, amount: e.target.value })} />
+//             </Form.Group>
+//             <Form.Group className="mb-3">
+//               <Form.Label>Status</Form.Label>
+//               <Form.Select value={newOrder.status} onChange={(e) => setNewOrder({ ...newOrder, status: e.target.value })}>
+//                 <option value="Pending">Pending</option>
+//                 <option value="Paid">Paid</option>
+//                 <option value="Partial">Partial</option>
+//               </Form.Select>
+//             </Form.Group>
+//           </Form>
+//         </Modal.Body>
+//         <Modal.Footer>
+//           <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
+//           <Button variant="primary" onClick={handleAddOrder}>Add Order</Button>
+//         </Modal.Footer>
+//       </Modal>
+//     </div>
+//   );
+// };
+
+// export default PurchaseOrder;

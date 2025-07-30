@@ -358,60 +358,116 @@ const InventoryItems = () => {
       </Row>
 
       <div className="card bg-white rounded-3 p-4">
-        <div className="table-responsive">
-          <table className="table table-hover align-middle mb-0">
-            <thead className="table-light">
-              <tr>
-                <th>Name</th>
-                <th>Category</th>
-                {/* <th>Type</th> */}
-                <th>HSN</th>
-                <th>Quantity</th>
-                <th>Warehouse</th>
-                <th>Amount</th>
-                <th>Value</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredItems.length > 0 ? (
-                filteredItems.map((item, idx) => (
-                  <tr key={idx}>
-                    <td>{item.itemName}</td>
-                    <td>{item.itemCategory}</td>
-                    {/* <td>{item.itemType}</td> */}
+    <div className="table-responsive">
+  <table className="table table-hover align-middle mb-0">
+    <thead className="table-light">
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        {/* <th>Type</th> */}
+        <th>HSN</th>
+        <th>Quantity</th>
+        <th>Warehouse</th>
+        <th>Amount</th>
+        <th>Value</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {filteredItems.length > 0 ? (
+        filteredItems.map((item, idx) => (
+          <tr key={idx}>
+            <td>{item.itemName}</td>
+            <td>{item.itemCategory}</td>
+            {/* <td>{item.itemType}</td> */}
+            <td>{item.hsn}</td>
+            <td>{item.quantity}</td>
+            <td>{item.warehouse}</td>
+            <td>{item.cost}</td>
+            <td>{item.value}</td>
+            <td>
+              <span
+                className={`badge px-3 py-1 rounded-pill fw-semibold ${
+                  item.status === "In Stock"
+                    ? "bg-success text-white"
+                    : "bg-danger text-white"
+                }`}
+              >
+                {item.status}
+              </span>
+            </td>
+            <td>
+              <div className="d-flex gap-2">
+                <Button
+                  variant="link"
+                  className="text-info p-0"
+                  onClick={() => {
+                    setSelectedItem(item);
+                    setShowView(true);
+                  }}
+                >
+                  <FaEye />
+                </Button>
+                <Button
+                  variant="link"
+                  className="text-warning p-0"
+                  onClick={() => {
+                    setSelectedItem(item);
+                    setNewItem(item);
+                    setShowEdit(true);
+                  }}
+                >
+                  <FaEdit />
+                </Button>
+                <Button
+                  variant="link"
+                  className="text-danger p-0"
+                  onClick={() => {
+                    setSelectedItem(item);
+                    setShowDelete(true);
+                  }}
+                >
+                  <FaTrash />
+                </Button>
+              </div>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="9" className="text-center">
+            No items found.
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
 
-                    <td>{item.hsn}</td>
-                    <td>{item.quantity}</td>
-                    <td>{item.warehouse}</td>
-                    <td>{item.cost}</td>
-                    <td>{item.value}</td>
-                    <td>
-                      <span
-                        className={`badge px-3 py-1 rounded-pill fw-semibold ${item.status === "In Stock" ? "bg-success text-white" : "bg-danger text-white"
-                          }`}
-                      >
-                        {item.status}
-                      </span>
+{/* Static Pagination UI */}
+<div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+  <small className="text-muted ms-2">
+    Showing 1 to {filteredItems.length} of {filteredItems.length} results
+  </small>
+  <nav>
+    <ul className="pagination mb-0">
+      <li className="page-item disabled">
+        <button className="page-link">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button className="page-link">1</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
 
-                    </td>
-                    <td>
-                      <div className="d-flex gap-2">
-                        <Button variant="link" className="text-info p-0" onClick={() => { setSelectedItem(item); setShowView(true); }}><FaEye /></Button>
-                        <Button variant="link" className="text-warning p-0" onClick={() => { setSelectedItem(item); setNewItem(item); setShowEdit(true); }}><FaEdit /></Button>
-                        <Button variant="link" className="text-danger p-0" onClick={() => { setSelectedItem(item); setShowDelete(true); }}><FaTrash /></Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr><td colSpan="7" className="text-center">No items found.</td></tr>
-              )}
-            </tbody>
-
-          </table>
-        </div>
       </div>
 
       {/* View Modal */}

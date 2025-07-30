@@ -162,58 +162,82 @@ const InventorySummary = () => {
         </Col>
       </Row>
 
-      <Table striped bordered responsive hover>
-        <thead className="table-light">
-          <tr>
-            <th>#</th>
-            <th>Product</th>
-            <th>SKU</th>
-            <th>Warehouse</th>
-            <th>Opening</th>
-            <th>Inward</th>
-            <th>Outward</th>
-            <th>Closing</th>
-            <th>Price (₹)</th>
-            <th>Total Value (₹)</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.length > 0 ? (
-            filteredData.map((item, index) => {
-              const totalValue = item.closing * item.price;
-              const status =
-                item.closing <= 5 ? (
-                  <Badge bg="danger">Low Stock</Badge>
-                ) : (
-                  <Badge bg="success">In Stock</Badge>
-                );
-
-              return (
-                <tr key={item.id}>
-                  <td>{index + 1}</td>
-                  <td>{item.name}</td>
-                  <td>{item.sku}</td>
-                  <td>{item.warehouse}</td>
-                  <td>{item.opening}</td>
-                  <td>{item.inward}</td>
-                  <td>{item.outward}</td>
-                  <td>{item.closing}</td>
-                  <td>₹{item.price}</td>
-                  <td>₹{totalValue}</td>
-                  <td>{status}</td>
-                </tr>
-              );
-            })
+   <Table striped bordered responsive hover>
+  <thead className="table-light">
+    <tr>
+      <th>#</th>
+      <th>Product</th>
+      <th>SKU</th>
+      <th>Warehouse</th>
+      <th>Opening</th>
+      <th>Inward</th>
+      <th>Outward</th>
+      <th>Closing</th>
+      <th>Price (₹)</th>
+      <th>Total Value (₹)</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {filteredData.length > 0 ? (
+      filteredData.map((item, index) => {
+        const totalValue = item.closing * item.price;
+        const status =
+          item.closing <= 5 ? (
+            <Badge bg="danger">Low Stock</Badge>
           ) : (
-            <tr>
-              <td colSpan="11" className="text-center">
-                No products found.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+            <Badge bg="success">In Stock</Badge>
+          );
+
+        return (
+          <tr key={item.id}>
+            <td>{index + 1}</td>
+            <td>{item.name}</td>
+            <td>{item.sku}</td>
+            <td>{item.warehouse}</td>
+            <td>{item.opening}</td>
+            <td>{item.inward}</td>
+            <td>{item.outward}</td>
+            <td>{item.closing}</td>
+            <td>₹{item.price}</td>
+            <td>₹{totalValue}</td>
+            <td>{status}</td>
+          </tr>
+        );
+      })
+    ) : (
+      <tr>
+        <td colSpan="11" className="text-center">
+          No products found.
+        </td>
+      </tr>
+    )}
+  </tbody>
+</Table>
+
+{/* Static Pagination UI */}
+<div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+  <small className="text-muted ms-2">
+    Showing 1 to {filteredData.length} of {filteredData.length} results
+  </small>
+  <nav>
+    <ul className="pagination mb-0">
+      <li className="page-item disabled">
+        <button className="page-link">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button className="page-link">1</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
     </Container>
   );
 };
