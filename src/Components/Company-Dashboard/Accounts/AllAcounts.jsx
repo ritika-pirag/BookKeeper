@@ -19,15 +19,17 @@ import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 const api = {
   get: async (url) => {
     if (url === "/accounts/parents") {
-       // Mock data for parent accounts
-       // In a real app, this would be an API call like: return fetch(`/api${url}`).then(res => res.json());
-      return Promise.resolve({ data: [
-        { _id: '1', name: 'Assets' },
-        { _id: '2', name: 'Liabilities' },
-        { _id: '3', name: 'Equity' },
-        { _id: '4', name: 'Income' },
-        { _id: '5', name: 'Expenses' },
-      ]});
+      // Mock data for parent accounts
+      // In a real app, this would be an API call like: return fetch(`/api${url}`).then(res => res.json());
+      return Promise.resolve({
+        data: [
+          { _id: '1', name: 'Assets' },
+          { _id: '2', name: 'Liabilities' },
+          { _id: '3', name: 'Equity' },
+          { _id: '4', name: 'Income' },
+          { _id: '5', name: 'Expenses' },
+        ]
+      });
     }
     return Promise.resolve({ data: [] });
   },
@@ -39,7 +41,7 @@ const api = {
 };
 
 const accountData = [
-  { type: "Cash-in-hand", rows: [{ name: "Cash", bal: "0.00" },{ name: "  ", bal: "  " }] },
+  { type: "Cash-in-hand", rows: [{ name: "Cash", bal: "0.00" }, { name: "  ", bal: "  " }] },
   { type: "Bank A/Cs", rows: [{ name: "Bank", bal: "0.00" }] },
   {
     type: "Sundry Debtors",
@@ -170,7 +172,7 @@ const AllAccounts = () => {
 
 
     fetchParentAccounts();
-  }, []); 
+  }, []);
 
   // Handlers
   const handleSaveVendor = () => {
@@ -245,24 +247,24 @@ const AllAccounts = () => {
     ],
   };
   const [selectedAccount, setSelectedAccount] = useState(null);
-const [showView, setShowView] = useState(false);
-const [showEdit, setShowEdit] = useState(false);
-const [showDelete, setShowDelete] = useState(false);
+  const [showView, setShowView] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
-const handleViewAccount = (type, name) => {
-  setSelectedAccount({ type, name });
-  setShowView(true);
-};
+  const handleViewAccount = (type, name) => {
+    setSelectedAccount({ type, name });
+    setShowView(true);
+  };
 
-const handleEditAccount = (type, name) => {
-  setSelectedAccount({ type, name });
-  setShowEdit(true);
-};
+  const handleEditAccount = (type, name) => {
+    setSelectedAccount({ type, name });
+    setShowEdit(true);
+  };
 
-const handleDeleteAccount = (type, name) => {
-  setSelectedAccount({ type, name });
-  setShowDelete(true);
-};
+  const handleDeleteAccount = (type, name) => {
+    setSelectedAccount({ type, name });
+    setShowDelete(true);
+  };
   return (
     <Container fluid className="py-4">
       {/* Header Row */}
@@ -298,79 +300,83 @@ const handleDeleteAccount = (type, name) => {
       </Row>
 
       {/* Table */}
-{/* Table */}
-<Card>
-  <Card.Body>
-    <div className="table-responsive">
-      <Table bordered hover className="align-middle text-center">
-        <thead className="table-light">
-          <tr>
-            <th>Account Type</th>
-            <th>Account Name</th>
-            <th>Balance</th>
-            <th>Total Balance</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {accountTypes.map((type) => (
-            <React.Fragment key={type}>
-              <tr className="bg-light">
-                <td colSpan="5" className="text-start fw-bold">
-                  {type}
-                </td>
-              </tr>
-              {predefinedAccounts[type].map((accountName, index) => (
-                <tr key={`${type}-${index}`}>
-                  <td className="text-start">{type}</td>
-                  <td className="text-start">{accountName}</td>
-                  <td>0.00</td>
-                  <td>0.00</td>
-                  <td>
-                    <div className="d-flex flex-wrap gap-2 justify-content-center">
-                      {/* View Button */}
-                      <Button
-                        variant="link"
-                        className="p-0 text-info"
-                        size="sm"
-                        onClick={() => handleViewAccount(type, accountName)}
-                        title="View"
-                      >
-                        <FaEye  size={16}/>
-                      </Button>
-                      
-                      {/* Edit Button */}
-                      <Button
-                        variant="link"
-                        className="p-0 text-warning"
-                        size="sm"
-                        onClick={() => handleEditAccount(type, accountName)}
-                        title="Edit"
-                      >
-                        <FaEdit size={16} />
-                      </Button>
-                      
-                      {/* Delete Button */}
-                      <Button
-                        variant="link"
-                        className="p-0 text-danger"
-                        size="sm"
-                        onClick={() => handleDeleteAccount(type, accountName)}
-                        title="Delete"
-                      >
-                        <FaTrash size={16} />
-                      </Button>
-                    </div>
-                  </td>
+      {/* Table */}
+      <Card>
+        <Card.Body>
+          <div className="table-responsive">
+            <Table bordered hover className="align-middle text-center">
+              <thead className="table-light">
+                <tr>
+                  <th>Account Type</th>
+                  <th>Account Name</th>
+                  <th>Balance</th>
+                  <th>Total Balance</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </React.Fragment>
-          ))}
-        </tbody>
-      </Table>
-    </div>
-  </Card.Body>
-</Card>
+              </thead>
+              <tbody>
+                {accountTypes.map((type) => (
+                  <React.Fragment key={type}>
+                    <tr className="bg-light">
+                      <td colSpan="5" className="text-start fw-bold">
+                        {type}
+                      </td>
+                    </tr>
+                    {predefinedAccounts[type].map((accountName, index) => (
+                      <tr key={`${type}-${index}`}>
+                        <td className="text-start">{type}</td>
+                        <td className="text-start">{accountName}</td>
+                        <td>0.00</td>
+                        <td>0.00</td>
+                        <td>
+                          <div className="d-flex flex-wrap gap-2 justify-content-center">
+                            {/* View Button */}
+                            <Button
+                              variant="link"
+                              className="p-0 text-info"
+                              size="sm"
+                              onClick={() => handleViewAccount(type, accountName)}
+                              title="View"
+                            >
+                              <FaEye size={16} />
+                            </Button>
+
+                            {/* Edit Button */}
+                            <Button
+                              variant="link"
+                              className="p-0 text-warning"
+                              size="sm"
+                              onClick={() => handleEditAccount(type, accountName)}
+                              title="Edit"
+                            >
+                              <FaEdit size={16} />
+                            </Button>
+
+                            {/* Delete Button */}
+                            <Button
+                              variant="link"
+                              className="p-0 text-danger"
+                              size="sm"
+                              onClick={() => handleDeleteAccount(type, accountName)}
+                              title="Delete"
+                            >
+                              <FaTrash size={16} />
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </Card.Body>
+      </Card>
+
+
+
+
 
       {/* Vendor Modal */}
       <Modal
@@ -397,54 +403,54 @@ const handleDeleteAccount = (type, name) => {
                 </Form.Group>
               </Col>
               <Col md={6}>
-          <Form.Group>
-            <Form.Label>Account Type</Form.Label>
-            <Form.Control
-              as="select"
-              value={vendorFormData.accountType}
-              onChange={(e) => {
-                setVendorFormData({ 
-                  ...vendorFormData, 
-                  accountType: e.target.value,
-                  accountName: "" // Reset account name when type changes
-                });
-              }}
-            >
-              <option value="">Select Account Type</option>
-              {["Assets", "Liabilities", "Income", "Expenses"].map((type, index) => (
-                <option key={index} value={type}>
-                  {type}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-        </Col>
+                <Form.Group>
+                  <Form.Label>Account Type</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={vendorFormData.accountType}
+                    onChange={(e) => {
+                      setVendorFormData({
+                        ...vendorFormData,
+                        accountType: e.target.value,
+                        accountName: "" // Reset account name when type changes
+                      });
+                    }}
+                  >
+                    <option value="">Select Account Type</option>
+                    {["Assets", "Liabilities", "Income", "Expenses"].map((type, index) => (
+                      <option key={index} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
             </Row>
             <Row className="mb-3">
 
 
-            <Col md={6}>
-            <Form.Group>
-  <Form.Label>Account Name</Form.Label>
-  <Form.Control
-    as="select"
-    value={vendorFormData.accountName}
-    onChange={(e) => setVendorFormData({ ...vendorFormData, accountName: e.target.value })}
-    disabled={!vendorFormData.accountType}
-  >
-    <option value="">Select Account Name</option>
-    {vendorFormData.accountType && 
-      (predefinedAccounts[vendorFormData.accountType] || []).map((name, index) => (
-        <option key={index} value={name}>
-          {name}
-        </option>
-      ))
-    }
-  </Form.Control>
-</Form.Group>
-        </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Account Name</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={vendorFormData.accountName}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, accountName: e.target.value })}
+                    disabled={!vendorFormData.accountType}
+                  >
+                    <option value="">Select Account Name</option>
+                    {vendorFormData.accountType &&
+                      (predefinedAccounts[vendorFormData.accountType] || []).map((name, index) => (
+                        <option key={index} value={name}>
+                          {name}
+                        </option>
+                      ))
+                    }
+                  </Form.Control>
+                </Form.Group>
+              </Col>
 
-        <Col md={6}>
+              <Col md={6}>
                 <Form.Group>
                   <Form.Label> Balance</Form.Label>
                   <Form.Control
@@ -457,23 +463,23 @@ const handleDeleteAccount = (type, name) => {
 
             </Row>
 
-<Row className="mb-3">
-<Col md={6}>
-    <Form.Group>
-      <Form.Label>Balance Type</Form.Label>
-      <Form.Control
-        as="select"
-        value={vendorFormData.balanceType}
-        onChange={(e) => setVendorFormData({ ...vendorFormData, balanceType: e.target.value })}
-      >
-        <option value="">Select Type</option>
-        <option value="Debit">Debit</option>
-        <option value="Credit">Credit</option>
-      </Form.Control>
-    </Form.Group>
-  </Col>
-    
-  <Col md={6}>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Balance Type</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={vendorFormData.balanceType}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, balanceType: e.target.value })}
+                  >
+                    <option value="">Select Type</option>
+                    <option value="Debit">Debit</option>
+                    <option value="Credit">Credit</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+
+              <Col md={6}>
                 <Form.Group>
                   <Form.Label>Creation Date</Form.Label>
                   <Form.Control
@@ -484,11 +490,11 @@ const handleDeleteAccount = (type, name) => {
                 </Form.Group>
               </Col>
 
-</Row>
+            </Row>
             <Row className="mb-3">
 
 
-      
+
 
               <Col md={6}>
                 <Form.Group>
@@ -500,7 +506,7 @@ const handleDeleteAccount = (type, name) => {
                   />
                 </Form.Group>
               </Col>
-                 
+
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Bank IFSC</Form.Label>
@@ -514,7 +520,7 @@ const handleDeleteAccount = (type, name) => {
 
             </Row>
             <Row className="mb-3">
-         
+
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Bank Name & Branch</Form.Label>
@@ -526,7 +532,7 @@ const handleDeleteAccount = (type, name) => {
                 </Form.Group>
               </Col>
             </Row>
-         
+
             <Row className="mb-3">
               <Col md={6}>
                 <Form.Group>
@@ -688,310 +694,316 @@ const handleDeleteAccount = (type, name) => {
         </Modal.Footer>
       </Modal>
 
- {/* Customer Modal */}
-<Modal
-  show={showCustomerModal}
-  onHide={() => setShowCustomerModal(false)}
-  size="lg"
-  centered
-  backdrop="static"
->
-  <Modal.Header closeButton className="bg-light">
-    <Modal.Title>Add Customer</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    <Form>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.name}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, name: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Account Type</Form.Label>
-            <Form.Control
-              as="select"
-              value={customerFormData.accountType}
-              onChange={(e) => {
-                setCustomerFormData({ 
-                  ...customerFormData, 
-                  accountType: e.target.value,
-                  accountName: "" // Reset account name when type changes
-                });
-              }}
-            >
-              <option value="">Select Account Type</option>
-              {["Assets", "Liabilities", "Income", "Expenses"].map((type, index) => (
-                <option key={index} value={type}>
-                  {type}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Account Name</Form.Label>
-            <Form.Control
-              as="select"
-              value={customerFormData.accountName}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, accountName: e.target.value })}
-              disabled={!customerFormData.accountType}
-            >
-              <option value="">Select Account Name</option>
-              {customerFormData.accountType && 
-                (predefinedAccounts[customerFormData.accountType] || []).map((name, index) => (
-                  <option key={index} value={name}>
-                    {name}
-                  </option>
-                ))
-              }
-            </Form.Control>
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Balance</Form.Label>
-            <Form.Control
-              type="number"
-              value={customerFormData.payable}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, payable: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
 
 
-  
-      </Row>
-      <Row className="mb-3" >
-<Col md={6}>
-    <Form.Group>
-      <Form.Label>Balance Type</Form.Label>
-      <Form.Control
-        as="select"
-        value={vendorFormData.balanceType}
-        onChange={(e) => setVendorFormData({ ...vendorFormData, balanceType: e.target.value })}
+
+
+
+
+      {/* Customer Modal */}
+      <Modal
+        show={showCustomerModal}
+        onHide={() => setShowCustomerModal(false)}
+        size="lg"
+        centered
+        backdrop="static"
       >
-        <option value="">Select Type</option>
-        <option value="Debit">Debit</option>
-        <option value="Credit">Credit</option>
-      </Form.Control>
-    </Form.Group>
-  </Col>
+        <Modal.Header closeButton className="bg-light">
+          <Modal.Title>Add Customer</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={customerFormData.name}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, name: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Account Type</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={customerFormData.accountType}
+                    onChange={(e) => {
+                      setCustomerFormData({
+                        ...customerFormData,
+                        accountType: e.target.value,
+                        accountName: "" // Reset account name when type changes
+                      });
+                    }}
+                  >
+                    <option value="">Select Account Type</option>
+                    {["Assets", "Liabilities", "Income", "Expenses"].map((type, index) => (
+                      <option key={index} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Account Name</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={customerFormData.accountName}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, accountName: e.target.value })}
+                    disabled={!customerFormData.accountType}
+                  >
+                    <option value="">Select Account Name</option>
+                    {customerFormData.accountType &&
+                      (predefinedAccounts[customerFormData.accountType] || []).map((name, index) => (
+                        <option key={index} value={name}>
+                          {name}
+                        </option>
+                      ))
+                    }
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Balance</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={customerFormData.payable}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, payable: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
 
-</Row>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Creation Date</Form.Label>
-            <Form.Control
-              type="date"
-              value={customerFormData.creationDate}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, creationDate: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Bank Account Number</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.bankAccountNumber}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, bankAccountNumber: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Bank IFSC</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.bankIFSC}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, bankIFSC: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Bank Name & Branch</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.bankName}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, bankName: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Country</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.country}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, country: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>State</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.state}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, state: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Pincode</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.pincode}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, pincode: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Address</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.address}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, address: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>State Code</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.stateCode}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, stateCode: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Shipping Address</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.shippingAddress}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, shippingAddress: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Phone</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.phone}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, phone: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              value={customerFormData.email}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, email: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Credit Period (days)</Form.Label>
-            <Form.Control
-              type="number"
-              value={customerFormData.creditPeriod}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, creditPeriod: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>GSTIN</Form.Label>
-            <Form.Control
-              type="text"
-              value={customerFormData.gstin}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, gstin: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>GST Type</Form.Label>
-            <Form.Control
-              as="select"
-              value={customerFormData.gstType}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, gstType: e.target.value })}
-            >
-              <option>Registered</option>
-              <option>Unregistered</option>
-              <option>Composition</option>
-            </Form.Control>
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group>
-            <Form.Label>Tax Enabled</Form.Label>
-            <Form.Check
-              type="switch"
-              checked={customerFormData.taxEnabled}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, taxEnabled: e.target.checked })}
-              label={customerFormData.taxEnabled ? "Yes" : "No"}
-            />
-            {customerFormData.taxEnabled && (
-              <Form.Control
-                type="text"
-                placeholder="Tax Number"
-                className="mt-2"
-                value={customerFormData.taxNumber}
-                onChange={(e) => setCustomerFormData({ ...customerFormData, taxNumber: e.target.value })}
-              />
-            )}
-          </Form.Group>
-        </Col>
-      </Row>
-    </Form>
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setShowCustomerModal(false)}>
-      Cancel
-    </Button>
-    <Button
-      style={{ backgroundColor: "#53b2a5", border: "none" }}
-      onClick={handleSaveCustomer}
-    >
-      Save Customer
-    </Button>
-  </Modal.Footer>
-</Modal>
+
+
+            </Row>
+            <Row className="mb-3" >
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Balance Type</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={vendorFormData.balanceType}
+                    onChange={(e) => setVendorFormData({ ...vendorFormData, balanceType: e.target.value })}
+                  >
+                    <option value="">Select Type</option>
+                    <option value="Debit">Debit</option>
+                    <option value="Credit">Credit</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Creation Date</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={customerFormData.creationDate}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, creationDate: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Bank Account Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={customerFormData.bankAccountNumber}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, bankAccountNumber: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Bank IFSC</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={customerFormData.bankIFSC}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, bankIFSC: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Bank Name & Branch</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={customerFormData.bankName}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, bankName: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Country</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={customerFormData.country}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, country: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>State</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={customerFormData.state}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, state: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Pincode</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={customerFormData.pincode}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, pincode: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Address</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={customerFormData.address}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, address: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>State Code</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={customerFormData.stateCode}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, stateCode: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Shipping Address</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={customerFormData.shippingAddress}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, shippingAddress: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Phone</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={customerFormData.phone}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, phone: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    value={customerFormData.email}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, email: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Credit Period (days)</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={customerFormData.creditPeriod}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, creditPeriod: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>GSTIN</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={customerFormData.gstin}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, gstin: e.target.value })}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>GST Type</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={customerFormData.gstType}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, gstType: e.target.value })}
+                  >
+                    <option>Registered</option>
+                    <option>Unregistered</option>
+                    <option>Composition</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Tax Enabled</Form.Label>
+                  <Form.Check
+                    type="switch"
+                    checked={customerFormData.taxEnabled}
+                    onChange={(e) => setCustomerFormData({ ...customerFormData, taxEnabled: e.target.checked })}
+                    label={customerFormData.taxEnabled ? "Yes" : "No"}
+                  />
+                  {customerFormData.taxEnabled && (
+                    <Form.Control
+                      type="text"
+                      placeholder="Tax Number"
+                      className="mt-2"
+                      value={customerFormData.taxNumber}
+                      onChange={(e) => setCustomerFormData({ ...customerFormData, taxNumber: e.target.value })}
+                    />
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowCustomerModal(false)}>
+            Cancel
+          </Button>
+          <Button
+            style={{ backgroundColor: "#53b2a5", border: "none" }}
+            onClick={handleSaveCustomer}
+          >
+            Save Customer
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
 
 
@@ -1002,23 +1014,23 @@ const handleDeleteAccount = (type, name) => {
         centered
         backdrop="static"
         size="lg"
-          dialogClassName="w-100"
+        dialogClassName="w-100"
       >
 
-<div     
-    >
-        <Modal.Header closeButton className="bg-light"   >
-          <Modal.Title>Add New Account</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+        <div
+        >
+          <Modal.Header closeButton className="bg-light"   >
+            <Modal.Title>Add New Account</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
 
 
 
 
-        <Form>
+            <Form>
 
 
-{/* 
+              {/* 
             <Form.Group className="mb-3">
               <Form.Label>Main Account</Form.Label>
               <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
@@ -1075,115 +1087,115 @@ const handleDeleteAccount = (type, name) => {
 
 
 
-{/* Account Type Dropdown */}
-<Form.Group className="mb-3">
-  <Form.Label>Account Type</Form.Label>
-  <Form.Select
-    value={newAccountData.type}
-    onChange={(e) => {
-      const selectedType = e.target.value;
-      setNewAccountData({
-        ...newAccountData,
-        type: selectedType,
-        name: "", // reset name when type changes
-      });
-    }}
-  >
-    <option value="">Select Account Type</option>
-    {accountTypes.map((type) => (
-      <option key={type} value={type}>
-        {type}
-      </option>
-    ))}
-  </Form.Select>
-</Form.Group>
+              {/* Account Type Dropdown */}
+              <Form.Group className="mb-3">
+                <Form.Label>Account Type</Form.Label>
+                <Form.Select
+                  value={newAccountData.type}
+                  onChange={(e) => {
+                    const selectedType = e.target.value;
+                    setNewAccountData({
+                      ...newAccountData,
+                      type: selectedType,
+                      name: "", // reset name when type changes
+                    });
+                  }}
+                >
+                  <option value="">Select Account Type</option>
+                  {accountTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
 
-{/* Account Name Dropdown Based on Type */}
-{newAccountData.type && (
-  <Form.Group className="mb-3">
-    <Form.Label>Account Name</Form.Label>
-    <Form.Select
-      value={newAccountData.name}
-      onChange={(e) =>
-        setNewAccountData({ ...newAccountData, name: e.target.value })
-      }
-    >
-      <option value="">Select Account Name</option>
-      {predefinedAccounts[newAccountData.type].map((accName, i) => (
-        <option key={i} value={accName}>
-          {accName}
-        </option>
-      ))}
-    </Form.Select>
-  </Form.Group>
-)}
-<Form.Group className="mb-3">
-  <Form.Label>Account Holder</Form.Label>
-  <Form.Control
-    type="text"
-    value={newAccountData.holder || ""}
-    onChange={(e) =>
-      setNewAccountData({ ...newAccountData, holder: e.target.value })
-    }
-  />
-</Form.Group>
-
-
-
-            {/* Bank Toggle */}
-            <Form.Group className="mb-3">
-              <Form.Check
-                type="switch"
-                label="Add Bank Details"
-                checked={showBankDetails}
-                onChange={() => setShowBankDetails(!showBankDetails)}
-              />
-            </Form.Group>
-            {/* Bank Fields */}
-            {showBankDetails && (
-              <>
+              {/* Account Name Dropdown Based on Type */}
+              {newAccountData.type && (
                 <Form.Group className="mb-3">
-                  <Form.Label>Account Number</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={newAccountData.bankAccountNumber}
+                  <Form.Label>Account Name</Form.Label>
+                  <Form.Select
+                    value={newAccountData.name}
                     onChange={(e) =>
-                      setNewAccountData({
-                        ...newAccountData,
-                        bankAccountNumber: e.target.value,
-                      })
+                      setNewAccountData({ ...newAccountData, name: e.target.value })
                     }
-                  />
+                  >
+                    <option value="">Select Account Name</option>
+                    {predefinedAccounts[newAccountData.type].map((accName, i) => (
+                      <option key={i} value={accName}>
+                        {accName}
+                      </option>
+                    ))}
+                  </Form.Select>
                 </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>IFSC Code</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={newAccountData.bankIFSC}
-                    onChange={(e) =>
-                      setNewAccountData({
-                        ...newAccountData,
-                        bankIFSC: e.target.value,
-                      })
-                    }
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Bank Name & Branch</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={newAccountData.bankNameBranch}
-                    onChange={(e) =>
-                      setNewAccountData({
-                        ...newAccountData,
-                        bankNameBranch: e.target.value,
-                      })
-                    }
-                  />
-                </Form.Group>
-              </>
-            )}
-          </Form>
+              )}
+              <Form.Group className="mb-3">
+                <Form.Label>Account Holder</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={newAccountData.holder || ""}
+                  onChange={(e) =>
+                    setNewAccountData({ ...newAccountData, holder: e.target.value })
+                  }
+                />
+              </Form.Group>
+
+
+
+              {/* Bank Toggle */}
+              <Form.Group className="mb-3">
+                <Form.Check
+                  type="switch"
+                  label="Add Bank Details"
+                  checked={showBankDetails}
+                  onChange={() => setShowBankDetails(!showBankDetails)}
+                />
+              </Form.Group>
+              {/* Bank Fields */}
+              {showBankDetails && (
+                <>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Account Number</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={newAccountData.bankAccountNumber}
+                      onChange={(e) =>
+                        setNewAccountData({
+                          ...newAccountData,
+                          bankAccountNumber: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>IFSC Code</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={newAccountData.bankIFSC}
+                      onChange={(e) =>
+                        setNewAccountData({
+                          ...newAccountData,
+                          bankIFSC: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Bank Name & Branch</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={newAccountData.bankNameBranch}
+                      onChange={(e) =>
+                        setNewAccountData({
+                          ...newAccountData,
+                          bankNameBranch: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
+                </>
+              )}
+            </Form>
 
 
 
@@ -1192,60 +1204,35 @@ const handleDeleteAccount = (type, name) => {
 
 
 
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowNewAccountModal(false)}>
-            Cancel
-          </Button>
-          <Button
-            style={{ backgroundColor: "#53b2a5", border: "none", padding: "8px 16px" }}
-            onClick={async () => {
-              try {
-                // Replace with your actual API endpoint
-                await api.post("/accounts", newAccountData);
-                // Optional: Refresh the account list or parent accounts if needed
-                // const refreshed = await api.get("/accounts/parents");
-                // setParentAccounts(refreshed.data);
-                setShowNewAccountModal(false);
-              } catch (error) {
-                 console.error("Failed to save new account:", error);
-                 // Optionally, show an error message to the user
-              }
-            }}
-          >
-            Save
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowNewAccountModal(false)}>
+              Cancel
+            </Button>
+            <Button
+              style={{ backgroundColor: "#53b2a5", border: "none", padding: "8px 16px" }}
+              onClick={async () => {
+                try {
+                  // Replace with your actual API endpoint
+                  await api.post("/accounts", newAccountData);
+                  // Optional: Refresh the account list or parent accounts if needed
+                  // const refreshed = await api.get("/accounts/parents");
+                  // setParentAccounts(refreshed.data);
+                  setShowNewAccountModal(false);
+                } catch (error) {
+                  console.error("Failed to save new account:", error);
+                  // Optionally, show an error message to the user
+                }
+              }}
+            >
+              Save
+            </Button>
+          </Modal.Footer>
 
         </div>
 
 
       </Modal>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       {/* Mini Modal for Main Account Name Input */}
       <Modal
@@ -1278,34 +1265,34 @@ const handleDeleteAccount = (type, name) => {
           <Button
             variant="primary"
             onClick={async () => {
-             try {
-               // Replace with your actual API endpoint
-               const res = await api.post("/accounts", {
-                 name: mainAccountName,
-                 type: "main", // Assuming 'main' is a valid type
-                 parentId: null,
-                 isDefault: true,
-               });
-               const newMain = res.data;
-               // Update newAccountData with the newly created main account's ID
-               setNewAccountData({
-                 ...newAccountData,
-                 parentId: newMain._id,
-                 // If selecting a main account, isDefault might be relevant,
-                 // but typically if it's a parent, isDefault is not applicable.
-                 // Let's keep it as false unless there's a specific need.
-                 // isDefault: true, // Or false, depending on logic
-                 isDefault: false, // More likely, as it's now a parent
-               });
-               // Refresh the parent accounts list to include the new one
-               const refreshed = await api.get("/accounts/parents");
-               setParentAccounts(refreshed.data);
-               setMainAccountName(""); // Clear the input
-               setShowMainAccountModal(false); // Close the modal
-             } catch (error) {
+              try {
+                // Replace with your actual API endpoint
+                const res = await api.post("/accounts", {
+                  name: mainAccountName,
+                  type: "main", // Assuming 'main' is a valid type
+                  parentId: null,
+                  isDefault: true,
+                });
+                const newMain = res.data;
+                // Update newAccountData with the newly created main account's ID
+                setNewAccountData({
+                  ...newAccountData,
+                  parentId: newMain._id,
+                  // If selecting a main account, isDefault might be relevant,
+                  // but typically if it's a parent, isDefault is not applicable.
+                  // Let's keep it as false unless there's a specific need.
+                  // isDefault: true, // Or false, depending on logic
+                  isDefault: false, // More likely, as it's now a parent
+                });
+                // Refresh the parent accounts list to include the new one
+                const refreshed = await api.get("/accounts/parents");
+                setParentAccounts(refreshed.data);
+                setMainAccountName(""); // Clear the input
+                setShowMainAccountModal(false); // Close the modal
+              } catch (error) {
                 console.error("Failed to create main account:", error);
                 // Optionally, show an error message to the user
-             }
+              }
             }}
           >
             Create
@@ -1313,123 +1300,119 @@ const handleDeleteAccount = (type, name) => {
         </Modal.Footer>
       </Modal>
 
+      {/* View Account Modal */}
+      <Modal show={showView} onHide={() => setShowView(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Account Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedAccount && (
+            <div>
+              <p><strong>Account Type:</strong> {selectedAccount.type}</p>
+              <p><strong>Account Name:</strong> {selectedAccount.name}</p>
+              <p><strong>Balance:</strong> 0.00</p>
+              <p><strong>Total Balance:</strong> 0.00</p>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowView(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-
-{/* View Account Modal */}
-<Modal show={showView} onHide={() => setShowView(false)} centered>
-  <Modal.Header closeButton>
-    <Modal.Title>Account Details</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    {selectedAccount && (
-      <div>
-        <p><strong>Account Type:</strong> {selectedAccount.type}</p>
-        <p><strong>Account Name:</strong> {selectedAccount.name}</p>
-        <p><strong>Balance:</strong> 0.00</p>
-        <p><strong>Total Balance:</strong> 0.00</p>
-      </div>
-    )}
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setShowView(false)}>
-      Close
-    </Button>
-  </Modal.Footer>
-</Modal>
-
-{/* Edit Account Modal */}
-<Modal show={showEdit} onHide={() => setShowEdit(false)} centered>
-  <Modal.Header closeButton>
-    <Modal.Title>Edit Account</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    {selectedAccount && (
-      <Form>
-        <Form.Group className="mb-3">
-          <Form.Label>Account Type</Form.Label>
-          <Form.Control
-            as="select"
-            value={selectedAccount.type || ''}
-            onChange={(e) => setSelectedAccount(prev => ({
-              ...prev,
-              type: e.target.value
-            }))}
+      {/* Edit Account Modal */}
+      <Modal show={showEdit} onHide={() => setShowEdit(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Account</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedAccount && (
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Account Type</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={selectedAccount.type || ''}
+                  onChange={(e) => setSelectedAccount(prev => ({
+                    ...prev,
+                    type: e.target.value
+                  }))}
+                >
+                  <option value="" disabled>Select account type</option>
+                  {accountTypes.map((type) => (
+                    <option key={type} value={type}>{type}</option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Account Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedAccount.name || ''}
+                  onChange={(e) => setSelectedAccount(prev => ({
+                    ...prev,
+                    name: e.target.value
+                  }))}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Balance</Form.Label>
+                <Form.Control
+                  type="number"
+                  value={selectedAccount.balance || "0.00"}
+                  onChange={(e) => setSelectedAccount(prev => ({
+                    ...prev,
+                    balance: parseFloat(e.target.value) || 0
+                  }))}
+                />
+              </Form.Group>
+            </Form>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowEdit(false)}>
+            Cancel
+          </Button>
+          <Button
+            style={{ backgroundColor: "#53b2a5", border: "none" }}
+            onClick={() => {
+              console.log("Account updated:", selectedAccount);
+              setShowEdit(false);
+              // Add your save logic here (e.g., API call to update account)
+            }}
           >
-            <option value="" disabled>Select account type</option>
-            {accountTypes.map((type) => (
-              <option key={type} value={type}>{type}</option>
-            ))}
-          </Form.Control>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Account Name</Form.Label>
-          <Form.Control
-            type="text"
-            value={selectedAccount.name || ''}
-            onChange={(e) => setSelectedAccount(prev => ({
-              ...prev,
-              name: e.target.value
-            }))}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Balance</Form.Label>
-          <Form.Control
-            type="number"
-            value={selectedAccount.balance || "0.00"}
-            onChange={(e) => setSelectedAccount(prev => ({
-              ...prev,
-              balance: parseFloat(e.target.value) || 0
-            }))}
-          />
-        </Form.Group>
-      </Form>
-    )}
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setShowEdit(false)}>
-      Cancel
-    </Button>
-    <Button 
-      style={{ backgroundColor: "#53b2a5", border: "none" }}
-      onClick={() => {
-        console.log("Account updated:", selectedAccount);
-        setShowEdit(false);
-        // Add your save logic here (e.g., API call to update account)
-      }}
-    >
-      Save Changes
-    </Button>
-  </Modal.Footer>
-</Modal>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-
-
-{/* Delete Confirmation Modal */}
-<Modal show={showDelete} onHide={() => setShowDelete(false)} centered>
-  <Modal.Header closeButton>
-    <Modal.Title>Confirm Deletion</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    {selectedAccount && (
-      <p>Are you sure you want to delete the account "{selectedAccount.name}" ({selectedAccount.type})? This action cannot be undone.</p>
-    )}
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setShowDelete(false)}>
-      Cancel
-    </Button>
-    <Button 
-      variant="danger"
-      onClick={() => {
-        console.log("Account deleted:", selectedAccount);
-        setShowDelete(false);
-      }}
-    >
-      Delete Account
-    </Button>
-  </Modal.Footer>
-</Modal>
+      {/* Delete Confirmation Modal */}
+      <Modal show={showDelete} onHide={() => setShowDelete(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Deletion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedAccount && (
+            <p>Are you sure you want to delete the account "{selectedAccount.name}" ({selectedAccount.type})? This action cannot be undone.</p>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDelete(false)}>
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => {
+              console.log("Account deleted:", selectedAccount);
+              setShowDelete(false);
+            }}
+          >
+            Delete Account
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
 
     </Container>
