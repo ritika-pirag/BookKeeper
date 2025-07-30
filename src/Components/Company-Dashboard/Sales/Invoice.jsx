@@ -398,34 +398,37 @@ const Invoice = () => {
                       </td>
                       <td>
                         <div className="d-flex gap-2 justify-content-center">
-                          <Button
+                          <button
+                          className="p-0 text-info"
                             variant="outline-info"
                             size="sm"
                             onClick={() => navigate("/company/viewinvoicee")}
                           >
                             <FaEye size={16} />
-                          </Button>
-                          <Button
+                          </button>
+                          <button
+                          className="p-0 text-warning" 
                             variant="outline-warning"
                             size="sm"
                             onClick={() => handleEdit(invoice)}
                           >
                             <FaEdit size={16} />
-                          </Button>
-                          <Button
+                          </button>
+                          <button
                             variant="outline-primary"
                             size="sm"
                             onClick={() => handleDownload(invoice)}
                           >
                             <FaDownload size={16} />
-                          </Button>
-                          <Button
+                          </button>
+                          <button
+                          className="p-0 text-danger" 
                             variant="outline-danger"
                             size="sm"
                             onClick={() => handleDelete(invoice)}
                           >
                             <FaTrash size={16} />
-                          </Button>
+                          </button>
                         </div>
                       </td>
                     </tr>

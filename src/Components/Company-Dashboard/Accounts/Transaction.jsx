@@ -219,44 +219,82 @@ const Transaction = () => {
         </Col>
       </Row>
 
-      <Table bordered hover>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Balance Type</th>
-            <th>Voucher No</th>
-            <th>Amount</th>
-            <th>From/To</th>
-            <th>Account Type</th>
-            <th>Account</th>
-            <th>Note</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.length > 0 ? (
-            transactions.map((txn, idx) => (
-              <tr key={idx}>
-                <td>{txn.date}</td>
-                <td>{txn.balanceType}</td>
-                <td>{txn.voucherNo}</td>
-                <td>{txn.amount}</td>
-                <td>{txn.fromTo}</td>
-                <td>{txn.accountType}</td>
-                <td>{txn.account}</td>
-                <td>{txn.note}</td>
-                <td>
-                  <Button variant="link" onClick={() => handleView(idx)}><FaEye /></Button>
-                  <Button variant="link" onClick={() => handleEdit(idx)}><FaEdit /></Button>
-                  <Button variant="link" onClick={() => handleDelete(idx)} className="text-danger"><FaTrash /></Button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr><td colSpan="9" className="text-center">No transactions found</td></tr>
-          )}
-        </tbody>
-      </Table>
+   <Table bordered hover>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Balance Type</th>
+      <th>Voucher No</th>
+      <th>Amount</th>
+      <th>From/To</th>
+      <th>Account Type</th>
+      <th>Account</th>
+      <th>Note</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {transactions.length > 0 ? (
+      transactions.map((txn, idx) => (
+        <tr key={idx}>
+          <td>{txn.date}</td>
+          <td>{txn.balanceType}</td>
+          <td>{txn.voucherNo}</td>
+          <td>{txn.amount}</td>
+          <td>{txn.fromTo}</td>
+          <td>{txn.accountType}</td>
+          <td>{txn.account}</td>
+          <td>{txn.note}</td>
+          <td>
+            <Button variant="link" onClick={() => handleView(idx)}>
+              <FaEye />
+            </Button>
+            <Button variant="link" onClick={() => handleEdit(idx)}>
+              <FaEdit />
+            </Button>
+            <Button
+              variant="link"
+              onClick={() => handleDelete(idx)}
+              className="text-danger"
+            >
+              <FaTrash />
+            </Button>
+          </td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan="9" className="text-center">
+          No transactions found
+        </td>
+      </tr>
+    )}
+  </tbody>
+</Table>
+
+{/* Static Pagination Section */}
+<div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+  <small className="text-muted ms-2">
+    Showing 1 to {transactions.length} of {transactions.length} results
+  </small>
+  <nav>
+    <ul className="pagination mb-0">
+      <li className="page-item disabled">
+        <button className="page-link">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button className="page-link">1</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
 
       {/* Add/Edit Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)}  size="lg">

@@ -293,7 +293,7 @@ const VendorsCreditors = () => {
                       setShowView(true);
                     }}
                   >
-                    <FaEye />
+                    <FaEye size={16}/>
                   </Button>
                   <Button
                     variant="link"
@@ -301,7 +301,7 @@ const VendorsCreditors = () => {
                     size="sm"
                     onClick={() => handleEditClick(vendor)}
                   >
-                    <FaEdit />
+                    <FaEdit size={16}/>
                   </Button>
                   <Button
                     variant="link"
@@ -312,7 +312,7 @@ const VendorsCreditors = () => {
                       setShowDelete(true);
                     }}
                   >
-                    <FaTrash />
+                    <FaTrash size={16}/>
                   </Button>
                 </div>
               </td>
@@ -326,8 +326,26 @@ const VendorsCreditors = () => {
           </tr>
         )}
       </tbody>
+      
     </table>
+    
   </div>
+    {/* Pagination */}
+  <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+    <small className="text-muted ms-2">
+      Showing 1 to 4 of 4 results
+    </small>
+    <nav>
+      <ul className="pagination mb-0">
+        <li className="page-item disabled"><button className="page-link">&laquo;</button></li>
+        <li className="page-item active"><button className="page-link">1</button></li>
+        <li className="page-item"><button className="page-link">2</button></li>
+        <li className="page-item"><button className="page-link">&raquo;</button></li>
+      </ul>
+    </nav>
+  </div>
+
+  
 </div>
 
 
