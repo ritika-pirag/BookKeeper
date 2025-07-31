@@ -153,13 +153,9 @@ import ReceiptEntry from "./Components/Company-Dashboard/Accounts/ReceiptEntry";
 import WareHouseDetail from "./Components/Company-Dashboard/Inventory/SiteData/WareHouseDetail";
 
 import DeliveryChallans from "./Components/Company-Dashboard/Sales/DeliveryChallans";
-<<<<<<< HEAD
-// import MultiStepPurchaseForm from "./Components/Company-Dashboard/Accounts/MultiStepPurchaseForm";
-=======
 import PurchaseOrderr from "./Components/Company-Dashboard/Purchases/PurchaseOrderr";
 import MultiStepPurchaseForms from "./Components/Company-Dashboard/Purchases/MultiStepPurchaseForms";
 
->>>>>>> 1a508c547d67d3d23bbd39ec15b463f1ab9e04d0
 
 
 
