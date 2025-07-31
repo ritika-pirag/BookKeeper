@@ -61,10 +61,10 @@ const Productlistsel = ({ products = [], onProductSelect, showModal }) => {
         <thead className="table-light">
   <tr>
     <th>Image</th>
-    <th>Product</th>
-    <th>Brand</th>
-    <th>Device</th>
-    <th>Price</th>
+    <th>Name</th>
+    <th>Category</th>
+    <th>HSN</th>
+    <th>Amount</th>
     <th>Quantity</th>
 
   </tr>

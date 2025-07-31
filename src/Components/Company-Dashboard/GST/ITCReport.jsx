@@ -284,6 +284,13 @@ const ITCReport = () => (
         </Card.Body>
       </Card>
     </Container>
+    <div className="mt-3">
+  <small className="d-block text-dark w-100 p-3 border-top bg-light rounded-bottom">
+    <strong>ITC (Input Tax Credit):</strong>  
+    The tax credit a business can claim for the GST paid on purchases of goods or services used for business purposes.
+  </small>
+</div>
+
   </div>
 );
 

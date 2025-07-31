@@ -102,8 +102,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         ]),
         renderFlatSection("POS", [
 
-
-          { to: "/company/product", icon: "fas fa-box", label: "Product" },
+          // { to: "/company/product", icon: "fas fa-box", label: "Product" },
           { to: "/company/ponitofsale", icon: "fas fa-desktop", label: "POS Screen" },
         ]),
      
