@@ -6,6 +6,7 @@ import { FaArrowRight, FaBoxes, FaEdit, FaTrash } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import { useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
+import AddProductModal from "../AddProductModal";
 
 
 const WareHouse = () => {
@@ -20,6 +21,16 @@ const WareHouse = () => {
   const [selectedWarehouse, setSelectedWarehouse] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+
+
+
+
+  const [showUOMModal, setShowUOMModal] = useState(false);
+
+
+
+
+
 
   useEffect(() => {
     const dummyData = [
@@ -278,17 +289,17 @@ const WareHouse = () => {
           <h4 className="fw-semibold">Manage Warehouses</h4>
 
           <div className="mb-3">
-  <Form.Control
-    type="text"
-    placeholder="Filter by location (e.g. Delhi, Mumbai)"
-    value={filterLocation}
-    onChange={(e) => {
-      setFilterLocation(e.target.value);
-      setCurrentPage(1); // Reset to first page when filtering
-    }}
-    style={{ maxWidth: "300px" }}
-  />
-</div>
+            <Form.Control
+              type="text"
+              placeholder="Filter by location (e.g. Delhi, Mumbai)"
+              value={filterLocation}
+              onChange={(e) => {
+                setFilterLocation(e.target.value);
+                setCurrentPage(1); // Reset to first page when filtering
+              }}
+              style={{ maxWidth: "300px" }}
+            />
+          </div>
 
           <div className="d-flex gap-2 flex-wrap">
             <Button
@@ -354,16 +365,35 @@ const WareHouse = () => {
                     <td>{w.totalStocks}</td>
                     <td>{w.location}</td>
                     <td>
-                      <Button
-                        variant="link"
-                        className="text-success p-0 me-2"
-                        onClick={() => handleAddStockModal(w)} // New handler
-                        title="Add Stock"
-                      >
-                        <FaBoxes />
-                      </Button>
+
                       <Button variant="link" className="text-warning p-0 me-2" onClick={() => handleModalShow(w)}   ><FaEdit /></Button>
+
                       <Button variant="link" className="text-danger p-0 me-2" onClick={() => handleDelete(w._id)}   ><FaTrash /></Button>
+            
+
+                      <Button onClick={() => handleAddStockModal(w)}
+                             style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+                        
+                        >Add Stoct</Button>
+                      <AddProductModal showAdd={showAdd}
+                        showEdit={showEdit}
+                        newItem={newItem}
+                        categories={categories}
+                        newCategory={newCategory}
+                        showUOMModal={showUOMModal}
+                        showAddCategoryModal={showAddCategoryModal}
+                        setShowAdd={setShowAdd}
+                        setShowEdit={setShowEdit}
+                        setShowUOMModal={setShowUOMModal}
+                        setShowAddCategoryModal={setShowAddCategoryModal}
+                        setNewCategory={setNewCategory}
+                        handleChange={handleChange}
+                        handleAddItem={handleAddItem}
+                        handleUpdateItem={handleUpdateItem}
+                        handleAddCategory={handleAddCategory}
+                          formMode="addStock"
+                      />
+
                     </td>
                   </tr>
                 ))
@@ -417,14 +447,14 @@ const WareHouse = () => {
         </div>
       </div>
 
-      {/* Modal */}
-      {/* <Modal show={showModal} onHide={handleModalClose} centered>
+      {/* add warehouse */}
+      <Modal show={showModal} onHide={handleModalClose} size="md">
         <Modal.Header closeButton>
           <Modal.Title>{editId ? "Edit Warehouse" : "Create Warehouse"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleFormSubmit}>
-            <Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>Warehouse Name</Form.Label>
               <Form.Control
                 type="text"
@@ -433,8 +463,7 @@ const WareHouse = () => {
                 required
               />
             </Form.Group>
-
-            <Form.Group className="mt-3">
+            <Form.Group className="mb-3">
               <Form.Label>Location</Form.Label>
               <Form.Control
                 type="text"
@@ -443,375 +472,18 @@ const WareHouse = () => {
                 required
               />
             </Form.Group>
-
-            <div className="d-flex justify-content-end mt-3">
-              <Button variant="secondary" onClick={handleModalClose}>Close</Button>
-              <Button variant="primary" type="submit" className="ms-2" style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}>
-                {editId ? "Update" : "Create"}
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal> */}
-      {/* <Offcanvas show={showModal} onHide={handleModalClose} placement="end">
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>{editId ? "Edit Warehouse" : "Create Warehouse"}</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Group>
-              <Form.Label>Warehouse Name</Form.Label>
-              <Form.Control
-                type="text"
-                value={warehouseName}
-                onChange={(e) => setWarehouseName(e.target.value)}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mt-3">
-              <Form.Label>Location</Form.Label>
-              <Form.Control
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                required
-              />
-            </Form.Group>
-
-            <div className="d-flex justify-content-end mt-3">
-              <Button style={{ backgroundColor: '#3E3F3FFF', borderColor: '#8E8E8EFF' }} onClick={handleModalClose}>Close</Button>
-              <Button
-                variant="primary"
-                type="submit"
-                className="ms-2"
-                style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
-              >
-                {editId ? "Update" : "Create"}
-              </Button>
-            </div>
-          </Form>
-        </Offcanvas.Body>
-      </Offcanvas> */}
-
-      <Offcanvas show={showModal} onHide={handleModalClose} placement="end" className="position-absolute pt-5 px-4">
-        <Offcanvas.Body>
-          {/* Arrow Button — properly positioned */}
-          <Button
-            variant="light"
-            onClick={handleModalClose}
-            className="position-absolute"
-            style={{
-              top: "20px",
-              left: "-12px", // slightly outside the drawer
-              zIndex: 1051,
-              borderRadius: "50%",
-              padding: "6px 10px",
-              boxShadow: "0 0 6px rgba(0,0,0,0.2)",
-            }}
-          >
-            <FaArrowRight size={20} color="#3daaaa" />
-          </Button>
-
-          {/* Title */}
-          <h5 className="mb-4">{editId ? "Edit Warehouse" : "Create Warehouse"}</h5>
-
-          {/* Form */}
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Group>
-              <Form.Label>Warehouse Name</Form.Label>
-              <Form.Control
-                type="text"
-                value={warehouseName}
-                onChange={(e) => setWarehouseName(e.target.value)}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mt-3">
-              <Form.Label>Location</Form.Label>
-              <Form.Control
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                required
-              />
-            </Form.Group>
-
-            <div className="d-flex justify-content-end mt-4">
-              <Button
-                style={{ backgroundColor: '#3E3F3F', borderColor: '#8E8E8E' }}
-                onClick={handleModalClose}
-              >
+            <div className="d-flex justify-content-end">
+              <Button variant="secondary" onClick={handleModalClose}>
                 Close
               </Button>
-              <Button
-                type="submit"
-                className="ms-2"
-                style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}
-              >
+              <Button type="submit" className="ms-2" style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }}>
                 {editId ? "Update" : "Create"}
               </Button>
             </div>
           </Form>
-        </Offcanvas.Body>
-      </Offcanvas>
-
-
-      <Offcanvas show={showAdd || showEdit} onHide={() => { setShowAdd(false); setShowEdit(false); }} style={{ width: '75%' }} placement="end" className="position-absolute pt-5 px-4">
-        {/* <Offcanvas.Header closeButton>
-          <Offcanvas.Title>{showAdd ? "Add Product" : "Edit Product"}</Offcanvas.Title>
-        </Offcanvas.Header> */}
-        <Offcanvas.Body>
-          <Button
-            variant="light"
-            onClick={() => { setShowAdd(false); setShowEdit(false); }}
-            className="position-absolute"
-            style={{
-              top: "20px",
-              left: "-12px", // slightly outside the drawer
-              zIndex: 1051,
-              borderRadius: "50%",
-              padding: "6px 10px",
-              boxShadow: "0 0 6px rgba(0,0,0,0.2)",
-            }}
-          >
-            <FaArrowRight size={20} color="#3daaaa" />
-          </Button>
-          <h5 className="mb-4">{showAdd ? "Add Product" : "Edit Product"}</h5>
-          <Form>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Item Name</Form.Label><Form.Control name="itemName" value={newItem.itemName} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>HSN</Form.Label><Form.Control name="hsn" value={newItem.hsn} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Barcode</Form.Label><Form.Control name="barcode" value={newItem.barcode} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Units of Measure</Form.Label><Form.Select name="unit" value={newItem.unit} onChange={handleChange}><option>Numbers</option><option>Kg</option><option>Litres</option></Form.Select></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Warehouse</Form.Label>
-                  {/* <Form.Select name="warehouse" value={newItem.warehouse} onChange={handleChange}> */}
-                  <Form.Select name="warehouse" value={selectedWarehouse} onChange={(e) => setSelectedWarehouse(e.target.value)} >
-                    <option value="">Select Warehouse</option>
-                    <option value="Main Warehouse">Main Warehouse</option>
-                    <option value="Central Warehouse">Central Warehouse</option>
-                    <option value="North Zone">North Zone</option>
-                    <option value="South Depot">South Depot</option>
-                    <option value="East Godown">East Godown</option>
-                    <option value="Backup Warehouse">Backup Warehouse</option>
-                    <option value="West Hub">West Hub</option>
-                    <option value="East Wing">East Wing</option>
-                    <option value="West Wing">West Wing</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-
-              <Col md={6}>
-                <Form.Group>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <Form.Label className="mb-0">Item Category</Form.Label>
-                    <Button
-                      variant="outline-primary"
-                      size="sm"
-                      onClick={() => setShowAddCategoryModal(true)}
-                    >
-                      + Add New
-                    </Button>
-                  </div>
-                  <Form.Select
-                    name="itemCategory"
-                    value={newItem.itemCategory}
-                    onChange={handleChange}
-                    className="mt-2"
-                  >
-                    <option value="">Select Category</option>
-                    {categories.map((cat, idx) => (
-                      <option key={idx} value={cat}>
-                        {cat}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={12}><Form.Group><Form.Label>Item Description</Form.Label><Form.Control as="textarea" rows={2} name="description" value={newItem.description} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Initial Quantity On Hand</Form.Label><Form.Control name="quantity" value={newItem.quantity} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>As Of Date</Form.Label><Form.Control type="date" name="date" value={newItem.date} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Initial Cost/Unit</Form.Label><Form.Control name="cost" value={newItem.cost} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Value</Form.Label><Form.Control name="value" value={newItem.value} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Minimum Order Quantity</Form.Label><Form.Control name="minQty" value={newItem.minQty} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Item Image</Form.Label><Form.Control type="file" name="image" onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Tax Account</Form.Label><Form.Control name="taxAccount" value={newItem.taxAccount} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Additional Cess</Form.Label><Form.Control name="cess" value={newItem.cess} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Purchase Price (Exclusive)</Form.Label><Form.Control name="purchasePriceExclusive" value={newItem.purchasePriceExclusive} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Default Purchase Price (Inclusive)</Form.Label><Form.Control name="purchasePriceInclusive" value={newItem.purchasePriceInclusive} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Sale Price (Exclusive)</Form.Label><Form.Control name="salePriceExclusive" value={newItem.salePriceExclusive} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Default Sale Price (Inclusive)</Form.Label><Form.Control name="salePriceInclusive" value={newItem.salePriceInclusive} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Discount %</Form.Label><Form.Control name="discount" value={newItem.discount} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Item Category</Form.Label><Form.Control name="category" value={newItem.category} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Item Subcategory</Form.Label><Form.Control name="subcategory" value={newItem.subcategory} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Remarks</Form.Label><Form.Control name="remarks" value={newItem.remarks} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <div className="mb-3 d-flex gap-2 justify-content-end">
-              {/* <Button variant="secondary" onClick={() => { setShowAdd(false); setShowEdit(false); }}>Cancel</Button> */}
-              <Button style={{ backgroundColor: '#3E3F3FFF', borderColor: '#8E8E8EFF' }} onClick={() => { setShowAdd(false); setShowEdit(false); }}>Cancel</Button>
-              <Button style={{ backgroundColor: '#27b2b6', borderColor: '#27b2b6' }} onClick={showAdd ? handleAddItem : handleUpdateItem}>{showAdd ? "Add" : "Update"}</Button>
-            </div>
-          </Form>
-        </Offcanvas.Body>
-      </Offcanvas>
-
-      {/* Add/Edit Modal */}
-      {/* <Modal show={showAdd || showEdit} onHide={() => { setShowAdd(false); setShowEdit(false); }} centered size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>{showAdd ? "Add Product" : "Edit Product"}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Item Name</Form.Label><Form.Control name="itemName" value={newItem.itemName} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>HSN</Form.Label><Form.Control name="hsn" value={newItem.hsn} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Barcode</Form.Label><Form.Control name="barcode" value={newItem.barcode} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Units of Measure</Form.Label><Form.Select name="unit" value={newItem.unit} onChange={handleChange}><option>Numbers</option><option>Kg</option><option>Litres</option></Form.Select></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Warehouse</Form.Label>
-                  <Form.Select name="warehouse" value={selectedWarehouse} onChange={(e) => setSelectedWarehouse(e.target.value)}>
-                    <option value="">Select Warehouse</option>
-                    <option value="Main Warehouse">Main Warehouse</option>
-                    <option value="Central Warehouse">Central Warehouse</option>
-                    <option value="North Zone">North Zone</option>
-                    <option value="South Depot">South Depot</option>
-                    <option value="East Godown">East Godown</option>
-                    <option value="Backup Warehouse">Backup Warehouse</option>
-                    <option value="West Hub">West Hub</option>
-                    <option value="East Wing">East Wing</option>
-                    <option value="West Wing">West Wing</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-
-              <Col md={6}>
-                <Form.Group>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <Form.Label className="mb-0">Item Category</Form.Label>
-                    <Button
-                      variant="outline-primary"
-                      size="sm"
-                      onClick={() => setShowAddCategoryModal(true)}
-                    >
-                      + Add New
-                    </Button>
-                  </div>
-                  <Form.Select
-                    name="itemCategory"
-                    value={newItem.itemCategory}
-                    onChange={handleChange}
-                    className="mt-2"
-                  >
-                    <option value="">Select Category</option>
-                    {categories.map((cat, idx) => (
-                      <option key={idx} value={cat}>
-                        {cat}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-            </Row>
-
-
-            <Row className="mb-3">
-
-              <Col md={12}><Form.Group><Form.Label>Item Description</Form.Label><Form.Control as="textarea" rows={2} name="description" value={newItem.description} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Initial Quantity On Hand</Form.Label><Form.Control name="quantity" value={newItem.quantity} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>As Of Date</Form.Label><Form.Control type="date" name="date" value={newItem.date} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Initial Cost/Unit</Form.Label><Form.Control name="cost" value={newItem.cost} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Value</Form.Label><Form.Control name="value" value={newItem.value} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Minimum Order Quantity</Form.Label><Form.Control name="minQty" value={newItem.minQty} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Item Image</Form.Label><Form.Control type="file" name="image" onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Tax Account</Form.Label><Form.Control name="taxAccount" value={newItem.taxAccount} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Additional Cess</Form.Label><Form.Control name="cess" value={newItem.cess} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Purchase Price (Exclusive)</Form.Label><Form.Control name="purchasePriceExclusive" value={newItem.purchasePriceExclusive} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Default Purchase Price (Inclusive)</Form.Label><Form.Control name="purchasePriceInclusive" value={newItem.purchasePriceInclusive} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Sale Price (Exclusive)</Form.Label><Form.Control name="salePriceExclusive" value={newItem.salePriceExclusive} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Default Sale Price (Inclusive)</Form.Label><Form.Control name="salePriceInclusive" value={newItem.salePriceInclusive} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Discount %</Form.Label><Form.Control name="discount" value={newItem.discount} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Item Category</Form.Label><Form.Control name="category" value={newItem.category} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Item Subcategory</Form.Label><Form.Control name="subcategory" value={newItem.subcategory} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Remarks</Form.Label><Form.Control name="remarks" value={newItem.remarks} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-          </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => { setShowAdd(false); setShowEdit(false); }}>Cancel</Button>
-          <Button style={{ backgroundColor: '#27b2b6', borderColor: '#27b2b6' }} onClick={showAdd ? handleAddItem : handleUpdateItem}>{showAdd ? "Add" : "Update"}</Button>
-        </Modal.Footer>
-      </Modal> */}
-
-      <Modal show={showAddCategoryModal} onHide={() => setShowAddCategoryModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Category</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group>
-            <Form.Label>Category Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter new category"
-              value={newCategory}
-              onChange={(e) => setNewCategory(e.target.value)}
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowAddCategoryModal(false)}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleAddCategory}>
-            Add
-          </Button>
-        </Modal.Footer>
       </Modal>
+
 
 
       {/* Page Description */}

@@ -31,6 +31,8 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
             orderNo: initialData?.salesOrder?.orderNo || '',
             deliveryDate: initialData?.salesOrder?.deliveryDate || '',
             items: initialData?.salesOrder?.items || [{ name: '', qty: '', rate: '' }],
+            voucherType: initialData?.salesOrder?.voucherType || '', // 👈 add this
+            voucherNo: initialData?.salesOrder?.voucherNo || '',     // 👈 add this
         },
         invoice: {
             orderNo: initialData?.invoice?.orderNo || '',
@@ -42,6 +44,8 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
             invoiceNo: initialData?.payment?.invoiceNo || '',
             paymentDate: initialData?.payment?.paymentDate || '',
             amount: initialData?.payment?.amount || '',
+            voucherType: initialData?.payment?.voucherType || '',    // 👈 add this
+            voucherNo: initialData?.payment?.voucherNo || '',        // 👈 add this
         },
     }));
 
@@ -226,6 +230,33 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                                     />
                                 </Form.Group>
                             </Col>
+                            <Col md={6} className="mt-2">
+  <Form.Group>
+    <Form.Label>Voucher Type</Form.Label>
+    <Form.Select
+      value={formData.salesOrder.voucherType}
+      onChange={(e) => handleChange('salesOrder', 'voucherType', e.target.value)}
+    >
+      <option value="">Select Type</option>
+      <option value="Cash">Cash</option>
+      <option value="Bank">Bank</option>
+      <option value="UPI">UPI</option>
+      <option value="Cheque">Cheque</option>
+    </Form.Select>
+  </Form.Group>
+</Col>
+
+<Col md={6} className="mt-2">
+  <Form.Group>
+    <Form.Label>Voucher No</Form.Label>
+    <Form.Control
+      type="text"
+      value={formData.salesOrder.voucherNo}
+      onChange={(e) => handleChange('salesOrder', 'voucherNo', e.target.value)}
+    />
+  </Form.Group>
+</Col>
+
                         </Row>
                         {renderItemsTable('salesOrder')}
                         <div className="d-flex justify-content-between mt-2">
@@ -338,6 +369,33 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                                     />
                                 </Form.Group>
                             </Col>
+                            <Col md={6} className="mt-2">
+  <Form.Group>
+    <Form.Label>Voucher Type</Form.Label>
+    <Form.Select
+      value={formData.payment.voucherType}
+      onChange={(e) => handleChange('payment', 'voucherType', e.target.value)}
+    >
+      <option value="">Select Type</option>
+      <option value="Cash">Cash</option>
+      <option value="Bank">Bank</option>
+      <option value="UPI">UPI</option>
+      <option value="Cheque">Cheque</option>
+    </Form.Select>
+  </Form.Group>
+</Col>
+
+<Col md={6} className="mt-2">
+  <Form.Group>
+    <Form.Label>Voucher No</Form.Label>
+    <Form.Control
+      type="text"
+      value={formData.payment.voucherNo}
+      onChange={(e) => handleChange('payment', 'voucherNo', e.target.value)}
+    />
+  </Form.Group>
+</Col>
+
                         </Row>
                         <div className="d-flex justify-content-between mt-2">
                             <Button variant="success" onClick={handleFinalSubmit}>Submit</Button>

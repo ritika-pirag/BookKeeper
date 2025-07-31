@@ -92,6 +92,7 @@ import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import { FaEye, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import AddProductModal from './AddProductModal';
 
 const InventoryItems = () => {
   const [items, setItems] = useState([
@@ -335,21 +336,30 @@ const InventoryItems = () => {
           >
             Download Template
           </Button>
-          <Button
-            style={{
+       
+          <Button onClick={() => setShowAdd(true)}  style={{
               backgroundColor: '#27b2b6',
               border: 'none',
               color: '#fff',
               padding: '6px 16px',
-            }}
-            onClick={() => {
-              setNewItem({ ...newItem });
-              setShowAdd(true);
-            }}
-          >
+            }}>Add Product</Button>
 
-            Add Product
-          </Button>
+            <AddProductModal   showAdd={showAdd}
+      showEdit={showEdit}
+      newItem={newItem}
+      categories={categories}
+      newCategory={newCategory}
+      showUOMModal={showUOMModal}
+      showAddCategoryModal={showAddCategoryModal}
+      setShowAdd={setShowAdd}
+      setShowEdit={setShowEdit}
+      setShowUOMModal={setShowUOMModal}
+      setShowAddCategoryModal={setShowAddCategoryModal}
+      setNewCategory={setNewCategory}
+      handleChange={handleChange}
+      handleAddItem={handleAddItem}
+      handleUpdateItem={handleUpdateItem}
+      handleAddCategory={handleAddCategory}/>
         </Col>
       </Row>
 
@@ -518,197 +528,9 @@ const InventoryItems = () => {
         </Modal.Footer>
       </Modal>
 
-      {/* Add/Edit Modal */}
-      <Modal show={showAdd || showEdit} onHide={() => { setShowAdd(false); setShowEdit(false); }} centered size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>{showAdd ? "Add Product" : "Edit Product"}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Item Name</Form.Label><Form.Control name="itemName" value={newItem.itemName} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>HSN</Form.Label><Form.Control name="hsn" value={newItem.hsn} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Barcode</Form.Label><Form.Control name="barcode" value={newItem.barcode} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Units of Measure</Form.Label><Form.Select name="unit" value={newItem.unit} onChange={handleChange}><option>Numbers</option><option>Kg</option><option>Litres</option></Form.Select></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Warehouse</Form.Label>
-                  <Form.Select name="warehouse" value={newItem.warehouse} onChange={handleChange}>
-                    <option value="">Select Warehouse</option>
-                    <option value="Main Warehouse">Main Warehouse</option>
-                    <option value="Backup Warehouse">Backup Warehouse</option>
-                    <option value="East Wing">East Wing</option>
-                    <option value="West Wing">West Wing</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-
-              <Col md={6}>
-                <Form.Group>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <Form.Label className="mb-0">Item Category</Form.Label>
-                    <Button
-                      variant="outline-primary"
-                      size="sm"
-                      onClick={() => setShowAddCategoryModal(true)}
-                      style={{
-                        backgroundColor: '#27b2b6',
-                        border: 'none',
-                        color: '#fff',
-                        padding: '6px 16px',
-                      }}
-                    >
-                      + Add New
-                    </Button>
-                  </div>
-                  <Form.Select
-                    name="itemCategory"
-                    value={newItem.itemCategory}
-                    onChange={handleChange}
-                    className="mt-2"
-                  >
-                    <option value="">Select Category</option>
-                    {categories.map((cat, idx) => (
-                      <option key={idx} value={cat}>
-                        {cat}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-            </Row>
+     
 
 
-            <Row className="mb-3">
-
-              <Col md={12}><Form.Group><Form.Label>Item Description</Form.Label><Form.Control as="textarea" rows={2} name="description" value={newItem.description} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Initial Quantity On Hand</Form.Label><Form.Control name="quantity" value={newItem.quantity} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Item Image</Form.Label><Form.Control type="file" name="image" onChange={handleChange} /></Form.Group></Col>
-
-            </Row>
-
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Minimum Order Quantity</Form.Label><Form.Control name="minQty" value={newItem.minQty} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>As Of Date</Form.Label><Form.Control type="date" name="date" value={newItem.date} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Tax Account</Form.Label><Form.Control name="taxAccount" value={newItem.taxAccount} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Initial Cost/Unit</Form.Label><Form.Control name="cost" value={newItem.cost} onChange={handleChange} /></Form.Group></Col>
-
-              {/* <Col md={6}><Form.Group><Form.Label>Additional Cess</Form.Label><Form.Control name="cess" value={newItem.cess} onChange={handleChange} /></Form.Group></Col> */}
-            </Row>
-
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Sale Price </Form.Label><Form.Control name="salePriceExclusive" value={newItem.salePriceExclusive} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Default Purchase Price </Form.Label><Form.Control name="salePriceInclusive" value={newItem.salePriceInclusive} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Discount %</Form.Label><Form.Control name="discount" value={newItem.discount} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Remarks</Form.Label><Form.Control name="remarks" value={newItem.remarks} onChange={handleChange} /></Form.Group></Col>
-
-            </Row>
-            <Row className="mb-3">
-              <Col md={12} className="text-end">
-                <Button variant="outline-info" onClick={() => setShowUOMModal(true)} style={{
-                  backgroundColor: '#27b2b6',
-                  border: 'none',
-                  color: '#fff',
-                  padding: '6px 16px',
-                }}>
-                  View More Details
-                </Button>
-              </Col>
-            </Row>
-
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => { setShowAdd(false); setShowEdit(false); }}>Cancel</Button>
-          <Button style={{ backgroundColor: '#27b2b6', borderColor: '#27b2b6' }} onClick={showAdd ? handleAddItem : handleUpdateItem}>{showAdd ? "Add" : "Update"}</Button>
-        </Modal.Footer>
-      </Modal>
-
-
-
-
-      <Modal show={showUOMModal} onHide={() => setShowUOMModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Unit Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Unit of Measurement (UOM)</Form.Label>
-              <Form.Select name="unit" value={newItem.unit} onChange={handleChange}>
-                <option value="">Select Unit</option>
-                <option value="Piece">Piece</option>
-                <option value="Box">Box</option>
-                <option value="KG">KG</option>
-                <option value="Meter">Meter</option>
-                <option value="Litre">Litre</option>
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Weight per Unit</Form.Label>
-              <Form.Control
-                name="weightPerUnit"
-                value={newItem.weightPerUnit}
-                onChange={handleChange}
-                placeholder="e.g. 0.5 KG"
-
-              />
-            </Form.Group>
-          </Form>
-
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowUOMModal(false)} style={{
-            backgroundColor: '#27b2b6',
-            border: 'none',
-            color: '#fff',
-            padding: '6px 16px',
-          }}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal show={showAddCategoryModal} onHide={() => setShowAddCategoryModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Category</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group>
-            <Form.Label>Category Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter new category"
-              value={newCategory}
-              onChange={(e) => setNewCategory(e.target.value)}
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowAddCategoryModal(false)}>
-            Cancel
-          </Button>
-          <Button class="btn"
-            style={{
-              backgroundColor: '#27b2b6',
-              border: 'none',
-              color: '#fff',
-              padding: '6px 16px',
-            }}
-            onClick={handleAddCategory}>
-            Add
-          </Button>
-        </Modal.Footer>
-      </Modal>
 
       {/* Delete Confirmation Modal */}
       <Modal show={showDelete} onHide={() => setShowDelete(false)} centered>
