@@ -719,6 +719,17 @@ const VendorsCreditors = () => {
           <Button variant="danger" onClick={handleDeleteVendor}>Yes, Delete</Button>
         </Modal.Footer>
       </Modal>
+      {/* Page Description */}
+<p className="text-muted text-center mt-3">
+This page allows you to manage vendor records, track payable balances, and perform actions like adding, viewing, editing, deleting, importing, and exporting vendor data efficiently.
+
+
+
+
+
+
+</p>
+
     </div>
   );
 };

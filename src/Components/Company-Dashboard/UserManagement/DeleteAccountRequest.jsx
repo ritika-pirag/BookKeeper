@@ -164,6 +164,10 @@ const DeleteAccountRequest = () => {
           <Button variant="danger" onClick={confirmDisapprove}>Yes, Reject</Button>
         </Modal.Footer>
       </Modal>
+      <p className="text-muted text-center mt-3">
+  Is page par users ke account delete request ko approve ya reject kiya ja sakta hai. Admin yahan se unka status manage karta hai.
+</p>
+
     </div>
   );
 };

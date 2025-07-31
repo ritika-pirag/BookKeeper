@@ -87,7 +87,8 @@ const AllAccounts = () => {
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [showMainAccountModal, setShowMainAccountModal] = useState(false);
   const [mainAccountName, setMainAccountName] = useState("");
-
+  const [filterType, setFilterType] = useState("");
+  const [filterName, setFilterName] = useState("");
 
   const [vendorFormData, setVendorFormData] = useState({
     name: "",
@@ -266,6 +267,16 @@ const handleDeleteAccount = (type, name) => {
   setSelectedAccount({ type, name });
   setShowDelete(true);
 };
+
+
+// Filtered account types
+const filteredAccountTypes = accountTypes.filter(type => {
+  if (filterType && type !== filterType) return false;
+  const matchesName = predefinedAccounts[type].some(name =>
+    name.toLowerCase().includes(filterName.toLowerCase())
+  );
+  return filterName ? matchesName : true;
+});
   return (
     <Container fluid className="py-4">
       {/* Header Row */}
@@ -299,78 +310,113 @@ const handleDeleteAccount = (type, name) => {
           </Button>
         </Col>
       </Row>
+{/* Filters */}
+<div className="d-flex flex-wrap gap-3 mb-3 align-items-end">
+  <Form.Group>
+    <Form.Label>Filter by Type</Form.Label>
+    <Form.Select
+      value={filterType}
+      onChange={(e) => setFilterType(e.target.value)}
+      style={{ minWidth: "180px" }}
+    >
+      <option value="">All Types</option>
+      {accountTypes.map((type) => (
+        <option key={type} value={type}>
+          {type}
+        </option>
+      ))}
+    </Form.Select>
+  </Form.Group>
 
+  <Form.Group>
+    <Form.Label>Filter by Name</Form.Label>
+    <Form.Control
+      type="text"
+      placeholder="Search account name"
+      value={filterName}
+      onChange={(e) => setFilterName(e.target.value)}
+      style={{ minWidth: "200px" }}
+    />
+  </Form.Group>
+
+  <Button
+    variant="secondary"
+    onClick={() => {
+      setFilterType("");
+      setFilterName("");
+    }}
+    className="mt-auto"
+  >
+    Clear
+  </Button>
+</div>
       {/* Table */}
 {/* Table */}
 <Card>
   <Card.Body>
-    <div className="table-responsive">
+    {/* Fixed height container with vertical scroll */}
+    <div 
+      style={{
+        height: "500px",           // Table ki height fix kardo
+        overflowY: "auto",         // Vertical scrollbar jab data zyada ho
+        overflowX: "hidden",       // Horizontal scroll avoid (agar wrap sahi hai toh)
+      }}
+    >
       <Table bordered hover className="align-middle text-center">
-        <thead className="table-light">
+        <thead className="table-light" style={{ position: "sticky", top: 0, zIndex: 1 }}>
           <tr>
             <th>Account Type</th>
             <th>Account Name</th>
-            <th> Opening Balance</th>
-            <th>Cureent Balance</th>
+            <th>Opening Balance</th>
+            <th>Current Balance</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {accountTypes.map((type) => (
-            <React.Fragment key={type}>
-              <tr className="bg-light">
-                <td colSpan="5" className="text-start fw-bold">{type}</td>
-              </tr>
-              {predefinedAccounts[type].map((accountName, index) => (
-                <tr key={`${type}-${index}`}>
-                  <td className="text-start">{type}</td>
-                  <td className="text-start">{accountName}</td>
-                  <td>0.00</td>
-                  <td>0.00</td>
-                  <td>
-                    <div className="d-flex flex-wrap gap-2 justify-content-center">
-                      <Button variant="link" className="p-0 text-info" size="sm" onClick={() => handleViewAccount(type, accountName)} title="View">
-                        <FaEye size={16} />
-                      </Button>
-                      <Button variant="link" className="p-0 text-warning" size="sm" onClick={() => handleEditAccount(type, accountName)} title="Edit">
-                        <FaEdit size={16} />
-                      </Button>
-                      <Button variant="link" className="p-0 text-danger" size="sm" onClick={() => handleDeleteAccount(type, accountName)} title="Delete">
-                        <FaTrash size={16} />
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </React.Fragment>
-          ))}
-        </tbody>
-      </Table>
-    </div>
+  {filteredAccountTypes.map((type) => {
+    // Filter accounts within this type
+    const filteredAccounts = predefinedAccounts[type].filter(name =>
+      name.toLowerCase().includes(filterName.toLowerCase())
+    );
 
-    {/* Pagination */}
-    <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
-      <small className="text-muted ms-2">Showing 1 to 3 of 3 results</small>
-      <nav>
-        <ul className="pagination mb-0">
-          <li className="page-item disabled">
-            <button className="page-link">&laquo;</button>
-          </li>
-          <li className="page-item active">
-            <button className="page-link">1</button>
-          </li>
-          <li className="page-item">
-            <button className="page-link">2</button>
-          </li>
-          <li className="page-item">
-            <button className="page-link">&raquo;</button>
-          </li>
-        </ul>
-      </nav>
+    if (filteredAccounts.length === 0) return null;
+
+    return (
+      <React.Fragment key={type}>
+        <tr className="bg-light">
+          <td colSpan="5" className="text-start fw-bold">
+            {type}
+          </td>
+        </tr>
+        {filteredAccounts.map((accountName, index) => (
+          <tr key={`${type}-${index}`}>
+            <td className="text-start">{type}</td>
+            <td className="text-start">{accountName}</td>
+            <td>0.00</td>
+            <td>0.00</td>
+            <td>
+              <div className="d-flex flex-wrap gap-2 justify-content-center">
+                <Button variant="link" className="p-0 text-info" size="sm" onClick={() => handleViewAccount(type, accountName)} title="View">
+                  <FaEye size={16} />
+                </Button>
+                <Button variant="link" className="p-0 text-warning" size="sm" onClick={() => handleEditAccount(type, accountName)} title="Edit">
+                  <FaEdit size={16} />
+                </Button>
+                <Button variant="link" className="p-0 text-danger" size="sm" onClick={() => handleDeleteAccount(type, accountName)} title="Delete">
+                  <FaTrash size={16} />
+                </Button>
+              </div>
+            </td>
+          </tr>
+        ))}
+      </React.Fragment>
+    );
+  })}
+</tbody>
+      </Table>
     </div>
   </Card.Body>
 </Card>
-
 
       {/* Vendor Modal */}
       <Modal

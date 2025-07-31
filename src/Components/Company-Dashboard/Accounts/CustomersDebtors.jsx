@@ -499,8 +499,8 @@ const CustomersDebtors = () => {
   {/* Pagination Section */}
   <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
     <small className="text-muted ms-2">
-npm run dev 
-ng 1 to {filteredCustomers.length} of {customersList.length} results
+
+ 1 to {filteredCustomers.length} of {customersList.length} results
     </small>
     <nav>
       <ul className="pagination mb-0">
