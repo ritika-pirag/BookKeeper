@@ -519,12 +519,6 @@ const InventoryItems = () => {
         </Modal.Footer>
       </Modal>
 
-
-
-
-
-
-
       {/* Add/Edit Modal */}
       <Modal show={showAdd || showEdit} onHide={() => { setShowAdd(false); setShowEdit(false); }} centered size="lg">
         <Modal.Header closeButton>
@@ -532,23 +526,6 @@ const InventoryItems = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            {/* <Row className="mb-3"> */}
-            {/* <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Item Type</Form.Label>
-                  <Form.Select name="itemType" value={newItem.itemType} onChange={handleChange}>
-                    <option value="Good">Good</option>
-                    <option value="Service">Service</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col> */}
-            {/* <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Item Category</Form.Label>
-                  <Form.Control name="itemCategory" value={newItem.itemCategory} onChange={handleChange} />
-                </Form.Group>
-              </Col> */}
-            {/* </Row> */}
             <Row className="mb-3">
               <Col md={6}><Form.Group><Form.Label>Item Name</Form.Label><Form.Control name="itemName" value={newItem.itemName} onChange={handleChange} /></Form.Group></Col>
               <Col md={6}><Form.Group><Form.Label>HSN</Form.Label><Form.Control name="hsn" value={newItem.hsn} onChange={handleChange} /></Form.Group></Col>
@@ -742,9 +719,13 @@ const InventoryItems = () => {
           <Button variant="secondary" onClick={() => setShowDelete(false)}>Cancel</Button>
           <Button variant="danger" onClick={handleDeleteItem}>Delete</Button>
         </Modal.Footer>
+
       </Modal>
+      {/* Page Description */}
+<small className="text-muted text-center w-100 mt-4">
+An Inventory Product Management Interface displaying product details, status, and actions with options to import/export data and manage records.
+</small>
     </div>
   );
 };
-
 export default InventoryItems;
