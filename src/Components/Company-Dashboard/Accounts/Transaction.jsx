@@ -17,7 +17,7 @@ const Transaction = () => {
   const [filterVoucherType, setFilterVoucherType] = useState('');
   const [filterVoucherNo, setFilterVoucherNo] = useState('');
   const [filterDate, setFilterDate] = useState('');
-  
+
   const [transactions, setTransactions] = useState([
     {
       date: '2025-07-01',
@@ -150,22 +150,22 @@ const Transaction = () => {
 
   const handleExport = () => {
     const data = transactions
-    .filter((txn) =>
-      (filterVoucherType === '' || txn.voucherType === filterVoucherType) &&
-      (filterVoucherNo === '' || txn.voucherNo.toLowerCase().includes(filterVoucherNo.toLowerCase())) &&
-      (filterDate === '' || txn.date === filterDate)
-    )
-    .map((txn, idx)=> ({
-      Date: txn.date,
-      "Balance Type": txn.balanceType,
-      "Voucher Type": txn.voucherType,
-      Amount: txn.amount,
-      "From/To": txn.fromTo,
-      "Account Type": txn.accountType,
-      "Account Name": txn.accountname,
-      "Voucher No": txn.voucherNo,
-      Note: txn.note
-    }));
+      .filter((txn) =>
+        (filterVoucherType === '' || txn.voucherType === filterVoucherType) &&
+        (filterVoucherNo === '' || txn.voucherNo.toLowerCase().includes(filterVoucherNo.toLowerCase())) &&
+        (filterDate === '' || txn.date === filterDate)
+      )
+      .map((txn, idx) => ({
+        Date: txn.date,
+        "Balance Type": txn.balanceType,
+        "Voucher Type": txn.voucherType,
+        Amount: txn.amount,
+        "From/To": txn.fromTo,
+        "Account Type": txn.accountType,
+        "Account Name": txn.accountname,
+        "Voucher No": txn.voucherNo,
+        Note: txn.note
+      }));
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Transactions");
@@ -222,188 +222,126 @@ const Transaction = () => {
 
   return (
     <div className="p-3">
-<<<<<<< HEAD
-      <Row className="mb-3">
-        <Col><h4>Transactions</h4></Col>
-        <Col className="text-end d-flex gap-2 justify-content-end">
-          <input
-            type="file"
-            accept=".xlsx, .xls"
-            ref={fileInputRef}
-            style={{ display: "none" }}
-            onChange={handleImport}
-          />
-          <Button
-            variant="success"
-            className="rounded-pill d-flex align-items-center"
-            // style={{ fontWeight: 600 }}
-            onClick={() => fileInputRef.current.click()}
-            title="Import Excel"
+      <Row className="mb-3 align-items-center">
+        <Col>
+          <h4>Transactions</h4>
+        </Col>
+
+        <Col className="text-end">
+          <div
+            className="d-flex justify-content-end align-items-center gap-2 flex-nowrap"
+            style={{ overflowX: "auto" }} // optional for scroll on small screens
           >
-            <FaFileImport className="me-2" /> Import
-          </Button>
-          <Button
-            variant="primary"
-            className="rounded-pill d-flex align-items-center"
-            // style={{ fontWeight: 600 }}
-            onClick={handleExport}
-            title="Export Excel"
-          >
-            <FaFileExport className="me-2" /> Export
-          </Button>
-          <Button
-            variant="warning"
-            className="rounded-pill d-flex align-items-center"
-            // style={{ fontWeight: 600, color: "#fff" }}
-            onClick={handleDownloadBlank}
-            title="Download Blank Excel"
-          >
-            <FaDownload className="me-2" /> Download
-          </Button>
-          <Button
-            style={customBtn}
-            onClick={() => {
-              setSelectedTransaction(null);
-              setForm({ ...emptyForm });
-              setFromToType('Customer');
-              setShowModal(true);
-            }}
-          >
-            Add Transaction
-          </Button>
-          <Button
-            variant="info"
-            className="rounded-pill d-flex align-items-center"
-          
-            onClick={() => navigate("/company/ledger")}
-            title="Go to Ledger"
-          >
-         Go to Ledger
-          </Button>
+            <input
+              type="file"
+              accept=".xlsx, .xls"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleImport}
+            />
+
+            <Button
+              variant="success"
+              size="sm"
+              className="d-flex align-items-center gap-1"
+              onClick={() => fileInputRef.current.click()}
+              title="Import Excel"
+            >
+              <FaFileImport /> Import
+            </Button>
+
+            <Button
+              variant="primary"
+              size="sm"
+              className="d-flex align-items-center gap-1"
+              onClick={handleExport}
+              title="Export Excel"
+            >
+              <FaFileExport /> Export
+            </Button>
+
+            <Button
+              variant="warning"
+              size="sm"
+              className="d-flex align-items-center gap-1"
+              onClick={handleDownloadBlank}
+              title="Download Blank Excel"
+            >
+              <FaDownload /> Download
+            </Button>
+
+            <Button
+              size="sm"
+              style={{
+                ...customBtn,
+
+              }}
+              onClick={() => {
+                setSelectedTransaction(null);
+                setForm({ ...emptyForm });
+                setFromToType("Customer");
+                setShowModal(true);
+              }}
+            >
+              Add Transaction
+            </Button>
+
+            <Button
+              variant="info"
+
+              size="sm"
+              style={{
+                ...customBtn,
+
+              }}
+              onClick={() => navigate("/company/ledger")}
+              title="Go to Ledger"
+            >
+              Go to Ledger
+            </Button>
+          </div>
         </Col>
       </Row>
-=======
-   <Row className="mb-3 align-items-center">
-  <Col>
-    <h4>Transactions</h4>
-  </Col>
->>>>>>> d345954368041c14ffc8c5b28f9509be96cbee30
-
-  <Col className="text-end">
-    <div
-      className="d-flex justify-content-end align-items-center gap-2 flex-nowrap"
-      style={{ overflowX: "auto" }} // optional for scroll on small screens
-    >
-      <input
-        type="file"
-        accept=".xlsx, .xls"
-        ref={fileInputRef}
-        style={{ display: "none" }}
-        onChange={handleImport}
-      />
-
-      <Button
-        variant="success"
-        size="sm"
-        className="d-flex align-items-center gap-1"
-        onClick={() => fileInputRef.current.click()}
-        title="Import Excel"
-      >
-        <FaFileImport /> Import
-      </Button>
-
-      <Button
-        variant="primary"
-        size="sm"
-        className="d-flex align-items-center gap-1"
-        onClick={handleExport}
-        title="Export Excel"
-      >
-        <FaFileExport /> Export
-      </Button>
-
-      <Button
-        variant="warning"
-        size="sm"
-        className="d-flex align-items-center gap-1"
-        onClick={handleDownloadBlank}
-        title="Download Blank Excel"
-      >
-        <FaDownload /> Download
-      </Button>
-
-      <Button
-        size="sm"
-        style={{
-          ...customBtn,
-   
-        }}
-        onClick={() => {
-          setSelectedTransaction(null);
-          setForm({ ...emptyForm });
-          setFromToType("Customer");
-          setShowModal(true);
-        }}
-      >
-        Add Transaction
-      </Button>
-
-      <Button
-        variant="info"
-
-       size="sm"
-        style={{
-          ...customBtn,
-   
-        }}
-        onClick={() => navigate("/company/ledger")}
-        title="Go to Ledger"
-      >
-        Go to Ledger
-      </Button>
-    </div>
-  </Col>
-</Row>
 
       <Row className="mb-3">
-  <Col md={4}>
-    <Form.Group>
-      <Form.Label>Filter by Voucher Type</Form.Label>
-      <Form.Select
-        value={filterVoucherType}
-        onChange={(e) => setFilterVoucherType(e.target.value)}
-      >
-        <option value="">All</option>
-        {voucherTypes.map((type, i) => (
-          <option key={i} value={type}>{type}</option>
-        ))}
-      </Form.Select>
-    </Form.Group>
-  </Col>
+        <Col md={4}>
+          <Form.Group>
+            <Form.Label>Filter by Voucher Type</Form.Label>
+            <Form.Select
+              value={filterVoucherType}
+              onChange={(e) => setFilterVoucherType(e.target.value)}
+            >
+              <option value="">All</option>
+              {voucherTypes.map((type, i) => (
+                <option key={i} value={type}>{type}</option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+        </Col>
 
-  <Col md={4}>
-    <Form.Group>
-      <Form.Label>Filter by Voucher No</Form.Label>
-      <Form.Control
-        type="text"
-        placeholder="Enter Voucher No"
-        value={filterVoucherNo}
-        onChange={(e) => setFilterVoucherNo(e.target.value)}
-      />
-    </Form.Group>
-  </Col>
+        <Col md={4}>
+          <Form.Group>
+            <Form.Label>Filter by Voucher No</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Voucher No"
+              value={filterVoucherNo}
+              onChange={(e) => setFilterVoucherNo(e.target.value)}
+            />
+          </Form.Group>
+        </Col>
 
-  <Col md={4}>
-    <Form.Group>
-      <Form.Label>Filter by Date</Form.Label>
-      <Form.Control
-        type="date"
-        value={filterDate}
-        onChange={(e) => setFilterDate(e.target.value)}
-      />
-    </Form.Group>
-  </Col>
-</Row>
+        <Col md={4}>
+          <Form.Group>
+            <Form.Label>Filter by Date</Form.Label>
+            <Form.Control
+              type="date"
+              value={filterDate}
+              onChange={(e) => setFilterDate(e.target.value)}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
 
       <Table bordered hover responsive>
         <thead>
@@ -608,11 +546,11 @@ const Transaction = () => {
         </Modal.Footer>
       </Modal>
     </div>
-    
+
   );
- 
+
 };
-{/* Footer Note / Description */}
+{/* Footer Note / Description */ }
 
 
 export default Transaction;
