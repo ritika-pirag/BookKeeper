@@ -264,7 +264,7 @@ const Transaction = () => {
           <Button
             variant="info"
             className="rounded-pill d-flex align-items-center"
-            // style={{ fontWeight: 600, color: "#fff" }}
+          
             onClick={() => navigate("/company/ledger")}
             title="Go to Ledger"
           >
@@ -476,10 +476,15 @@ const Transaction = () => {
         </Modal.Footer>
       </Modal>
     </div>
+    
   );
+ 
 };
+{/* Footer Note / Description */}
+
 
 export default Transaction;
+
 
 
 

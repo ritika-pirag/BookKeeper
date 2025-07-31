@@ -1,3 +1,6 @@
+
+
+
 // import React, { useState, useEffect } from "react";
 // import { Form, Button, Row, Col, Card, Table, ListGroup } from "react-bootstrap";
 
@@ -20,20 +23,13 @@
 //   });
 
 //   const [searchInput, setSearchInput] = useState("");
-//   const [suggestions, setSuggestions] = useState([]);
 //   const [transferItems, setTransferItems] = useState([]);
+//   const [showList, setShowList] = useState(false);
 
 //   useEffect(() => {
 //     const autoNo = `TRF-${Date.now().toString().slice(-6)}`;
 //     setFormData((prev) => ({ ...prev, receiptNo: autoNo }));
 //   }, []);
-
-//   useEffect(() => {
-//     const filtered = productOptions.filter((item) =>
-//       item.toLowerCase().includes(searchInput.toLowerCase())
-//     );
-//     setSuggestions(searchInput ? filtered : []);
-//   }, [searchInput]);
 
 //   const handleAddProduct = (nameFromList) => {
 //     const name = nameFromList || searchInput.trim();
@@ -41,8 +37,7 @@
 //     const already = transferItems.some((item) => item.name === name);
 //     if (already) return;
 //     setTransferItems((prev) => [...prev, { id: Date.now(), name, qty: "" }]);
-//     setSearchInput("");
-//     setSuggestions([]);
+//     setSearchInput(name); // Maintain input value to keep list visible
 //   };
 
 //   const updateQty = (id, qty) => {
@@ -66,7 +61,11 @@
 
 //   const handleSubmit = (e) => {
 //     e.preventDefault();
-//     if (!formData.receiptNo || formData.transferFrom === formData.transferTo || transferItems.length === 0) {
+//     if (
+//       !formData.receiptNo ||
+//       formData.transferFrom === formData.transferTo ||
+//       transferItems.length === 0
+//     ) {
 //       alert("Please complete all required fields.");
 //       return;
 //     }
@@ -76,7 +75,10 @@
 //     }
 //     const payload = {
 //       ...formData,
-//       products: transferItems.map(({ name, qty }) => ({ name, quantity: qty }))
+//       products: transferItems.map(({ name, qty }) => ({
+//         name,
+//         quantity: qty
+//       }))
 //     };
 //     console.log("Submitted Payload:", payload);
 //     // Send payload to backend here
@@ -134,10 +136,12 @@
 //                 type="text"
 //                 placeholder="Type product name"
 //                 value={searchInput}
+//                 onFocus={() => setShowList(true)}
+//                 onBlur={() => setTimeout(() => setShowList(false), 200)}
 //                 onChange={(e) => setSearchInput(e.target.value)}
 //                 autoComplete="off"
 //               />
-//               {suggestions.length > 0 && (
+//               {showList && (
 //                 <ListGroup style={{
 //                   position: "absolute",
 //                   zIndex: 1000,
@@ -146,7 +150,7 @@
 //                   overflowY: "auto",
 //                   boxShadow: "0px 2px 8px rgba(0,0,0,0.15)"
 //                 }}>
-//                   {suggestions.map((item, idx) => (
+//                   {productOptions.map((item, idx) => (
 //                     <ListGroup.Item
 //                       key={idx}
 //                       action
@@ -226,7 +230,6 @@
 // export default StockTransfer;
 
 
-
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Card, Table, ListGroup } from "react-bootstrap";
 
@@ -245,7 +248,9 @@ const StockTransfer = () => {
   const [formData, setFormData] = useState({
     receiptNo: "",
     transferFrom: "NewYork Warehouse",
-    transferTo: "Mumbai Warehouse"
+    transferTo: "Mumbai Warehouse",
+    approvedBy: "",
+    dateTime: ""
   });
 
   const [searchInput, setSearchInput] = useState("");
@@ -254,7 +259,8 @@ const StockTransfer = () => {
 
   useEffect(() => {
     const autoNo = `TRF-${Date.now().toString().slice(-6)}`;
-    setFormData((prev) => ({ ...prev, receiptNo: autoNo }));
+    const now = new Date().toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM
+    setFormData((prev) => ({ ...prev, receiptNo: autoNo, dateTime: now }));
   }, []);
 
   const handleAddProduct = (nameFromList) => {
@@ -354,6 +360,33 @@ const StockTransfer = () => {
             </Col>
           </Row>
 
+          {/* Approved By */}
+          <Row className="mb-3">
+            <Form.Label column sm={2}>Approved By</Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                type="text"
+                name="approvedBy"
+                placeholder="Enter approver name"
+                value={formData.approvedBy}
+                onChange={handleChange}
+              />
+            </Col>
+          </Row>
+
+          {/* Date Time */}
+          <Row className="mb-3">
+            <Form.Label column sm={2}>Date & Time</Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                type="datetime-local"
+                name="dateTime"
+                value={formData.dateTime}
+                onChange={handleChange}
+              />
+            </Col>
+          </Row>
+
           {/* Search Product */}
           <Row className="mb-3">
             <Form.Label column sm={2}>Search Product</Form.Label>
@@ -403,6 +436,10 @@ const StockTransfer = () => {
                       <th>#</th>
                       <th>Product</th>
                       <th>Quantity</th>
+                      <th>From</th>
+                      <th>To</th>
+                      <th>Approved By</th>
+                      <th>Date & Time</th>
                       <th>Remove</th>
                     </tr>
                   </thead>
@@ -422,6 +459,10 @@ const StockTransfer = () => {
                           />
                           <span style={{ fontSize: "0.9rem", color: "#666" }}>pcs</span>
                         </td>
+                        <td>{formData.transferFrom}</td>
+                        <td>{formData.transferTo}</td>
+                        <td>{formData.approvedBy || "N/A"}</td>
+                        <td>{formData.dateTime.replace("T", " ")}</td>
                         <td>
                           <Button variant="danger" size="sm" onClick={() => removeItem(item.id)}>X</Button>
                         </td>
@@ -449,7 +490,12 @@ const StockTransfer = () => {
           </div>
         </Form>
       </Card>
+      <small className="text-muted text-center w-100 mt-4">
+      stock transfers between warehouses, specifying details like receipt number, transfer locations, approver, date, and products involved.
+</small>
+
     </div>
+    
   );
 };
 
