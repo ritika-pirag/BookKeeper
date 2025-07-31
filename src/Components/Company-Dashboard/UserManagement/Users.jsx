@@ -347,6 +347,10 @@ const Users = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      <p className="text-muted text-center mt-2">
+  This page allows you to manage user records with add, edit, delete, search, and PDF export functionality.
+</p>
+
     </div>
   );
 };

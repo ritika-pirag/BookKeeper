@@ -545,6 +545,10 @@ const Transaction = () => {
           <Button variant="secondary" onClick={() => setShowViewModal(false)}>Close</Button>
         </Modal.Footer>
       </Modal>
+      <p className="text-muted text-center mt-3">
+  This page allows you to manage all financial transactions including import, export, and filtering by voucher type.
+</p>
+
     </div>
   );
 };

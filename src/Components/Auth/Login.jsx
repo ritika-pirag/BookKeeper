@@ -53,7 +53,7 @@ const Login = () => {
             <div className="mb-6">
               <div className="flex items-center mb-8">
                 <img
-                  src={k1}
+                  src={newlogo}
                   alt="ZirakBook Logo"
                   className="max-h-12"
                 />
@@ -105,7 +105,7 @@ const Login = () => {
           {/* Right Panel - Illustration */}
           <div className="hidden md:flex md:w-1/2  p-6 md:p-10 relative items-center justify-center">
             <img
-              src={k1}
+              src={rightlogo}
               alt="Digital Connection"
               className="max-w-full max-h-full object-contain "
             />
