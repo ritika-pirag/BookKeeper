@@ -343,7 +343,7 @@ const Transaction = () => {
   </Col>
 </Row>
 
-      <Table bordered hover>
+      <Table bordered hover responsive>
         <thead>
           <tr>
             <th>Date</th>
