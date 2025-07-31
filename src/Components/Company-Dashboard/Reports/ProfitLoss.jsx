@@ -197,7 +197,11 @@ const ProfitLoss = () => {
           </Card.Body>
         </Card>
       </Container>
+      <small>
+      Profit and Loss shows how much money your business earned or lost in a specific time by comparing income vs expenses
+      </small>
     </div>
+
   );
 };
 

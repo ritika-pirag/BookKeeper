@@ -6,7 +6,7 @@ const detectInitialStep = (data) => {
     if (!data) return 'quotation';
     if (data.payment?.amount) return 'payment';
     if (data.invoice?.invoiceNo) return 'invoice';
-    if (data.salesOrder?.orderNo) return 'salesOrder';
+    if (data.purchaseOrder?.orderNo) return 'purchaseOrder';
     return 'quotation';
 };
 
@@ -16,21 +16,21 @@ const calculateTotalAmount = (items) => {
     }, 0).toFixed(2);
 };
 
-const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
+const MultiStepPurchaseForms = ({ onSubmit, initialData, initialStep }) => {
     const [key, setKey] = useState(initialStep || detectInitialStep(initialData));
     const formRef = useRef();
 
     const [formData, setFormData] = useState(() => ({
         quotation: {
             quotationNo: initialData?.quotation?.quotationNo || '',
-            customer: initialData?.quotation?.customer || '',
+            vendor: initialData?.quotation?.vendor || '',
             items: initialData?.quotation?.items || [{ name: '', qty: '', rate: '' }],
         },
-        salesOrder: {
-            quotationNo: initialData?.salesOrder?.quotationNo || '',
-            orderNo: initialData?.salesOrder?.orderNo || '',
-            deliveryDate: initialData?.salesOrder?.deliveryDate || '',
-            items: initialData?.salesOrder?.items || [{ name: '', qty: '', rate: '' }],
+        purchaseOrder: {
+            quotationNo: initialData?.purchaseOrder?.quotationNo || '',
+            orderNo: initialData?.purchaseOrder?.orderNo || '',
+            deliveryDate: initialData?.purchaseOrder?.deliveryDate || '',
+            items: initialData?.purchaseOrder?.items || [{ name: '', qty: '', rate: '' }],
         },
         invoice: {
             orderNo: initialData?.invoice?.orderNo || '',
@@ -137,8 +137,8 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                 <tr>
                     <td colSpan="4" className="text-end">
                         <Button size="sm" onClick={() => addItem(tab)}  
-                                     style={{ backgroundColor: "#53b2a5", border: "none", padding: "8px 16px" }}
-                            >+ Add Product</Button>
+                            style={{ backgroundColor: "#53b2a5", border: "none", padding: "8px 16px" }}
+                        >+ Add Product</Button>
                     </td>
                 </tr>
             </tbody>
@@ -147,7 +147,7 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
 
     return (
         <div className="container mt-4" ref={formRef}>
-            <h4 className="text-center mb-4">Sales Process</h4>
+            <h4 className="text-center mb-4">Purchase Process</h4>
             <Tabs activeKey={key} onSelect={(k) => setKey(k)} className="mb-3" fill>
                 {/* QUOTATION */}
                 <Tab eventKey="quotation" title="Quotation">
@@ -165,11 +165,11 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                             </Col>
                             <Col md={6}>
                                 <Form.Group>
-                                    <Form.Label>Customer</Form.Label>
+                                    <Form.Label>Vendor</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        value={formData.quotation.customer}
-                                        onChange={(e) => handleChange('quotation', 'customer', e.target.value)}
+                                        value={formData.quotation.vendor}
+                                        onChange={(e) => handleChange('quotation', 'vendor', e.target.value)}
                                     />
                                 </Form.Group>
                             </Col>
@@ -181,12 +181,12 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                                 onClick={() => {
                                     setFormData(prev => ({
                                         ...prev,
-                                        salesOrder: {
-                                            ...prev.salesOrder,
+                                        purchaseOrder: {
+                                            ...prev.purchaseOrder,
                                             quotationNo: prev.quotation.quotationNo,
                                         },
                                     }));
-                                    setKey('salesOrder');
+                                    setKey('purchaseOrder');
                                 }}
                             >
                                 Save & Next
@@ -196,14 +196,14 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                     </Form>
                 </Tab>
 
-                {/* SALES ORDER */}
-                <Tab eventKey="salesOrder" title="Sales Order">
+                {/* PURCHASE ORDER */}
+                <Tab eventKey="purchaseOrder" title="Purchase Order">
                     <Form>
                         <Row className="mb-3">
                             <Col md={6}>
                                 <Form.Group>
                                     <Form.Label>Linked Quotation No</Form.Label>
-                                    <Form.Control type="text" value={formData.salesOrder.quotationNo} readOnly />
+                                    <Form.Control type="text" value={formData.purchaseOrder.quotationNo} readOnly />
                                 </Form.Group>
                             </Col>
                             <Col md={6}>
@@ -211,8 +211,8 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                                     <Form.Label>Order No</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        value={formData.salesOrder.orderNo}
-                                        onChange={(e) => handleChange('salesOrder', 'orderNo', e.target.value)}
+                                        value={formData.purchaseOrder.orderNo}
+                                        onChange={(e) => handleChange('purchaseOrder', 'orderNo', e.target.value)}
                                     />
                                 </Form.Group>
                             </Col>
@@ -221,13 +221,13 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                                     <Form.Label>Delivery Date</Form.Label>
                                     <Form.Control
                                         type="date"
-                                        value={formData.salesOrder.deliveryDate}
-                                        onChange={(e) => handleChange('salesOrder', 'deliveryDate', e.target.value)}
+                                        value={formData.purchaseOrder.deliveryDate}
+                                        onChange={(e) => handleChange('purchaseOrder', 'deliveryDate', e.target.value)}
                                     />
                                 </Form.Group>
                             </Col>
                         </Row>
-                        {renderItemsTable('salesOrder')}
+                        {renderItemsTable('purchaseOrder')}
                         <div className="d-flex justify-content-between mt-2">
                             <Button
                                 variant="outline-secondary"
@@ -236,7 +236,7 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                                         ...prev,
                                         invoice: {
                                             ...prev.invoice,
-                                            orderNo: prev.salesOrder.orderNo,
+                                            orderNo: prev.purchaseOrder.orderNo,
                                         },
                                     }));
                                     setKey('invoice');
@@ -315,7 +315,7 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                             <Col md={6}>
                                 <Form.Group>
                                     <Form.Label>Total Amount</Form.Label>
-                                    <Form.Control type="text" value={`$ ${calculateTotalAmount(formData.invoice.items)}`} readOnly />
+                                    <Form.Control type="text" value={`₹ ${calculateTotalAmount(formData.invoice.items)}`} readOnly />
                                 </Form.Group>
                             </Col>
                             <Col md={6}>
@@ -330,7 +330,7 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                             </Col>
                             <Col md={6}>
                                 <Form.Group>
-                                    <Form.Label>Amount</Form.Label>
+                                    <Form.Label>Amount Paid</Form.Label>
                                     <Form.Control
                                         type="number"
                                         value={formData.payment.amount}
@@ -341,7 +341,9 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                         </Row>
                         <div className="d-flex justify-content-between mt-2">
                             <Button variant="success" onClick={handleFinalSubmit}>Submit</Button>
-                            <Button variant="primary" onClick={handleDownloadPDF}          style={{ backgroundColor: "#53b2a5", border: "none", padding: "8px 16px" }}>Download PDF</Button>
+                            <Button variant="primary" onClick={handleDownloadPDF}
+                                style={{ backgroundColor: "#53b2a5", border: "none", padding: "8px 16px" }}
+                            >Download PDF</Button>
                         </div>
                     </Form>
                 </Tab>
@@ -350,4 +352,4 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
     );
 };
 
-export default MultiStepPurchaseForm;
+export default MultiStepPurchaseForms;

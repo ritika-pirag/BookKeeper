@@ -96,8 +96,9 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
         ]),
         renderFlatSection("Purchases", [
           // { to: "/company/vendors", icon: "fas fa-users", label: "Vendors" },
-          { to: "/company/bill", icon: "fas fa-file", label: "Bill" },
+          // { to: "/company/bill", icon: "fas fa-file", label: "Bill" },
           { to: "/company/purchasorder", icon: "fas fa-shopping-cart", label: "Purchase Order" },
+         { to: "/company/purchasorderr", icon: "fas fa-shopping-cart", label: "Purchase Orders" },
           { to: "/company/purchasereturn", icon: "fas fa-undo", label: "Purchase Return" },
         ]),
         renderFlatSection("POS", [

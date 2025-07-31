@@ -324,10 +324,13 @@ const Daybook = () => {
     </ul>
   </nav>
 </div>
-
+<small className="text dark mt-3">
+Daybook is a simple daily report that shows all money and accounting entries done on that day — like a diary of your business transactions.
+</small>
 
       {/* Pagination & Modals remain unchanged below this point */}
       {/* ... Keep your Add, Edit, and Delete modals from previous code ... */}
+
     </div>
   );
 };

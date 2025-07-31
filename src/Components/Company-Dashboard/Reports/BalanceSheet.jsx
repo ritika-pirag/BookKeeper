@@ -122,8 +122,7 @@ const BalanceSheet = () => (
       </Row>
     </Container>
     <small className="text-dark">
-    A trial balance is used in accounting to verify that total debits equal total credits—essentially a checkpoint to ensure the books are mathematically sound before preparing financial statements.
-    </small>
+    Balance Sheet shows your business’s financial position on a specific date by listing all assets, liabilities, and owner’s capital, ensuring that Assets = Liabilities + Capital.    </small>
   </div>
 );
 

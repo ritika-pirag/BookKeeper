@@ -133,6 +133,11 @@ const VatReport = () => {
           </tbody>
         </Table>
       </Card>
+      <small className="text-dark mt-3">
+      VAT (Value Added Tax) is a type of indirect tax that is charged on the sale of goods and services at every stage of the supply chain — from manufacturer to wholesaler to retailer to customer.
+
+
+      </small>
     </div>
   );
 };

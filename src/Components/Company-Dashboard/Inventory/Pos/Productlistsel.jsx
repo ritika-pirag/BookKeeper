@@ -62,6 +62,7 @@ const Productlistsel = ({ products = [], onProductSelect, showModal }) => {
   <tr>
     <th>Image</th>
     <th>Name</th>
+    <th>Warehouse</th>
     <th>Category</th>
     <th>HSN</th>
     <th>Amount</th>
@@ -89,8 +90,9 @@ const Productlistsel = ({ products = [], onProductSelect, showModal }) => {
           />
         </td>
         <td>{product.name}</td>
-        <td>{product.brand || "-"}</td>
-        <td>{product.device || "-"}</td>
+        <td>{product.warehouse || "-"}</td>
+        <td>{product.categories || "-"}</td>
+        <td>{product.hsns || "-"}</td>
         <td>₹{product.price}</td>
         <td style={{ color }}>{product.quantity ?? 0} <small>({label})</small></td>
 

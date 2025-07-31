@@ -391,6 +391,9 @@ const JournalEntries = () => {
           </div>
         </div>
       </div>
+      <small className="text-dark mt-3">
+      A Journal Entry is a manual transaction that records a debit and a credit in your accounts 
+      </small>
     </div>
   );
 };

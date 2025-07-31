@@ -1079,7 +1079,9 @@ const Invoice = () => {
   return (
     <div className="p-4">
       <h5 className="mb-4">Sales Workflow</h5>
-      <Button variant="primary" className="mb-3" onClick={() => handleCreateNewInvoice()}>
+      <Button variant="primary" className="mb-3" onClick={() => handleCreateNewInvoice()} 
+                    style={{ backgroundColor: "#53b2a5", border: "none", padding: "8px 16px" }}
+        >
         + Create New Invoice
       </Button>
       <Table bordered hover responsive className="text-center align-middle">

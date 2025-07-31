@@ -305,6 +305,9 @@ const CashFlow = () => {
           </Card.Body>
         </Card>
       </Container>
+      <small className="text-dark mt-3">
+      Cash Flow shows how much cash comes in and goes out of your business during a specific period — helping you track actual money movement, not just profit.
+      </small>
     </div>
   );
 };
