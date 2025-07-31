@@ -594,7 +594,20 @@ const TdsTcs = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      <div className="mt-3">
+  <small className="d-block text-dark w-100 p-3 border-top bg-light rounded-bottom">
+    <strong>TDS (Tax Deducted at Source):</strong>  
+    Tax deducted by the payer at the time of making certain payments like salary, rent, or contractor fees.<br /><br />
+    <strong>TCS (Tax Collected at Source):</strong>  
+    Tax collected by the seller at the time of selling certain goods or services.
+  </small>
+</div>
+
+
+      
     </div>
+    
+
   );
 };
 

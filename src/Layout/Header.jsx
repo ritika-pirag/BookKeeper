@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
  import k1 from "../assets/kiaanlogo-.png";
-// import newlogo from "../assets/newlogozirakbookk.png"
+import newlogo from "../assets/newlogozirakbookk.png"
 import  "./header.css";
 import ProfileModal from './ProfileModal'; // Correct path lagayein
 const Header = ({ onToggleSidebar }) => {
@@ -32,7 +32,7 @@ const Header = ({ onToggleSidebar }) => {
           {/* Logo */}
           <div className="d-none d-md-block">
             <img
-              src={k1}
+              src={newlogo}
               alt="Logo"
               className="img-fluid sidebar-logo"
               style={{ maxHeight: "40px" }}

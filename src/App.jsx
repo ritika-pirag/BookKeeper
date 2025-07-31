@@ -137,7 +137,7 @@ import ViewInvoicee from "./Components/Company-Dashboard/Sales/ViewInvoicee";
 import Categories from "./Components/Company-Dashboard/Inventory/SiteData/Categories";
 
 import PurchasOrder from "./Components/Company-Dashboard/Purchases/PurchasOrder";
-import Bill from "./Components/Company-Dashboard/Purchases/Bill";
+// import Bill from "./Components/Company-Dashboard/Purchases/Bill";
 import AllAcounts from "./Components/Company-Dashboard/Accounts/AllAcounts";
 import CustomersDebtors from "./Components/Company-Dashboard/Accounts/CustomersDebtors";
 import VendorsCreditors from "./Components/Company-Dashboard/Accounts/VendorsCreditors";
@@ -153,6 +153,8 @@ import ReceiptEntry from "./Components/Company-Dashboard/Accounts/ReceiptEntry";
 import WareHouseDetail from "./Components/Company-Dashboard/Inventory/SiteData/WareHouseDetail";
 
 import DeliveryChallans from "./Components/Company-Dashboard/Sales/DeliveryChallans";
+import PurchaseOrderr from "./Components/Company-Dashboard/Purchases/PurchaseOrderr";
+import MultiStepPurchaseForms from "./Components/Company-Dashboard/Purchases/MultiStepPurchaseForms";
 
 
 
@@ -248,8 +250,10 @@ function App() {
 
 
 
-          <Route path="/company/bill" element={<Bill />} />
+          {/* <Route path="/company/bill" element={<Bill />} /> */}
           <Route path="/company/purchasorder" element={<PurchasOrder />} />
+                    <Route path="/company/purchasorderr" element={<PurchaseOrderr/>} />
+                    <Route path="/company/multiforms" element={<MultiStepPurchaseForms/>} />
           <Route path="/company/purchasereturn" element={<PurchaseReturn />} />
           <Route path="/company/purchaseview" element={<PurchaseOrderView />} />
           {/* Finance & Accounts */}

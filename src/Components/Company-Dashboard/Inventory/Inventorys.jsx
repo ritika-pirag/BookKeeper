@@ -107,7 +107,7 @@ const InventoryItems = () => {
       value: 1000,
       minQty: 5,
       taxAccount: "5% GST",
- 
+
       purchasePriceExclusive: 90,
       purchasePriceInclusive: 95,
       salePriceExclusive: 110,
@@ -287,7 +287,7 @@ const InventoryItems = () => {
     item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  
+
   return (
     <div className="mt-4 p-2">
       <Row className="align-items-center mb-3 ">
@@ -358,115 +358,114 @@ const InventoryItems = () => {
       </Row>
 
       <div className="card bg-white rounded-3 p-4">
-    <div className="table-responsive">
-  <table className="table table-hover align-middle mb-0">
-    <thead className="table-light">
-      <tr>
-        <th>Name</th>
-        <th>Category</th>
-        {/* <th>Type</th> */}
-        <th>HSN</th>
-        <th>Quantity</th>
-        <th>Warehouse</th>
-        <th>Amount</th>
-        <th>Value</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {filteredItems.length > 0 ? (
-        filteredItems.map((item, idx) => (
-          <tr key={idx}>
-            <td>{item.itemName}</td>
-            <td>{item.itemCategory}</td>
-            {/* <td>{item.itemType}</td> */}
-            <td>{item.hsn}</td>
-            <td>{item.quantity}</td>
-            <td>{item.warehouse}</td>
-            <td>{item.cost}</td>
-            <td>{item.value}</td>
-            <td>
-              <span
-                className={`badge px-3 py-1 rounded-pill fw-semibold ${
-                  item.status === "In Stock"
-                    ? "bg-success text-white"
-                    : "bg-danger text-white"
-                }`}
-              >
-                {item.status}
-              </span>
-            </td>
-            <td>
-              <div className="d-flex gap-2">
-                <Button
-                  variant="link"
-                  className="text-info p-0"
-                  onClick={() => {
-                    setSelectedItem(item);
-                    setShowView(true);
-                  }}
-                >
-                  <FaEye />
-                </Button>
-                <Button
-                  variant="link"
-                  className="text-warning p-0"
-                  onClick={() => {
-                    setSelectedItem(item);
-                    setNewItem(item);
-                    setShowEdit(true);
-                  }}
-                >
-                  <FaEdit />
-                </Button>
-                <Button
-                  variant="link"
-                  className="text-danger p-0"
-                  onClick={() => {
-                    setSelectedItem(item);
-                    setShowDelete(true);
-                  }}
-                >
-                  <FaTrash />
-                </Button>
-              </div>
-            </td>
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td colSpan="9" className="text-center">
-            No items found.
-          </td>
-        </tr>
-      )}
-    </tbody>
-  </table>
-</div>
+        <div className="table-responsive">
+          <table className="table table-hover align-middle mb-0">
+            <thead className="table-light">
+              <tr>
+                <th>Name</th>
+                <th>Category</th>
+                {/* <th>Type</th> */}
+                <th>HSN</th>
+                <th>Quantity</th>
+                <th>Warehouse</th>
+                <th>Amount</th>
+                <th>Value</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredItems.length > 0 ? (
+                filteredItems.map((item, idx) => (
+                  <tr key={idx}>
+                    <td>{item.itemName}</td>
+                    <td>{item.itemCategory}</td>
+                    {/* <td>{item.itemType}</td> */}
+                    <td>{item.hsn}</td>
+                    <td>{item.quantity}</td>
+                    <td>{item.warehouse}</td>
+                    <td>{item.cost}</td>
+                    <td>{item.value}</td>
+                    <td>
+                      <span
+                        className={`badge px-3 py-1 rounded-pill fw-semibold ${item.status === "In Stock"
+                          ? "bg-success text-white"
+                          : "bg-danger text-white"
+                          }`}
+                      >
+                        {item.status}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="d-flex gap-2">
+                        <Button
+                          variant="link"
+                          className="text-info p-0"
+                          onClick={() => {
+                            setSelectedItem(item);
+                            setShowView(true);
+                          }}
+                        >
+                          <FaEye />
+                        </Button>
+                        <Button
+                          variant="link"
+                          className="text-warning p-0"
+                          onClick={() => {
+                            setSelectedItem(item);
+                            setNewItem(item);
+                            setShowEdit(true);
+                          }}
+                        >
+                          <FaEdit />
+                        </Button>
+                        <Button
+                          variant="link"
+                          className="text-danger p-0"
+                          onClick={() => {
+                            setSelectedItem(item);
+                            setShowDelete(true);
+                          }}
+                        >
+                          <FaTrash />
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="9" className="text-center">
+                    No items found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
-{/* Static Pagination UI */}
-<div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
-  <small className="text-muted ms-2">
-    Showing 1 to {filteredItems.length} of {filteredItems.length} results
-  </small>
-  <nav>
-    <ul className="pagination mb-0">
-      <li className="page-item disabled">
-        <button className="page-link">&laquo;</button>
-      </li>
-      <li className="page-item active">
-        <button className="page-link">1</button>
-      </li>
-      <li className="page-item">
-        <button className="page-link">2</button>
-      </li>
-      <li className="page-item">
-        <button className="page-link">&raquo;</button>
-      </li>
-    </ul>
-  </nav>
-</div>
+        {/* Static Pagination UI */}
+        <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+          <small className="text-muted ms-2">
+            Showing 1 to {filteredItems.length} of {filteredItems.length} results
+          </small>
+          <nav>
+            <ul className="pagination mb-0">
+              <li className="page-item disabled">
+                <button className="page-link">&laquo;</button>
+              </li>
+              <li className="page-item active">
+                <button className="page-link">1</button>
+              </li>
+              <li className="page-item">
+                <button className="page-link">2</button>
+              </li>
+              <li className="page-item">
+                <button className="page-link">&raquo;</button>
+              </li>
+            </ul>
+          </nav>
+        </div>
 
       </div>
 
@@ -591,9 +590,9 @@ const InventoryItems = () => {
             <Row className="mb-3">
               <Col md={6}><Form.Group><Form.Label>Initial Quantity On Hand</Form.Label><Form.Control name="quantity" value={newItem.quantity} onChange={handleChange} /></Form.Group></Col>
               <Col md={6}><Form.Group><Form.Label>Item Image</Form.Label><Form.Control type="file" name="image" onChange={handleChange} /></Form.Group></Col>
-            
+
             </Row>
-        
+
             <Row className="mb-3">
               <Col md={6}><Form.Group><Form.Label>Minimum Order Quantity</Form.Label><Form.Control name="minQty" value={newItem.minQty} onChange={handleChange} /></Form.Group></Col>
               <Col md={6}><Form.Group><Form.Label>As Of Date</Form.Label><Form.Control type="date" name="date" value={newItem.date} onChange={handleChange} /></Form.Group></Col>
@@ -604,7 +603,7 @@ const InventoryItems = () => {
 
               {/* <Col md={6}><Form.Group><Form.Label>Additional Cess</Form.Label><Form.Control name="cess" value={newItem.cess} onChange={handleChange} /></Form.Group></Col> */}
             </Row>
-          
+
             <Row className="mb-3">
               <Col md={6}><Form.Group><Form.Label>Default Sale Price </Form.Label><Form.Control name="salePriceExclusive" value={newItem.salePriceExclusive} onChange={handleChange} /></Form.Group></Col>
               <Col md={6}><Form.Group><Form.Label>Default Purchase Price </Form.Label><Form.Control name="salePriceInclusive" value={newItem.salePriceInclusive} onChange={handleChange} /></Form.Group></Col>
@@ -615,17 +614,17 @@ const InventoryItems = () => {
 
             </Row>
             <Row className="mb-3">
-  <Col md={12} className="text-end">
-    <Button variant="outline-info" onClick={() => setShowUOMModal(true)}      style={{
-              backgroundColor: '#27b2b6',
-              border: 'none',
-              color: '#fff',
-              padding: '6px 16px',
-            }}>
-      View More Details
-    </Button>
-  </Col>
-</Row>
+              <Col md={12} className="text-end">
+                <Button variant="outline-info" onClick={() => setShowUOMModal(true)} style={{
+                  backgroundColor: '#27b2b6',
+                  border: 'none',
+                  color: '#fff',
+                  padding: '6px 16px',
+                }}>
+                  View More Details
+                </Button>
+              </Col>
+            </Row>
 
           </Form>
         </Modal.Body>
@@ -639,45 +638,45 @@ const InventoryItems = () => {
 
 
       <Modal show={showUOMModal} onHide={() => setShowUOMModal(false)} centered>
-  <Modal.Header closeButton>
-    <Modal.Title>Unit Details</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    <Form>
-      <Form.Group className="mb-3">
-        <Form.Label>Unit of Measurement (UOM)</Form.Label>
-        <Form.Select name="unit" value={newItem.unit} onChange={handleChange}>
-          <option value="">Select Unit</option>
-          <option value="Piece">Piece</option>
-          <option value="Box">Box</option>
-          <option value="KG">KG</option>
-          <option value="Meter">Meter</option>
-          <option value="Litre">Litre</option>
-        </Form.Select>
-      </Form.Group>
+        <Modal.Header closeButton>
+          <Modal.Title>Unit Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Unit of Measurement (UOM)</Form.Label>
+              <Form.Select name="unit" value={newItem.unit} onChange={handleChange}>
+                <option value="">Select Unit</option>
+                <option value="Piece">Piece</option>
+                <option value="Box">Box</option>
+                <option value="KG">KG</option>
+                <option value="Meter">Meter</option>
+                <option value="Litre">Litre</option>
+              </Form.Select>
+            </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Label>Weight per Unit</Form.Label>
-        <Form.Control
-          name="weightPerUnit"
-          value={newItem.weightPerUnit}
-          onChange={handleChange}
-          placeholder="e.g. 0.5 KG"
-          
-        />
-      </Form.Group>
-    </Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Weight per Unit</Form.Label>
+              <Form.Control
+                name="weightPerUnit"
+                value={newItem.weightPerUnit}
+                onChange={handleChange}
+                placeholder="e.g. 0.5 KG"
 
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setShowUOMModal(false)}      style={{
-              backgroundColor: '#27b2b6',
-              border: 'none',
-              color: '#fff',
-              padding: '6px 16px',
-            }}>Close</Button>
-  </Modal.Footer>
-</Modal>
+              />
+            </Form.Group>
+          </Form>
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowUOMModal(false)} style={{
+            backgroundColor: '#27b2b6',
+            border: 'none',
+            color: '#fff',
+            padding: '6px 16px',
+          }}>Close</Button>
+        </Modal.Footer>
+      </Modal>
 
       <Modal show={showAddCategoryModal} onHide={() => setShowAddCategoryModal(false)}>
         <Modal.Header closeButton>
@@ -699,13 +698,13 @@ const InventoryItems = () => {
             Cancel
           </Button>
           <Button class="btn"
-          style={{
-            backgroundColor: '#27b2b6',
-            border: 'none',
-            color: '#fff',
-            padding: '6px 16px',
-          }}
-          onClick={handleAddCategory}>
+            style={{
+              backgroundColor: '#27b2b6',
+              border: 'none',
+              color: '#fff',
+              padding: '6px 16px',
+            }}
+            onClick={handleAddCategory}>
             Add
           </Button>
         </Modal.Footer>
@@ -722,9 +721,9 @@ const InventoryItems = () => {
 
       </Modal>
       {/* Page Description */}
-<small className="text-muted text-center w-100 mt-4">
-An Inventory Product Management Interface displaying product details, status, and actions with options to import/export data and manage records.
-</small>
+      <small className="text-muted text-center w-100 mt-4">
+        An Inventory Product Management Interface displaying product details, status, and actions with options to import/export data and manage records.
+      </small>
     </div>
   );
 };
