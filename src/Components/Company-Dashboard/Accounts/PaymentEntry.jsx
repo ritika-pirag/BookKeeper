@@ -372,8 +372,12 @@ const PaymentEntry = () => {
     </Button>
   </Modal.Footer>
 </Modal>
+<p className="text-muted text-center mt-4">
+This page allows users to add, view, and download payment records in PDF format.
+</p>
 
     </div>
+    
   );
 };
 

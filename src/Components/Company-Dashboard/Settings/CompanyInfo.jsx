@@ -224,6 +224,10 @@ const CompanyInfo = () => {
           </div>
         </div>
       </Container>
+      <p className="text-muted text-center mt-3">
+  This page allows you to manage company settings including general info, upload logos/icons, and configure address details like country, city, and postal code.
+</p>
+
     </div>
   );
 };

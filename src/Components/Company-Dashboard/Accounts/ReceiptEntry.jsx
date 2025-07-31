@@ -384,6 +384,10 @@ const ReceiptEntry = () => {
   </Modal.Footer>
 </Modal>
 
+{/* Page Description */}
+<p className="text-muted text-center mt-3">
+The "Add Receipt" button opens a form to add a new receipt by entering details like date, receipt number, customer name, invoice number, amount, payment mode, reference, and notes.
+</p>
 
     </div>
   );
