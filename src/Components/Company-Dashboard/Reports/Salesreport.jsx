@@ -156,6 +156,9 @@ const Salesreport = () => {
           </nav>
         </div>
       </div>
+      <small className>
+      A Report summary that presents daily sales, product-wise totals, and income analysis to support smart business decisions.
+      </small>
     </div>
   );
 };

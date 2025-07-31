@@ -121,7 +121,7 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
           { to: "/company/balancesheet", icon: "fas fa-balance-scale", label: "Balance Sheet" },
           { to: "/company/cashflow", icon: "fas fa-coins", label: "Cash Flow" },
           { to: "/company/profitloss", icon: "fas fa-chart-pie", label: "Profit & Loss" },
-          { to: "/company/vatreport", icon: "fas fa-file-invoice-dollar", label: "VaT Report" },
+          { to: "/company/vatreport", icon: "fas fa-file-invoice-dollar", label: "Vat Report" },
           { to: "/company/daybook", icon: "fas fa-calendar-day", label: "DayBook" },
           { to: "/company/expense", icon: "fas fa-money-bill", label: "Expenses" },
           { to: "/company/journalentries", icon: "fas fa-book", label: "Journal Entries" },

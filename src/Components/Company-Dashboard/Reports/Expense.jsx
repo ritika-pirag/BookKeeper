@@ -756,6 +756,9 @@ const Expense = () => {
           </div>
         </div>
       </div>
+      <small className="text-dark">
+      Record business spending like rent, purchases, or salaries—linked to vendor, account head, and payment method for easy tracking
+      </small>
     </div>
   );
 };

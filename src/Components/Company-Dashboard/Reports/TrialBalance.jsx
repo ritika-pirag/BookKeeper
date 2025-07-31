@@ -177,7 +177,10 @@ Auto-generated accounting summary by account head.
       </tbody>
     </Table>
   </Card>
+  A trial balance is used in accounting to verify that total debits equal total credits—essentially a checkpoint to ensure the books are mathematically sound before preparing financial statements.
 </div>
+
+
 );
 };
 
