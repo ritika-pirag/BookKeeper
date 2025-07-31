@@ -75,6 +75,7 @@ const CustomersDebtors = () => {
       taxNumber: "GSTIN123",
       altMobile: "0987654321",
       balance: "5000",
+      
       taxEnabled: true,
       billing: {
         name: "Lalit Singh",
@@ -427,78 +428,103 @@ const CustomersDebtors = () => {
   </Row>
 </div>
 
-      <Card className="rounded-3 p-3">
-        {/* Search and Filter Section */}
-        <div className="mb-3">
-          <Row>
-            <Col md={6}>
-              <InputGroup>
-                <InputGroup.Text>
-                  <FaSearch />
-                </InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="Search by name, email or phone"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </InputGroup>
-            </Col>
-            <Col md={6}></Col>
-          </Row>
-        </div>
-        <Table bordered hover responsive>
-          <thead className="table-light">
-            <tr>
-              <th>No</th>
-              <th>Voucher No</th> 
-              <th>Name</th>
-              <th>Contact</th>
-              <th>Email</th>
-              <th>Balance</th>
+   <Card className="rounded-3 p-3">
+  {/* Search and Filter Section */}
+  <div className="mb-3">
+    <Row>
+      <Col md={6}>
+        <InputGroup>
+          <InputGroup.Text>
+            <FaSearch />
+          </InputGroup.Text>
+          <Form.Control
+            type="text"
+            placeholder="Search by name, email or phone"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </InputGroup>
+      </Col>
+      <Col md={6}></Col>
+    </Row>
+  </div>
 
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredCustomers.length > 0 ? (
-              filteredCustomers.map((cust, idx) => (
-                <tr key={idx}>
-                  <td>{idx + 1}</td>
-                  <td>{cust.name}</td>
-                  <td>{cust.contact}</td>
-                  <td>{cust.email}</td>
-                  <td>${parseFloat(cust.balance || 0).toFixed(2)}</td>
-             
-                  <td>
-                    <div className="d-flex gap-2 justify-content-center">
-                      <Button variant="outline-info" size="sm" onClick={() => handleOpenViewModal(cust)}>
-                        <FaEye />
-                      </Button>
-                      <Button variant="outline-warning" size="sm" onClick={() => handleOpenAddEditModal("edit", cust, idx)}>
-                        <FaEdit />
-                      </Button>
-                      <Button variant="outline-danger" size="sm" onClick={() => { setDeleteIndex(idx); setShowConfirmDelete(true); }}>
-                        <FaTrash />
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="7" className="text-center text-muted py-4">
-                  {customersList.length === 0 ? "No customers found. Add your first customer!" : "No matching customers found."}
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
-      </Card>
+  {/* Customer Table */}
+  <Table bordered hover responsive>
+    <thead className="table-light">
+      <tr>
+        {/* <th>No</th> */}
+        <th>Voucher No</th> 
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Email</th>
+        <th>Balance</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {filteredCustomers.length > 0 ? (
+        filteredCustomers.map((cust, idx) => (
+          <tr key={idx}>
+            <td>{idx + 1}</td>
+            <td>{cust.name}</td>
+            <td>{cust.contact}</td>
+            <td>{cust.email}</td>
+            <td>${parseFloat(cust.balance || 0).toFixed(2)}</td>
+            <td>
+              <div className="d-flex gap-2 justify-content-center">
+                <button className="p-0 text-info" onClick={() => handleOpenViewModal(cust)}>
+                  <FaEye size={16}/>
+                </button>
+                <button className="p-0 text-warning" onClick={() => handleOpenAddEditModal("edit", cust, idx)}>
+                  <FaEdit />
+                </button>
+                <button className="p-0 text-danger" onClick={() => { setDeleteIndex(idx); setShowConfirmDelete(true); }}>
+                  <FaTrash />
+                </button>
+              </div>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="7" className="text-center text-muted py-4">
+            {customersList.length === 0 ? "No customers found. Add your first customer!" : "No matching customers found."}
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </Table>
+
+  {/* Pagination Section */}
+  <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+    <small className="text-muted ms-2">
+npm run dev 
+ng 1 to {filteredCustomers.length} of {customersList.length} results
+    </small>
+    <nav>
+      <ul className="pagination mb-0">
+        <li className="page-item disabled">
+          <button className="page-link">&laquo;</button>
+        </li>
+        <li className="page-item active">
+          <button className="page-link">1</button>
+        </li>
+        <li className="page-item">
+          <button className="page-link">2</button>
+        </li>
+        <li className="page-item">
+          <button className="page-link">&raquo;</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</Card>
+
       {/* Add/Edit Modal */}
       <Modal   show={showAddEditModal}
   onHide={() => setShowAddEditModal(false)}
-  size="lg"
+  size="xl"
   centered
   backdrop="static">
       <Modal.Header closeButton className="bg-light">
@@ -563,21 +589,6 @@ const CustomersDebtors = () => {
           </Form.Group>
         </Col>
         <Col md={6}>
-          <Form.Group>
-            <Form.Label>Balance</Form.Label>
-            <Form.Control
-              type="number"
-              value={customerFormData.payable}
-              onChange={(e) => setCustomerFormData({ ...customerFormData, payable: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-
-
-  
-      </Row>
-      <Row className="mb-3" >
-<Col md={6}>
     <Form.Group>
       <Form.Label>Balance Type</Form.Label>
       <Form.Control
@@ -591,6 +602,46 @@ const CustomersDebtors = () => {
       </Form.Control>
     </Form.Group>
   </Col>
+
+
+  
+      </Row>
+      <Row className="mb-3" >
+      <Row className="mb-3">
+  <Col md={6}>
+    <Form.Group>
+      <Form.Label>Opening Balance</Form.Label>
+      <Form.Control
+        type="number"
+        value={customerFormData.payable}
+        onChange={(e) => {
+          const value = e.target.value;
+          setCustomerFormData({
+            ...customerFormData,
+            payable: value,
+          });
+        }}
+      />
+    </Form.Group>
+  </Col>
+
+  <Col md={6}>
+    <Form.Group>
+      <Form.Label>Current Balance</Form.Label>
+      <Form.Control
+        type="number"
+        value={customerFormData.currentBalance}
+        onChange={(e) => {
+          const value = e.target.value;
+          setCustomerFormData({
+            ...customerFormData,
+            currentBalance: value,
+          });
+        }}
+      />
+    </Form.Group>
+  </Col>
+</Row>
 
 </Row>
       <Row className="mb-3">
@@ -867,6 +918,11 @@ const CustomersDebtors = () => {
           <Button variant="secondary" onClick={() => setShowViewModal(false)}>Close</Button>
         </Modal.Footer>
       </Modal>
+
+
+
+
+
       {/* Delete Confirmation Modal */}
       <Modal show={showConfirmDelete} onHide={() => setShowConfirmDelete(false)} centered>
         <Modal.Header closeButton>

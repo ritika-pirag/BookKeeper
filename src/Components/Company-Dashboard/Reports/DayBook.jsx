@@ -245,44 +245,86 @@ const Daybook = () => {
         </div>
       </div>
 
-      {/* Table */}
-      <div className="table-responsive">
-        <table className="table table-bordered align-middle">
-          <thead className="table-light">
-            <tr>
-              <th>Voucher Date</th>
-              <th>Voucher No</th>
-              <th>Voucher Type</th>
-              <th>Debit</th>
-              <th>Credit</th>
-              <th>Debit Amount</th>
-              <th>Credit Amount</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredEntries.length > 0 ? (
-              filteredEntries.map((entry) => (
-                <tr key={entry.id}>
-                  <td>{entry.voucherDate}</td>
-                  <td>{entry.voucherNo}</td>
-                  <td>{entry.voucherType}</td>
-                  <td>{entry.debit}</td>
-                  <td>{entry.credit}</td>
-                  <td>${entry.debitAmount}</td>
-                  <td>${entry.creditAmount}</td>
-                  <td className="d-flex gap-2 justify-content-center">
-                    <button className="btn btn-sm text-warning" data-bs-toggle="modal" data-bs-target="#editEntryModal" onClick={() => handleEdit(entry)}><FaEdit /></button>
-                    <button className="btn btn-sm text-danger" data-bs-toggle="modal" data-bs-target="#deleteEntryModal" onClick={() => handleDelete(entry)}><FaTrash /></button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr><td colSpan="8" className="text-center">No records found</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+{/* Table */}
+<div className="table-responsive">
+  <table className="table table-bordered align-middle">
+    <thead className="table-light">
+      <tr>
+        <th>Voucher Date</th>
+        <th>Voucher No</th>
+        <th>Voucher Type</th>
+        <th>Debit</th>
+        <th>Credit</th>
+        <th>Debit Amount</th>
+        <th>Credit Amount</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {filteredEntries.length > 0 ? (
+        filteredEntries.map((entry) => (
+          <tr key={entry.id}>
+            <td>{entry.voucherDate}</td>
+            <td>{entry.voucherNo}</td>
+            <td>{entry.voucherType}</td>
+            <td>{entry.debit}</td>
+            <td>{entry.credit}</td>
+            <td>${entry.debitAmount}</td>
+            <td>${entry.creditAmount}</td>
+            <td className="d-flex gap-2 justify-content-center">
+              <button
+                className="btn btn-sm text-warning"
+                data-bs-toggle="modal"
+                data-bs-target="#editEntryModal"
+                onClick={() => handleEdit(entry)}
+              >
+                <FaEdit size={16} />
+              </button>
+              <button
+                className="btn btn-sm text-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteEntryModal"
+                onClick={() => handleDelete(entry)}
+              >
+                <FaTrash size={16} />
+              </button>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="8" className="text-center">
+            No records found
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
+
+{/* Static Pagination UI */}
+<div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+  <small className="text-muted ms-2">
+    Showing 1 to {filteredEntries.length} of {filteredEntries.length} entries
+  </small>
+  <nav>
+    <ul className="pagination mb-0">
+      <li className="page-item disabled">
+        <button className="page-link">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button className="page-link">1</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
 
       {/* Pagination & Modals remain unchanged below this point */}
       {/* ... Keep your Add, Edit, and Delete modals from previous code ... */}

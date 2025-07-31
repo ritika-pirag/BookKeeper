@@ -366,7 +366,7 @@ const getStatusBadge = (status) => {
                 <option value="Singh Distributors">Singh Distributors</option>
               </select>
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <label className="form-label fw-semibold">
                 Order Reference <span className="text-danger">*</span>
               </label>
@@ -376,7 +376,7 @@ const getStatusBadge = (status) => {
                 placeholder="SO-YYYY-XXX"
                 required
               />
-            </div>
+            </div> */}
           </div>
 
           <div className="mb-3">

@@ -455,28 +455,28 @@ const SalesReturn = () => {
                   <td>{getStatusBadge(returnItem.status)}</td>
                   <td className="d-flex gap-2 justify-content-center">
                     <button 
-                      className="btn btn-sm btn-outline-info" 
+                     className="btn outlin-info btn-sm  text-info"
                       onClick={() => {
                         setSelectedReturn(returnItem);
                         setShowViewModal(true);
                       }}
                     >
-                      <FaEye size={14} />
+                      <FaEye size={16} />
                     </button>
                     <button 
-                      className="btn btn-sm btn-outline-warning" 
+                      className="p-0 text-warning" 
                       onClick={() => {
                         setEditReturn({...returnItem});
                         setShowEditModal(true);
                       }}
                     >
-                      <FaEdit size={14} />
+                      <FaEdit size={16} />
                     </button>
                     <button 
-                      className="btn btn-sm btn-outline-danger" 
+                        className="btn outline-danger btn-sm text-danger"
                       onClick={() => handleDelete(returnItem.id)}
                     >
-                      <FaTrash size={14} />
+                      <FaTrash size={16} />
                     </button>
                   </td>
                 </tr>

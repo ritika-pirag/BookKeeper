@@ -107,7 +107,7 @@ const InventoryItems = () => {
       value: 1000,
       minQty: 5,
       taxAccount: "5% GST",
-      cess: 0,
+ 
       purchasePriceExclusive: 90,
       purchasePriceInclusive: 95,
       salePriceExclusive: 110,
@@ -151,7 +151,7 @@ const InventoryItems = () => {
     }
   ]);
 
-
+  const [showUOMModal, setShowUOMModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
   const [showView, setShowView] = useState(false);
@@ -207,7 +207,9 @@ const InventoryItems = () => {
     image: null,
     status: "In Stock",
     itemType: "Good", // New field for item type
-    itemCategory: "" // New field for item category
+    itemCategory: "", // New field for item category
+    unit: "",
+    weightPerUnit: "",
   });
 
   const handleChange = (e) => {
@@ -285,11 +287,12 @@ const InventoryItems = () => {
     item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  
   return (
     <div className="mt-4 p-2">
       <Row className="align-items-center mb-3 ">
         <Col md={4}>
-          <h4 className="fw-bold mb-0">Inventory Items</h4>
+          <h4 className="fw-bold mb-0">Inventory Product</h4>
         </Col>
         <Col md={8} className="text-md-end d-flex flex-wrap gap-2 justify-content-md-end">
           <Button
@@ -345,7 +348,7 @@ const InventoryItems = () => {
             }}
           >
 
-            Add Item
+            Add Product
           </Button>
         </Col>
       </Row>
@@ -355,60 +358,116 @@ const InventoryItems = () => {
       </Row>
 
       <div className="card bg-white rounded-3 p-4">
-        <div className="table-responsive">
-          <table className="table table-hover align-middle mb-0">
-            <thead className="table-light">
-              <tr>
-                <th>Name</th>
-                <th>Category</th>
-                {/* <th>Type</th> */}
-                <th>HSN</th>
-                <th>Quantity</th>
-                <th>Warehouse</th>
-                <th>Cost</th>
-                <th>Value</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredItems.length > 0 ? (
-                filteredItems.map((item, idx) => (
-                  <tr key={idx}>
-                    <td>{item.itemName}</td>
-                    <td>{item.itemCategory}</td>
-                    {/* <td>{item.itemType}</td> */}
+    <div className="table-responsive">
+  <table className="table table-hover align-middle mb-0">
+    <thead className="table-light">
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        {/* <th>Type</th> */}
+        <th>HSN</th>
+        <th>Quantity</th>
+        <th>Warehouse</th>
+        <th>Amount</th>
+        <th>Value</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {filteredItems.length > 0 ? (
+        filteredItems.map((item, idx) => (
+          <tr key={idx}>
+            <td>{item.itemName}</td>
+            <td>{item.itemCategory}</td>
+            {/* <td>{item.itemType}</td> */}
+            <td>{item.hsn}</td>
+            <td>{item.quantity}</td>
+            <td>{item.warehouse}</td>
+            <td>{item.cost}</td>
+            <td>{item.value}</td>
+            <td>
+              <span
+                className={`badge px-3 py-1 rounded-pill fw-semibold ${
+                  item.status === "In Stock"
+                    ? "bg-success text-white"
+                    : "bg-danger text-white"
+                }`}
+              >
+                {item.status}
+              </span>
+            </td>
+            <td>
+              <div className="d-flex gap-2">
+                <Button
+                  variant="link"
+                  className="text-info p-0"
+                  onClick={() => {
+                    setSelectedItem(item);
+                    setShowView(true);
+                  }}
+                >
+                  <FaEye />
+                </Button>
+                <Button
+                  variant="link"
+                  className="text-warning p-0"
+                  onClick={() => {
+                    setSelectedItem(item);
+                    setNewItem(item);
+                    setShowEdit(true);
+                  }}
+                >
+                  <FaEdit />
+                </Button>
+                <Button
+                  variant="link"
+                  className="text-danger p-0"
+                  onClick={() => {
+                    setSelectedItem(item);
+                    setShowDelete(true);
+                  }}
+                >
+                  <FaTrash />
+                </Button>
+              </div>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="9" className="text-center">
+            No items found.
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
 
-                    <td>{item.hsn}</td>
-                    <td>{item.quantity}</td>
-                    <td>{item.warehouse}</td>
-                    <td>{item.cost}</td>
-                    <td>{item.value}</td>
-                    <td>
-                      <span
-                        className={`badge px-3 py-1 rounded-pill fw-semibold ${item.status === "In Stock" ? "bg-success text-white" : "bg-danger text-white"
-                          }`}
-                      >
-                        {item.status}
-                      </span>
+{/* Static Pagination UI */}
+<div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+  <small className="text-muted ms-2">
+    Showing 1 to {filteredItems.length} of {filteredItems.length} results
+  </small>
+  <nav>
+    <ul className="pagination mb-0">
+      <li className="page-item disabled">
+        <button className="page-link">&laquo;</button>
+      </li>
+      <li className="page-item active">
+        <button className="page-link">1</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">2</button>
+      </li>
+      <li className="page-item">
+        <button className="page-link">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+</div>
 
-                    </td>
-                    <td>
-                      <div className="d-flex gap-2">
-                        <Button variant="link" className="text-info p-0" onClick={() => { setSelectedItem(item); setShowView(true); }}><FaEye /></Button>
-                        <Button variant="link" className="text-warning p-0" onClick={() => { setSelectedItem(item); setNewItem(item); setShowEdit(true); }}><FaEdit /></Button>
-                        <Button variant="link" className="text-danger p-0" onClick={() => { setSelectedItem(item); setShowDelete(true); }}><FaTrash /></Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr><td colSpan="7" className="text-center">No items found.</td></tr>
-              )}
-            </tbody>
-
-          </table>
-        </div>
       </div>
 
       {/* View Modal */}
@@ -436,9 +495,9 @@ const InventoryItems = () => {
               <Row className="mb-3">
                 <Col md={6}><strong>Tax Account:</strong> {selectedItem.taxAccount}</Col>
                 <Col md={6}><strong>Cess:</strong> {selectedItem.cess}</Col>
-                <Col md={6}><strong>Purchase Price (Excl):</strong> {selectedItem.purchasePriceExclusive}</Col>
+                {/* <Col md={6}><strong>Purchase Price (Excl):</strong> {selectedItem.purchasePriceExclusive}</Col> */}
                 <Col md={6}><strong>Purchase Price (Incl):</strong> {selectedItem.purchasePriceInclusive}</Col>
-                <Col md={6}><strong>Sale Price (Excl):</strong> {selectedItem.salePriceExclusive}</Col>
+                {/* <Col md={6}><strong>Sale Price (Excl):</strong> {selectedItem.salePriceExclusive}</Col> */}
                 <Col md={6}><strong>Sale Price (Incl):</strong> {selectedItem.salePriceInclusive}</Col>
                 <Col md={6}><strong>Discount %:</strong> {selectedItem.discount}</Col>
               </Row>
@@ -497,6 +556,12 @@ const InventoryItems = () => {
                       variant="outline-primary"
                       size="sm"
                       onClick={() => setShowAddCategoryModal(true)}
+                      style={{
+                        backgroundColor: '#27b2b6',
+                        border: 'none',
+                        color: '#fff',
+                        padding: '6px 16px',
+                      }}
                     >
                       + Add New
                     </Button>
@@ -525,36 +590,43 @@ const InventoryItems = () => {
             </Row>
             <Row className="mb-3">
               <Col md={6}><Form.Group><Form.Label>Initial Quantity On Hand</Form.Label><Form.Control name="quantity" value={newItem.quantity} onChange={handleChange} /></Form.Group></Col>
+              <Col md={6}><Form.Group><Form.Label>Item Image</Form.Label><Form.Control type="file" name="image" onChange={handleChange} /></Form.Group></Col>
+            
+            </Row>
+        
+            <Row className="mb-3">
+              <Col md={6}><Form.Group><Form.Label>Minimum Order Quantity</Form.Label><Form.Control name="minQty" value={newItem.minQty} onChange={handleChange} /></Form.Group></Col>
               <Col md={6}><Form.Group><Form.Label>As Of Date</Form.Label><Form.Control type="date" name="date" value={newItem.date} onChange={handleChange} /></Form.Group></Col>
             </Row>
             <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Initial Cost/Unit</Form.Label><Form.Control name="cost" value={newItem.cost} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Value</Form.Label><Form.Control name="value" value={newItem.value} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Minimum Order Quantity</Form.Label><Form.Control name="minQty" value={newItem.minQty} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Item Image</Form.Label><Form.Control type="file" name="image" onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
               <Col md={6}><Form.Group><Form.Label>Default Tax Account</Form.Label><Form.Control name="taxAccount" value={newItem.taxAccount} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Additional Cess</Form.Label><Form.Control name="cess" value={newItem.cess} onChange={handleChange} /></Form.Group></Col>
+              <Col md={6}><Form.Group><Form.Label>Initial Cost/Unit</Form.Label><Form.Control name="cost" value={newItem.cost} onChange={handleChange} /></Form.Group></Col>
+
+              {/* <Col md={6}><Form.Group><Form.Label>Additional Cess</Form.Label><Form.Control name="cess" value={newItem.cess} onChange={handleChange} /></Form.Group></Col> */}
             </Row>
+          
             <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Purchase Price (Exclusive)</Form.Label><Form.Control name="purchasePriceExclusive" value={newItem.purchasePriceExclusive} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Default Purchase Price (Inclusive)</Form.Label><Form.Control name="purchasePriceInclusive" value={newItem.purchasePriceInclusive} onChange={handleChange} /></Form.Group></Col>
-            </Row>
-            <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Default Sale Price (Exclusive)</Form.Label><Form.Control name="salePriceExclusive" value={newItem.salePriceExclusive} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Default Sale Price (Inclusive)</Form.Label><Form.Control name="salePriceInclusive" value={newItem.salePriceInclusive} onChange={handleChange} /></Form.Group></Col>
+              <Col md={6}><Form.Group><Form.Label>Default Sale Price </Form.Label><Form.Control name="salePriceExclusive" value={newItem.salePriceExclusive} onChange={handleChange} /></Form.Group></Col>
+              <Col md={6}><Form.Group><Form.Label>Default Purchase Price </Form.Label><Form.Control name="salePriceInclusive" value={newItem.salePriceInclusive} onChange={handleChange} /></Form.Group></Col>
             </Row>
             <Row className="mb-3">
               <Col md={6}><Form.Group><Form.Label>Default Discount %</Form.Label><Form.Control name="discount" value={newItem.discount} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Item Category</Form.Label><Form.Control name="category" value={newItem.category} onChange={handleChange} /></Form.Group></Col>
+              <Col md={6}><Form.Group><Form.Label>Remarks</Form.Label><Form.Control name="remarks" value={newItem.remarks} onChange={handleChange} /></Form.Group></Col>
+
             </Row>
             <Row className="mb-3">
-              <Col md={6}><Form.Group><Form.Label>Item Subcategory</Form.Label><Form.Control name="subcategory" value={newItem.subcategory} onChange={handleChange} /></Form.Group></Col>
-              <Col md={6}><Form.Group><Form.Label>Remarks</Form.Label><Form.Control name="remarks" value={newItem.remarks} onChange={handleChange} /></Form.Group></Col>
-            </Row>
+  <Col md={12} className="text-end">
+    <Button variant="outline-info" onClick={() => setShowUOMModal(true)}      style={{
+              backgroundColor: '#27b2b6',
+              border: 'none',
+              color: '#fff',
+              padding: '6px 16px',
+            }}>
+      View More Details
+    </Button>
+  </Col>
+</Row>
+
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -562,6 +634,50 @@ const InventoryItems = () => {
           <Button style={{ backgroundColor: '#27b2b6', borderColor: '#27b2b6' }} onClick={showAdd ? handleAddItem : handleUpdateItem}>{showAdd ? "Add" : "Update"}</Button>
         </Modal.Footer>
       </Modal>
+
+
+
+
+      <Modal show={showUOMModal} onHide={() => setShowUOMModal(false)} centered>
+  <Modal.Header closeButton>
+    <Modal.Title>Unit Details</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <Form>
+      <Form.Group className="mb-3">
+        <Form.Label>Unit of Measurement (UOM)</Form.Label>
+        <Form.Select name="unit" value={newItem.unit} onChange={handleChange}>
+          <option value="">Select Unit</option>
+          <option value="Piece">Piece</option>
+          <option value="Box">Box</option>
+          <option value="KG">KG</option>
+          <option value="Meter">Meter</option>
+          <option value="Litre">Litre</option>
+        </Form.Select>
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Weight per Unit</Form.Label>
+        <Form.Control
+          name="weightPerUnit"
+          value={newItem.weightPerUnit}
+          onChange={handleChange}
+          placeholder="e.g. 0.5 KG"
+          
+        />
+      </Form.Group>
+    </Form>
+
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowUOMModal(false)}      style={{
+              backgroundColor: '#27b2b6',
+              border: 'none',
+              color: '#fff',
+              padding: '6px 16px',
+            }}>Close</Button>
+  </Modal.Footer>
+</Modal>
 
       <Modal show={showAddCategoryModal} onHide={() => setShowAddCategoryModal(false)}>
         <Modal.Header closeButton>
@@ -582,7 +698,14 @@ const InventoryItems = () => {
           <Button variant="secondary" onClick={() => setShowAddCategoryModal(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleAddCategory}>
+          <Button class="btn"
+          style={{
+            backgroundColor: '#27b2b6',
+            border: 'none',
+            color: '#fff',
+            padding: '6px 16px',
+          }}
+          onClick={handleAddCategory}>
             Add
           </Button>
         </Modal.Footer>

@@ -5,6 +5,8 @@ import "react-toastify/dist/ReactToastify.css"; // Don't forget to import the CS
 import newlogo from "../../assets/newlogozirakbook.jpeg"
 import logo from "../../assets/ZirakTech.jpeg"
 import rightlogo from "../../assets/newlogoo.png"
+
+import k1 from "../../assets/kiaanlogo-.png"
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,7 +53,7 @@ const Login = () => {
             <div className="mb-6">
               <div className="flex items-center mb-8">
                 <img
-                  src={newlogo}
+                  src={k1}
                   alt="ZirakBook Logo"
                   className="max-h-12"
                 />
@@ -103,7 +105,7 @@ const Login = () => {
           {/* Right Panel - Illustration */}
           <div className="hidden md:flex md:w-1/2  p-6 md:p-10 relative items-center justify-center">
             <img
-              src={rightlogo}
+              src={k1}
               alt="Digital Connection"
               className="max-w-full max-h-full object-contain "
             />

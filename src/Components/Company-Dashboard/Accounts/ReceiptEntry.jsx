@@ -134,55 +134,78 @@ const ReceiptEntry = () => {
 
       <div className="card bg-white rounded-3 p-3">
   <div className="table-responsive">
-    <Table className="table table-hover table-bordered align-middle mb-0">
-      <thead className="table-light border">
-        <tr>
-          <th>Date</th>
-          <th>Receipt No</th>
-          <th>Received From</th>
-          <th>Amount</th>
-          <th>Mode</th>
-          <th>Reference</th>
-          <th>Notes</th>
-          <th>Action</th>
+  <Table className="table table-hover table-bordered align-middle mb-0">
+    <thead className="table-light border">
+      <tr>
+        <th>Date</th>
+        <th>Receipt No</th>
+        <th>Received From</th>
+        <th>Amount</th>
+        <th>Mode</th>
+        <th>Reference</th>
+        <th>Notes</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {receiptData.map((item, idx) => (
+        <tr key={idx}>
+          <td>{item.date}</td>
+          <td>{item.receiptNo}</td>
+          <td>{item.receivedFrom}</td>
+          <td>₹{item.amount}</td>
+          <td>{item.mode}</td>
+          <td>{item.reference}</td>
+          <td>{item.notes}</td>
+          <td className="d-flex gap-2">
+            <Button
+              variant="link"
+              size="sm"
+              onClick={() => handleView(item)}
+              className="text-info p-0"
+              title="View"
+            >
+              <FaEye size={16} />
+            </Button>
+            <Button
+              variant="link"
+              size="sm"
+              onClick={() => handleDirectPDF(item)}
+              className="text-danger p-0"
+              title="Download PDF"
+            >
+              📄
+            </Button>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        {receiptData.map((item, idx) => (
-          <tr key={idx}>
-            <td>{item.date}</td>
-            <td>{item.receiptNo}</td>
-            <td>{item.receivedFrom}</td>
-            <td>₹{item.amount}</td>
-            <td>{item.mode}</td>
-            <td>{item.reference}</td>
-            <td>{item.notes}</td>
-            <td className="d-flex gap-2">
-  <Button
-    variant="link"
-    size="sm"
-    onClick={() => handleView(item)}
-    className="text-info p-0"
-    title="View"
-  >
-    <FaEye size={18} />
-  </Button>
-  <Button
-    variant="link"
-    size="sm"
-    onClick={() => handleDirectPDF(item)}
-    className="text-danger p-0"
-    title="Download PDF"
-  >
-    📄
-  </Button>
-</td>
+      ))}
+    </tbody>
+  </Table>
 
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+  {/* Pagination UI */}
+  <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+    <small className="text-muted ms-2">
+      Showing 1 to {receiptData.length} of {receiptData.length} results
+    </small>
+    <nav>
+      <ul className="pagination mb-0">
+        <li className="page-item disabled">
+          <button className="page-link">&laquo;</button>
+        </li>
+        <li className="page-item active">
+          <button className="page-link">1</button>
+        </li>
+        <li className="page-item">
+          <button className="page-link">2</button>
+        </li>
+        <li className="page-item">
+          <button className="page-link">&raquo;</button>
+        </li>
+      </ul>
+    </nav>
   </div>
+</div>
+
 </div>
 
 

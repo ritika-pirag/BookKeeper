@@ -325,21 +325,21 @@ const SalesDelivery = () => {
                   <td className="d-flex gap-2 justify-content-center">
                     {/* Changed onClick to handleView */}
                     <button 
-                      className="btn btn-sm btn-outline-info"
+                       className="btn outlin-info btn-sm  text-info"
                       onClick={() => handleView(delivery)} // Open modal instead of navigating
                       title="View Details"
                     >
                       <FaEye size={16} />
                     </button>
                     <button 
-                      className="btn btn-sm btn-outline-warning" 
+                      className="p-0 text-warning" 
                       onClick={() => handleDownload(delivery)}
                       title="Download"
                     >
                       <FaDownload size={16} />
                     </button>
                     <button 
-                      className="btn btn-sm btn-outline-danger" 
+                     className="btn outline-danger btn-sm text-danger" 
                       onClick={() => handleDelete(delivery.id)}
                       title="Delete"
                     >
