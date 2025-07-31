@@ -1444,7 +1444,10 @@ const handleDeleteAccount = (type, name) => {
   </Modal.Footer>
 </Modal>
 
-
+{/* Page Description */}
+<small className="text-muted text-center w-100 mt-4">
+  This page displays all financial accounts categorized by type for easy management and tracking.
+</small>
     </Container>
   );
 };

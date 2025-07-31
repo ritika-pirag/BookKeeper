@@ -934,6 +934,12 @@ ng 1 to {filteredCustomers.length} of {customersList.length} results
           <Button variant="danger" onClick={handleDelete}>Delete</Button>
         </Modal.Footer>
       </Modal>
+
+
+       {/* Page Description */}
+  <p className="text-muted text-center mt-3">
+    This page allows you to manage customer records, track balances, and perform actions like add, view, edit, or delete customers.
+  </p>
     </div>
   );
 };
