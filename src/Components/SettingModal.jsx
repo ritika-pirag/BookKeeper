@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Button, Offcanvas, Form } from "react-bootstrap";
 import "./SettingModal.css";
-
+import defaultsidebar from "../../src/assets/defaultsidebar.jpeg"
+import minilayout from "../../src/assets/minilayout.jpeg"
+import withoutheader from "../../src/assets/withoutheader.jpeg"
 const SettingModal = ({ show, handleClose }) => {
   const [layout, setLayout] = useState("default");
   const [layoutWidth, setLayoutWidth] = useState("fluid");
@@ -10,9 +12,9 @@ const SettingModal = ({ show, handleClose }) => {
   const [themeMode, setThemeMode] = useState("light");
 
   const layoutImages = [
-    { id: "default", src: "/layout-default.png", alt: "Default" },
-    { id: "mini", src: "/layout-mini.png", alt: "Mini" },
-    { id: "no-header", src: "/layout-no-header.png", alt: "No Header" },
+    { id: "default", src:defaultsidebar, alt: "Default" ,name: "Default"},
+    { id: "mini", src: minilayout, alt: "Mini",name: "Mini Layout" },
+    { id: "no-header", src: withoutheader, alt: "No Header",name: "No-Header" },
   ];
 
   const topbarColors = ["#ffffff", "#000000", "#6c757d", "#0d6efd", "#6610f2", "#20c997", "#6366f1"];
@@ -34,6 +36,7 @@ const SettingModal = ({ show, handleClose }) => {
               <img
                 key={item.id}
                 src={item.src}
+
                 alt={item.alt}
                 className={`layout-img rounded ${layout === item.id ? "border border-primary" : ""}`}
                 onClick={() => setLayout(item.id)}

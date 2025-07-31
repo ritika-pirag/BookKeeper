@@ -153,7 +153,7 @@ import ReceiptEntry from "./Components/Company-Dashboard/Accounts/ReceiptEntry";
 import WareHouseDetail from "./Components/Company-Dashboard/Inventory/SiteData/WareHouseDetail";
 
 import DeliveryChallans from "./Components/Company-Dashboard/Sales/DeliveryChallans";
-import MultiStepPurchaseForm from "./Components/Company-Dashboard/Accounts/MultiStepPurchaseForm";
+
 
 
 
