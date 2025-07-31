@@ -222,72 +222,10 @@ const Transaction = () => {
 
   return (
     <div className="p-3">
-<<<<<<< HEAD
-      <Row className="mb-3">
-        <Col><h4>Transactions</h4></Col>
-        <Col className="text-end d-flex gap-2 justify-content-end">
-          <input
-            type="file"
-            accept=".xlsx, .xls"
-            ref={fileInputRef}
-            style={{ display: "none" }}
-            onChange={handleImport}
-          />
-          <Button
-            variant="success"
-            className="rounded-pill d-flex align-items-center"
-            // style={{ fontWeight: 600 }}
-            onClick={() => fileInputRef.current.click()}
-            title="Import Excel"
-          >
-            <FaFileImport className="me-2" /> Import
-          </Button>
-          <Button
-            variant="primary"
-            className="rounded-pill d-flex align-items-center"
-            // style={{ fontWeight: 600 }}
-            onClick={handleExport}
-            title="Export Excel"
-          >
-            <FaFileExport className="me-2" /> Export
-          </Button>
-          <Button
-            variant="warning"
-            className="rounded-pill d-flex align-items-center"
-            // style={{ fontWeight: 600, color: "#fff" }}
-            onClick={handleDownloadBlank}
-            title="Download Blank Excel"
-          >
-            <FaDownload className="me-2" /> Download
-          </Button>
-          <Button
-            style={customBtn}
-            onClick={() => {
-              setSelectedTransaction(null);
-              setForm({ ...emptyForm });
-              setFromToType('Customer');
-              setShowModal(true);
-            }}
-          >
-            Add Transaction
-          </Button>
-          <Button
-            variant="info"
-            className="rounded-pill d-flex align-items-center"
-          
-            onClick={() => navigate("/company/ledger")}
-            title="Go to Ledger"
-          >
-         Go to Ledger
-          </Button>
-        </Col>
-      </Row>
-=======
    <Row className="mb-3 align-items-center">
   <Col>
     <h4>Transactions</h4>
   </Col>
->>>>>>> d345954368041c14ffc8c5b28f9509be96cbee30
 
   <Col className="text-end">
     <div
