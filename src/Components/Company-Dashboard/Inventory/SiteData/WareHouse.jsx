@@ -1099,9 +1099,13 @@ const WareHouse = () => {
       </Modal>
 
 
-
+      {/* Page Description */}
+      <small className="text-muted text-center w-100 mt-4">
+        This page allows users to manage multiple warehouses by viewing, adding, editing, deleting, importing, and exporting warehouse details along with stock and location information.
+      </small>
     </div>
   );
+
 };
 
 export default WareHouse;

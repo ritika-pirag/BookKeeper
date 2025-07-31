@@ -719,9 +719,13 @@ const InventoryItems = () => {
           <Button variant="secondary" onClick={() => setShowDelete(false)}>Cancel</Button>
           <Button variant="danger" onClick={handleDeleteItem}>Delete</Button>
         </Modal.Footer>
+
       </Modal>
+      {/* Page Description */}
+<small className="text-muted text-center w-100 mt-4">
+An Inventory Product Management Interface displaying product details, status, and actions with options to import/export data and manage records.
+</small>
     </div>
   );
 };
-
 export default InventoryItems;
