@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaEye, FaEdit, FaTrash, FaArrowDown, FaArrowUp, FaRupeeSign } from 'react-icons/fa';
-import { Modal, Button, Form, Badge } from 'react-bootstrap';
+import { Modal, Button, Form, Badge ,Card} from 'react-bootstrap';
 
 const summaryData = [
   {
@@ -73,7 +73,7 @@ const GSTReturns = () => {
   };
 
   return (
-    <div className="container-fluid px-2 px-md-5 mt-4">
+    <div className="container-fluid px-2 px-md-5 mt-4 ">
       <h4 className="fw-bold mb-4" style={{ color: '#15110aff' }}>GST Returns</h4>
 
       {/* Summary Cards */}
@@ -93,13 +93,13 @@ const GSTReturns = () => {
 
       {/* Search and Filters */}
       <div className="row g-2 mb-3">
-        <div className="col-12">
+        <div className="col-6">
           <input type="text" className="form-control" placeholder="Search returns..." />
         </div>
       </div>
 
       {/* Table */}
-      <div className="table-responsive">
+      <div className="table-responsive shadow rounded-3 p-2">
         <table className="table table-hover align-middle">
           <thead className="table-light">
             <tr>
@@ -242,7 +242,10 @@ const GSTReturns = () => {
 
         {/* Page Description */}
      
-        <div className="mt-3">
+    
+
+<Card className="mb-4 p-3 shadow rounded-3 mt-3">
+  <Card.Body>
   <small className="d-block text-dark w-100 p-3 border-top bg-light rounded-bottom">
     <strong>About GST Returns</strong><br />
     A GST Return is a document you (the business) must file with the government, showing:
@@ -257,8 +260,8 @@ const GSTReturns = () => {
       <li>Claim Input Tax Credit (ITC) on purchases</li>
     </ul>
   </small>
-</div>
-
+  </Card.Body>
+</Card>
 
 
     </div>

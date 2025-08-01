@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
+import { Modal, Button, Form, Row, Col,Card } from 'react-bootstrap';
 import { FaEye, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
@@ -719,16 +719,16 @@ const VendorsCreditors = () => {
           <Button variant="danger" onClick={handleDeleteVendor}>Yes, Delete</Button>
         </Modal.Footer>
       </Modal>
+
       {/* Page Description */}
-<p className="text-muted text-center mt-3">
-This page allows you to manage vendor records, track payable balances, and perform actions like adding, viewing, editing, deleting, importing, and exporting vendor data efficiently.
+      <Card className="mb-4 p-3 shadow rounded-4 mt-2">
+  <Card.Body>
+    <p className="text-muted text-center fs-6 mb-0">
+    This page allows you to manage vendor records, track payable balances, and perform actions like adding, viewing, editing, deleting, importing, and exporting vendor data efficientl
 
-
-
-
-
-
-</p>
+    </p>
+  </Card.Body>
+</Card>
 
     </div>
   );

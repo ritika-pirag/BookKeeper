@@ -1,11 +1,11 @@
 
 
 import React, { useEffect, useState } from "react";
-import { Table, Modal, Button, Form, Row, Col } from "react-bootstrap";
+import { Table, Modal, Button, Form, Row, Col,Card } from "react-bootstrap";
 import { FaArrowRight, FaBoxes, FaEdit, FaTrash } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import { useNavigate } from "react-router-dom";
-import { Offcanvas } from "react-bootstrap";
+
 import AddProductModal from "../AddProductModal";
 
 
@@ -284,14 +284,14 @@ const WareHouse = () => {
 
   return (
     <div className="mx-md-5 mt-5 mx-3">
-      <div className="shadow p-4">
+      <div className="shadow p-4 rounded-4">
         <div className="d-flex justify-content-between flex-wrap gap-2">
           <h4 className="fw-semibold">Manage Warehouses</h4>
 
           <div className="mb-3">
             <Form.Control
               type="text"
-              placeholder="Filter by location (e.g. Delhi, Mumbai)"
+              placeholder="Filter by location "
               value={filterLocation}
               onChange={(e) => {
                 setFilterLocation(e.target.value);
@@ -340,6 +340,11 @@ const WareHouse = () => {
             >
               <i className="fa fa-plus me-2"></i> Create Warehouse
             </Button>
+
+
+
+
+            
           </div>
 
 
@@ -374,7 +379,7 @@ const WareHouse = () => {
                       <Button onClick={() => handleAddStockModal(w)}
                              style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
                         
-                        >Add Stoct</Button>
+                        > Add Stock</Button>
                       <AddProductModal showAdd={showAdd}
                         showEdit={showEdit}
                         newItem={newItem}
@@ -486,10 +491,19 @@ const WareHouse = () => {
 
 
 
-      {/* Page Description */}
-      <small className="text-muted text-center w-100 mt-4">
-        This page allows users to manage multiple warehouses by viewing, adding, editing, deleting, importing, and exporting warehouse details along with stock and location information.
-      </small>
+
+
+
+
+
+            {/* Page Description */}
+            <Card className="mb-4 p-3 shadow rounded-4 mt-2">
+  <Card.Body>
+    <p className="text-muted text-center fs-6 mb-0">
+    This page allows users to manage multiple warehouses by viewing, adding, editing, deleting, importing, and exporting warehouse details along with stock and location information.
+    </p>
+  </Card.Body>
+</Card>
     </div>
   );
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Form, Table } from "react-bootstrap";
+import { Modal, Button, Form, Table,Card } from "react-bootstrap";
 import { FaEye } from 'react-icons/fa'; 
 import html2pdf from "html2pdf.js";
 import { useRef } from "react";
@@ -384,11 +384,15 @@ const ReceiptEntry = () => {
   </Modal.Footer>
 </Modal>
 
-{/* Page Description */}
-<p className="text-muted text-center mt-3">
-The "Add Receipt" button opens a form to add a new receipt by entering details like date, receipt number, customer name, invoice number, amount, payment mode, reference, and notes.
-</p>
 
+      {/* Page Description */}
+      <Card className="mb-4 p-3 shadow rounded-4 mt-2">
+  <Card.Body>
+    <p className="text-muted text-center fs-6 mb-0">
+    The "Add Receipt" button opens a form to add a new receipt by entering details like date, receipt number, customer name, invoice number, amount, payment mode, reference, and notes.
+    </p>
+  </Card.Body>
+</Card>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Form, Table } from "react-bootstrap";
+import { Modal, Button, Form, Table,Card } from "react-bootstrap";
 import { FaEye } from "react-icons/fa";
 import html2pdf from "html2pdf.js";
 import { useRef } from "react";
@@ -372,10 +372,15 @@ const PaymentEntry = () => {
     </Button>
   </Modal.Footer>
 </Modal>
-<p className="text-muted text-center mt-4">
-This page allows users to add, view, and download payment records in PDF format.
-</p>
 
+      {/* Page Description */}
+      <Card className="mb-4 p-3 shadow rounded-4 mt-2">
+  <Card.Body>
+    <p className="text-muted text-center fs-6 mb-0">
+    This page allows users to add, view, and download payment records in PDF format.
+    </p>
+  </Card.Body>
+</Card>
     </div>
     
   );

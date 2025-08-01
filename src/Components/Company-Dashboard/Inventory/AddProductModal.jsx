@@ -37,7 +37,7 @@ const AddProductModal = ({
   return (
     <>
       {/* Main Add/Edit Product Modal */}
-      <Modal show={isAdding || isEditing} onHide={() => { setShowAdd(false); setShowEdit(false); }} centered size="lg">
+      <Modal show={isAdding || isEditing} onHide={() => { setShowAdd(false); setShowEdit(false); }} centered size="xl">
         <Modal.Header closeButton>
           <Modal.Title>{isAdding ? "Add Product" : "Edit Product"}</Modal.Title>
         </Modal.Header>

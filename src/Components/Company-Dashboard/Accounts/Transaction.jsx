@@ -7,6 +7,7 @@ import {
   Row,
   Col,
   Table,
+  Card
 } from 'react-bootstrap';
 import { FaPlus, FaEdit, FaTrash, FaEye, FaFileImport, FaFileExport, FaDownload, FaBook } from 'react-icons/fa';
 import * as XLSX from "xlsx";
@@ -545,10 +546,15 @@ const Transaction = () => {
           <Button variant="secondary" onClick={() => setShowViewModal(false)}>Close</Button>
         </Modal.Footer>
       </Modal>
-      <p className="text-muted text-center mt-3">
-        This page allows you to manage all financial transactions including import, export, and filtering by voucher type.
-      </p>
 
+      {/* Page Description */}
+      <Card className="mb-4 p-3 shadow rounded-4 mt-2">
+  <Card.Body>
+    <p className="text-muted text-center fs-6 mb-0">
+    This page allows you to manage all financial transactions including import, export, and filtering by voucher type.
+    </p>
+  </Card.Body>
+</Card>
     </div>
   );
 };

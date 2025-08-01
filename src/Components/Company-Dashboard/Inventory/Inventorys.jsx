@@ -88,7 +88,7 @@
 
 // export default MangeStock;
 import React, { useState } from 'react';
-import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
+import { Modal, Button, Form, Row, Col,Card } from 'react-bootstrap';
 import { FaEye, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
@@ -173,6 +173,17 @@ const InventoryItems = () => {
     "Stationery",
     "Other",
   ]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedWarehouse, setSelectedWarehouse] = useState("All");
+  const uniqueCategories = ["All", ...new Set(items.map(item => item.itemCategory))];
+const uniqueWarehouses = ["All", ...new Set(items.map(item => item.warehouse))];
+const filteredItems = items.filter((item) => {
+  const matchesSearch = item.itemName.toLowerCase().includes(searchTerm.toLowerCase());
+  const matchesCategory = selectedCategory === "All" || item.itemCategory === selectedCategory;
+  const matchesWarehouse = selectedWarehouse === "All" || item.warehouse === selectedWarehouse;
+  return matchesSearch && matchesCategory && matchesWarehouse;
+  item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
+});
 
   const handleAddCategory = () => {
     const trimmed = newCategory.trim();
@@ -284,9 +295,6 @@ const InventoryItems = () => {
     reader.readAsBinaryString(file);
   };
 
-  const filteredItems = items.filter((item) =>
-    item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
 
   return (
@@ -362,10 +370,41 @@ const InventoryItems = () => {
       handleAddCategory={handleAddCategory}/>
         </Col>
       </Row>
+      <Row className="mb-3 px-3 py-2 align-items-center g-2">
+  <Col xs={12} sm={4}>
+    <Form.Control
+      type="text"
+      placeholder="Search item..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="rounded-pill"
+    />
+  </Col>
 
-      <Row className="mb-3 justify-content-start  card">
-        <Col md={4}><Form.Control type="text" placeholder="Search item..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="rounded-pill" /></Col>
-      </Row>
+  <Col xs={12} sm={4}>
+    <Form.Select
+      className="rounded-pill"
+      value={selectedCategory}
+      onChange={(e) => setSelectedCategory(e.target.value)}
+    >
+      {uniqueCategories.map((cat, idx) => (
+        <option key={idx} value={cat}>{cat}</option>
+      ))}
+    </Form.Select>
+  </Col>
+
+  <Col xs={12} sm={4}>
+    <Form.Select
+      className="rounded-pill"
+      value={selectedWarehouse}
+      onChange={(e) => setSelectedWarehouse(e.target.value)}
+    >
+      {uniqueWarehouses.map((wh, idx) => (
+        <option key={idx} value={wh}>{wh}</option>
+      ))}
+    </Form.Select>
+  </Col>
+</Row>
 
       <div className="card bg-white rounded-3 p-4">
         <div className="table-responsive">
@@ -543,9 +582,14 @@ const InventoryItems = () => {
 
       </Modal>
       {/* Page Description */}
-      <small className="text-muted text-center w-100 mt-4">
-        An Inventory Product Management Interface displaying product details, status, and actions with options to import/export data and manage records.
-      </small>
+      <Card className="mb-4 p-3 shadow rounded-4 mt-2">
+  <Card.Body>
+    <p className="text-muted text-center fs-6 mb-0">
+      An Inventory Product Management Interface displaying product details, status, and actions with options to import/export data and manage records.
+    </p>
+  </Card.Body>
+</Card>
+
     </div>
   );
 };
