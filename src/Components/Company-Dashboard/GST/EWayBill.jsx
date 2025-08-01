@@ -436,12 +436,18 @@ const EWayBill = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <div className="mt-3">
-  <small className="d-block text-dark w-100 p-3 border-top bg-light rounded-bottom">
+
+
+
+<Card className="mb-4 p-4 shadow rounded-4 mt-3">
+  <Card.Body>
+  <small className="d-block text-dark w-100 p-3 bg-light rounded-bottom">
     <strong>e‑Way Bill:</strong>  
     An electronic document generated on the GST portal for the movement of goods valued over ₹50,000, containing details of the consignment, transporter, and journey.
   </small>
-</div>
+  </Card.Body>
+</Card>
+
 
     </div>
   );

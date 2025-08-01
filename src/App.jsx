@@ -155,6 +155,7 @@ import WareHouseDetail from "./Components/Company-Dashboard/Inventory/SiteData/W
 import DeliveryChallans from "./Components/Company-Dashboard/Sales/DeliveryChallans";
 import PurchaseOrderr from "./Components/Company-Dashboard/Purchases/PurchaseOrderr";
 import MultiStepPurchaseForms from "./Components/Company-Dashboard/Purchases/MultiStepPurchaseForms";
+import AddProductModal from "./Components/Company-Dashboard/Inventory/AddProductModal";
 
 
 
@@ -200,6 +201,7 @@ function App() {
           <Route path="/company/warehouse/:id" element={<WareHouseDetail />} />
           <Route path="/company/unitofmeasure" element={<UnitofMeasure />} />
           <Route path="/company/inventorys" element={<Inventorys />} />
+          <Route path="/company/addproduct" element={<AddProductModal/>} />
           <Route path="/company/createvoucher" element={<CreateVoucher />} />
           <Route path="/company/stocktranfer" element={<StockTransfer />} />
           <Route path="/company/salesvoucher" element={<SalesVoucher />} />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button, Card, Table, Badge, Dropdown } from "react-bootstrap";
 import { FaArrowLeft, FaWarehouse, FaBoxes, FaFilter } from "react-icons/fa";
+import AddProductModal from "../AddProductModal";
 
 const warehouseProductsMap = {
     "1": [
@@ -141,10 +142,65 @@ const WareHouseDetail = () => {
     const [warehouse, setWarehouse] = useState(null);
     const [productData, setProductData] = useState([]);
     const [filter, setFilter] = useState("All");
+       
+         const [showAdd, setShowAdd] = useState(false);
+         const [showEdit, setShowEdit] = useState(false);
+       
+         const [newItem, setNewItem] = useState({
+           itemName: "",
+           hsn: "",
+           barcode: "",
+           unit: "Numbers",
+           description: "",
+           quantity: 0,
+           date: "2020-04-01",
+           cost: 0,
+           value: 0,
+           minQty: 50,
+           taxAccount: "",
+           cess: 0,
+           purchasePriceExclusive: 0,
+           purchasePriceInclusive: 0,
+           salePriceExclusive: 0,
+           salePriceInclusive: 0,
+           discount: 0,
+           category: "default",
+           subcategory: "default",
+           remarks: "",
+           image: null,
+           status: "In Stock",
+           itemType: "Good", // New field for item type
+           itemCategory: "" // New field for item category
+         });
+           const [categories, setCategories] = useState([
+             "Electronics",
+             "Furniture",
+             "Apparel",
+             "Food",
+             "Books",
+             "Automotive",
+             "Medical",
+             "Software",
+             "Stationery",
+             "Other",
+           ]);
+             const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
+               const [showUOMModal, setShowUOMModal] = useState(false);
 
+         
     useEffect(() => {
         const dummyData = [
-            { _id: "1", name: "Central Warehouse", location: "Delhi" },
+            {
+                _id: "1",
+                name: "Central Warehouse",
+                location: "Delhi",
+                addressLine1: "Plot No. 12, Industrial Area",
+                addressLine2: "Near Metro Station",
+                city: "New Delhi",
+                state: "Delhi",
+                pincode: "110001",
+                country: "India"
+              },
             { _id: "2", name: "North Zone", location: "Noida" },
             { _id: "3", name: "South Depot", location: "Bangalore" },
             { _id: "4", name: "East Godown", location: "Kolkata" },
@@ -180,36 +236,180 @@ const WareHouseDetail = () => {
         return map[category] || "info";
     };
 
+        const handleChange = (e) => {
+          const { name, value, type, files } = e.target;
+          if (type === "file") {
+            setNewItem({ ...newItem, image: files[0] });
+          } else {
+            setNewItem({ ...newItem, [name]: value });
+          }
+        };
+
+        const [newCategory, setNewCategory] = useState("");
+  
+      
+        const handleAddCategory = () => {
+          const trimmed = newCategory.trim();
+          if (trimmed && !categories.includes(trimmed)) {
+            setCategories((prev) => [...prev, trimmed]);
+            setNewItem((prev) => ({ ...prev, itemCategory: trimmed }));
+          }
+          setNewCategory("");
+          setShowAddCategoryModal(false);
+        };
+        const [items, setItems] = useState([
+          {
+            itemName: "Sample Item",
+            hsn: "1234",
+            barcode: "ABC123",
+            unit: "Numbers",
+            description: "Sample inventory item description.",
+            quantity: 10,
+            date: "2020-04-01",
+            cost: 100,
+            value: 1000,
+            minQty: 5,
+            taxAccount: "5% GST",
+            cess: 0,
+            purchasePriceExclusive: 90,
+            purchasePriceInclusive: 95,
+            salePriceExclusive: 110,
+            salePriceInclusive: 115,
+            discount: 5,
+            category: "default",
+            itemCategory: "Furniture",
+            itemType: 'Good',
+            subcategory: "default",
+            remarks: "Internal only",
+            image: null,
+            status: "In Stock",
+            warehouse: "Main Warehouse",
+          },
+          {
+            itemName: "Out of Stock Item",
+            hsn: "5678",
+            barcode: "XYZ567",
+            unit: "Kg",
+            description: "This item is currently out of stock.",
+            quantity: 0,
+            date: "2024-12-01",
+            cost: 200,
+            value: 0,
+            minQty: 10,
+            taxAccount: "12% GST",
+            cess: 0,
+            purchasePriceExclusive: 180,
+            purchasePriceInclusive: 200,
+            salePriceExclusive: 220,
+            salePriceInclusive: 250,
+            discount: 0,
+            category: "Electronics",
+            subcategory: "Accessories",
+            remarks: "Awaiting new shipment",
+            image: null,
+            status: "Out of Stock",
+            warehouse: "Backup Warehouse",
+            itemCategory: "Electronics",
+            itemType: 'Service',
+          }
+        ]);
+        const [selectedItem, setSelectedItem] = useState(null);
+        const [selectedWarehouse, setSelectedWarehouse] = useState('');
+
+      
+        const handleAddItem = () => {
+          setItems([...items, newItem]);
+          setShowAdd(false);
+        };
+      
+        const handleUpdateItem = () => {
+          const updated = items.map((i) => (i === selectedItem ? { ...newItem } : i));
+          setItems(updated);
+          setShowEdit(false);
+        };
+      
+        const handleAddStockModal = (warehouse) => {
+          setSelectedWarehouse(warehouse.name);
+          // setShowAddStockModal(true);
+          setShowAdd(true);
+        };
+  
+          
     return (
         <div className="container py-5">
-            <div className="d-flex align-items-center justify-content-between mb-4">
-                <Button
-                    variant="outline-dark"
-                    onClick={() => navigate(-1)}
-                    className="d-flex align-items-center rounded-pill px-3 shadow-sm"
-                >
-                    <FaArrowLeft className="me-2" />
-                    Back
-                </Button>
-                <h3 className="fw-bold mb-0 text-primary-emphasis d-flex">
-                    <FaBoxes className="me-2 text-warning" />
-                    <span className="text-gradient">Stock by Warehouse</span>
-                </h3>
-            </div>
+   <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between mb-4 gap-3">
+    <div className="d-flex align-items-center">
+        <Button
+            variant="outline-dark"
+            onClick={() => navigate(-1)}
+            className="d-flex align-items-center rounded-pill px-3 shadow-sm me-3"
+        >
+            <FaArrowLeft className="me-2" />
+            Back
+        </Button>
+        <h3 className="fw-bold mb-0 text-primary-emphasis d-flex">
+            <FaBoxes className="me-2 text-warning" />
+            <span className="text-gradient">Stock by Warehouse</span>
+        </h3>
+    </div>
+
+    <Button
+  onClick={() => handleAddStockModal(warehouse)}
+  style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+>
+  Add Stock
+</Button>
+
+                  <AddProductModal     showAdd={showAdd}
+                        showEdit={showEdit}
+                        newItem={newItem}
+                        categories={categories}
+                        newCategory={newCategory}
+                        showUOMModal={showUOMModal}
+                        showAddCategoryModal={showAddCategoryModal}
+                        setShowAdd={setShowAdd}
+                        setShowEdit={setShowEdit}
+                        setShowUOMModal={setShowUOMModal}
+                        setShowAddCategoryModal={setShowAddCategoryModal}
+                        setNewCategory={setNewCategory}
+                        handleChange={handleChange}
+                        handleAddItem={handleAddItem}
+                        handleUpdateItem={handleUpdateItem}
+                        handleAddCategory={handleAddCategory}
+                        selectedWarehouse={selectedWarehouse}
+                          formMode="addStock"      />
+
+   
+
+</div>
+
 
             {warehouse ? (
                 <>
-                    <Card className="shadow-lg border-0 mb-4">
-                        <Card.Body className="bg-light">
-                            <h4 className="fw-bold text-primary mb-1 d-flex align-items-center">
-                                <FaWarehouse className="me-2" />
-                                {warehouse.name}
-                            </h4>
-                            <p className="mb-0 text-muted">
-                                <strong>📍 Location:</strong> {warehouse.location}
-                            </p>
-                        </Card.Body>
-                    </Card>
+<Card className="shadow-lg border-0 mb-4">
+  <Card.Body className="bg-light">
+    <h4 className="fw-bold text-primary mb-1 d-flex align-items-center">
+      <FaWarehouse className="me-2" />
+      {warehouse.name}
+    </h4>
+
+    <p className="mb-1 text-muted">
+      <strong>📍 Address:</strong>
+    </p>
+
+    <p className="mb-0 text-dark ps-4">
+      {warehouse.addressLine1}<br />
+      {warehouse.addressLine2 && (
+        <>
+          {warehouse.addressLine2}<br />
+        </>
+      )}
+      {warehouse.city}, {warehouse.state} - {warehouse.pincode}<br />
+      {warehouse.country}
+    </p>
+  </Card.Body>
+</Card>
+
 
                     <div className="row row-cols-1 row-cols-md-3 g-4 mb-4">
                         <div className="col">

@@ -936,10 +936,17 @@ const CustomersDebtors = () => {
       </Modal>
 
 
-       {/* Page Description */}
-  <p className="text-muted text-center mt-3">
+
+
+
+        {/* Page Description */}
+        <Card className="mb-4 p-3 shadow rounded-4 mt-2">
+  <Card.Body>
+    <p className="text-muted text-center fs-6 mb-0">
     This page allows you to manage customer records, track balances, and perform actions like add, view, edit, or delete customers.
-  </p>
+    </p>
+  </Card.Body>
+</Card>
     </div>
   );
 };

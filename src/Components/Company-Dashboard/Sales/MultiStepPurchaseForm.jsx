@@ -547,7 +547,7 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
         </Tab>
 
         {/* SALES ORDER */}
-        <Tab eventKey="salesOrder" title="Sales Order">
+        {/* <Tab eventKey="salesOrder" title="Sales Order">
           <Form>
             <Row>
               <Col md={6}>
@@ -632,171 +632,287 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
               <Button variant="success" onClick={handleNext}>Next</Button>
             </div>
           </Form>
-        </Tab>
+        </Tab> */}
+        {/* SALES ORDER */}
+<Tab eventKey="salesOrder" title="Sales Order">
+  <Form>
+    <Row>
+      <Col md={6}>
+        <Form.Group>
+          <Form.Label>Linked Quotation No</Form.Label>
+          <Form.Control type="text" value={formData.salesOrder.quotationNo} readOnly />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Order No</Form.Label>
+          <Form.Control
+            type="text"
+            value={formData.salesOrder.orderNo}
+            onChange={(e) => handleChange('salesOrder', 'orderNo', e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Order Date</Form.Label>
+          <Form.Control
+            type="date"
+            value={formData.salesOrder.orderDate}
+            onChange={(e) => handleChange('salesOrder', 'orderDate', e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Delivery Date</Form.Label>
+          <Form.Control
+            type="date"
+            value={formData.salesOrder.deliveryDate}
+            onChange={(e) => handleChange('salesOrder', 'deliveryDate', e.target.value)}
+          />
+        </Form.Group>
+      </Col>
+      <Col md={6}>
+        <Form.Group>
+          <Form.Label>Customer Name</Form.Label>
+          <Form.Control
+            type="text"
+            value={formData.salesOrder.customerName}
+            onChange={(e) => handleChange('salesOrder', 'customerName', e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Customer Address</Form.Label>
+          <Form.Control
+            type="text"
+            value={formData.salesOrder.customerAddress}
+            onChange={(e) => handleChange('salesOrder', 'customerAddress', e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Customer Email</Form.Label>
+          <Form.Control
+            type="email"
+            value={formData.salesOrder.customerEmail}
+            onChange={(e) => handleChange('salesOrder', 'customerEmail', e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Customer Phone</Form.Label>
+          <Form.Control
+            type="text"
+            value={formData.salesOrder.customerPhone}
+            onChange={(e) => handleChange('salesOrder', 'customerPhone', e.target.value)}
+          />
+        </Form.Group>
+      </Col>
+    </Row>
+
+    <div className="mt-4">{renderItemsTable('salesOrder')}</div>
+
+    {/* === Total Table === */}
+    <Table striped bordered>
+      <tbody>
+        <tr>
+          <td className="text-end">Sub Total:</td>
+          <td>${calculateTotalAmount(formData.salesOrder.items)}</td>
+        </tr>
+        <tr>
+          <td className="text-end">Tax:</td>
+          <td>$0.00</td>
+        </tr>
+        <tr>
+          <td className="text-end">Discount:</td>
+          <td>$0.00</td>
+        </tr>
+        <tr>
+          <td className="text-end"><strong>Total:</strong></td>
+          <td><strong>${calculateTotalAmount(formData.salesOrder.items)}</strong></td>
+        </tr>
+      </tbody>
+    </Table>
+    {/* === End Total Table === */}
+
+    <Form.Group className="mt-4">
+      <Form.Label>Terms & Conditions</Form.Label>
+      <Form.Control
+        as="textarea"
+        rows={2}
+        value={formData.salesOrder.terms}
+        onChange={(e) => handleChange('salesOrder', 'terms', e.target.value)}
+      />
+    </Form.Group>
+
+    <div className="d-flex justify-content-between mt-4">
+      <Button variant="secondary" onClick={handleSkip}>Skip</Button>
+      <Button variant="warning" onClick={handleSaveDraft}>Save Draft</Button>
+      <Button variant="primary" onClick={handleSaveNext}>Save & Next</Button>
+      <Button variant="success" onClick={handleNext}>Next</Button>
+    </div>
+  </Form>
+</Tab>
 
         {/* INVOICE */}
         <Tab eventKey="invoice" title="Invoice">
-          <Form>
-            <Row>
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Linked Order No</Form.Label>
-                  <Form.Control type="text" value={formData.invoice.orderNo} readOnly />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Invoice No</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={formData.invoice.invoiceNo}
-                    onChange={(e) => handleChange('invoice', 'invoiceNo', e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Invoice Date</Form.Label>
-                  <Form.Control
-                    type="date"
-                    value={formData.invoice.invoiceDate}
-                    onChange={(e) => handleChange('invoice', 'invoiceDate', e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Due Date</Form.Label>
-                  <Form.Control
-                    type="date"
-                    value={formData.invoice.dueDate}
-                    onChange={(e) => handleChange('invoice', 'dueDate', e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Company Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={formData.invoice.companyName}
-                    onChange={(e) => handleChange('invoice', 'companyName', e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Company Address</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={formData.invoice.companyAddress}
-                    onChange={(e) => handleChange('invoice', 'companyAddress', e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Company Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    value={formData.invoice.companyEmail}
-                    onChange={(e) => handleChange('invoice', 'companyEmail', e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Company Phone</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={formData.invoice.companyPhone}
-                    onChange={(e) => handleChange('invoice', 'companyPhone', e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Customer Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={formData.invoice.customerName}
-                    onChange={(e) => handleChange('invoice', 'customerName', e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Customer Address</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={formData.invoice.customerAddress}
-                    onChange={(e) => handleChange('invoice', 'customerAddress', e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Customer Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    value={formData.invoice.customerEmail}
-                    onChange={(e) => handleChange('invoice', 'customerEmail', e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Customer Phone</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={formData.invoice.customerPhone}
-                    onChange={(e) => handleChange('invoice', 'customerPhone', e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <div className="mt-4">{renderItemsTable('invoice')}</div>
-            <Table striped bordered>
-              <tbody>
-                <tr>
-                  <td className="text-end">Sub Total:</td>
-                  <td>${calculateTotalAmount(formData.invoice.items)}</td>
-                </tr>
-                <tr>
-                  <td className="text-end">Tax:</td>
-                  <td>$0.00</td>
-                </tr>
-                <tr>
-                  <td className="text-end">Discount:</td>
-                  <td>$0.00</td>
-                </tr>
-                <tr>
-                  <td className="text-end"><strong>Total:</strong></td>
-                  <td><strong>${calculateTotalAmount(formData.invoice.items)}</strong></td>
-                </tr>
-              </tbody>
-            </Table>
-            <Form.Group className="mt-4">
-              <Form.Label>Payment Status</Form.Label>
-              <Form.Control
-                type="text"
-                value={formData.invoice.paymentStatus}
-                onChange={(e) => handleChange('invoice', 'paymentStatus', e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mt-2">
-              <Form.Label>Payment Method</Form.Label>
-              <Form.Control
-                type="text"
-                value={formData.invoice.paymentMethod}
-                onChange={(e) => handleChange('invoice', 'paymentMethod', e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mt-2">
-              <Form.Label>Note</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={2}
-                value={formData.invoice.note}
-                onChange={(e) => handleChange('invoice', 'note', e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mt-2">
-              <Form.Label>Terms & Conditions</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={2}
-                value={formData.invoice.terms}
-                onChange={(e) => handleChange('invoice', 'terms', e.target.value)}
-              />
-            </Form.Group>
-            <div className="d-flex justify-content-between mt-4">
-              <Button variant="secondary" onClick={handleSkip}>Skip</Button>
-              <Button variant="warning" onClick={handleSaveDraft}>Save Draft</Button>
-              <Button variant="primary" onClick={handleSaveNext}>Save & Next</Button>
-              <Button variant="success" onClick={handleNext}>Next</Button>
-            </div>
-          </Form>
+        <Form>
+  <div className="invoice-header">
+    <h1>INVOICE</h1>
+    <div className="invoice-number">
+      <h3>1</h3>
+    </div>
+  </div>
+
+  <Row>
+    <Col md={6}>
+      <Form.Group className="mb-3">
+        <h5>Bill To</h5>
+        <Form.Control
+          as="textarea"
+          rows={2}
+          placeholder="Who is this to?"
+          value={formData.invoice.billTo}
+          onChange={(e) => handleChange('invoice', 'billTo', e.target.value)}
+        />
+      </Form.Group>
+    </Col>
+    <Col md={6} className="text-end">
+      <div className="invoice-z">Z</div>
+    </Col>
+  </Row>
+
+  <Row>
+    <Col md={6}>
+      <Form.Group className="mb-3">
+        <h5>Ship To</h5>
+        <Form.Control
+          as="textarea"
+          rows={2}
+          value={formData.invoice.shipTo}
+          onChange={(e) => handleChange('invoice', 'shipTo', e.target.value)}
+        />
+      </Form.Group>
+    </Col>
+    <Col md={6}>
+      <Row>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Payment Terms</Form.Label>
+            <Form.Control
+              type="text"
+              value={formData.invoice.paymentTerms}
+              onChange={(e) => handleChange('invoice', 'paymentTerms', e.target.value)}
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Due Date</Form.Label>
+            <Form.Control
+              type="date"
+              value={formData.invoice.dueDate}
+              onChange={(e) => handleChange('invoice', 'dueDate', e.target.value)}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Form.Group className="mb-3">
+        <Form.Label>PO Number</Form.Label>
+        <Form.Control
+          type="text"
+          value={formData.invoice.poNumber}
+          onChange={(e) => handleChange('invoice', 'poNumber', e.target.value)}
+        />
+      </Form.Group>
+    </Col>
+  </Row>
+
+  <hr />
+
+  <div className="mb-3">
+    <h5>Item</h5>
+    <Form.Control
+      as="textarea"
+      rows={2}
+      placeholder="Description of item/service..."
+      value={formData.invoice.itemDescription}
+      onChange={(e) => handleChange('invoice', 'itemDescription', e.target.value)}
+    />
+    <Button variant="link" className="p-0 mt-2">
+      + Line Item
+    </Button>
+  </div>
+
+  <Row>
+    <Col md={8}>
+      <div className="mb-3">
+        <h5>Notes</h5>
+        <ul className="list-unstyled">
+          <li>
+            <Form.Control
+              type="text"
+              placeholder="Notes - any relevant information not already covered"
+              value={formData.invoice.notes}
+              onChange={(e) => handleChange('invoice', 'notes', e.target.value)}
+            />
+          </li>
+          <li className="mt-2">
+            <Form.Control
+              type="text"
+              placeholder="Terms"
+              value={formData.invoice.terms}
+              onChange={(e) => handleChange('invoice', 'terms', e.target.value)}
+            />
+          </li>
+          <li className="mt-2">
+            <Form.Control
+              type="text"
+              placeholder="Terms and conditions - late fees, payment methods, delivery schedule"
+              value={formData.invoice.termsConditions}
+              onChange={(e) => handleChange('invoice', 'termsConditions', e.target.value)}
+            />
+          </li>
+        </ul>
+      </div>
+    </Col>
+    <Col md={4}>
+      <Table borderless className="quantity-rate-table">
+        <thead>
+          <tr>
+            <th>Quantity</th>
+            <th>Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><Form.Control type="number" value={1} readOnly /></td>
+            <td><Form.Control type="text" value="$0.00" readOnly /></td>
+          </tr>
+          <tr>
+            <td className="text-end"><strong>Subtotal</strong></td>
+            <td>$0.00</td>
+          </tr>
+          <tr>
+            <td className="text-end"><strong>Tax</strong></td>
+            <td>0%</td>
+          </tr>
+        </tbody>
+      </Table>
+      <div className="d-flex justify-content-between mb-2">
+        <Button variant="link" className="p-0">+ Discount</Button>
+        <Button variant="link" className="p-0">+ Shipping</Button>
+      </div>
+      <div className="invoice-totals">
+        <div className="d-flex justify-content-between">
+          <span>Total</span>
+          <span>$0.00</span>
+        </div>
+        <div className="d-flex justify-content-between">
+          <span>Amount Paid</span>
+          <span>$0.00</span>
+        </div>
+        <div className="d-flex justify-content-between">
+          <span>Balance Due</span>
+          <span>$0.00</span>
+        </div>
+      </div>
+    </Col>
+  </Row>
+</Form>
         </Tab>
 
         {/* PAYMENT */}
@@ -867,10 +983,15 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
       </Tabs>
     </div>
   );
-
 };
-
 export default MultiStepPurchaseForm;
+
+
+
+
+
+
+
 
 
 

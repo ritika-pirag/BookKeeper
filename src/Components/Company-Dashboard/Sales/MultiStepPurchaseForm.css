@@ -129,7 +129,69 @@ body {
       padding-right: 15px;
     }
 
+    .invoice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .invoice-header h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    
+    .invoice-number h3 {
+      font-size: 1.5rem;
+      border: 1px solid #000;
+      padding: 5px 15px;
+      margin: 0;
+    }
+    
+    .invoice-z {
+      font-size: 3rem;
+      font-weight: bold;
+      opacity: 0.2;
+    }
+    
+    .quantity-rate-table {
+      width: 100%;
+    }
+    
+    .quantity-rate-table td, .quantity-rate-table th {
+      padding: 5px;
+    }
+    
+    .invoice-totals {
+      border-top: 1px solid #000;
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+    
+    .invoice-totals div {
+      margin-bottom: 5px;
+    }
 
 
+
+    .form-control-no-border {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      background-color: transparent !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      /* Remove bottom border completely */
+      border-bottom: none !important;
+    }
+    
+    /* Remove focus styles completely */
+    .form-control-no-border:focus {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      border-bottom: none !important;
+      background-color: transparent !important;
+    }
 
 

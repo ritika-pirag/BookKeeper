@@ -74,6 +74,9 @@ const PurchaseOrderr = () => {
             <th>#</th>
             <th>Purchase No</th>
             <th>Vendor</th>
+            <th>Voucher Type</th>
+<th>Voucher No</th>
+
             <th>Date</th>
             <th>Amount</th>
             <th>Quotation</th>
@@ -89,6 +92,9 @@ const PurchaseOrderr = () => {
               <td>{idx + 1}</td>
               <td>{order.invoice?.invoiceNo || '-'}</td>
               <td>{order.vendor}</td>
+              <td>{order.payment?.voucherType || '-'}</td>
+<td>{order.payment?.voucherNo || '-'}</td>
+
               <td>{order.date}</td>
               <td>{order.amount}</td>
               <td>{statusBadge(order.quotationStatus)}</td>
