@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaEye, FaEdit, FaTrash, FaArrowDown, FaArrowUp, FaRupeeSign } from 'react-icons/fa';
-import { Modal, Button, Form, Badge ,Card} from 'react-bootstrap';
+import { Modal, Button, Form, Badge, Card } from 'react-bootstrap';
 
 const summaryData = [
   {
@@ -45,7 +45,7 @@ const returns = [
     igst: '₹0',
     cgst: '₹12,150',
     sgst: '₹12,150',
-    status: 'Not Filed',
+    status: 'Filed',
   },
   {
     period: 'June 2025',
@@ -65,6 +65,28 @@ const GSTReturns = () => {
   const [showDelete, setShowDelete] = useState(false);
   const [selectedReturn, setSelectedReturn] = useState(null);
 
+  const [filters, setFilters] = useState({
+    period: '',
+    type: '',
+    status: '',
+  });
+
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredReturns = returns.filter((item) => {
+    const matchesFilters =
+      (filters.period ? item.period === filters.period : true) &&
+      (filters.type ? item.type === filters.type : true) &&
+      (filters.status ? item.status === filters.status : true);
+
+    const matchesSearch = Object.values(item)
+      .join(' ')
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+
+    return matchesFilters && matchesSearch;
+  });
+
   const handleAction = (action, item) => {
     setSelectedReturn(item);
     if (action === 'view') setShowView(true);
@@ -73,7 +95,7 @@ const GSTReturns = () => {
   };
 
   return (
-    <div className="container-fluid px-2 px-md-5 mt-4 ">
+    <div className="container-fluid px-2 px-md-5 mt-4">
       <h4 className="fw-bold mb-4" style={{ color: '#15110aff' }}>GST Returns</h4>
 
       {/* Summary Cards */}
@@ -91,10 +113,47 @@ const GSTReturns = () => {
         ))}
       </div>
 
-      {/* Search and Filters */}
-      <div className="row g-2 mb-3">
-        <div className="col-6">
-          <input type="text" className="form-control" placeholder="Search returns..." />
+      {/* Search & Filter Section */}
+      <div className="row g-3 mb-4 align-items-end">
+        <div className="col-md-4">
+          <Form.Control
+            type="text"
+            placeholder="Search returns..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+        <div className="col-md-3">
+          <Form.Select
+            value={filters.period}
+            onChange={(e) => setFilters({ ...filters, period: e.target.value })}
+          >
+            <option value="">All Periods</option>
+            {[...new Set(returns.map((r) => r.period))].map((p, i) => (
+              <option key={i} value={p}>{p}</option>
+            ))}
+          </Form.Select>
+        </div>
+        <div className="col-md-3">
+          <Form.Select
+            value={filters.type}
+            onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+          >
+            <option value="">All Return Types</option>
+            {[...new Set(returns.map((r) => r.type))].map((t, i) => (
+              <option key={i} value={t}>{t}</option>
+            ))}
+          </Form.Select>
+        </div>
+        <div className="col-md-2">
+          <Form.Select
+            value={filters.status}
+            onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+          >
+            <option value="">All Status</option>
+            <option value="Filed">Filed</option>
+            <option value="Not Filed">Not Filed</option>
+          </Form.Select>
         </div>
       </div>
 
@@ -115,7 +174,7 @@ const GSTReturns = () => {
             </tr>
           </thead>
           <tbody>
-            {returns.map((item, idx) => (
+            {filteredReturns.map((item, idx) => (
               <tr key={idx}>
                 <td>{item.period}</td>
                 <td>{item.type}</td>
@@ -126,13 +185,13 @@ const GSTReturns = () => {
                 <td>{item.sgst}</td>
                 <td>
                   <Badge bg="outline-danger" style={{ color: '#d32f2f', border: '1px solid #d32f2f' }}>
-                    Not Filed
+                    {item.status}
                   </Badge>
                 </td>
                 <td className="d-flex gap-2">
-                  <button className="btn outline-info btn-sm py-1 px-1 text-info"  size="sm" onClick={() => handleAction('view', item)}><FaEye size={16}/></button>
-                  <button className="btn outline-primary btn-sm text-warning py-1 px-1"  size="sm" onClick={() => handleAction('edit', item)}><FaEdit size={16}/></button>
-                  <button className="btn outline-primary btn-sm text-danger py-2 px-1"size="sm" onClick={() => handleAction('delete', item)}><FaTrash size={16}/></button>
+                  <button className="btn outline-info btn-sm py-1 px-1 text-info" onClick={() => handleAction('view', item)}><FaEye size={16} /></button>
+                  <button className="btn outline-primary btn-sm text-warning py-1 px-1" onClick={() => handleAction('edit', item)}><FaEdit size={16} /></button>
+                  <button className="btn outline-primary btn-sm text-danger py-2 px-1" onClick={() => handleAction('delete', item)}><FaTrash size={16} /></button>
                 </td>
               </tr>
             ))}
@@ -140,34 +199,30 @@ const GSTReturns = () => {
         </table>
       </div>
 
-    {/* Pagination */}
-<div className="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
-  <span className="small text-muted">
-    Showing 1 to {returns.length} of {returns.length} results
-  </span>
-  <nav>
-    <ul className="pagination pagination-sm mb-0 flex-wrap">
-      <li className="page-item disabled">
-        <button className="page-link rounded-start">&laquo;</button>
-      </li>
-      <li className="page-item active">
-        <button
-          className="page-link"
-          style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
-        >
-          1
-        </button>
-      </li>
-      <li className="page-item">
-        <button className="page-link">2</button>
-      </li>
-      <li className="page-item">
-        <button className="page-link rounded-end">&raquo;</button>
-      </li>
-    </ul>
-  </nav>
-</div>
-
+      {/* Pagination */}
+      <div className="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
+        <span className="small text-muted">
+          Showing 1 to {filteredReturns.length} of {filteredReturns.length} results
+        </span>
+        <nav>
+          <ul className="pagination pagination-sm mb-0 flex-wrap">
+            <li className="page-item disabled">
+              <button className="page-link rounded-start">&laquo;</button>
+            </li>
+            <li className="page-item active">
+              <button className="page-link" style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}>
+                1
+              </button>
+            </li>
+            <li className="page-item">
+              <button className="page-link">2</button>
+            </li>
+            <li className="page-item">
+              <button className="page-link rounded-end">&raquo;</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
 
       {/* View Modal */}
       <Modal show={showView} onHide={() => setShowView(false)} centered>
@@ -187,9 +242,7 @@ const GSTReturns = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowView(false)}>
-            Close
-          </Button>
+          <Button variant="secondary" onClick={() => setShowView(false)}>Close</Button>
         </Modal.Footer>
       </Modal>
 
@@ -204,17 +257,22 @@ const GSTReturns = () => {
               {Object.entries(selectedReturn).map(([k, v]) => (
                 <Form.Group className="mb-3" key={k}>
                   <Form.Label className="text-capitalize">{k}</Form.Label>
-                  <Form.Control type="text" defaultValue={v} />
+                  {k === "status" ? (
+                    <Form.Select defaultValue={v}>
+                      <option value="Filed">Filed</option>
+                      <option value="Not Filed">Not Filed</option>
+                    </Form.Select>
+                  ) : (
+                    <Form.Control type="text" defaultValue={v} />
+                  )}
                 </Form.Group>
               ))}
             </Form>
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowEdit(false)}>
-            Cancel
-          </Button>
-          <Button style={{backgroundColor:"#3daaaa", borderColor:"#3daaaa"}} onClick={() => setShowEdit(false)}>
+          <Button variant="secondary" onClick={() => setShowEdit(false)}>Cancel</Button>
+          <Button style={{ backgroundColor: "#3daaaa", borderColor: "#3daaaa" }} onClick={() => setShowEdit(false)}>
             Save Changes
           </Button>
         </Modal.Footer>
@@ -225,45 +283,32 @@ const GSTReturns = () => {
         <Modal.Header closeButton>
           <Modal.Title>Confirm Delete</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Are you sure you want to delete this?
-        </Modal.Body>
+        <Modal.Body>Are you sure you want to delete this?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDelete(false)}>
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={() => setShowDelete(false)}>
-            Yes, Delete
-          </Button>
+          <Button variant="secondary" onClick={() => setShowDelete(false)}>Cancel</Button>
+          <Button variant="danger" onClick={() => setShowDelete(false)}>Yes, Delete</Button>
         </Modal.Footer>
       </Modal>
 
-
-
-        {/* Page Description */}
-     
-    
-
-<Card className="mb-4 p-3 shadow rounded-3 mt-3">
-  <Card.Body>
-  <small className="d-block text-dark w-100 p-3 border-top bg-light rounded-bottom">
-    <strong>About GST Returns</strong><br />
-    A GST Return is a document you (the business) must file with the government, showing:
-    <ul className="mb-2 mt-2 ps-3">
-      <li>Your sales</li>
-      <li>Your purchases</li>
-      <li>The tax collected and paid</li>
-    </ul>
-    GST Returns help you:
-    <ul className="mb-0 ps-3 text-dark">
-      <li>Track your GST Liability (Output Tax)</li>
-      <li>Claim Input Tax Credit (ITC) on purchases</li>
-    </ul>
-  </small>
-  </Card.Body>
-</Card>
-
-
+      {/* Page Description */}
+      <Card className="mb-4 p-3 shadow rounded-3 mt-3">
+        <Card.Body>
+          <small className="d-block text-dark w-100 p-3 border-top bg-light rounded-bottom">
+            <strong>About GST Returns</strong><br />
+            A GST Return is a document you (the business) must file with the government, showing:
+            <ul className="mb-2 mt-2 ps-3">
+              <li>Your sales</li>
+              <li>Your purchases</li>
+              <li>The tax collected and paid</li>
+            </ul>
+            GST Returns help you:
+            <ul className="mb-0 ps-3 text-dark">
+              <li>Track your GST Liability (Output Tax)</li>
+              <li>Claim Input Tax Credit (ITC) on purchases</li>
+            </ul>
+          </small>
+        </Card.Body>
+      </Card>
     </div>
   );
 };
