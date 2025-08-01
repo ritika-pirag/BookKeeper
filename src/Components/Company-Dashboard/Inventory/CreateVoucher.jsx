@@ -350,7 +350,7 @@ const CreateVoucherModal = ({ show, onHide, onSave, editData }) => {
               {/* FROM SECTION */}
               <Col md={6}>
                 <h6 className="fw-bold mb-3 text-dark">{getFromLabel()}</h6>
-                <Form.Group as={Row} className="mb-3  align-items-center">
+                <Form.Group as={Row} className="mb-3 me-4 align-items-center">
                   <Form.Label column sm={4}>Name</Form.Label>
                   <Col sm={8}>
                     <Form.Control
@@ -362,7 +362,7 @@ const CreateVoucherModal = ({ show, onHide, onSave, editData }) => {
                   </Col>
                 </Form.Group>
 
-                <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Group as={Row} className="mb-3 me-4 align-items-center">
                   <Form.Label column sm={4}>Email</Form.Label>
                   <Col sm={8}>
                     <Form.Control
@@ -374,7 +374,7 @@ const CreateVoucherModal = ({ show, onHide, onSave, editData }) => {
                   </Col>
                 </Form.Group>
 
-                <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Group as={Row} className="mb-3 me-4 align-items-center">
                   <Form.Label column sm={4}>Address</Form.Label>
                   <Col sm={8}>
                     <Form.Control
@@ -386,7 +386,7 @@ const CreateVoucherModal = ({ show, onHide, onSave, editData }) => {
                   </Col>
                 </Form.Group>
 
-                <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Group as={Row} className="mb-3 me-4 align-items-center">
                   <Form.Label column sm={4}>Phone</Form.Label>
                   <Col sm={8}>
                     <Form.Control
@@ -398,7 +398,7 @@ const CreateVoucherModal = ({ show, onHide, onSave, editData }) => {
                   </Col>
                 </Form.Group>
 
-                <Form.Group as={Row} className="mb-2 align-items-center">
+                <Form.Group as={Row} className="mb-2 me-4 align-items-center">
                   <Form.Label column sm={4}>Business Number</Form.Label>
                   <Col sm={8}>
                     <Form.Control
@@ -414,7 +414,7 @@ const CreateVoucherModal = ({ show, onHide, onSave, editData }) => {
               {/* BILL TO SECTION */}
               <Col md={6}>
                 <h6 className="fw-bold mb-3 text-dark">{getToLabel()}</h6>
-                <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Group as={Row} className="mb-3 me-5 align-items-center">
                   <Form.Label column sm={4}>Name</Form.Label>
                   <Col sm={8}>
                     <Form.Control
@@ -426,7 +426,7 @@ const CreateVoucherModal = ({ show, onHide, onSave, editData }) => {
                   </Col>
                 </Form.Group>
 
-                <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Group as={Row} className="mb-3 me-5 align-items-center">
                   <Form.Label column sm={4}>Email</Form.Label>
                   <Col sm={8}>
                     <Form.Control
@@ -438,7 +438,7 @@ const CreateVoucherModal = ({ show, onHide, onSave, editData }) => {
                   </Col>
                 </Form.Group>
 
-                <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Group as={Row} className="mb-3 me-5 align-items-center">
                   <Form.Label column sm={4}>Address</Form.Label>
                   <Col sm={8}>
                     <Form.Control
@@ -450,7 +450,7 @@ const CreateVoucherModal = ({ show, onHide, onSave, editData }) => {
                   </Col>
                 </Form.Group>
 
-                <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Group as={Row} className="mb-3 me-5 align-items-center">
                   <Form.Label column sm={4}>Phone</Form.Label>
                   <Col sm={8}>
                     <Form.Control
@@ -462,7 +462,7 @@ const CreateVoucherModal = ({ show, onHide, onSave, editData }) => {
                   </Col>
                 </Form.Group>
 
-                <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Group as={Row} className="mb-3 me-5 align-items-center">
                   <Form.Label column sm={4}>Mobile</Form.Label>
                   <Col sm={8}>
                     <Form.Control
