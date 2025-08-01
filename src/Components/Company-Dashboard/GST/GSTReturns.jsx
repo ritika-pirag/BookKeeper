@@ -246,7 +246,7 @@ const GSTReturns = () => {
 
 <Card className="mb-4 p-3 shadow rounded-3 mt-3">
   <Card.Body>
-  <small className="d-block text-dark w-100 p-3 border-top bg-light rounded-bottom">
+  <small className="d-block text-dark w-100 p-3   rounded-bottom">
     <strong>About GST Returns</strong><br />
     A GST Return is a document you (the business) must file with the government, showing:
     <ul className="mb-2 mt-2 ps-3">

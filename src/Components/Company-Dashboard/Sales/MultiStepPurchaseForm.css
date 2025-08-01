@@ -128,3 +128,22 @@ body {
       padding-left: 15px;
       padding-right: 15px;
     }
+    .form-control-no-border {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      background-color: transparent !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      /* Remove bottom border completely */
+      border-bottom: none !important;
+    }
+    
+    /* Remove focus styles completely */
+    .form-control-no-border:focus {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      border-bottom: none !important;
+      background-color: transparent !important;
+    }
