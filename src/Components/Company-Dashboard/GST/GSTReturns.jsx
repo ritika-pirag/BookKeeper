@@ -290,25 +290,32 @@ const GSTReturns = () => {
         </Modal.Footer>
       </Modal>
 
-      {/* Page Description */}
-      <Card className="mb-4 p-3 shadow rounded-3 mt-3">
-        <Card.Body>
-          <small className="d-block text-dark w-100 p-3 border-top bg-light rounded-bottom">
-            <strong>About GST Returns</strong><br />
-            A GST Return is a document you (the business) must file with the government, showing:
-            <ul className="mb-2 mt-2 ps-3">
-              <li>Your sales</li>
-              <li>Your purchases</li>
-              <li>The tax collected and paid</li>
-            </ul>
-            GST Returns help you:
-            <ul className="mb-0 ps-3 text-dark">
-              <li>Track your GST Liability (Output Tax)</li>
-              <li>Claim Input Tax Credit (ITC) on purchases</li>
-            </ul>
-          </small>
-        </Card.Body>
-      </Card>
+
+
+        {/* Page Description */}
+     
+    
+
+<Card className="mb-4 p-3 shadow rounded-3 mt-3">
+  <Card.Body>
+  <small className="d-block text-dark w-100 p-3   rounded-bottom">
+    <strong>About GST Returns</strong><br />
+    A GST Return is a document you (the business) must file with the government, showing:
+    <ul className="mb-2 mt-2 ps-3">
+      <li>Your sales</li>
+      <li>Your purchases</li>
+      <li>The tax collected and paid</li>
+    </ul>
+    GST Returns help you:
+    <ul className="mb-0 ps-3 text-dark">
+      <li>Track your GST Liability (Output Tax)</li>
+      <li>Claim Input Tax Credit (ITC) on purchases</li>
+    </ul>
+  </small>
+  </Card.Body>
+</Card>
+
+
     </div>
   );
 };
