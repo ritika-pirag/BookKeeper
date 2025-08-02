@@ -56,7 +56,7 @@ const Salesreport = () => {
         </div>
 
         <div className="col-12 col-md-3">
-          <label className="form-label">Store</label>
+          <label className="form-label">Category</label>
           <select className="form-select">
             <option>All</option>
             <option>Lenovo</option>

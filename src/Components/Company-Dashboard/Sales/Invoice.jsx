@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Badge, Modal } from 'react-bootstrap';
 import MultiStepPurchaseForm from './MultiStepPurchaseForm';
-
+// import 'invoice.css';
 const initialOrders = [];
 
 const statusBadge = (status) => {
@@ -62,7 +62,7 @@ const Invoice = () => {
       <Button variant="primary" className="mb-3" onClick={() => handleCreateNewInvoice()} 
                     style={{ backgroundColor: "#53b2a5", border: "none", padding: "8px 16px" }}
         >
-        + Create New Invoice
+        + Create sales order
       </Button>
       <Table bordered hover responsive className="text-center align-middle">
         <thead className="table-light">
@@ -93,7 +93,7 @@ const Invoice = () => {
               <td>{statusBadge(order.paymentStatus)}</td>
               <td>
                 <Button
-                  size="sm"
+                  size="xl"
                   className="me-1 mb-1"
                   variant="outline-primary"
                   onClick={() => handleCreateNewInvoice(order)}

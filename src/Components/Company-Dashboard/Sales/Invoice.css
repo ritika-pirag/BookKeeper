@@ -22,3 +22,27 @@
     margin: auto;
   }
   
+
+
+
+  /* 90% wide modal */
+.modal-90w .modal-dialog {
+  max-width: 90vw;
+  width: 90%;
+  margin: auto;
+}
+
+.modal-90w .modal-content {
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  min-height: 90vh;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .modal-90w .modal-dialog {
+    width: 95%;
+    max-width: none;
+    margin: 10px auto;
+  }
+}

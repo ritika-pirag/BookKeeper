@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Badge, Modal } from 'react-bootstrap';
 import MultiStepPurchaseForms from './MultiStepPurchaseForms';
-// import MultiStepPurchaseForm from './MultiStepPurchaseForm';
+
 
 const initialOrders = [];
 
@@ -18,6 +18,7 @@ const PurchaseOrderr = () => {
   const handleCreateNewPurchase = (order = null) => {
     setSelectedOrder(order);
     setStepModal(true);
+    
   };
 
   const handleCloseModal = () => {
@@ -116,7 +117,7 @@ const PurchaseOrderr = () => {
         </tbody>
       </Table>
 
-      <Modal show={stepModal} onHide={handleCloseModal} size="lg" centered>
+      <Modal show={stepModal} onHide={handleCloseModal} size="xl" centered>
         <Modal.Header closeButton>
           <Modal.Title>{selectedOrder ? 'Continue Purchase' : 'Create Purchase'}</Modal.Title>
         </Modal.Header>
