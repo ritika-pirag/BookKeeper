@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Tabs, Tab, Form, Button, Table, Row, Col } from 'react-bootstrap';
+import React, { useState, useRef, useEffect } from 'react';
+import { Tabs, Tab, Form, Button, Table, Row, Col , Modal} from 'react-bootstrap';
 import html2pdf from 'html2pdf.js';
 import * as XLSX from 'xlsx';
 import './MultiStepPurchaseForm.css';
@@ -9,7 +9,7 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons';
 const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
   const [key, setKey] = useState(initialStep || 'quotation');
   const formRef = useRef();
-
+  const pdfRef = useRef();
   // --- Form Data State ---
   const [formData, setFormData] = useState(() => ({
     quotation: {
@@ -70,9 +70,26 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
       paymentMethod: '',
       paymentStatus: '',
       note: '',
+      customerName: '',
+      customerAddress: '',
+      customerEmail: '',
+      customerPhone: '',
+      companyName: '',
+      companyAddress: '',
+      companyEmail: '',
+      companyPhone: '',
+      totalAmount: '', // ✅ Add this
+      footerNote: '', // ✅ Add this
     },
-  }));
+  
+  }
 
+
+));
+  const [savedRecords, setSavedRecords] = useState([]); // All saved records
+  const [currentRecordId, setCurrentRecordId] = useState(null); // For editing
+  const [showModal, setShowModal] = useState(false);
+const [selectedRecord, setSelectedRecord] = useState(null);
   // --- Handlers ---
   const handleChange = (tab, field, value) => {
     setFormData(prev => ({
@@ -111,32 +128,80 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
     }));
   };
 
-  // ✅ Fixed: Now returns a NUMBER, not a string
   const calculateTotalAmount = (items) => {
-    return items.reduce((total, item) => total + (item.rate || 0) * (item.quantity || 0), 0);
+    if (!Array.isArray(items)) return 0; // Safeguard
+    return items.reduce((total, item) => {
+      const rate = parseFloat(item.rate) || 0;
+      const qty = parseInt(item.qty) || 0;
+      return total + (rate * qty);
+    }, 0);
   };
 
   // --- Top Buttons ---
-  const handlePrint = () => window.print();
+  const handlePrint = () => {
+    const printContent = pdfRef.current;
+    if (!printContent) {
+      alert("No content to print!");
+      return;
+    }
+  
+    // Temporary print window open karte hain
+    const printWindow = window.open('', '', 'height=800,width=1000');
+    printWindow.document.write('<html><head><title>Print</title>');
+    
+    // Styling add karte hain taki print accha dikhe
+    printWindow.document.write('<style>');
+    printWindow.document.write(`
+      body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+      table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+      th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+      .text-end { text-align: right; }
+      .fw-bold { font-weight: bold; }
+      hr { border: 2px solid #28a745; margin: 10px 0; }
+      h2, h4, h5 { color: #28a745; }
+    `);
+    printWindow.document.write('</style></head><body>');
+    printWindow.document.write(printContent.innerHTML);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.focus();
+  
+    // Print ke liye wait karein
+    printWindow.onload = () => {
+      printWindow.print();
+      // printWindow.close(); // Optional: print ke baad window band karna
+    };
+  };
 
   const handleSend = () => {
     window.location.href = `mailto:?subject=Sales Quotation&body=Please find the quotation details attached.`;
   };
 
   const handleDownloadPDF = () => {
-    const element = formRef.current;
+    const element = pdfRef.current;
     html2pdf()
       .from(element)
       .set({
-        margin: 1,
-        filename: 'sales-quotation.pdf',
-        jsPDF: { orientation: 'portrait' },
-        html2canvas: { scale: 2 },
+        margin: 10,
+        filename: `${key}-${formData[key].quotationNo || formData[key].invoiceNo || 'document'}.pdf`,
+        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' },
+        html2canvas: { scale: 3 },
         pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
       })
       .save();
   };
-
+// On mount
+useEffect(() => {
+  const saved = localStorage.getItem('purchaseFormRecords');
+  if (saved) setSavedRecords(JSON.parse(saved));
+}, []);
+const newRecord = {
+  id: currentRecordId || Date.now(),
+  data: formData,
+  createdAt: new Date().toLocaleString(),
+};
+// In handleFinalSubmit, after setSavedRecords:
+localStorage.setItem('purchaseFormRecords', JSON.stringify([...savedRecords, newRecord]));
   const handleDownloadExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(formData.quotation.items);
     const workbook = XLSX.utils.book_new();
@@ -157,10 +222,89 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
   const handleSaveDraft = () => onSubmit(formData, key);
 
   const handleSaveNext = () => {
-    handleSaveDraft();
-    handleSkip();
+    handleSaveDraft(); // Save current tab
+  
+    setKey(prev => {
+      if (prev === 'quotation') {
+        setFormData(prevData => ({
+          ...prevData,
+          salesOrder: {
+            ...prevData.salesOrder,
+            quotationNo: prevData.quotation.quotationNo,
+            orderDate: prevData.quotation.quotationDate,
+            customerName: prevData.quotation.billToName,
+            customerAddress: prevData.quotation.billToAddress,
+            customerEmail: prevData.quotation.billToEmail,
+            customerPhone: prevData.quotation.billToPhone,
+            companyName: prevData.quotation.companyName,
+            companyAddress: prevData.quotation.companyAddress,
+            companyEmail: prevData.quotation.companyEmail,
+            companyPhone: prevData.quotation.companyPhone,
+            items: prevData.quotation.items.map(item => ({
+              name: item.name,
+              qty: item.qty,
+              rate: item.rate,
+            })),
+          },
+        }));
+        return 'salesOrder';
+      }
+  
+      if (prev === 'salesOrder') {
+        setFormData(prevData => ({
+          ...prevData,
+          invoice: {
+            ...prevData.invoice,
+            orderNo: prevData.salesOrder.orderNo,
+            invoiceNo: `INV-${Date.now().toString().slice(-6)}`,
+            invoiceDate: new Date().toISOString().split('T')[0],
+            dueDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            customerName: prevData.salesOrder.billToCompanyName || prevData.salesOrder.customerName,
+            customerAddress: prevData.salesOrder.billToAddress,
+            customerEmail: prevData.salesOrder.billToEmail,
+            customerPhone: prevData.salesOrder.billToPhone,
+            companyName: prevData.salesOrder.companyName,
+            companyAddress: prevData.salesOrder.companyAddress,
+            companyEmail: prevData.salesOrder.companyEmail,
+            companyPhone: prevData.salesOrder.companyPhone,
+            items: prevData.salesOrder.items.map(item => ({
+              description: item.name,
+              qty: item.qty,
+              rate: item.rate,
+              tax: 0,
+              discount: 0,
+              amount: item.rate * item.qty,
+            })),
+          },
+        }));
+        return 'invoice';
+      }
+  
+      if (prev === 'invoice') {
+        setFormData(prevData => ({
+          ...prevData,
+          payment: {
+            ...prevData.payment,
+            invoiceNo: prevData.invoice.invoiceNo,
+            paymentDate: new Date().toISOString().split('T')[0],
+            totalAmount: calculateTotalAmount(prevData.invoice.items).toFixed(2), // ✅ Set total
+            amount: '', // Let user fill
+            customerName: prevData.invoice.customerName,
+            customerAddress: prevData.invoice.customerAddress,
+            customerEmail: prevData.invoice.customerEmail,
+            customerPhone: prevData.invoice.customerPhone,
+            companyName: prevData.invoice.companyName,
+            companyAddress: prevData.invoice.companyAddress,
+            companyEmail: prevData.invoice.companyEmail,
+            companyPhone: prevData.invoice.companyPhone,
+          },
+        }));
+        return 'payment';
+      }
+  
+      return 'quotation';
+    });
   };
-
   const handleNext = () => {
     setKey(prev => {
       if (prev === 'quotation') return 'salesOrder';
@@ -170,7 +314,62 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
     });
   };
 
-  const handleFinalSubmit = () => onSubmit(formData, 'payment');
+  const handleFinalSubmit = () => {
+    const newRecord = {
+      id: currentRecordId || Date.now(),
+      data: formData,
+      createdAt: new Date().toLocaleString(),
+    };
+  
+    if (currentRecordId) {
+      setSavedRecords(prev => {
+        const updated = prev.map(r => r.id === currentRecordId ? newRecord : r);
+        localStorage.setItem('purchaseFormRecords', JSON.stringify(updated)); // ✅ Save to localStorage
+        return updated;
+      });
+    } else {
+      const updatedRecords = [...savedRecords, newRecord];
+      setSavedRecords(updatedRecords);
+      localStorage.setItem('purchaseFormRecords', JSON.stringify(updatedRecords)); // ✅ Save to localStorage
+    }
+  
+    setCurrentRecordId(null);
+    alert("Form submitted!");
+  };
+  const handleEditRecord = (id) => {
+    const record = savedRecords.find(r => r.id === id);
+    if (record) {
+      setFormData(record.data); // ✅ All tabs filled
+      setCurrentRecordId(id);
+  
+      // Auto-open relevant tab
+      if (record.data.payment?.invoiceNo) {
+        setKey('payment');
+      } else if (record.data.invoice?.invoiceNo) {
+        setKey('invoice');
+      } else if (record.data.salesOrder?.orderNo) {
+        setKey('salesOrder');
+      } else {
+        setKey('quotation');
+      }
+    }
+  };
+  const handleDeleteRecord = (id) => {
+    if (window.confirm("Are you sure you want to delete this record?")) {
+      setSavedRecords(prev => prev.filter(r => r.id !== id));
+      if (currentRecordId === id) {
+        setCurrentRecordId(null);
+      }
+    }
+  };
+
+
+
+
+
+
+
+
 
   // --- Render Items Table ---
   const renderItemsTable = (tab) => (
@@ -319,8 +518,99 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
       </tbody>
     </Table>
   );
+  const renderPDFView = () => {
+    const currentTab = formData[key];
+  
+    return (
+      <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
+        <h2 style={{ color: '#28a745', textAlign: 'center' }}>
+          {key === 'quotation' && 'QUOTATION'}
+          {key === 'salesOrder' && 'SALES ORDER'}
+          {key === 'invoice' && 'INVOICE'}
+          {key === 'payment' && 'PAYMENT RECEIPT'}
+        </h2>
+        <hr style={{ border: '2px solid #28a745', margin: '10px 0' }} />
+  
+        {/* Company Info */}
+        <div style={{ marginBottom: '20px' }}>
+          <h4>{currentTab.companyName}</h4>
+          <p>{currentTab.companyAddress}</p>
+          <p>Email: {currentTab.companyEmail} | Phone: {currentTab.companyPhone}</p>
+        </div>
+  
+        {/* Customer Info */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+          <div>
+            <h5>BILL TO</h5>
+            <p><strong>{currentTab.customerName || currentTab.billToName}</strong></p>
+            <p>{currentTab.customerAddress || currentTab.billToAddress}</p>
+            <p>Email: {currentTab.customerEmail || currentTab.billToEmail}</p>
+            <p>Phone: {currentTab.customerPhone || currentTab.billToPhone}</p>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <p><strong>{key === 'quotation' ? 'Quotation No:' : ''} {currentTab.quotationNo}</strong></p>
+            <p><strong>{key === 'salesOrder' ? 'Order No:' : ''} {currentTab.orderNo}</strong></p>
+            <p><strong>{key === 'invoice' ? 'Invoice No:' : ''} {currentTab.invoiceNo}</strong></p>
+            <p><strong>Date:</strong> {currentTab.quotationDate || currentTab.orderDate || currentTab.invoiceDate || currentTab.paymentDate}</p>
+            {key === 'invoice' && <p><strong>Due Date:</strong> {currentTab.dueDate}</p>}
+          </div>
+        </div>
+  
+        {/* Items Table */}
+        <table width="100%" style={{ borderCollapse: 'collapse', marginBottom: '20px' }}>
+          <thead>
+            <tr style={{ backgroundColor: '#f4f4f4' }}>
+              <th style={{ border: '1px solid #000', padding: '8px' }}>Description</th>
+              <th style={{ border: '1px solid #000', padding: '8px' }}>Qty</th>
+              <th style={{ border: '1px solid #000', padding: '8px' }}>Rate</th>
+              <th style={{ border: '1px solid #000', padding: '8px' }}>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {(currentTab.items || []).map((item, idx) => (
+              <tr key={idx}>
+                <td style={{ border: '1px solid #000', padding: '8px' }}>{item.description || item.name}</td>
+                <td style={{ border: '1px solid #000', padding: '8px', textAlign: 'center' }}>{item.qty}</td>
+                <td style={{ border: '1px solid #000', padding: '8px', textAlign: 'right' }}>${parseFloat(item.rate).toFixed(2)}</td>
+                <td style={{ border: '1px solid #000', padding: '8px', textAlign: 'right' }}>${(item.qty * item.rate).toFixed(2)}</td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan="3" style={{ textAlign: 'right', fontWeight: 'bold', border: '1px solid #000', padding: '8px' }}>Total:</td>
+              <td style={{ fontWeight: 'bold', border: '1px solid #000', padding: '8px', textAlign: 'right' }}>
+                ${calculateTotalAmount(currentTab.items).toFixed(2)}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+  
+        {/* Terms & Notes */}
+        {currentTab.terms && (
+          <div style={{ marginBottom: '10px' }}>
+            <p><strong>Terms & Conditions:</strong></p>
+            <p>{currentTab.terms}</p>
+          </div>
+        )}
+  
+        {currentTab.notes && (
+          <div style={{ marginBottom: '10px' }}>
+            <p><strong>Notes:</strong></p>
+            <p>{currentTab.notes}</p>
+          </div>
+        )}
+  
+        {/* Footer */}
+        <div style={{ textAlign: 'center', marginTop: '40px', borderTop: '1px solid #ddd', paddingTop: '10px' }}>
+          <p><strong>Thank you for your business!</strong></p>
 
+        </div>
+      </div>
+    );
+  };
   return (
+    <>  
     <div className="container-fluid mt-4 px-2" ref={formRef}>
       <h4 className="text-center mb-4">Sales Process</h4>
 {/* Top Action Buttons */}
@@ -342,13 +632,13 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
     Send
   </Button>
   <Button
-    variant="success"
-    onClick={handleDownloadPDF}
-    className="flex-grow-1 flex-sm-grow-0"
-    style={{ minWidth: "130px", fontSize: "0.95rem", padding: "6px 12px" }}
-  >
-    Download PDF
-  </Button>
+  variant="success"
+  onClick={handleDownloadPDF}
+  className="flex-grow-1 flex-sm-grow-0"
+  style={{ minWidth: "130px", fontSize: "0.95rem", padding: "6px 12px" }}
+>
+  Download PDF
+</Button>
   <Button
     variant="primary"
     onClick={handleDownloadExcel}
@@ -357,6 +647,11 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
   >
     Download Excel
   </Button>
+
+
+
+
+
 </div>
       <Tabs activeKey={key} onSelect={setKey} className="mb-4" fill>
         {/* ============= QUOTATION TAB ============= */}
@@ -428,9 +723,9 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
  <hr
   style={{
     width: "100%",
-    height: "4px", // height badhaya gaya
-    backgroundColor: "#28a745", // color apply kiya
-    border: "none", // default border hata diya
+    height: "4px", 
+    backgroundColor: "#28a745", 
+    border: "none", 
     marginTop: "5px",
     marginBottom: "10px",
   }}
@@ -518,7 +813,17 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                 {renderItemsTable("quotation")}
               </Col>
             </Row>
-
+            <hr
+  style={{
+    width: "100%",
+    height: "4px", 
+    backgroundColor: "#28a745",
+    border: "none", 
+    marginTop: "5px",
+    marginBottom: "10px",
+  }}
+/>
+    
             {/* Totals */}
     {/* Totals */}
 <Row className="mb-4">
@@ -539,7 +844,17 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
     </Table>
   </Col>
 </Row>
-
+<hr
+  style={{
+    width: "100%",
+    height: "4px", 
+    backgroundColor: "#28a745", 
+    border: "none", 
+    marginTop: "5px",
+    marginBottom: "10px",
+  }}
+/>
+    
             {/* Bank & Notes */}
             <Row className="mb-4 ">
             <h5>Bank Details</h5>
@@ -576,7 +891,17 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
                 />
               </Col>
             </Row>
-
+            <hr
+  style={{
+    width: "100%",
+    height: "4px", 
+    backgroundColor: "#28a745", 
+    border: "none", 
+    marginTop: "5px",
+    marginBottom: "10px",
+  }}
+/>
+    
             {/* Terms & Footer */}
             <Row className="mb-4">
               <Col>
@@ -1227,6 +1552,8 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
     </div>
   </Form>
 </Tab>
+
+
 <Tab eventKey="payment" title="Payment">
   <Form>
     {/* Header: Logo + Title */}
@@ -1416,15 +1743,17 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
             />
           </Form.Group>
           <Form.Group className="mb-2">
-            <Form.Control
-              type="number"
-              step="0.01"
-              value={formData.payment.totalAmount || calculateTotalAmount(formData.invoice.items).toFixed(2)}
-              onChange={(e) => handleChange("payment", "totalAmount", e.target.value)}
-              placeholder="Total Invoice"
-              className="form-control-no-border text-end"
-              style={{ fontSize: "1rem", lineHeight: "1.5", minHeight: "auto", padding: "0", textAlign: "right" }}
-            />
+          <Form.Control
+  type="number"
+  step="0.01"
+  value={(
+    parseFloat(formData.payment.totalAmount) ||
+    calculateTotalAmount(formData.invoice.items)
+  ).toFixed(2)}
+  readOnly // ✅ Add this
+  className="form-control-no-border text-end"
+  style={{ textAlign: "right" }}
+/>
           </Form.Group>
           <Form.Group className="mb-2">
             <Form.Control
@@ -1518,8 +1847,230 @@ const MultiStepPurchaseForm = ({ onSubmit, initialData, initialStep }) => {
     </div>
   </Form>
 </Tab>
+
+
+
+
+
+
       </Tabs>
+
+
+
+
+
+
+{/* === RECORD VIEW MODAL === */}
+{selectedRecord && (
+  <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" centered>
+    <Modal.Header closeButton>
+      <Modal.Title>
+        View {selectedRecord.data.invoice?.invoiceNo ? 'Invoice' : 
+             selectedRecord.data.salesOrder?.orderNo ? 'Sales Order' : 
+             selectedRecord.data.payment?.invoiceNo ? 'Payment' : 'Quotation'}
+      </Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      {selectedRecord && (
+        <div className="p-3">
+          {/* Quotation Details */}
+          {selectedRecord.data.quotation?.quotationNo && (
+            <div>
+              <h5>Quotation Details</h5>
+              <p><strong>Quotation No:</strong> {selectedRecord.data.quotation.quotationNo}</p>
+              <p><strong>Date:</strong> {selectedRecord.data.quotation.quotationDate}</p>
+              <p><strong>Valid Till:</strong> {selectedRecord.data.quotation.validDate}</p>
+              <p><strong>Customer:</strong> {selectedRecord.data.quotation.billToName}</p>
+              <p><strong>Email:</strong> {selectedRecord.data.quotation.billToEmail}</p>
+              <p><strong>Phone:</strong> {selectedRecord.data.quotation.billToPhone}</p>
+              <p><strong>Address:</strong> {selectedRecord.data.quotation.billToAddress}</p>
+
+              <h6 className="mt-3">Items</h6>
+              <Table striped bordered size="sm">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedRecord.data.quotation.items.map((item, idx) => (
+                    <tr key={idx}>
+                      <td>{item.name}</td>
+                      <td>{item.qty}</td>
+                      <td>${parseFloat(item.rate).toFixed(2)}</td>
+                      <td>${(item.qty * item.rate).toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={3} className="text-end fw-bold">Total:</td>
+                    <td>${calculateTotalAmount(selectedRecord.data.quotation.items).toFixed(2)}</td>
+                  </tr>
+                </tfoot>
+              </Table>
+
+              <p><strong>Notes:</strong> {selectedRecord.data.quotation.notes || "N/A"}</p>
+              <p><strong>Terms:</strong> {selectedRecord.data.quotation.terms || "N/A"}</p>
+            </div>
+          )}
+
+          {/* Sales Order */}
+          {selectedRecord.data.salesOrder?.orderNo && (
+            <div className="mt-4">
+              <h5>Sales Order Details</h5>
+              <p><strong>Order No:</strong> {selectedRecord.data.salesOrder.orderNo}</p>
+              <p><strong>Date:</strong> {selectedRecord.data.salesOrder.orderDate}</p>
+              <p><strong>Quotation No:</strong> {selectedRecord.data.salesOrder.quotationNo}</p>
+              <p><strong>Customer:</strong> {selectedRecord.data.salesOrder.customerName}</p>
+              <p><strong>Phone:</strong> {selectedRecord.data.salesOrder.customerPhone}</p>
+              <p><strong>Email:</strong> {selectedRecord.data.salesOrder.customerEmail}</p>
+              <p><strong>Address:</strong> {selectedRecord.data.salesOrder.customerAddress}</p>
+
+              <h6 className="mt-3">Items</h6>
+              <Table striped bordered size="sm">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedRecord.data.salesOrder.items.map((item, idx) => (
+                    <tr key={idx}>
+                      <td>{item.name}</td>
+                      <td>{item.qty}</td>
+                      <td>${parseFloat(item.rate).toFixed(2)}</td>
+                      <td>${(item.qty * item.rate).toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={3} className="text-end fw-bold">Total:</td>
+                    <td>${calculateTotalAmount(selectedRecord.data.salesOrder.items).toFixed(2)}</td>
+                  </tr>
+                </tfoot>
+              </Table>
+
+              <p><strong>Terms:</strong> {selectedRecord.data.salesOrder.terms || "N/A"}</p>
+            </div>
+          )}
+
+          {/* Invoice */}
+          {selectedRecord.data.invoice?.invoiceNo && (
+            <div className="mt-4">
+              <h5>Invoice Details</h5>
+              <p><strong>Invoice No:</strong> {selectedRecord.data.invoice.invoiceNo}</p>
+              <p><strong>Date:</strong> {selectedRecord.data.invoice.invoiceDate}</p>
+              <p><strong>Due Date:</strong> {selectedRecord.data.invoice.dueDate}</p>
+              <p><strong>Customer:</strong> {selectedRecord.data.invoice.customerName}</p>
+              <p><strong>Email:</strong> {selectedRecord.data.invoice.customerEmail}</p>
+              <p><strong>Phone:</strong> {selectedRecord.data.invoice.customerPhone}</p>
+              <p><strong>Address:</strong> {selectedRecord.data.invoice.customerAddress}</p>
+
+              <h6 className="mt-3">Items</h6>
+              <Table striped bordered size="sm">
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th>Qty</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedRecord.data.invoice.items.map((item, idx) => (
+                    <tr key={idx}>
+                      <td>{item.description}</td>
+                      <td>{item.qty}</td>
+                      <td>${parseFloat(item.rate).toFixed(2)}</td>
+                      <td>${(item.qty * item.rate).toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={3} className="text-end fw-bold">Total Due:</td>
+                    <td>${calculateTotalAmount(selectedRecord.data.invoice.items).toFixed(2)}</td>
+                  </tr>
+                </tfoot>
+              </Table>
+
+              <p><strong>Terms:</strong> {selectedRecord.data.invoice.terms || "N/A"}</p>
+            </div>
+          )}
+
+          {/* Payment */}
+          {selectedRecord.data.payment?.invoiceNo && (
+            <div className="mt-4">
+              <h5>Payment Details</h5>
+              <p><strong>Invoice No:</strong> {selectedRecord.data.payment.invoiceNo}</p>
+              <p><strong>Payment Date:</strong> {selectedRecord.data.payment.paymentDate}</p>
+              <p><strong>Amount Received:</strong> ${parseFloat(selectedRecord.data.payment.amount || 0).toFixed(2)}</p>
+              <p><strong>Payment Method:</strong> {selectedRecord.data.payment.paymentMethod || "N/A"}</p>
+              <p><strong>Status:</strong> {selectedRecord.data.payment.paymentStatus || "N/A"}</p>
+              <p><strong>Customer:</strong> {selectedRecord.data.payment.customerName}</p>
+              <p><strong>Note:</strong> {selectedRecord.data.payment.note || "N/A"}</p>
+
+              <h6 className="mt-3">Balance Summary</h6>
+              <Table bordered size="sm" className="text-end">
+                <tbody>
+                  <tr>
+                    <td><strong>Total Invoice:</strong></td>
+                    <td>${calculateTotalAmount(selectedRecord.data.invoice?.items || []).toFixed(2)}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Amount Received:</strong></td>
+                    <td>${parseFloat(selectedRecord.data.payment.amount || 0).toFixed(2)}</td>
+                  </tr>
+                  <tr style={{ backgroundColor: "#f8f9fa" }}>
+                    <td><strong>Balance:</strong></td>
+                    <td className="text-danger fw-bold">
+                      ${(
+                        calculateTotalAmount(selectedRecord.data.invoice?.items || []) -
+                        parseFloat(selectedRecord.data.payment.amount || 0)
+                      ).toFixed(2)}
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
+            </div>
+          )}
+        </div>
+      )}
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={() => setShowModal(false)}>
+        Close
+      </Button>
+    </Modal.Footer>
+  </Modal>
+)}
+
     </div>
+ 
+{/* Hidden PDF View - Only for PDF generation and printing */}
+<div style={{
+  visibility: 'hidden',
+  position: 'absolute',
+  left: '-9999px',
+  top: '-9999px',
+  width: '210mm',
+  padding: '15mm',
+  boxSizing: 'border-box',
+}}>
+  <div id="pdf-view" ref={pdfRef}>
+    {renderPDFView()}
+  </div>
+</div>
+  
+    </>
   );
 };
 
