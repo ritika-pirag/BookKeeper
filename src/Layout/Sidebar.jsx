@@ -50,15 +50,21 @@ const Sidebar = ({ isMobile, onLinkClick }) => {
   const getMenuItems = () => {
     const menuItems = {
       SuperAdmin: [
+        // renderFlatSection("Admin Dashboard", [
+        //   { to: "/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" },
+        //   { to: "/superadmin/company", icon: "fas fa-building", label: "Company" },
+        //   { to: "/superadmin/planpricing", icon: "fas fa-tags", label: "Plans & Pricing" },
+        //   { to: "/superadmin/requestplan", icon: "fas fa-envelope-open", label: "Request Plan" },
+        //   { to: "/superadmin/payments", icon: "fas fa-credit-card", label: "Payments" },
+        // ]),
+
         renderFlatSection("Admin Dashboard", [
           { to: "/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" },
-          { to: "/superadmin/company", icon: "fas fa-building", label: "Company" },
-          { to: "/superadmin/planpricing", icon: "fas fa-tags", label: "Plans & Pricing" },
-          { to: "/superadmin/requestplan", icon: "fas fa-envelope-open", label: "Request Plan" },
-          { to: "/superadmin/payments", icon: "fas fa-credit-card", label: "Payments" },
+          { to: "/superadmin/planpackages", icon: "fas fa-building", label: "Plan Packages" },
+          { to: "/superadmin/planrequest", icon: "fas fa-tags", label: "Plan Request" },
+          { to: "/superadmin/usermanagement", icon: "fas fa-envelope-open", label: "Admin Management" },
+          { to: "/superadmin/payment", icon: "fas fa-credit-card", label: "Payments" },
         ]),
-
-     
      
       ],
 

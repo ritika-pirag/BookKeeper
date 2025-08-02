@@ -158,6 +158,16 @@ import MultiStepPurchaseForms from "./Components/Company-Dashboard/Purchases/Mul
 import AddProductModal from "./Components/Company-Dashboard/Inventory/AddProductModal";
 
 
+import Dashboard from "./Components/Superadmin/Dashboard/Dashboard";
+import PlanPackages from "./Components/Superadmin/PlanPackages/PlanPackages"
+import ActivityLogs from "./Components/Superadmin/ActivityLogs/ActivityLogs";
+import Setting from "./Components/Superadmin/Setting/Setting";
+import PlanBilling from "./Components/Superadmin/PlanBilling/PlanBilling";
+import PlanManagement from "./Components/Superadmin/Planmanagement/PlanManagement";
+import AdminManagement from "./Components/Superadmin/AdminManagement/AdminManagement";
+import BrandingCMS from "./Components/Superadmin/BrandingCMS/BrandingCMS";
+import PlanRequest from "./Components/Superadmin/PlanRequest/PlanRequest";
+import Payment from "./Components/Superadmin/Payment/Payment"
 
 
 
@@ -166,6 +176,7 @@ function App() {
   return (
     <Router>
       <Routes>
+
         {/* Public routes without sidebar */}
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -173,14 +184,14 @@ function App() {
 
 
         {/* Admin Dashboard routes with MainLayout */}
-        <Route element={<MainLayout />}>
+        {/* <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<Dashboardd />} />
           <Route path="/superadmin/company" element={<Company />} />
           <Route path="/superadmin/planpricing" element={<PlansPricing />} />
           <Route path="/superadmin/requestplan" element={<RequestPlan />} />
           <Route path="/superadmin/payments" element={<Payments />} />
 
-        </Route>
+        </Route> */}
 
         {/* Company Dashboard routes with MainLayout */}
         <Route element={<MainLayout />}>
@@ -353,9 +364,39 @@ function App() {
 
 
         </Route>
+
+
+
+
+
+
+        {/* Superadmin new  */}
+        <Route element={<MainLayout />}>
+                <Route path="/dashboard" element={<Dashboard/>} />
+   
+                <Route path="/superadmin/setting" element={<Setting/>} />
+                <Route path="/superadmin/planbilling" element={<PlanBilling/>} />
+                <Route path="/superadmin/ordermanagement" element={<PlanManagement/>} />
+                <Route path="/superadmin/usermanagement" element={<AdminManagement/>} />
+                <Route path="/superadmin/activitylogs" element={<ActivityLogs/>} />
+                <Route path="/superadmin/brandingcms" element={<BrandingCMS/>} />
+                <Route path="/superadmin/planmanagement" element={<PlanManagement/>} />
+                <Route path="/superadmin/planpackages" element={<PlanPackages/>} />
+                <Route path="/superadmin/planrequest" element={<PlanRequest/>} />
+                <Route path="/superadmin/payment" element={<Payment/>} />
+        </Route>
+
+
+
+
+
+
+
+
       </Routes>
     </Router>
   );
 }
+
 
 export default App;
