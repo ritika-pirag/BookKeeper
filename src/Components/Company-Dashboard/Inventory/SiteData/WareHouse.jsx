@@ -370,36 +370,55 @@ const WareHouse = () => {
                     <td>{w.totalStocks}</td>
                     <td>{w.location}</td>
                     <td>
+  <div className="d-flex align-items-center gap-2 flex-wrap">
+    <Button
+      variant="link"
+      className="text-warning p-0"
+      onClick={() => handleModalShow(w)}
+      title="Edit"
+    >
+      <FaEdit size={18} />
+    </Button>
 
-                      <Button variant="link" className="text-warning p-0 me-2" onClick={() => handleModalShow(w)}   ><FaEdit /></Button>
+    <Button
+      variant="link"
+      className="text-danger p-0"
+      onClick={() => handleDelete(w._id)}
+      title="Delete"
+    >
+      <FaTrash size={18} />
+    </Button>
 
-                      <Button variant="link" className="text-danger p-0 me-2" onClick={() => handleDelete(w._id)}   ><FaTrash /></Button>
-            
+    <Button
+      onClick={() => handleAddStockModal(w)}
+      style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
+      className="btn-sm text-white"
+    >
+      Add Stock
+    </Button>
+  </div>
 
-                      <Button onClick={() => handleAddStockModal(w)}
-                             style={{ backgroundColor: '#3daaaa', borderColor: '#3daaaa' }}
-                        
-                        > Add Stock</Button>
-                      <AddProductModal showAdd={showAdd}
-                        showEdit={showEdit}
-                        newItem={newItem}
-                        categories={categories}
-                        newCategory={newCategory}
-                        showUOMModal={showUOMModal}
-                        showAddCategoryModal={showAddCategoryModal}
-                        setShowAdd={setShowAdd}
-                        setShowEdit={setShowEdit}
-                        setShowUOMModal={setShowUOMModal}
-                        setShowAddCategoryModal={setShowAddCategoryModal}
-                        setNewCategory={setNewCategory}
-                        handleChange={handleChange}
-                        handleAddItem={handleAddItem}
-                        handleUpdateItem={handleUpdateItem}
-                        handleAddCategory={handleAddCategory}
-                          formMode="addStock"
-                      />
+  <AddProductModal
+    showAdd={showAdd}
+    showEdit={showEdit}
+    newItem={newItem}
+    categories={categories}
+    newCategory={newCategory}
+    showUOMModal={showUOMModal}
+    showAddCategoryModal={showAddCategoryModal}
+    setShowAdd={setShowAdd}
+    setShowEdit={setShowEdit}
+    setShowUOMModal={setShowUOMModal}
+    setShowAddCategoryModal={setShowAddCategoryModal}
+    setNewCategory={setNewCategory}
+    handleChange={handleChange}
+    handleAddItem={handleAddItem}
+    handleUpdateItem={handleUpdateItem}
+    handleAddCategory={handleAddCategory}
+    formMode="addStock"
+  />
+</td>
 
-                    </td>
                   </tr>
                 ))
               ) : (

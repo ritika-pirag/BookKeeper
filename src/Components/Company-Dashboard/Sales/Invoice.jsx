@@ -1,5 +1,4 @@
 
-// export default Invoice;
 import React, { useState } from 'react';
 import { Table, Button, Badge, Modal } from 'react-bootstrap';
 import MultiStepPurchaseForm from './MultiStepPurchaseForm';
@@ -107,13 +106,7 @@ const Invoice = () => {
         </tbody>
       </Table>
 
-      <Modal 
-  show={stepModal} 
-  onHide={handleCloseModal} 
-  // dialogClassName="modal-90w" 
-  size="xl"
-  centered 
->
+      <Modal show={stepModal} onHide={handleCloseModal} size="xl" centered>
         <Modal.Header closeButton>
           <Modal.Title>{selectedOrder ? 'Continue Invoice' : 'Create Invoice'}</Modal.Title>
         </Modal.Header>

@@ -18,6 +18,7 @@ const PurchaseOrderr = () => {
   const handleCreateNewPurchase = (order = null) => {
     setSelectedOrder(order);
     setStepModal(true);
+    
   };
 
   const handleCloseModal = () => {
@@ -116,7 +117,7 @@ const PurchaseOrderr = () => {
         </tbody>
       </Table>
 
-      <Modal show={stepModal} onHide={handleCloseModal} size="lg" centered>
+      <Modal show={stepModal} onHide={handleCloseModal} size="xl" centered>
         <Modal.Header closeButton>
           <Modal.Title>{selectedOrder ? 'Continue Purchase' : 'Create Purchase'}</Modal.Title>
         </Modal.Header>
