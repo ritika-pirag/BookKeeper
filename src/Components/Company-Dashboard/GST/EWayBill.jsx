@@ -71,6 +71,10 @@ const EWayBill = () => {
   const [selected, setSelected] = useState(null);
   const [addForm, setAddForm] = useState(emptyForm);
 
+    // Filters
+  const [statusFilter, setStatusFilter] = useState("");
+  const [fromFilter, setFromFilter] = useState("");
+
   const handleView = (row) => {
     setSelected(row);
     setShowView(true);
@@ -95,6 +99,14 @@ const EWayBill = () => {
     setAddForm(emptyForm);
     setShowAdd(false);
   };
+
+    const filteredData = data.filter((row) => {
+    const matchStatus = statusFilter ? row.status === statusFilter : true;
+    const matchFrom = fromFilter
+      ? row.from.toLowerCase().includes(fromFilter.toLowerCase())
+      : true;
+    return matchStatus && matchFrom;
+  });
 
   return (
     <div style={{ background: "#f7f7f7", minHeight: "100vh", paddingBottom: 40 }}>
@@ -231,6 +243,29 @@ const EWayBill = () => {
                 </Button>
               </div>
             </div>
+    {/* Filter Section */}
+            <Row className="mb-3">
+                     <Col md={4}>
+                <Form.Control
+                  placeholder="Search"
+                  value={fromFilter}
+                  onChange={(e) => setFromFilter(e.target.value)}
+                />
+              </Col>
+              <Col md={4}>
+                <Form.Select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                >
+                  <option value="">Status</option>
+                  <option value="Active">Active</option>
+                  <option value="Expired">Expired</option>
+                </Form.Select>
+              </Col>
+       
+            </Row>
+
+            
             <div style={{ overflowX: "auto" }}>
               <Table responsive hover className="align-middle mb-0">
                 <thead style={{ background: "#f5f6fa" }}>

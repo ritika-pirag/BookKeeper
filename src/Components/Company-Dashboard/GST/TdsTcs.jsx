@@ -77,6 +77,24 @@ const TdsTcs = () => {
   const [editForm, setEditForm] = useState({});
   const [addForm, setAddForm] = useState(emptyForm);
 
+  // Filter States
+  const [filterType, setFilterType] = useState("");
+  const [filterText, setFilterText] = useState("");
+  const [filterFrom, setFilterFrom] = useState("");
+  const [filterTo, setFilterTo] = useState("");
+
+  const filteredData = tdsData.filter((item) => {
+    const matchesType = filterType ? item.type === filterType : true;
+    const matchesText = filterText
+      ? item.party.toLowerCase().includes(filterText.toLowerCase()) ||
+        item.pan.toLowerCase().includes(filterText.toLowerCase())
+      : true;
+    const matchesFrom = filterFrom ? new Date(item.date) >= new Date(filterFrom) : true;
+    const matchesTo = filterTo ? new Date(item.date) <= new Date(filterTo) : true;
+    return matchesType && matchesText && matchesFrom && matchesTo;
+  });
+
+
   // Handlers
   const handleView = (row) => {
     setSelectedRow(row);
@@ -153,6 +171,7 @@ const TdsTcs = () => {
         <h3 style={{ fontWeight: 600, marginBottom: 24 }} >
           TDS/TCS
         </h3>
+        
         <Row className="g-3 mb-4">
           <Col xs={12} sm={6} md={4}>
             <Card className="shadow-sm text-center" style={{padding: 0, height: "auto"}}>
@@ -243,6 +262,7 @@ const TdsTcs = () => {
   <div style={{ fontWeight: 600, fontSize: 18 }}>
     TDS/TCS Details
   </div>
+  
 
   {/* Right: Buttons */}
   <div className="d-flex gap-2 flex-wrap justify-content-md-end w-100 w-md-auto">
@@ -280,6 +300,40 @@ const TdsTcs = () => {
     </Button>
   </div>
 </div>
+  {/* Filter Section */}
+        <Card className="mb-4 shadow-sm">
+          <Card.Body className="row g-3">
+              <Col md={3}>
+              <Form.Control
+                placeholder="Search by Party or PAN"
+                value={filterText}
+                onChange={(e) => setFilterText(e.target.value)}
+              />
+            </Col>
+            <Col md={3}>
+              <Form.Select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+                <option value="">All Types</option>
+                <option value="TDS">TDS</option>
+                <option value="TCS">TCS</option>
+              </Form.Select>
+            </Col>
+          
+            <Col md={3}>
+              <Form.Control
+                type="date"
+                value={filterFrom}
+                onChange={(e) => setFilterFrom(e.target.value)}
+              />
+            </Col>
+            <Col md={3}>
+              <Form.Control
+                type="date"
+                value={filterTo}
+                onChange={(e) => setFilterTo(e.target.value)}
+              />
+            </Col>
+          </Card.Body>
+        </Card>
 
   {/* Table Styled like Coupons */}
 <div className="table-responsive">

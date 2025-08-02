@@ -282,7 +282,7 @@ const CreateVoucherModal = ({ show, onHide, onSave, editData }) => {
 
   return (
     <>
-      <Modal show={show} onHide={onHide} centered size="xl">
+      <Modal show={show} onHide={onHide} centered size="xl"  >
         <Modal.Header closeButton>
           <Modal.Title>{editData ? "Edit Voucher" : "Create Voucher"}</Modal.Title>
         </Modal.Header>
@@ -938,61 +938,78 @@ const VoucherPage = () => {
         </Button>
       </div>
 
-      <Table bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Type</th>
-            <th>Date</th>
-            <th>Party</th>
-            <th>Customer/Vendor</th>
-            <th>Voucher No</th>
-            <th>Amount</th>
-            <th>Mode</th>
-            <th>Bill No</th>
-            <th>Reference</th>
-            <th>Note</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {vouchers.map((v, i) => (
-            <tr key={i}>
-              <td>{i + 1}</td>
-              <td>{v.voucherType}</td>
-              <td>{v.date}</td>
-              <td>{v.partyName}</td>
-              <td>{v.customerVendor}</td>
-              <td>{v.voucherNo}</td>
-              <td>{v.amount}</td>
-              <td>{v.paymentMode}</td>
-              <td>{v.billNo}</td>
-              <td>{v.reference}</td>
-              <td>{v.note}</td>
-              <td>
-                <div className="d-flex gap-2">
-                  <Button variant="link" className="text-info p-0" onClick={() => handleView(i)}>
-                    <FaEye />
-                  </Button>
-                  <Button variant="link" className="text-warning p-0" onClick={() => handleEdit(i)}>
-                    <FaEdit />
-                  </Button>
-                  <Button variant="link" className="text-danger p-0" onClick={() => handleDelete(i)}>
-                    <FaTrash />
-                  </Button>
-                </div>
-              </td>
-            </tr>
-          ))}
-          {vouchers.length === 0 && (
-            <tr>
-              <td colSpan="12" className="text-center">
-                No vouchers added yet
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+      <div className="table-responsive">
+  <Table bordered hover responsive="sm">
+    <thead>
+      <tr>
+        <th className="text-nowrap">#</th>
+        <th className="text-nowrap">Type</th>
+        <th className="text-nowrap">Date</th>
+        <th className="text-nowrap">Party</th>
+        <th className="text-nowrap">Customer/Vendor</th>
+        <th className="text-nowrap">Voucher No</th>
+        <th className="text-nowrap">Amount</th>
+        <th className="text-nowrap d-none d-md-table-cell">Mode</th>
+        <th className="text-nowrap d-none d-lg-table-cell">Bill No</th>
+        <th className="text-nowrap d-none d-lg-table-cell">Reference</th>
+        <th className="text-nowrap d-none d-xl-table-cell">Note</th>
+        <th className="text-nowrap">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {vouchers.map((v, i) => (
+        <tr key={i}>
+          <td>{i + 1}</td>
+          <td>{v.voucherType}</td>
+          <td>{v.date}</td>
+          <td className="text-truncate" style={{maxWidth: '150px'}}>{v.partyName}</td>
+          <td className="text-truncate" style={{maxWidth: '150px'}}>{v.customerVendor}</td>
+          <td>{v.voucherNo}</td>
+          <td>{v.amount}</td>
+          <td className="d-none d-md-table-cell">{v.paymentMode}</td>
+          <td className="d-none d-lg-table-cell">{v.billNo}</td>
+          <td className="d-none d-lg-table-cell">{v.reference}</td>
+          <td className="d-none d-xl-table-cell text-truncate" style={{maxWidth: '200px'}}>{v.note}</td>
+          <td>
+            <div className="d-flex gap-1 gap-sm-2">
+              <Button 
+                variant="link" 
+                className="text-info p-0" 
+                onClick={() => handleView(i)}
+                aria-label="View"
+              >
+                <FaEye />
+              </Button>
+              <Button 
+                variant="link" 
+                className="text-warning p-0" 
+                onClick={() => handleEdit(i)}
+                aria-label="Edit"
+              >
+                <FaEdit />
+              </Button>
+              <Button 
+                variant="link" 
+                className="text-danger p-0" 
+                onClick={() => handleDelete(i)}
+                aria-label="Delete"
+              >
+                <FaTrash />
+              </Button>
+            </div>
+          </td>
+        </tr>
+      ))}
+      {vouchers.length === 0 && (
+        <tr>
+          <td colSpan="12" className="text-center">
+            No vouchers added yet
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </Table>
+</div>
 
       <CreateVoucherModal
         show={showModal}
